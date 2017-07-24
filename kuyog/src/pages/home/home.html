@@ -5,8 +5,6 @@
 </ion-header>
 
 <ion-content>
-</ion-content>
-<!--<ion-content>
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="pages"> 
       <ion-segment-button value = "list">
@@ -19,44 +17,42 @@
   </ion-toolbar>
 
   <div [ngSwitch]="pages">
+    <ion-list *ngSwitchCase="'list'">
+      <ion-card>
+        <!--<img src = "../assets/img/frisbee-game.jpg">-->
+        <ion-card-content>
+          <ion-card-title>
+            <ion-icon name="football"></ion-icon>
+            Frisbee Game
+          </ion-card-title>
 
+          <ion-item>
+            <p><ion-icon name="pin"></ion-icon>  Ballfield, Silliman University</p>
+          </ion-item>
 
+          <ion-item>
+            <p><ion-icon name="time"></ion-icon>  3:00PM - 5:00PM</p>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
 
-        <ion-list *ngSwitchCase="'list'">
-          <ion-card>-->
-            <!--<img src = "../assets/img/frisbee-game.jpg">-->
-            <!--<ion-card-content>
-              <ion-card-title>
-                <ion-icon name="football"></ion-icon>
-                Frisbee Game
-              </ion-card-title>
+      <ion-card>
+        <ion-card-content>
+          <ion-card-title>
+            <ion-icon name="beer"></ion-icon>
+            Drink with us
+          </ion-card-title>
 
-              <ion-item>
-                <p><ion-icon name="pin"></ion-icon>  Ballfield, Silliman University</p>
-              </ion-item>
+          <ion-item>
+            <p><ion-icon name="pin"></ion-icon>  Hayahay</p>
+          </ion-item>
 
-              <ion-item>
-                <p><ion-icon name="time"></ion-icon>  3:00PM - 5:00PM</p>
-              </ion-item>
-            </ion-card-content>
-          </ion-card>
-
-          <ion-card>
-            <ion-card-content>
-              <ion-card-title>
-                <ion-icon name="beer"></ion-icon>
-                Drink with us
-              </ion-card-title>
-
-              <ion-item>
-                <p><ion-icon name="pin"></ion-icon>  Hayahay</p>
-              </ion-item>
-
-              <ion-item>
-                <p><ion-icon name="time"></ion-icon>  10:00PM</p>
-              </ion-item>
-            </ion-card-content>
-          </ion-card>
-  </ion-list>
-</ion-content>-->
+          <ion-item>
+            <p><ion-icon name="time"></ion-icon>  10:00PM</p>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+</ion-content>
 
