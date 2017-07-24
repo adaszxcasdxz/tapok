@@ -7,11 +7,11 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  page: string = "list";
+  pages: string = "list";
   isAndroid: boolean = false;
 
   constructor(public navCtrl: NavController) {
-    //this.isAndroid = platform.is('android');
+
   }
 
 }

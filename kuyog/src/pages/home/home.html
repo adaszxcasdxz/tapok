@@ -1,10 +1,9 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar no-border-bottom>
     <ion-title>Events</ion-title>
   </ion-navbar>
-</ion-header>
 
-<ion-content>
+
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="pages"> 
       <ion-segment-button value = "list">
@@ -15,7 +14,9 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
+</ion-header>  
 
+<ion-content>
   <div [ngSwitch]="pages">
     <ion-list *ngSwitchCase="'list'">
       <ion-card>
