@@ -5,7 +5,7 @@ import { MyApp } from './app.component';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { HomePage } from '../pages/home/home';
-import { MapPage } from '../pages/map/map';
+import { ChatPage } from '../pages/chat/chat';
 import { GroupPage } from '../pages/group/group';
 import { UserPage } from '../pages/user/user';
 
@@ -18,7 +18,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     TabsPage,
     HomePage,
-    MapPage,
+    ChatPage,
     GroupPage,
     UserPage
   ],
@@ -31,7 +31,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     TabsPage,
     HomePage,
-    MapPage,
+    ChatPage,
     GroupPage,
     UserPage
   ],

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { MapPage } from '../map/map';
+import { ChatPage } from '../chat/chat';
 import { UserPage } from '../user/user';
 import { HomePage } from '../home/home';
 import { GroupPage } from '../group/group';
@@ -11,7 +11,7 @@ import { GroupPage } from '../group/group';
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = MapPage;
+  tab2Root = ChatPage;
   tab3Root = GroupPage;
   tab4Root = UserPage;
 
