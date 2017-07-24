@@ -4,7 +4,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { TabsPage } from '../pages/tabs/tabs';
-import { HomePage } from '../pages/home/home';
+import { EventPage, EventContent } from '../pages/event/event';
 import { ChatPage } from '../pages/chat/chat';
 import { GroupPage } from '../pages/group/group';
 import { UserPage } from '../pages/user/user';
@@ -17,7 +17,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   declarations: [
     MyApp,
     TabsPage,
-    HomePage,
+    EventPage,
+    EventContent,
     ChatPage,
     GroupPage,
     UserPage
@@ -30,7 +31,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     TabsPage,
-    HomePage,
+    EventPage,
+    EventContent,
     ChatPage,
     GroupPage,
     UserPage
