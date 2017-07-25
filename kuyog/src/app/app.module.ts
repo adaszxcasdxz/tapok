@@ -4,7 +4,8 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { TabsPage } from '../pages/tabs/tabs';
-import { EventPage, EventContent } from '../pages/event/event';
+import { EventPage } from '../pages/event/event';
+import { EventContent } from '../pages/event-content/event-content';
 import { ChatPage } from '../pages/chat/chat';
 import { GroupPage } from '../pages/group/group';
 import { UserPage } from '../pages/user/user';

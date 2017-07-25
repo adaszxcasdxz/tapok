@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { EventContent } from '../event-content/event-content';
 
 @Component({
   selector: 'page-event',
@@ -19,26 +20,3 @@ export class EventPage {
 
 }
 
-@Component({
-  template: 
-  `
-    <ion-header>
-      <ion-navbar>
-        <ion-title>
-          Event Content
-        </ion-title>
-      </ion-navbar>
-    </ion-header>
-
-    <ion-content padding>
-
-    </ion-content>
-  `
-})
-export class EventContent {
-
-  constructor(){
-
-  }
-
-}
