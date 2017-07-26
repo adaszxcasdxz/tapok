@@ -3,7 +3,6 @@
     <ion-title>Events</ion-title>
   </ion-navbar>
 
-
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="pages"> 
       <ion-segment-button value = "list">
@@ -13,10 +12,16 @@
         Map
       </ion-segment-button>
     </ion-segment>
+    <ion-buttons end>
+      <button ion-button (click)="toggleSearch()" icon-only clear><ion-icon name="search"></ion-icon></button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>  
 
 <ion-content>
+  <ion-searchbar *ngIf="toggled" animated (ionClear)="toggleSearch()" showCancelButton="true">
+  </ion-searchbar>
+
   <div [ngSwitch]="pages">
     <ion-list *ngSwitchCase="'list'">
       <ion-card (click)="openEventContent()">

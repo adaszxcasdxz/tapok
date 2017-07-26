@@ -15,8 +15,6 @@
 
     .overlay{
             background: black; 
-            padding-right: 20.3em;
-            padding-bottom: 3.6em;
             opacity: .5;
             position: absolute;
             top: 10.4em;
@@ -26,21 +24,36 @@
 
 .ios{
     .event-title{
-    top: 5.1em;
+    top: 5.2em;
     left: .6em;
+    }
+
+    .overlay{
+        padding-right: 20.3em;
+        padding-bottom: 3.6em;
     }
 }
 
 .md{
     .event-title{
-    top: 5em;
-    left: .5em;
+        top: 5.2em;
+        left: .5em;
+    }
+
+    .overlay{
+        padding-right: 20.55em;
+        padding-bottom: 3.6em;
     }
 }
 
 .wp{
     .event-title{
-    top: 5em;
-    left: .5em;
+        top: 5.2em;
+        left: .5em;
+    }
+
+    .overlay{
+        padding-right: 20.89em;
+        padding-bottom: 3.6em;
     }
 }

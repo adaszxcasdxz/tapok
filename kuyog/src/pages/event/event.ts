@@ -9,9 +9,14 @@ import { EventContent } from '../event-content/event-content';
 export class EventPage {
 
   pages: string = "list";
+  public toggled = false;
 
   constructor(public navCtrl: NavController) {
+    this.toggled = false;
+  }
 
+  toggleSearch(){
+    this.toggled = this.toggled ? false : true;
   }
 
   openEventContent(){
