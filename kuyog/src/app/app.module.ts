@@ -6,7 +6,8 @@ import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
 import { EventPage } from '../pages/event/event';
 import { EventContent } from '../pages/event-content/event-content';
-import { ChatPage } from '../pages/chat/chat';
+import { Filter } from '../pages/filter/filter';
+;import { ChatPage } from '../pages/chat/chat';
 import { GroupPage } from '../pages/group/group';
 import { UserPage } from '../pages/user/user';
 
@@ -20,6 +21,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     TabsPage,
     EventPage,
     EventContent,
+    Filter,
     ChatPage,
     GroupPage,
     UserPage
@@ -34,6 +36,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     TabsPage,
     EventPage,
     EventContent,
+    Filter,
     ChatPage,
     GroupPage,
     UserPage
