@@ -6,7 +6,27 @@
   </ion-navbar>
 </ion-header>
 
-<div class="samp">
+<ion-content>
+
+<div padding>
+  <ion-segment [(ngModel)]="group">
+    <ion-segment-button value="nearby">
+      NEARBY
+    </ion-segment-button> 
+    <ion-segment-button value="recommended">
+      RECOMMENDED 
+    </ion-segment-button> 
+  </ion-segment>
+</div>
+
+<div [ngSwitch]="group">
+  <ion-list *ngSwitchCase="'nearby'">
+  </ion-list>
+
+  <ion-list *ngSwitchCase="'recommended'">
+  </ion-list>
+</div>
+
 <ion-card>
   <ion-card-header>
      <ion-icon name="book"></ion-icon> CAPSTONE
@@ -16,9 +36,7 @@
      Bottomless Pitcher
   </ion-card-content>
 </ion-card>
-</div>
 
-<div class="samp1">
 <ion-card>
   <ion-card-header>
       <ion-icon name="ice-cream"></ion-icon>   FOOD LOVERS 
@@ -28,4 +46,5 @@
       Food Enthusiasts of Dumaguete City
   </ion-card-content>
 </ion-card>
-</div>
+
+</ion-content>
