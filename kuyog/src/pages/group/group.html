@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Group
+      Entourage
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -10,30 +10,27 @@
 
 <div padding>
   <ion-segment [(ngModel)]="group">
-    <ion-segment-button value="nearby">
-      NEARBY
+    <ion-segment-button value="mygroup">
+      MY GROUPS
     </ion-segment-button> 
     <ion-segment-button value="recommended">
       RECOMMENDED 
     </ion-segment-button> 
   </ion-segment>
+
 </div>
 
 <div [ngSwitch]="group">
-  <ion-list *ngSwitchCase="'nearby'">
-  </ion-list>
-
-  <ion-list *ngSwitchCase="'recommended'">
-  </ion-list>
-</div>
-
-<ion-card>
+  <ion-list *ngSwitchCase="'mygroup'">
+    <ion-card>
   <ion-card-header>
      <ion-icon name="book"></ion-icon> CAPSTONE
   </ion-card-header>
 
   <ion-card-content>
-     Bottomless Pitcher
+     Bottomless Pitcher! We're just young students
+     who are aspiring to march on March. If you want to 
+     graduate with us, then hop on the boat!
   </ion-card-content>
 </ion-card>
 
@@ -43,8 +40,45 @@
   </ion-card-header>
 
   <ion-card-content>
-      Food Enthusiasts of Dumaguete City
+      Food Enthusiasts of Dumaguete City! We eat everything. And by
+      everything, we actually mean everything! Everything that's edible
+      of course. Know a new fancy restaurant? Come and share it with us!
   </ion-card-content>
 </ion-card>
+
+  <ion-fab bottom right>
+    <button ion-fab mini><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+
+  </ion-list>
+
+  <ion-list *ngSwitchCase="'recommended'">
+    <ion-card>
+  <ion-card-header>
+     <ion-icon name="book"></ion-icon> PROGRAMMING BUDDIES
+  </ion-card-header>
+
+  <ion-card-content>
+     We're tech savvy people who are passionate in hard-coding!
+     C, C++, Java, C#, Python - you name it! If you eat codes for
+     breakfast, then come join us for a code buffet!
+  </ion-card-content>
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+      <ion-icon name="aperture"></ion-icon> PRIMA ARTISTAS 
+  </ion-card-header>
+
+  <ion-card-content>
+      Calling all people who enthuse and wants to be enthused about
+      theater productions - come join us! This is where open-minded 
+      and creative minds meet!
+  </ion-card-content>
+</ion-card>
+  </ion-list>
+</div>
+
+
 
 </ion-content>
