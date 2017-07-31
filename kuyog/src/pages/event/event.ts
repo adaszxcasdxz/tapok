@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { PopoverController } from 'ionic-angular';
+import { NavController, PopoverController, ModalController } from 'ionic-angular';
 import { EventContent } from '../event-content/event-content';
 import { Filter } from '../filter/filter';
+import { AddEvent } from '../add-event/add-event';
 
 @Component({
   selector: 'page-event',
@@ -13,7 +13,7 @@ export class EventPage {
   pages: string = "list";
   public toggled = false;
 
-  constructor(public navCtrl: NavController, public popoverCtrl: PopoverController) {
+  constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, public modalCtrl: ModalController) {
     this.toggled = false;
   }
 
@@ -30,6 +30,11 @@ export class EventPage {
     popover.present({
       ev: myEvent
     });
+  }
+
+  openAddEvent(){
+    let modal = this.modalCtrl.create(AddEvent);
+    modal.present();
   }
 
 }

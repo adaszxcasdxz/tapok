@@ -1,11 +1,15 @@
 <ion-header>
   <ion-navbar no-border-bottom>
     <ion-title *ngIf="!toggled">Events</ion-title>
-    <ion-searchbar *ngIf="toggled" animated (ionClear)="toggleSearch()">
+    <ion-searchbar *ngIf="toggled" animated>
     </ion-searchbar>
     <ion-buttons end>
-      <button *ngIf="!toggled" ion-button (click)="toggleSearch()" icon-only clear><ion-icon name="search"></ion-icon></button>
-      <button *ngIf="toggled" ion-button (click)="toggleSearch()" icon-only clear><ion-icon name="close"></ion-icon></button>
+      <button *ngIf="!toggled" (click)="toggleSearch()" ion-button icon-only clear>
+        <ion-icon name="search"></ion-icon>
+      </button>
+      <button *ngIf="toggled" (click)="toggleSearch()" ion-button icon-only clear>
+        <ion-icon name="close"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 
@@ -19,7 +23,7 @@
       </ion-segment-button>
     </ion-segment>
     <ion-buttons end>
-      <button class = "filter-button" ion-button (click)="showFilterPopOver($event)" small clear>FILTERS</button>
+      <button class = "filter-button" ion-button (click)="showFilterPopOver()" small clear>FILTERS</button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>  
@@ -64,7 +68,7 @@
   </div>
 
   <ion-fab bottom right>
-    <button ion-fab>
+    <button ion-fab (click)="openAddEvent()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>

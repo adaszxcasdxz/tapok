@@ -1,0 +1,30 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Add Event
+        </ion-title>
+    
+    <ion-buttons end>
+        <button (click)="dismiss()" ion-button icon-only clear>
+            <ion-icon name="close"></ion-icon>
+        </button>
+    </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <div padding>
+        <ion-item>
+            <ion-label floating>Event Name</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+        </div>
+    </ion-list>
+
+    <ion-footer>
+        <div padding>
+            <button class="kuyog-button "ion-button block>ADD EVENT</button>
+        </div>
+    </ion-footer>
+</ion-content>
