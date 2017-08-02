@@ -6,7 +6,7 @@ import { NavController } from 'ionic-angular'
     templateUrl: 'group.html'
 })
 export class GroupPage{
-
+    group: string="mygroup";
     constructor(public navCtrl: NavController){
 
     }
