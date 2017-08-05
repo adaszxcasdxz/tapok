@@ -1,4 +1,4 @@
-.chat
+.members
 {
     background-color: orange;
     padding:.5em;
@@ -7,10 +7,14 @@
     font-size: .8em;
 }
 
-#user
+.user
 {
     text-align: right;
-    background-color:lightorange;
+    background-color:#F0F0EF  ;
+    padding:.5em;
+    color: black;
+    border-radius: 1em;
+    font-size: .8em;
 }
 
 .icon-customize
