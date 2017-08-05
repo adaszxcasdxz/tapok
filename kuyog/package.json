@@ -32,8 +32,13 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "2.0.2",
+<<<<<<< HEAD
     "@ionic/cli-plugin-ionic-angular": "1.4.1",
     "ionic": "3.7.0",
+=======
+    "@ionic/cli-plugin-ionic-angular": "1.4.0",
+    "ionic": "3.6.0",
+>>>>>>> 39e0e28a70643a0c3bab11eb7b88cba42d6de697
     "typescript": "2.3.4"
   },
   "description": "An Ionic project"

@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-navbar no-border-bottom>
+    <ion-title *ngIf="!toggled">Events</ion-title>
+    <ion-searchbar *ngIf="toggled" animated>
+    </ion-searchbar>
+    <ion-buttons end>
+      <button *ngIf="!toggled" (click)="toggleSearch()" ion-button icon-only clear>
+        <ion-icon name="search"></ion-icon>
+      </button>
+      <button *ngIf="toggled" (click)="toggleSearch()" ion-button icon-only clear>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="pages"> 
+      <ion-segment-button value = "list">
+        List
+      </ion-segment-button>
+      <ion-segment-button value="map">
+        Map
+      </ion-segment-button>
+    </ion-segment>
+    <ion-buttons end>
+      <button class = "filter-button" ion-button (click)="showFilterPopOver()" small clear>FILTERS</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>  
+
+<ion-content>
+  <div [ngSwitch]="pages">
+    <ion-list *ngSwitchCase="'list'">
+      <ion-card (click)="openEventContent()">
+        <ion-card-content>
+          <ion-card-title>
+            <ion-icon name="trophy"></ion-icon>
+            Frisbee Game
+          </ion-card-title>
+
+          <ion-item>
+            <p><ion-icon name="pin"></ion-icon>  Ballfield, Silliman University</p>
+          </ion-item>
+
+          <ion-item>
+            <p><ion-icon name="time"></ion-icon>  3:00PM - 5:00PM</p>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content>
+          <ion-card-title>
+            <ion-icon name="beer"></ion-icon>
+            Drink with us
+          </ion-card-title>
+
+          <ion-item>
+            <p><ion-icon name="pin"></ion-icon>  Hayahay</p>
+          </ion-item>
+
+          <ion-item>
+            <p><ion-icon name="time"></ion-icon>  10:00PM</p>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+
+  <ion-fab bottom right>
+    <button ion-fab (click)="openAddEvent()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>
+
