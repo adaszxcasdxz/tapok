@@ -4,10 +4,10 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { TabsPage } from '../pages/tabs/tabs';
-import { EventPage } from '../pages/event/event';
-import { EventContent } from '../pages/event-content/event-content';
+import { KuyogPage } from '../pages/kuyog/kuyog';
+import { KuyogContent } from '../pages/kuyog-content/kuyog-content';
 import { Filter } from '../pages/filter/filter';
-import { AddEvent } from '../pages/add-event/add-event';
+import { AddKuyog } from '../pages/add-kuyog/add-kuyog';
 import { ChatPage } from '../pages/chat/chat';
 import { GroupPage } from '../pages/group/group';
 import { UserPage } from '../pages/user/user';
@@ -19,10 +19,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   declarations: [
     MyApp,
     TabsPage,
-    EventPage,
-    EventContent,
+    KuyogPage,
+    KuyogContent,
     Filter,
-    AddEvent,
+    AddKuyog,
     ChatPage,
     GroupPage,
     UserPage
@@ -35,10 +35,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     TabsPage,
-    EventPage,
-    EventContent,
+    KuyogPage,
+    KuyogContent,
     Filter,
-    AddEvent,
+    AddKuyog,
     ChatPage,
     GroupPage,
     UserPage
