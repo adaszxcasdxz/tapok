@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar no-border-bottom>
-    <ion-title *ngIf="!toggled">Events</ion-title>
+    <ion-title *ngIf="!toggled">Kuyog</ion-title>
     <ion-searchbar *ngIf="toggled" animated>
     </ion-searchbar>
     <ion-buttons end>
@@ -31,18 +31,15 @@
 <ion-content>
   <div [ngSwitch]="pages">
     <ion-list *ngSwitchCase="'list'">
-      <ion-card (click)="openEventContent()">
+      <ion-card (click)="openKuyogContent()">
         <ion-card-content>
-          <ion-card-title>
+          <h2> 
             <ion-icon name="trophy"></ion-icon>
             Frisbee Game
-          </ion-card-title>
+          </h2>
 
           <ion-item>
-            <p><ion-icon name="pin"></ion-icon>  Ballfield, Silliman University</p>
-          </ion-item>
-
-          <ion-item>
+            <p><ion-icon name="pin"></ion-icon>  Ballfield, Silliman University</p><br>
             <p><ion-icon name="time"></ion-icon>  3:00PM - 5:00PM</p>
           </ion-item>
         </ion-card-content>
@@ -50,16 +47,13 @@
 
       <ion-card>
         <ion-card-content>
-          <ion-card-title>
+          <h2>
             <ion-icon name="beer"></ion-icon>
             Drink with us
-          </ion-card-title>
+          </h2>
 
           <ion-item>
-            <p><ion-icon name="pin"></ion-icon>  Hayahay</p>
-          </ion-item>
-
-          <ion-item>
+            <p><ion-icon name="pin"></ion-icon>  Hayahay</p><br>
             <p><ion-icon name="time"></ion-icon>  10:00PM</p>
           </ion-item>
         </ion-card-content>
@@ -68,7 +62,7 @@
   </div>
 
   <ion-fab bottom right>
-    <button ion-fab (click)="openAddEvent()">
+    <button ion-fab (click)="openAddKuyog()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>

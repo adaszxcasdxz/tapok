@@ -1,19 +1,49 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      User
-    </ion-title>
-  </ion-navbar>
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="pages">
+      <ion-segment-button value="you">
+        YOU
+      </ion-segment-button>
+      <ion-segment-button value="friends">
+        FRIENDS
+      </ion-segment-button>
+      <ion-segment-button value="history">
+        HISTORY
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-item>
-      <ion-avatar item-start large>
-        <img class="item-avatar" src="../assets/img/bubby.png">
-      </ion-avatar>
-      <h2>Bubby the Whale</h2>
-      <p>can i flap your jack?</p>
-    </ion-item>
-  </ion-card>
+  <div [ngSwitch]="pages">
+    <ion-card *ngSwitchCase="'you'">
+      <ion-item>
+        <ion-avatar item-start large>
+          <img class="item-avatar" src="../assets/img/bubby.png">
+        </ion-avatar>
+        <h2>Bubby the Whale</h2>
+        <p>can i flap your jack?</p>
+      </ion-item>
+    
+    <ion-card-content>
+      <ion-item>
+        <p><ion-icon name="mail"></ion-icon> bubby69@flappy.com</p>
+      </ion-item>
+
+      <ion-item>
+        <p><ion-icon name="call"></ion-icon> 0932 323 3232</p>
+      </ion-item>
+    </ion-card-content>
+    </ion-card>
+
+    <ion-item-group *ngSwitchCase="'friends'">
+      <ion-item>
+        <h2>Flapjack JackFlap</h2>
+      </ion-item>
+
+      <ion-item>
+        <h2>Jack Jackster</h2>
+      </ion-item>
+    </ion-item-group>
+  </div>
 </ion-content>
