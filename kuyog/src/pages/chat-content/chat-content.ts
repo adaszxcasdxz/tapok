@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { EventPage } from '../event/event';
 
 
 @Component({
@@ -8,7 +9,12 @@ import { NavController } from 'ionic-angular';
 })
 export class ChatContent {
 
+  chatTabs:string="Chat";
   constructor(public navCtrl: NavController) {
 
+  }
+
+  openDetails(){
+    this.navCtrl.push(EventPage, {});
   }
 }
