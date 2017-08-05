@@ -13,8 +13,4 @@ export class ChatContent {
   constructor(public navCtrl: NavController) {
 
   }
-
-  openDetails(){
-    this.navCtrl.push(EventPage, {});
-  }
 }
