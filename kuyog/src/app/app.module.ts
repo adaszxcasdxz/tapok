@@ -11,6 +11,7 @@ import { AddKuyog } from '../pages/add-kuyog/add-kuyog';
 import { ChatPage } from '../pages/chat/chat';
 import { GroupPage } from '../pages/group/group';
 import { UserPage } from '../pages/user/user';
+import { ChatContent } from '../pages/chat-content/chat-content';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -25,7 +26,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AddKuyog,
     ChatPage,
     GroupPage,
-    UserPage
+    UserPage,
+    ChatContent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AddKuyog,
     ChatPage,
     GroupPage,
-    UserPage
+    UserPage,
+    ChatContent
   ],
   providers: [
     StatusBar,

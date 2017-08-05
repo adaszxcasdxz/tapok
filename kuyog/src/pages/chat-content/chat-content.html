@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Frisbee Game
+    </ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="chatTabs"> 
+      <ion-segment-button value = "Chat">
+        Chat
+      </ion-segment-button>
+      <ion-segment-button value="Details">
+        Details
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div [ngSwitch]="chatTabs">
+      <ion-item no-lines *ngSwitchCase="'Chat'">
+        <ion-avatar item-start>
+          <img src="../../assets/img/henry.jpg">
+        </ion-avatar>
+        <div class="chat" item-start>Let's play guys!</div>
+      </ion-item>
+
+      <ion-item no-lines *ngSwitchCase="'Chat'">
+        <div class="chat" item-end id="user">G!</div>
+        <ion-avatar item-end>
+          <img src="../../assets/img/carmelle.jpg">
+        </ion-avatar>
+      </ion-item>
+
+      <ion-item no-lines *ngSwitchCase="'Chat'">
+        <ion-avatar item-start>
+          <img src="../../assets/img/kurt.jpg">
+        </ion-avatar>
+        <div class="chat" item-start>Okay!</div>
+      </ion-item>
+
+      <ion-item no-lines *ngSwitchCase="'Chat'">
+        <div class="chat" item-end id="user">Ballfield guys, don't forget!</div>
+        <ion-avatar item-end>
+          <img src="../../assets/img/carmelle.jpg">
+        </ion-avatar>
+      </ion-item>
+
+      <ion-item no-lines *ngSwitchCase="'Chat'">
+        <ion-avatar item-start>
+          <img src="../../assets/img/henry.jpg">
+        </ion-avatar>
+        <div class="chat" item-start>When are we going to meet, Kurt?</div>
+      </ion-item>
+
+      <ion-item no-lines *ngSwitchCase="'Chat'">
+        <div class="chat" item-end id="user">See you!</div>
+        <ion-avatar item-end>
+          <img src="../../assets/img/carmelle.jpg">
+        </ion-avatar>
+      </ion-item>
+
+      <ion-footer *ngSwitchCase="'Chat'">
+        <ion-item>
+          <ion-textarea placeholder="Type message here..."></ion-textarea>
+          <ion-icon name="send" item-end class="icon-customize"></ion-icon>
+        </ion-item>
+      </ion-footer>
+      
+      <div *ngSwitchCase="'Details'">
+        <ion-card>
+          <img src="../assets/img/frisbee-game.jpg">
+          <div class="event-title">
+              Frisbee Game
+          </div>
+          <div class="overlay"></div>
+        </ion-card>
+        
+        <ion-card>
+          <ion-item>
+            <p><ion-icon name="pin"></ion-icon>  Ballfield, Silliman University</p>
+          </ion-item>
+          
+          <ion-item>
+            <p><ion-icon name="time"></ion-icon>  3:00PM - 5:00PM</p>
+          </ion-item>
+        </ion-card>
+      </div>
+    </div>
+</ion-content>

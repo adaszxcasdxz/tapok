@@ -1,23 +1,23 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Chat
+      Events
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
+  <ion-card (click)="openChatContent()">
   <ion-item>
     <ion-avatar item-start>
       <ion-icon name="trophy"></ion-icon>
     </ion-avatar>
-    <h2>Frisbee Game</h2>
+    <h2><b>Frisbee Game</b></h2>
     <p></p>
   </ion-item>
   <ion-card-content>
     <p>Henry: When are we going to meet, Kurt?</p>
-    <p>Carmelle: Let me join you! :)</p>
+    <p>Carmelle: See you!</p>
   </ion-card-content>
 
   <ion-row>
@@ -35,7 +35,7 @@
     <ion-avatar item-start>
       <ion-icon name="beer"></ion-icon>
     </ion-avatar>
-    <h2>Drink with us</h2>
+    <h2><b>Drink with us</b></h2>
     <p></p>
   </ion-item>
   <ion-card-content>
