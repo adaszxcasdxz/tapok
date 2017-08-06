@@ -1,8 +1,9 @@
 <ion-header>
-  <ion-navbar no-border-bottom>
-    <ion-title *ngIf="!toggled">Kuyog</ion-title>
-    <ion-searchbar *ngIf="toggled" animated>
+  <ion-navbar *ngIf="toggled" no-border-bottom>
+    <ion-searchbar animated>
     </ion-searchbar>
+  </ion-navbar>
+  <ion-toolbar no-border-top>
     <ion-buttons end>
       <button *ngIf="!toggled" (click)="toggleSearch()" ion-button icon-only clear>
         <ion-icon name="search"></ion-icon>
@@ -11,9 +12,7 @@
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
-  </ion-navbar>
 
-  <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="pages"> 
       <ion-segment-button value = "list">
         List
@@ -23,7 +22,9 @@
       </ion-segment-button>
     </ion-segment>
     <ion-buttons end>
-      <button class = "filter-button" ion-button (click)="showFilterPopOver()" small clear>FILTERS</button>
+      <button class="filter-button" ion-button (click)="showFilterPopOver()" small clear>
+        <ion-icon name="more"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>  
@@ -32,12 +33,13 @@
   <div [ngSwitch]="pages">
     <ion-list *ngSwitchCase="'list'">
       <ion-card (click)="openKuyogContent()">
-        <ion-card-content>
-          <h2> 
-            <ion-icon name="trophy"></ion-icon>
-            Frisbee Game
-          </h2>
+        <ion-card-header>
+          <ion-icon name="trophy"></ion-icon>
+            FRISBEE GAME
+          <ion-icon class="people-icon" name="people"> 5</ion-icon>
+        </ion-card-header>
 
+        <ion-card-content>
           <ion-item>
             <p><ion-icon name="pin"></ion-icon>  Ballfield, Silliman University</p><br>
             <p><ion-icon name="time"></ion-icon>  3:00PM - 5:00PM</p>
@@ -46,12 +48,13 @@
       </ion-card>
 
       <ion-card>
+        <ion-card-header>
+          <ion-icon name="beer"></ion-icon>
+            DRINK WITH US
+          <ion-icon class="people-icon" name="people"> 5</ion-icon>
+        </ion-card-header>
+        
         <ion-card-content>
-          <h2>
-            <ion-icon name="beer"></ion-icon>
-            Drink with us
-          </h2>
-
           <ion-item>
             <p><ion-icon name="pin"></ion-icon>  Hayahay</p><br>
             <p><ion-icon name="time"></ion-icon>  10:00PM</p>

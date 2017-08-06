@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { EventPage } from '../event/event';
-
 
 @Component({
   selector: 'page-about',

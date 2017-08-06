@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="pages">
-      <ion-segment-button value="you">
+      <ion-segment-button value="me">
         YOU
       </ion-segment-button>
       <ion-segment-button value="friends">
@@ -16,7 +16,7 @@
 
 <ion-content>
   <div [ngSwitch]="pages">
-    <ion-card *ngSwitchCase="'you'">
+    <ion-card *ngSwitchCase="'me'">
       <ion-item>
         <ion-avatar item-start large>
           <img class="item-avatar" src="../assets/img/bubby.png">
@@ -37,13 +37,58 @@
     </ion-card>
 
     <ion-item-group *ngSwitchCase="'friends'">
-      <ion-item>
-        <h2>Flapjack JackFlap</h2>
-      </ion-item>
+      <ion-list>
+        <ion-item-sliding>
+          <ion-item>
+            <ion-avatar item-start>
+              <img src="">
+            </ion-avatar>
+            <h2>Flapjack JackFlap</h2>
+            <p>Happy Flappy</p>
+          </ion-item>
+          <ion-item-options side="right">
+            <button ion-button color="danger">
+              <ion-icon name="trash"></ion-icon>
+              delete
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
 
-      <ion-item>
-        <h2>Jack Jackster</h2>
-      </ion-item>
+        <ion-item>
+          <ion-avatar item-start>
+            <img src="">
+          </ion-avatar>
+          <h2>Jack Jackster</h2>
+          <p>Jacky Jacker</p>
+        </ion-item>
+      </ion-list>
+    </ion-item-group>
+
+    <ion-item-group *ngSwitchCase="'history'">
+      <ion-list>
+        <ion-item-sliding>
+          <ion-item>
+            <ion-avatar item-start>
+              <img src="">
+            </ion-avatar>
+            <h2>Aquaintance Party</h2>
+            <p>Time to party</p>
+          </ion-item>
+          <ion-item-options side="right">
+            <button ion-button color="danger">
+              <ion-icon name="trash"></ion-icon>
+              delete
+            </button>
+          </ion-item-options>
+      </ion-item-sliding>
+          <ion-item>
+            <ion-avatar item-start>
+              <img src="">
+            </ion-avatar>
+            <h2>Google IO</h2>
+            <p>Google that sheet</p>
+          </ion-item>
+        </ion-list>
     </ion-item-group>
   </div>
 </ion-content>
