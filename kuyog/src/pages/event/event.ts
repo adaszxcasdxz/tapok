@@ -5,9 +5,9 @@ import { ChatContent } from '../chat-content/chat-content';
 
 @Component({
   selector: 'page-about',
-  templateUrl: 'chat.html'
+  templateUrl: 'event.html'
 })
-export class ChatPage {
+export class EventPage {
 
   constructor(public navCtrl: NavController) {
 

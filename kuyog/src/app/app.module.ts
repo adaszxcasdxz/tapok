@@ -8,7 +8,7 @@ import { KuyogPage } from '../pages/kuyog/kuyog';
 import { KuyogContent } from '../pages/kuyog-content/kuyog-content';
 import { Filter } from '../pages/filter/filter';
 import { AddKuyog } from '../pages/add-kuyog/add-kuyog';
-import { ChatPage } from '../pages/chat/chat';
+import { EventPage } from '../pages/event/event';
 import { GroupPage } from '../pages/group/group';
 import { UserPage } from '../pages/user/user';
 import { ChatContent } from '../pages/chat-content/chat-content';
@@ -24,7 +24,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     KuyogContent,
     Filter,
     AddKuyog,
-    ChatPage,
+    EventPage,
     GroupPage,
     UserPage,
     ChatContent
@@ -41,7 +41,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     KuyogContent,
     Filter,
     AddKuyog,
-    ChatPage,
+    EventPage,
     GroupPage,
     UserPage,
     ChatContent
