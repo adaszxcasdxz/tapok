@@ -1,0 +1,188 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Entourage
+    </ion-title>
+  </ion-navbar>
+    <ion-toolbar no-border-top>
+        <div padding>
+            <ion-segment [(ngModel)]="groupcont">
+                <ion-segment-button value="posts">
+                    POSTS
+                </ion-segment-button> 
+                <ion-segment-button value="events">
+                    EVENTS
+                </ion-segment-button>
+                <ion-segment-button value="members">
+                    MEMBERS
+                </ion-segment-button>  
+            </ion-segment>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+        <div [ngSwitch]="groupcont">
+            <ion-list *ngSwitchCase="'posts'">
+                    <img src="../assets/img/capstone.jpg">
+                    <div class="group-title">
+                        Capstone
+                    </div>
+                    <div class="overlay1"></div>
+
+                    <ion-item>
+                        <ion-input type="text" placeholder="Post something..."></ion-input>
+                    </ion-item>
+              
+                <ion-card>
+                     <ion-item>
+                    <ion-avatar item-start large>
+                        <img class="item-avatar" src="../assets/img/kurt.jpg">
+                    </ion-avatar>
+                    <h2 class="names">Kurt Torregosa</h2>
+                    <p>3 mins ago</p>
+
+                    </ion-item>
+                    <ion-card-content>
+                        Hey guys! Just checking if any of y'all have found a place for
+                        the next meet-up? A place with fast wifi is preferable. Also, 
+                        somewhere where there isn't a lot of people :)
+                    </ion-card-content>
+
+                    <ion-row>
+                        <ion-col>
+                        <button ion-button icon-left clear small>
+                            <ion-icon name="thumbs-up"></ion-icon>
+                            <div>Like</div>
+                        </button>
+                        </ion-col>
+
+                        <ion-col>
+                        <button ion-button icon-left clear small>
+                            <ion-icon name="text"></ion-icon>
+                            <div>Comment</div>
+                        </button>
+                        </ion-col>
+                    </ion-row>
+                </ion-card>
+
+
+                <ion-card>
+                     <ion-item>
+                    <ion-avatar item-start large>
+                        <img class="item-avatar" src="../assets/img/carm.jpg">
+                    </ion-avatar>
+                    <h2 class="names">Carmelle Felicio</h2>
+                    <p>55 mins ago</p>
+
+                    </ion-item>
+                    <ion-card-content>
+                        Who's up for a study out tonight? I'll create an
+                        activity later on. I'll share it to the group :D
+                    </ion-card-content>
+
+                    <ion-row>
+                        <ion-col>
+                        <button ion-button icon-left clear small>
+                            <ion-icon name="thumbs-up"></ion-icon>
+                            <div>Like</div>
+                        </button>
+                        </ion-col>
+
+                        <ion-col>
+                        <button ion-button icon-left clear small>
+                            <ion-icon name="text"></ion-icon>
+                            <div>Comment</div>
+                        </button>
+                        </ion-col>
+                    </ion-row>
+                </ion-card>
+            </ion-list>
+        </div>
+
+        <div [ngSwitch]="groupcont">
+            <ion-list *ngSwitchCase="'events'">
+                <img src="../assets/img/capstone.jpg">
+                    <div class="group-title">
+                        Capstone
+                    </div>
+                    <div class="overlay1"></div>
+
+                <ion-card>
+                    <ion-card-content>
+                    <ion-card-title>
+                        <ion-icon name="school"></ion-icon>
+                            Study Out
+                        </ion-card-title>
+
+                    <ion-item>
+                        <p><ion-icon name="pin"></ion-icon>  Silliman University Library</p>
+                    </ion-item>
+
+                    <ion-item>
+                        <p><ion-icon name="time"></ion-icon>  2:00PM - 5:00PM</p>
+                    </ion-item>
+                    </ion-card-content>
+                </ion-card>
+
+                <ion-card>
+                    <ion-card-content>
+                    <ion-card-title>
+                        <ion-icon name="school"></ion-icon>
+                            Documentation 
+                        </ion-card-title>
+
+                    <ion-item>
+                        <p><ion-icon name="pin"></ion-icon>  Doltz Hall, Silliman University</p>
+                    </ion-item>
+
+                    <ion-item>
+                        <p><ion-icon name="time"></ion-icon>  9:00AM - 11:00AM</p>
+                    </ion-item>
+                    </ion-card-content>
+                </ion-card>
+            </ion-list>
+        </div>
+
+        <div [ngSwitch]="groupcont">
+            <ion-list *ngSwitchCase="'members'">
+                 <img src="../assets/img/capstone.jpg">
+                    <div class="group-title">
+                        Capstone
+                    </div>
+                    <div class="overlay1"></div>
+
+                <ion-card>
+                    <ion-item>
+                        <ion-avatar item-start large>
+                            <img class="item-avatar" src="../assets/img/carm.jpg">
+                        </ion-avatar>
+                        <h2>Carmelle Felicio</h2>
+                        <button ion-button item-end clear large><ion-icon name="mail"></ion-icon></button>
+                    </ion-item>
+                </ion-card>
+
+                <ion-card>
+                    <ion-item>
+                        <ion-avatar item-start large>
+                            <img class="item-avatar" src="../assets/img/henry.jpg">
+                        </ion-avatar>
+                        <h2>Henry Eguia</h2>
+                        <button ion-button item-end clear large><ion-icon name="mail"></ion-icon></button>
+                    </ion-item>
+                </ion-card>
+
+                <ion-card>
+                    <ion-item>
+                        <ion-avatar item-start large>
+                            <img class="item-avatar" src="../assets/img/kurt.jpg">
+                        </ion-avatar>
+                            <h2>Kurt Torregosa</h2>
+                            <button ion-button item-end clear large><ion-icon name="mail"></ion-icon></button>
+                    </ion-item>
+                </ion-card>
+
+                
+            </ion-list>
+        </div>
+</ion-content>

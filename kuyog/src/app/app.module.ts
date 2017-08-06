@@ -11,6 +11,7 @@ import { AddEvent } from '../pages/add-event/add-event';
 import { ChatPage } from '../pages/chat/chat';
 import { GroupPage } from '../pages/group/group';
 import { UserPage } from '../pages/user/user';
+import { GroupContent } from '../pages/group-content/group-content';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -25,7 +26,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AddEvent,
     ChatPage,
     GroupPage,
-    UserPage
+    UserPage,
+    GroupContent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AddEvent,
     ChatPage,
     GroupPage,
-    UserPage
+    UserPage,
+    GroupContent
   ],
   providers: [
     StatusBar,
