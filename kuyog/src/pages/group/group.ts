@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
-import { NavController } from 'ionic-angular'
+import { NavController, PopoverController, ModalController } from 'ionic-angular'
+import { GroupContent } from '../group-content/group-content'
 
 @Component({
     selector: 'page-group',
@@ -7,8 +8,14 @@ import { NavController } from 'ionic-angular'
 })
 export class GroupPage{
     group: string="mygroup";
-    constructor(public navCtrl: NavController){
+    public toggled = false;
 
+    constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, public modalCtrl: ModalController){
+        this.toggled = false;    
+    }
+
+    openGroupContent(){
+        this.navCtrl.push(GroupContent, {});
     }
 
 }

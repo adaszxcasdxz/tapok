@@ -11,7 +11,7 @@ import { AddKuyog } from '../pages/add-kuyog/add-kuyog';
 import { EventPage } from '../pages/event/event';
 import { GroupPage } from '../pages/group/group';
 import { UserPage } from '../pages/user/user';
-import { ChatContent } from '../pages/chat-content/chat-content';
+import { GroupContent } from '../pages/group-content/group-content';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -27,7 +27,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     EventPage,
     GroupPage,
     UserPage,
-    ChatContent
+    GroupContent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +44,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     EventPage,
     GroupPage,
     UserPage,
-    ChatContent
+    GroupContent
   ],
   providers: [
     StatusBar,
