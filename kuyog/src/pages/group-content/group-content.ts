@@ -6,6 +6,8 @@ import { NavController } from 'ionic-angular';
 })
 export class GroupContent {
 
+  groupcont: string = "posts";
+
   constructor(public navCtrl: NavController){
 
   }

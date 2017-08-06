@@ -12,6 +12,7 @@ import { EventPage } from '../pages/event/event';
 import { GroupPage } from '../pages/group/group';
 import { UserPage } from '../pages/user/user';
 import { GroupContent } from '../pages/group-content/group-content';
+import { ChatContent } from '../pages/chat-content/chat-content';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -27,7 +28,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     EventPage,
     GroupPage,
     UserPage,
-    GroupContent
+    GroupContent,
+    ChatContent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     EventPage,
     GroupPage,
     UserPage,
-    GroupContent
+    GroupContent,
+    ChatContent
   ],
   providers: [
     StatusBar,
