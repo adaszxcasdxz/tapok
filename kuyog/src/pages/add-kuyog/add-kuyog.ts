@@ -1,24 +1,38 @@
 import { Component } from '@angular/core';
 import { ViewController, AlertController } from 'ionic-angular';
+import { FireBaseService } from '../../providers/firebase-service';
+//import { FirebaseListObservable } from 'angularfire2/database';
 
 @Component({
-    templateUrl: 'add-kuyog.html'
+	templateUrl: 'add-kuyog.html'
 })
-export class AddKuyog{
-    constructor(public viewCtrl: ViewController, public alertCtrl: AlertController){
+export class AddKuyog {
 
-    }
+	eventTitle = '';
+	eventPlace = '';
+	eventDate = '';
+	eventDetails;
 
-    dismiss(){
-        this.viewCtrl.dismiss();
-    }
+	constructor(public viewCtrl: ViewController, public alertCtrl: AlertController, 
+		public firebaseService: FireBaseService) {
+	}
 
-    addKuyog(){
-        this.viewCtrl.dismiss();
-        let alert = this.alertCtrl.create({
-        title: 'Kuyog Added',
-        buttons: ['OK']
-        });
-        alert.present();
-    }
+	dismiss() {
+		this.viewCtrl.dismiss();
+	}
+
+	addKuyog() {
+		this.eventDetails={
+			"title": this.eventTitle,
+			"place": this.eventPlace,
+			"date": this.eventDate
+		}
+		this.firebaseService.addEvent(this.eventDetails);
+		this.viewCtrl.dismiss();
+		let alert = this.alertCtrl.create({
+			title: 'Kuyog Added',
+			buttons: [ 'OK' ]
+		});
+		alert.present();
+	}
 }

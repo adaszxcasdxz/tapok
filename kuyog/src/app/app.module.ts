@@ -17,6 +17,20 @@ import { ChatContent } from '../pages/chat-content/chat-content';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { HttpModule } from '@angular/http';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireModule } from 'angularfire2';
+import { FireBaseService } from './../providers/firebase-service';
+
+var kuyogFirebase = {
+    apiKey: "AIzaSyCk4mD962DyKQrecncrVpgrQt3ydpj69m8",
+    authDomain: "kuyog-a0deb.firebaseapp.com",
+    databaseURL: "https://kuyog-a0deb.firebaseio.com",
+    projectId: "kuyog-a0deb",
+    storageBucket: "kuyog-a0deb.appspot.com",
+    messagingSenderId: "1034408130626"
+  };
+
 @NgModule({
   declarations: [
     MyApp,
@@ -33,6 +47,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
+    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(kuyogFirebase),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -52,6 +69,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
+    FireBaseService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -15,10 +15,18 @@
 <ion-content>
     <ion-list>
         <div padding>
-        <ion-item>
-            <ion-label floating>Kuyog Name</ion-label>
-            <ion-input type="text"></ion-input>
-        </ion-item>
+            <ion-item>
+                <ion-label>Kuyog Name</ion-label>
+                <ion-input type="text" [(ngModel)]="eventTitle"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Place</ion-label>
+                <ion-input type="text" [(ngModel)]="eventPlace"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Date</ion-label>
+                <ion-input type="date" [(ngModel)]="eventDate"></ion-input>
+            </ion-item>
         </div>
     </ion-list>
 

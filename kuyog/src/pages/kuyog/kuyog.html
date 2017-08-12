@@ -32,22 +32,23 @@
 <ion-content>
   <div [ngSwitch]="pages">
     <ion-list *ngSwitchCase="'list'">
-      <ion-card (click)="openKuyogContent()">
+      <ion-card (click)="openKuyogContent()" *ngFor="let event of Event | async">
         <ion-card-header>
           <ion-icon name="trophy"></ion-icon>
-            FRISBEE GAME
+            {{ event.title }}
           <ion-icon class="people-icon" name="people"> 5</ion-icon>
         </ion-card-header>
 
         <ion-card-content>
           <ion-item>
-            <p><ion-icon name="pin"></ion-icon>  Ballfield, Silliman University</p><br>
-            <p><ion-icon name="time"></ion-icon>  3:00PM - 5:00PM</p>
+            <p><ion-icon name="pin"></ion-icon>  {{ event.place }}</p><br>
+            <p><ion-icon name="time"></ion-icon>  {{ event.date }}</p>
           </ion-item>
         </ion-card-content>
       </ion-card>
-
-      <ion-card>
+    </ion-list>
+  </div>
+<!--<ion-card>
         <ion-card-header>
           <ion-icon name="beer"></ion-icon>
             DRINK WITH US
@@ -60,9 +61,8 @@
             <p><ion-icon name="time"></ion-icon>  10:00PM</p>
           </ion-item>
         </ion-card-content>
-      </ion-card>
-    </ion-list>
-  </div>
+      </ion-card>-->
+    
 
   <ion-fab bottom right>
     <button ion-fab (click)="openAddKuyog()">
