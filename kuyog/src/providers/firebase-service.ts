@@ -18,8 +18,4 @@ export class FireBaseService {
     this.kuyog.list('/event/').push(name);
   }
 
-  removeItem(id){
-    this.kuyog.list('kuyog').remove(id);  
-  }
-
 }
