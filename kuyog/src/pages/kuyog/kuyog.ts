@@ -27,7 +27,7 @@ export class KuyogPage {
     this.toggled = this.toggled ? false : true;
   }
   
-  openKuyogContent(){
+  openKuyogContent(eventTitle){
     this.navCtrl.push(KuyogContent, {});
   }
 
