@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
-import { NavController, ViewController, AlertController } from 'ionic-angular';
+import { NavController, ViewController, AlertController, NavParams } from 'ionic-angular';
 
 @Component({
   templateUrl: 'kuyog-content.html'
 })
 export class KuyogContent {
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController){
+  event: any;
 
+  constructor(public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
+  public navParams: NavParams){
+    this.event = navParams.get('param1');
   }
 
   kuyog(){

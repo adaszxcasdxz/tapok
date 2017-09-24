@@ -27,8 +27,8 @@ export class KuyogPage {
     this.toggled = this.toggled ? false : true;
   }
   
-  openKuyogContent(eventTitle){
-    this.navCtrl.push(KuyogContent, {});
+  openKuyogContent(event){
+    this.navCtrl.push(KuyogContent, {param1: event});
   }
 
   showFilterPopOver(myKuyog){

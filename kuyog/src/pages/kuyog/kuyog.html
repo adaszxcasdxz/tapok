@@ -32,7 +32,7 @@
 <ion-content>
   <div [ngSwitch]="pages">
     <ion-list *ngSwitchCase="'list'">
-      <ion-card (click)="openKuyogContent()" *ngFor="let event of Event | async">
+      <ion-card (click)="openKuyogContent(event)" *ngFor="let event of Event | async">
         <ion-card-header>
           <ion-icon name="trophy"></ion-icon>
             {{ event.title }}
