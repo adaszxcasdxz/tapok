@@ -22,8 +22,8 @@ $app-direction: ltr;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
 
-
-
+//$tabs-background: #FF8D3F;
+$toolbar-active-color: #FF8D3F;
 
 // Named Color Variables
 // --------------------------------------------------
@@ -54,7 +54,13 @@ $colors: (
 // Material Design only Sass variables can go here
 
 
+$card-md-background-color: #FFFFFF ;
+$card-md-border-radius: 15px;
 
+$tabs-md-tab-color-inactive: #353C3F;
+$tabs-md-tab-color-active: #FF8D3F;
+
+$segment-button-md-border-bottom-color: #D5D6D2;
 
 // App Windows Variables
 // --------------------------------------------------
@@ -86,3 +92,5 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+

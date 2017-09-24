@@ -29,40 +29,31 @@
   </ion-toolbar>
 </ion-header>  
 
-<ion-content>
+<ion-content class="background" fullscreen>
   <div [ngSwitch]="pages">
     <ion-list *ngSwitchCase="'list'">
       <ion-card (click)="openKuyogContent(event)" *ngFor="let event of Event | async">
-        <ion-card-header>
-          <ion-icon name="trophy"></ion-icon>
-            {{ event.title }}
-          <ion-icon class="people-icon" name="people"> 5</ion-icon>
-        </ion-card-header>
-
-        <ion-card-content>
-          <ion-item>
-            <p><ion-icon name="pin"></ion-icon>  {{ event.place }}</p><br>
-            <p><ion-icon name="time"></ion-icon>  {{ event.date }}</p><br>
-          </ion-item>
-        </ion-card-content>
+        <ion-row>
+          <ion-row>
+            <ion-col>  
+                <div class="title"><h1>{{ event.title }}</h1></div>
+            </ion-col>
+            <ion-col>
+              <div class="month">MARCH</div><br>
+              <div class="day">20</div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col>
+                <ion-card-content>
+                  <p><ion-icon name="pin"></ion-icon>  {{ event.place }} • <ion-icon name="time"></ion-icon>  {{ event.date }}</p>
+                </ion-card-content> 
+              </ion-col>  
+          </ion-row>
+        </ion-row>
       </ion-card>
     </ion-list>
   </div>
-<!--<ion-card>
-        <ion-card-header>
-          <ion-icon name="beer"></ion-icon>
-            DRINK WITH US
-          <ion-icon class="people-icon" name="people"> 5</ion-icon>
-        </ion-card-header>
-        
-        <ion-card-content>
-          <ion-item>
-            <p><ion-icon name="pin"></ion-icon>  Hayahay</p><br>
-            <p><ion-icon name="time"></ion-icon>  10:00PM</p>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>-->
-    
 
   <ion-fab bottom right>
     <button ion-fab (click)="openAddKuyog()">
