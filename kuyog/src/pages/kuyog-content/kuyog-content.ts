@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, ViewController, AlertController, NavParams } from 'ionic-angular';
 
 @Component({
+  selector: 'kuyog-content',
   templateUrl: 'kuyog-content.html'
 })
 export class KuyogContent {

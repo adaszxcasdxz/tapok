@@ -1,43 +1,53 @@
 <ion-header>
     <ion-navbar>
-    <ion-title>
-        Kuyog Content
-    </ion-title>
+        <ion-title>
+            Kuyog Content
+        </ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
 
-    <ion-card>
+    <ion-card text-center>        
         <img src="assets/img/frisbee-game.jpg">
-        <div class="kuyog-title">
-                {{ event.title }}
-        </div>
-        <div class="overlay"></div>
+
+        <ion-row class="row-status">
+            <ion-col>
+                <button ion-button icon-left round clear>
+                    <ion-icon name="happy"></ion-icon>
+                    <div class="kuyogg">Kuyog 21</div>
+                </button> 
+            </ion-col>
+            <ion-col>
+                <button ion-button icon-left round clear>
+                    <ion-icon name="share"></ion-icon>
+                    <div class="sharee">Share</div>
+                </button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h1>{{ event.title }}</h1>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <div class="sched">MARCH 20 | 2:30 PM</div>
+                <p><ion-icon name="pin"></ion-icon>  {{ event.place }}</p>          
+            </ion-col>
+        </ion-row>
+        <ion-row text-justify padding>
+            <ion-col>
+                <p>Enter the description of the event here in the description section. Just be descriptive</p>
+            </ion-col>
+        </ion-row>
+        <br>
     </ion-card>
 
-    <ion-footer>
-        <div padding>
-            <button class="kuyog-button" (click)="kuyog()" ion-button block>KUYOG</button>
-        </div>
-    </ion-footer>
-
-    <ion-card>
-        <ion-item>
-            <p><ion-icon name="pin"></ion-icon>  {{ event.place }}</p>
-        </ion-item>
-
-        <ion-item>
-            <p><ion-icon name="time"></ion-icon>  {{ event.date }}</p>
-        </ion-item>
-
-        <ion-item>
-            <p><ion-icon name="share-alt"></ion-icon>  facebook</p>
-        </ion-item>
-
-        <ion-item>
-            <p>Description<br>Enter the description of the event <br>here in the description section. Just be descriptive</p>
-        </ion-item>
-    </ion-card>
+    <!--<ion-footer>
+            <div padding>
+                <button class="kuyog-button" (click)="kuyog()" ion-button block>KUYOG</button>
+            </div>
+    </ion-footer>-->
 
 </ion-content>

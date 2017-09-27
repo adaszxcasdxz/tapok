@@ -24,6 +24,7 @@ $app-direction: ltr;
 
 //$tabs-background: #FF8D3F;
 $toolbar-active-color: #FF8D3F;
+$toolbar-background: #FF8D3F;
 
 // Named Color Variables
 // --------------------------------------------------
@@ -38,7 +39,8 @@ $colors: (
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  kuyog-orange: #FF8D3F
 );
 
 
@@ -52,7 +54,6 @@ $colors: (
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-
 
 $card-md-background-color: #FFFFFF ;
 $card-md-border-radius: 5px;
