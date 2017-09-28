@@ -3,56 +3,74 @@
         <ion-title>
             Add Kuyog
         </ion-title>
-    
-    <ion-buttons end>
-        <button (click)="dismiss()" ion-button icon-only clear>
-            <ion-icon name="close"></ion-icon>
-        </button>
-    </ion-buttons>
+        
+        <ion-buttons end>
+            <button (click)="dismiss()" ion-button icon-only clear>
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
-
-<ion-content>
-    <ion-list>
-        <div>
-            <ion-grid>
-                <ion-row>
-                    <ion-col>
-                        <ion-item>
-                            <ion-label>Event</ion-label><br>
-                            <ion-input type="text" [(ngModel)]="eventTitle"></ion-input>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col>
-                        <ion-item>
-                            <ion-label>Date</ion-label><br>
-                            <ion-input type="date" [(ngModel)]="eventDate"></ion-input>
-                        </ion-item>
-                    </ion-col>
-                    <ion-col>
-                        <ion-item>
-                            <ion-label>Time</ion-label><br>
-                            <ion-datetime displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="eventTime"></ion-datetime>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-                <ion-item>
-                    <ion-label fixed>Place</ion-label><br>
-                    <ion-input type="text" [(ngModel)]="eventPlace"></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-textarea [(ngModel)]="eventDescription" placeholder="Description"></ion-textarea>
-                </ion-item>
-            </ion-grid>
-        </div>
-    </ion-list>
-
-    <ion-footer>
-        <div padding>
-            <button class="kuyog-button" (click)="addKuyog()" ion-button block>ADD KUYOG</button>
-        </div>
-    </ion-footer>
     
-</ion-content>
+    <ion-content text-center>
+        <ion-row>
+            <ion-col>
+                <div class="box"></div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <div class="name-label">Event Name</div>
+                <ion-input class="name" type="text"></ion-input>
+            </ion-col>  
+        </ion-row>
+        <ion-row align-items-start>
+            <ion-col>
+                <div class="detail-label">Date</div>
+                <ion-input class="detail" type="date"></ion-input>
+            </ion-col> 
+            <ion-col>
+                <div class="detail-label">Time</div>
+                <ion-datetime class="detail" displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="eventTime" placeholder="00:00 MM"></ion-datetime>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <div class="detail-label">Venue</div>
+                <ion-input class="detail"type="text"></ion-input>
+            </ion-col>
+        </ion-row>
+        <ion-row text-justify>
+            <ion-col>
+                <div class="detail-label">Description</div>
+                <ion-textarea class="description"></ion-textarea>
+            </ion-col>
+        </ion-row>
+   
+        <ion-row>
+            <ion-col>
+                <button class="kuyog-button" (click)="addKuyog()" ion-button block>ADD KUYOG</button>
+            </ion-col>
+        </ion-row>
+        
+<!--
+        <ion-input type="text" [(ngModel)]="eventTitle" placeholder="Event Name"></ion-input>
+
+    <ion-item>
+        <ion-label>Date</ion-label>
+        <ion-input type="date" [(ngModel)]="eventDate"></ion-input>
+    </ion-item>
+                
+    <ion-item>
+        <ion-label>Time</ion-label>
+        <ion-datetime displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="eventTime" placeholder="hh:mm A"></ion-datetime>
+    </ion-item>
+                     
+    <ion-item>
+        <ion-label>Place</ion-label>
+        <ion-input type="text" [(ngModel)]="eventPlace"></ion-input>
+    </ion-item>
+
+    <ion-textarea [(ngModel)]="eventDescription" placeholder="Description"></ion-textarea>
+-->
+    </ion-content>

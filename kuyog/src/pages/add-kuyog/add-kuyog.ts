@@ -4,6 +4,7 @@ import { FireBaseService } from '../../providers/firebase-service';
 //import { FirebaseListObservable } from 'angularfire2/database';
 
 @Component({
+	selector: 'add-kuyog',
 	templateUrl: 'add-kuyog.html'
 })
 export class AddKuyog {
