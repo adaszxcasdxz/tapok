@@ -21,29 +21,29 @@
         <ion-row>
             <ion-col>
                 <div class="name-label">Event Name</div>
-                <ion-input class="name" type="text"></ion-input>
+                <ion-input class="name" [(ngModel)]="name" type="text"></ion-input>
             </ion-col>  
         </ion-row>
         <ion-row align-items-start>
             <ion-col>
                 <div class="detail-label">Date</div>
-                <ion-input class="detail" type="date"></ion-input>
+                <ion-input class="detail" [(ngModel)]="date" type="date"></ion-input>
             </ion-col> 
             <ion-col>
                 <div class="detail-label">Time</div>
-                <ion-datetime class="detail" displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="eventTime" placeholder="00:00 MM"></ion-datetime>
+                <ion-datetime class="detail" [(ngModel)]="time" displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="eventTime" placeholder="00:00 MM"></ion-datetime>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
                 <div class="detail-label">Venue</div>
-                <ion-input class="detail"type="text"></ion-input>
+                <ion-input class="detail" [(ngModel)]="venue" type="text"></ion-input>
             </ion-col>
         </ion-row>
         <ion-row text-justify>
             <ion-col>
                 <div class="detail-label">Description</div>
-                <ion-textarea class="description"></ion-textarea>
+                <ion-textarea class="description" [(ngModel)]="description"></ion-textarea>
             </ion-col>
         </ion-row>
    

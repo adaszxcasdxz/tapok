@@ -62,13 +62,13 @@
         </ion-row>
         <ion-row>
           <ion-col class="title-col" width-50>  
-              <div class="title">{{ event.title }}</div>
+              <div class="title">{{ event.name }}</div>
           </ion-col> 
         </ion-row>
         <ion-row>
           <ion-col>
-              <div class="sched">MARCH 20 | 2:30 PM</div>
-              <p><ion-icon name="pin"></ion-icon>  {{ event.place }}</p>    
+              <div class="sched">{{ event.date }} | {{ event.time }}</div>
+              <p><ion-icon name="pin"></ion-icon>  {{ event.venue }}</p>    
           </ion-col> 
         </ion-row>
         <ion-row class="status-row">

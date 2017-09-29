@@ -9,10 +9,12 @@ import { FireBaseService } from '../../providers/firebase-service';
 })
 export class AddKuyog {
 
-	eventTitle = '';
-	eventPlace = '';
-	eventDate = '';
-	eventDetails;
+	event;
+	name = '';
+	date = '';
+	time = '';
+	venue = '';
+	description = '';
 
 	constructor(public viewCtrl: ViewController, public alertCtrl: AlertController, 
 		public firebaseService: FireBaseService) {
@@ -23,12 +25,14 @@ export class AddKuyog {
 	}
 
 	addKuyog() {
-		this.eventDetails={
-			"title": this.eventTitle,
-			"place": this.eventPlace,
-			"date": this.eventDate
+		this.event={
+			"name": this.name,
+			"date": this.date,
+			"time": this.time,
+			"venue": this.venue,
+			"description": this.description
 		}
-		this.firebaseService.addEvent(this.eventDetails);
+		this.firebaseService.addEvent(this.event);
 		this.viewCtrl.dismiss();
 		let alert = this.alertCtrl.create({
 			title: 'Kuyog Added',
