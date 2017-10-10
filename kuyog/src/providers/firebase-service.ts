@@ -18,4 +18,12 @@ export class FireBaseService {
     this.kuyog.list('/event/').push(name);
   }
 
+  getGroup(){
+    return this.kuyog.list('/group/');
+  }
+
+  addGroup(name){
+    this.kuyog.list('/group/').push(name);
+  }
+
 }
