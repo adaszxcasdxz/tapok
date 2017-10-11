@@ -1,0 +1,26 @@
+.ion-ios-kuyog{
+  content: url(assets/img/kuyog-selected.svg);
+  width: 3em;
+  height: 1em;
+  padding-top: 2px;
+  opacity: 0.9;
+}
+
+.tab-button[aria-selected=true] {
+    .ion-md-kuyog{
+      content: url(assets/img/kuyog-selected.svg);
+      width: 3em;
+      height: 1em;
+      padding-top: 2px;
+      opacity: 0.9; 
+    }
+ }
+
+.ion-md-kuyog,
+.ion-ios-kuyog-outline{
+  content: url(assets/img/kuyog-deselected.svg);
+  width: 3em;
+  height: 1em;
+  padding-top: 2px;
+  opacity: 0.9;
+}
