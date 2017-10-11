@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, PopoverController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, PopoverController, ModalController } from 'ionic-angular';
 import { KuyogContent } from '../kuyog-content/kuyog-content';
 import { Filter } from '../filter/filter';
 import { AddKuyog } from '../add-kuyog/add-kuyog';
 import { FireBaseService } from '../../providers/firebase-service';
 import { FirebaseListObservable } from 'angularfire2/database';
 
+@IonicPage()
 @Component({
   selector: 'page-kuyog',
   templateUrl: 'kuyog.html'

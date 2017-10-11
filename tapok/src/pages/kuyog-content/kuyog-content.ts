@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, ViewController, AlertController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, AlertController, NavParams } from 'ionic-angular';
 
+@IonicPage()
 @Component({
   selector: 'kuyog-content',
   templateUrl: 'kuyog-content.html'

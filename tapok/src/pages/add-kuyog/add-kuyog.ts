@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { ViewController, AlertController } from 'ionic-angular';
+import { IonicPage, ViewController, AlertController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 //import { FirebaseListObservable } from 'angularfire2/database';
 
+@IonicPage()
 @Component({
 	selector: 'add-kuyog',
 	templateUrl: 'add-kuyog.html'
