@@ -52,7 +52,7 @@ var kuyogFirebase = {
     GroupPage,
     UserPage,
     GroupContent,
-    ChatContent
+    ChatContent,
   ],
   providers: [
     StatusBar,

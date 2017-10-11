@@ -1,25 +1,26 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the TapokContentPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavController, ViewController, AlertController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-tapok-content',
-  templateUrl: 'tapok-content.html',
+  selector: 'tapok-content',
+  templateUrl: 'tapok-content.html'
 })
-export class TapokContentPage {
+export class TapokContent {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  event: any;
+
+  constructor(public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
+  public navParams: NavParams){
+    this.event = navParams.get('param1');
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TapokContentPage');
+  tapok(){
+    this.viewCtrl.dismiss();
+    let alert = this.alertCtrl.create({
+    title: 'Tapok Joined',
+    buttons: ['OK']
+    });
+    alert.present();
   }
-
 }

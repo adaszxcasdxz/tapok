@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { AddTapokPage } from './add-tapok';
+import { AddTapok } from './add-tapok';
 
 @NgModule({
   declarations: [
-    AddTapokPage,
+    AddTapok,
   ],
   imports: [
-    IonicPageModule.forChild(AddTapokPage),
+    IonicPageModule.forChild(AddTapok),
   ],
+  exports: [
+    AddTapok
+  ]
 })
-export class AddTapokPageModule {}
+export class AddTapokModule {}

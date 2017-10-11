@@ -9,5 +9,8 @@ import { TapokPage } from './tapok';
   imports: [
     IonicPageModule.forChild(TapokPage),
   ],
+  exports: [
+    TapokPage
+  ]
 })
 export class TapokPageModule {}

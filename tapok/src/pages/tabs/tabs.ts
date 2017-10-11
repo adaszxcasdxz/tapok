@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { EventPage } from '../event/event';
-import { UserPage } from '../user/user';
-import { KuyogPage } from '../kuyog/kuyog';
-import { GroupPage } from '../group/group';
 /**
  * Generated class for the TabsPage page.
  *
@@ -19,10 +15,10 @@ import { GroupPage } from '../group/group';
 })
 export class TabsPage {
 
-  tab1Root = KuyogPage;
-  tab2Root = EventPage;
-  tab3Root = GroupPage;
-  tab4Root = UserPage;
+  tab1Root = 'TapokPage';
+  tab2Root = 'EventPage';
+  tab3Root = 'GroupPage';
+  tab4Root = 'UserPage';
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }

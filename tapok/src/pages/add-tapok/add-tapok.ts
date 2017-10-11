@@ -1,25 +1,44 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the AddTapokPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, ViewController, AlertController } from 'ionic-angular';
+import { FireBaseService } from '../../providers/firebase-service';
+//import { FirebaseListObservable } from 'angularfire2/database';
 
 @IonicPage()
 @Component({
-  selector: 'page-add-tapok',
-  templateUrl: 'add-tapok.html',
+	selector: 'add-tapok',
+	templateUrl: 'add-tapok.html'
 })
-export class AddTapokPage {
+export class AddTapok {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+	event;
+	name = '';
+	date = '';
+	time = '';
+	venue = '';
+	description = '';
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AddTapokPage');
-  }
+	constructor(public viewCtrl: ViewController, public alertCtrl: AlertController, 
+		public firebaseService: FireBaseService) {
+	}
 
+	dismiss() {
+		this.viewCtrl.dismiss();
+	}
+
+	addTapok() {
+		this.event={
+			"name": this.name,
+			"date": this.date,
+			"time": this.time,
+			"venue": this.venue,
+			"description": this.description
+		}
+		this.firebaseService.addEvent(this.event);
+		this.viewCtrl.dismiss();
+		let alert = this.alertCtrl.create({
+			title: 'Tapok Added',
+			buttons: [ 'OK' ]
+		});
+		alert.present();
+	}
 }

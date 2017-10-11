@@ -1,25 +1,46 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the TapokPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavController, PopoverController, ModalController } from 'ionic-angular';
+import { Filter } from '../filter/filter';
+import { FireBaseService } from '../../providers/firebase-service';
+import { FirebaseListObservable } from 'angularfire2/database';
 
 @IonicPage()
 @Component({
   selector: 'page-tapok',
-  templateUrl: 'tapok.html',
+  templateUrl: 'tapok.html'
 })
 export class TapokPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  Event: FirebaseListObservable<any[]>;
+  pages: string = "list";
+  public toggled = false;
+
+  constructor(
+      public navCtrl: NavController, public popoverCtrl: PopoverController, 
+      public modalCtrl: ModalController, public firebaseService: FireBaseService) {
+    this.toggled = false;
+    this.Event = this.firebaseService.getEvent();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TapokPage');
+  toggleSearch(){
+    this.toggled = this.toggled ? false : true;
+  }
+  
+  openTapokContent(event){
+    this.navCtrl.push('TapokContent', {param1: event});
+  }
+
+  showFilterPopOver(myTapok){
+    let popover = this.popoverCtrl.create(Filter);
+    popover.present({
+      ev: myTapok
+    });
+  }
+
+  openAddTapok(){
+    let modal = this.modalCtrl.create('AddTapok');
+    modal.present();
   }
 
 }
+
