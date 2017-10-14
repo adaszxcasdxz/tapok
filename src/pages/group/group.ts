@@ -1,7 +1,8 @@
 import { Component } from '@angular/core'
-import { NavController, PopoverController, ModalController } from 'ionic-angular'
+import { IonicPage, NavController, PopoverController, ModalController } from 'ionic-angular'
 import { GroupContent } from '../group-content/group-content'
 
+@IonicPage()
 @Component({
     selector: 'page-group',
     templateUrl: 'group.html'

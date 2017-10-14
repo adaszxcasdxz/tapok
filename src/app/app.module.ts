@@ -4,10 +4,6 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { Filter } from '../pages/filter/filter';
-import { EventPage } from '../pages/event/event';
-import { GroupPage } from '../pages/group/group';
-import { GroupContent } from '../pages/group-content/group-content';
-import { ChatContent } from '../pages/chat-content/chat-content';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -30,10 +26,6 @@ var kuyogFirebase = {
   declarations: [
     MyApp,
     Filter,
-    EventPage,
-    GroupPage,
-    GroupContent,
-    ChatContent
   ],
   imports: [
     BrowserModule,
@@ -46,10 +38,6 @@ var kuyogFirebase = {
   entryComponents: [
     MyApp,
     Filter,
-    EventPage,
-    GroupPage,
-    GroupContent,
-    ChatContent,
   ],
   providers: [
     StatusBar,
