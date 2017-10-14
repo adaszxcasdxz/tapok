@@ -24,3 +24,7 @@ $ ionic cordova run ios
 
 Substitute ios for android if not on a Mac.
 
+Notes:
+
+Kuyog API: ""
+Google Maps API (Android): "AIzaSyAJftArUYRiv_EvA0ofqqFqK3GYWrDytD8"

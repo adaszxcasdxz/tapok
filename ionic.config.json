@@ -1,0 +1,8 @@
+{
+  "name": "kuyog",
+  "app_id": "402ee245",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
