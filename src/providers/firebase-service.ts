@@ -32,4 +32,8 @@ export class FireBaseService {
     this.tapok.list('/chat/').push(name);
   }
 
+  addTapok(key, value){
+    //this.tapok.list('/events/'+key).push(value+1);
+  }
+
 }

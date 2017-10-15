@@ -42,8 +42,8 @@ export class TapokPage {
     modal.present();
   }
 
-  tapok(){
-    
+  tapok(event){
+    this.firebaseService.addTapok(event.$key, event.tapok);
   }
 }
 
