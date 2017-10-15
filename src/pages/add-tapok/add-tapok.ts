@@ -17,6 +17,7 @@ export class AddTapok {
 	time = '';
 	venue = '';
 	description = '';
+	tapok = 0;
 
 	constructor(public viewCtrl: ViewController, public alertCtrl: AlertController, 
 		public firebaseService: FireBaseService, public params: NavParams) {
@@ -37,7 +38,8 @@ export class AddTapok {
 			"date": this.date,
 			"time": this.time,
 			"venue": this.venue,
-			"description": this.description
+			"description": this.description,
+			"tapok": this.tapok
 		}
 		this.firebaseService.addEvent(this.event);
 		this.viewCtrl.dismiss();
