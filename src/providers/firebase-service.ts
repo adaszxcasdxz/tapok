@@ -28,4 +28,8 @@ export class FireBaseService {
     this.tapok.list('/events/').push(name);
   }
 
+  addChat(name){
+    this.tapok.list('/chat/').push(name);
+  }
+
 }

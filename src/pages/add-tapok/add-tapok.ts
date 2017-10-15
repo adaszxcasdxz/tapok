@@ -19,6 +19,8 @@ export class AddTapok {
 	description = '';
 	tapok = 0;
 
+	chat: any;
+
 	constructor(public viewCtrl: ViewController, public alertCtrl: AlertController, 
 		public firebaseService: FireBaseService, public params: NavParams) {
 			this.host = firebaseService.user;
@@ -40,8 +42,14 @@ export class AddTapok {
 			"venue": this.venue,
 			"description": this.description,
 			"tapok": this.tapok
+		};
+
+		this.chat={
+			"name": this.name,
 		}
+
 		this.firebaseService.addEvent(this.event);
+		this.firebaseService.addChat(this.chat);
 		this.viewCtrl.dismiss();
 		let alert = this.alertCtrl.create({
 			title: 'Tapok Added',
