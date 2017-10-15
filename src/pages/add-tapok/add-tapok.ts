@@ -18,6 +18,7 @@ export class AddTapok {
 	venue = '';
 	description = '';
 	tapok = 0;
+	attending = "false";
 
 	chat: any;
 
@@ -41,7 +42,8 @@ export class AddTapok {
 			"time": this.time,
 			"venue": this.venue,
 			"description": this.description,
-			"tapok": this.tapok
+			"tapok": this.tapok,
+			"attending": this.attending
 		};
 
 		this.chat={

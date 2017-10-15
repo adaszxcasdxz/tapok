@@ -43,7 +43,18 @@ export class TapokPage {
   }
 
   tapok(event){
-    this.firebaseService.addTapok(event.$key, event.tapok);
+    var status = "";
+    var tapok = event.tapok;
+    if(event.attending == "false"){
+      status = "true";
+      tapok++;
+    }
+    else{
+      status = "false";
+      tapok--;
+    }
+
+    this.firebaseService.addTapok(event.$key, status, tapok);
   }
 }
 
