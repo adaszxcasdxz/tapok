@@ -6,8 +6,18 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class FireBaseService {
 
-  constructor(public tapok: AngularFireDatabase) {
+  user;
 
+  constructor(public tapok: AngularFireDatabase) {
+    this.user = "Henry Eguia";
+  }
+
+  setUser(name){
+    this.user = name;
+  }
+
+  getUser(){
+    return this.user;
   }
 
   getEvent(){

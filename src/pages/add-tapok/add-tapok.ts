@@ -11,6 +11,7 @@ import { FireBaseService } from '../../providers/firebase-service';
 export class AddTapok {
 
 	event: any;
+	host = '';
 	name = '';
 	date = '';
 	time = '';
@@ -19,6 +20,7 @@ export class AddTapok {
 
 	constructor(public viewCtrl: ViewController, public alertCtrl: AlertController, 
 		public firebaseService: FireBaseService, public params: NavParams) {
+			this.host = firebaseService.user;
 			this.event = params.get('tapok');
 			if(this.event != undefined)
 				this.editTapok();
@@ -30,6 +32,7 @@ export class AddTapok {
 
 	addTapok() {
 		this.event={
+			"host": this.host,
 			"name": this.name,
 			"date": this.date,
 			"time": this.time,
