@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-navbar>
+        <ion-buttons right>
+            <button (click)="editTapok()" ion-button clear>
+                EDIT
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-card text-center>        
+        <img src="assets/img/frisbee-game.jpg">
+
+        <ion-row class="row-status">
+            <ion-col>
+                <button ion-button icon-left round clear>
+                    <ion-icon name="happy"></ion-icon>
+                    <div class>Tapok 21</div>
+                </button> 
+            </ion-col>
+            <ion-col>
+                <button ion-button icon-left round clear>
+                    <ion-icon name="share"></ion-icon>
+                    <div class="share">Share</div>
+                </button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h1>{{ event.name }}</h1>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <div class="sched">{{ event.date }}| {{ event.time }} </div>
+                <p><ion-icon name="pin"></ion-icon>  {{ event.venue }}</p>          
+            </ion-col>
+        </ion-row>
+        <ion-row text-justify padding>
+            <ion-col>
+                <p>Description:<br>{{ event.description }}</p>
+            </ion-col>
+        </ion-row>
+    </ion-card>
+
+    <!--<ion-footer>
+            <div padding>
+                <button class="kuyog-button" (click)="kuyog()" ion-button block>KUYOG</button>
+            </div>
+    </ion-footer>-->
+
+</ion-content>

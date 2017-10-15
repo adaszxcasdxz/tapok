@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-navbar hide-on-scroll="true" no-border-bottom>  
+    <ion-title text-center>
+      <div class="nav-title">Tapok</div>
+    </ion-title>
+
+    <ion-buttons right>
+        <button (click)="toggleSearch()" ion-button icon-only round clear>
+          <ion-icon class="search-icon" name="search"></ion-icon>
+        </button>
+    </ion-buttons> 
+
+    <ion-buttons left>
+        <button (click)="showFilterPopOver()" ion-button icon-only round clear>
+          <ion-icon class="search-icon" name="eye"></ion-icon>
+        </button>
+    </ion-buttons> 
+  </ion-navbar>
+</ion-header>  
+
+<ion-content class="background" fullscreen>
+  <div [ngSwitch]="pages">
+    <ion-list *ngSwitchCase="'list'">
+      <ion-card *ngFor="let event of Event | async" text-center>
+        <div  (click)="openTapokContent(event)">
+          <ion-item>
+            <ion-avatar item-start>
+              <img class="user-avatar" src="assets/img/user.png">
+            </ion-avatar>
+            <ion-label>
+              <h2><strong>{{ event.host }}</strong></h2>
+            </ion-label>
+          </ion-item>
+          <ion-row>
+            <ion-col>
+              <div class="box"></div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="title-col" width-50>  
+                <div class="title">{{ event.name }}</div>
+            </ion-col> 
+          </ion-row>
+          <ion-row>
+            <ion-col>
+                <div class="sched">{{ event.date }} | {{ event.time }}</div>
+                <p><ion-icon name="pin"></ion-icon>  {{ event.venue }}</p>    
+            </ion-col> 
+          </ion-row>
+        </div>
+        <ion-row class="status-row">
+          <ion-col>
+            <button (click)="tapok()" ion-button icon-left round clear>
+              <ion-icon name="happy"></ion-icon>
+              <div>Tapok 21</div>
+            </button> 
+          </ion-col>
+          <ion-col>
+              <button ion-button icon-left round clear>
+                  <ion-icon name="share"></ion-icon>
+                  <div class="share">Share</div>
+              </button> 
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-list>
+  </div>
+
+  <ion-fab bottom right>
+    <button ion-fab (click)="openAddTapok()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>
+
