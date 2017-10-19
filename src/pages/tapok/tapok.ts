@@ -61,7 +61,7 @@ export class TapokPage {
     if(status == "false")
       tapok++;
     else
-      tapok--;
+      tapok--;d
 
     this.firebaseService.addTapok(event.$key, status, tapok, this.user, attendeeKey);
   }
