@@ -32,11 +32,15 @@ export class FireBaseService {
     this.tapok.list('/chat/').push(name);
   }
 
-  addTapok(key, status, value){
-    this.tapok.object('events/'+key).update({
+  addTapok(eventKey, status, value, attendee, attendeeKey){
+    this.tapok.object('events/'+eventKey).update({
       attending: status,
       tapok: value
     });
+    if(status == "false")
+      this.tapok.list('events/'+eventKey+'/attendees/').push(attendee);
+    else
+      this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).remove();
   }
 
 }

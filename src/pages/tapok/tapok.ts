@@ -14,12 +14,15 @@ export class TapokPage {
   Event: FirebaseListObservable<any[]>;
   pages: string = "list";
   public toggled = false;
+  user: any;
+  attendees: any;
 
   constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, 
       public modalCtrl: ModalController, public firebaseService: FireBaseService) {
     this.toggled = false;
     this.Event = this.firebaseService.getEvent();
+    this.user = firebaseService.user;
   }
 
   toggleSearch(){
@@ -43,18 +46,24 @@ export class TapokPage {
   }
 
   tapok(event){
-    var status = "";
+    var status = "false";
     var tapok = event.tapok;
-    if(event.attending == "false"){
-      status = "true";
-      tapok++;
-    }
-    else{
-      status = "false";
-      tapok--;
+    var attendeeKey;
+
+    for(var attendees in event.attendees){
+      if(event.attendees[attendees] == this.user){
+        status = "true";
+        attendeeKey = attendees;
+        break;
+      }
     }
 
-    this.firebaseService.addTapok(event.$key, status, tapok);
+    if(status == "false")
+      tapok++;
+    else
+      tapok--;
+
+    this.firebaseService.addTapok(event.$key, status, tapok, this.user, attendeeKey);
   }
 }
 
