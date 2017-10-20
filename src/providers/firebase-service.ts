@@ -43,4 +43,8 @@ export class FireBaseService {
       this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).remove();
   }
 
+  deleteTapok(eventKey){
+    this.tapok.object('events/'+eventKey).remove();
+  }
+
 }
