@@ -47,4 +47,14 @@ export class FireBaseService {
     this.tapok.object('events/'+eventKey).remove();
   }
 
+  searchTapok(search){
+    return this.tapok.list('/events',{
+      query: {
+        orderByChild: 'search_key',
+        startAt: search,
+        endAt: search+'\uf8ff'
+      },
+    });
+  }
+
 }

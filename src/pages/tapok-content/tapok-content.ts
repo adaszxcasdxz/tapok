@@ -28,7 +28,7 @@ export class TapokContent {
   }
 
   editTapok(){
-    let modal = this.modalCtrl.create('AddTapok', { tapok: this.event });
+    let modal = this.modalCtrl.create('AddTapok', { tapok: this.event, label: "Edit Tapok" });
     modal.present();
   }
 
@@ -44,7 +44,7 @@ export class TapokContent {
           text: 'YES',
           handler: () => {
             this.firebaseServeice.deleteTapok(this.event.$key);
-            this.navCtrl.push('TapokPage');
+            this.navCtrl.setRoot('TapokPage');
             confirm.present();
           }
         },

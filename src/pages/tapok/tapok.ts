@@ -11,7 +11,7 @@ import { FirebaseListObservable } from 'angularfire2/database';
 })
 export class TapokPage {
 
-  Event: FirebaseListObservable<any[]>;
+  Event: any;
   pages: string = "list";
   public toggled = false;
   user: any;
@@ -41,7 +41,12 @@ export class TapokPage {
   }
 
   openAddTapok(){
-    let modal = this.modalCtrl.create('AddTapok');
+    let modal = this.modalCtrl.create('AddTapok', { label: 'Add Tapok' });
+    modal.present();
+  }
+
+  openSearch(){
+    let modal = this.modalCtrl.create('SearchPage');
     modal.present();
   }
 

@@ -9,6 +9,7 @@ import { FireBaseService } from '../../providers/firebase-service';
 	templateUrl: 'add-tapok.html'
 })
 export class AddTapok {
+	label: any;
 
 	event: any;
 	host = '';
@@ -18,13 +19,14 @@ export class AddTapok {
 	venue = '';
 	description = '';
 	tapok = 0;
-	attending = "false";
+	search_key = '';
 
 	chat: any;
 
 	constructor(public viewCtrl: ViewController, public alertCtrl: AlertController, 
 		public firebaseService: FireBaseService, public params: NavParams) {
 			this.host = firebaseService.user;
+			this.label = params.get('label');
 			this.event = params.get('tapok');
 			if(this.event != undefined)
 				this.editTapok();
@@ -43,7 +45,7 @@ export class AddTapok {
 			"venue": this.venue,
 			"description": this.description,
 			"tapok": this.tapok,
-			"attending": this.attending
+			"search_key": this.name.toLowerCase()
 		};
 
 		this.chat={
