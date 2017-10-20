@@ -48,6 +48,7 @@ export class TapokContent {
             confirm.present();
           }
         },
+        
         {
           text: 'NO',
         }
