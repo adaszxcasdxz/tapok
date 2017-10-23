@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, PopoverController, ModalController } from 'ionic-angular';
 import { Filter } from '../filter/filter';
 import { FireBaseService } from '../../providers/firebase-service';
-import { FirebaseListObservable } from 'angularfire2/database';
 
 @IonicPage()
 @Component({
@@ -30,7 +29,7 @@ export class TapokPage {
   }
   
   openTapokContent(event){
-    this.navCtrl.push('TapokContent', {param1: event});
+    this.navCtrl.push('TapokContent', {param1: event.$key});
   }
 
   showFilterPopOver(myTapok){

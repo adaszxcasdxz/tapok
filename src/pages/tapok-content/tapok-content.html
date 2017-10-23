@@ -20,9 +20,9 @@
 
         <ion-row class="row-status">
             <ion-col>
-                <button ion-button icon-left round clear>
+                <button (click)="tapok(event)" ion-button icon-left round clear>
                     <ion-icon name="happy"></ion-icon>
-                    <div class>Tapok 21</div>
+                    <div class>Tapok {{ event.tapok }}</div>
                 </button> 
             </ion-col>
             <ion-col>

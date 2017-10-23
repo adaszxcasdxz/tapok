@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-//import { Http } from '@angular/http';
 import { AngularFireDatabase } from 'angularfire2/database';
 import 'rxjs/add/operator/map';
 
@@ -24,12 +23,20 @@ export class FireBaseService {
     return this.tapok.list('/events/');
   }
 
+  getSpecificEvent(key){
+    return this.tapok.object('/events/'+key);
+  }
+
   addEvent(name){
     this.tapok.list('/events/').push(name);
   }
 
-  addChat(name){
-    this.tapok.list('/chat/').push(name);
+  addChat(key, message){
+    this.tapok.list('/events/'+key+'/chat').push(message);
+  }
+
+  editEvent(eventKey, info){
+    this.tapok.object('events/'+eventKey).update(info);
   }
 
   addTapok(eventKey, status, value, attendee, attendeeKey){

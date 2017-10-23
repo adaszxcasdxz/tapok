@@ -10,21 +10,19 @@ import { FireBaseService } from '../../providers/firebase-service';
 export class TapokContent {
 
   event: any;
+  key: any;
+  user: any;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
-    public navParams: NavParams, public modalCtrl: ModalController, public firebaseServeice: FireBaseService
+    public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService
   ){
-    this.event = navParams.get('param1');
-  }
-
-  tapok(){
-    this.viewCtrl.dismiss();
-    let alert = this.alertCtrl.create({
-    title: 'Tapok Joined',
-    buttons: ['OK']
+    this.user = this.firebaseService.getUser();
+    this.key = navParams.get('param1');
+    this.event = this.firebaseService.getSpecificEvent(this.key);
+    this.event.forEach(events=> {
+      this.event = events;
     });
-    alert.present();
   }
 
   editTapok(){
@@ -43,7 +41,7 @@ export class TapokContent {
         {
           text: 'YES',
           handler: () => {
-            this.firebaseServeice.deleteTapok(this.event.$key);
+            this.firebaseService.deleteTapok(this.event.$key);
             this.navCtrl.setRoot('TapokPage');
             confirm.present();
           }
@@ -55,4 +53,26 @@ export class TapokContent {
     });
     alert.present(); 
   }
+
+  tapok(event){
+    var status = "false";
+    var tapok = event.tapok;
+    var attendeeKey;
+
+    for(var attendees in event.attendees){
+      if(event.attendees[attendees] == this.user){
+        status = "true";
+        attendeeKey = attendees;
+        break;
+      }
+    }
+
+    if(status == "false")
+      tapok++;
+    else
+      tapok--;
+
+    this.firebaseService.addTapok(event.$key, status, tapok, this.user, attendeeKey);
+  }
+  
 }

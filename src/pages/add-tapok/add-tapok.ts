@@ -10,6 +10,7 @@ import { FireBaseService } from '../../providers/firebase-service';
 })
 export class AddTapok {
 	label: any;
+	key: any;
 
 	event: any;
 	host = '';
@@ -21,6 +22,9 @@ export class AddTapok {
 	tapok = 0;
 	search_key = '';
 
+	addEndDate = false;
+	addEndTime = false;
+
 	chat: any;
 
 	constructor(public viewCtrl: ViewController, public alertCtrl: AlertController, 
@@ -29,14 +33,14 @@ export class AddTapok {
 			this.label = params.get('label');
 			this.event = params.get('tapok');
 			if(this.event != undefined)
-				this.editTapok();
+				this.editTapokInfo();
 	}
 
 	dismiss() {
 		this.viewCtrl.dismiss();
 	}
 
-	addTapok() {
+	generateTapok() {
 		this.event={
 			"host": this.host,
 			"name": this.name,
@@ -52,8 +56,10 @@ export class AddTapok {
 			"name": this.name,
 		}
 
-		this.firebaseService.addEvent(this.event);
-		this.firebaseService.addChat(this.chat);
+		if(this.label == "add")
+			this.firebaseService.addEvent(this.event);
+		else
+			this.firebaseService.editEvent(this.key, this.event);
 		this.viewCtrl.dismiss();
 		let alert = this.alertCtrl.create({
 			title: 'Tapok Added',
@@ -62,11 +68,26 @@ export class AddTapok {
 		alert.present();
 	}
 
-	editTapok(){
+	editTapokInfo(){
+		this.key = this.event.$key;
 		this.name = this.event.name;
 		this.date = this.event.date;
 		this.time = this.event.time;
 		this.venue = this.event.venue;
 		this.description = this.event.description;
+	}
+
+	endDate(){
+		if(this.addEndDate == false)
+			this.addEndDate = true;
+		else
+			this.addEndDate = false;
+	}
+
+	endTime(){
+		if(this.addEndTime == false)
+			this.addEndTime = true;
+		else
+			this.addEndTime = false;	
 	}
 }
