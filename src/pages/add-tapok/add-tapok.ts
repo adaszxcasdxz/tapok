@@ -56,7 +56,7 @@ export class AddTapok {
 			"name": this.name,
 		}
 
-		if(this.label == "add")
+		if(this.label == "Add Tapok")
 			this.firebaseService.addEvent(this.event);
 		else
 			this.firebaseService.editEvent(this.key, this.event);
