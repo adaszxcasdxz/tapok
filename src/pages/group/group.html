@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Entourage
+      Group
     </ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top>
@@ -18,10 +18,30 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="background" fullscreen>
 <div [ngSwitch]="group">
   <ion-list *ngSwitchCase="'mygroup'">
-    <ion-card (click)="openGroupContent()">
+    <ion-card *ngFor="let group of Group | async" text-center>
+      <div (click)="openGroupContent(group)">
+        <ion-item>
+          <ion-row>
+            <ion-col>
+              <div class="box"></div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="title-col" width-50>  
+                <div class="title">{{ group.gname }}</div>
+            </ion-col> 
+          </ion-row>
+          <ion-row>
+            <ion-col>
+                <div class="sched">{{ group.gdescr }}</div>  
+            </ion-col> 
+          </ion-row>
+        </ion-item>
+      </div>
+    <!---<ion-card (click)="openGroupContent()">
       <ion-card-header>
         <ion-icon name="school"></ion-icon> CAPSTONE
       </ion-card-header>
@@ -81,7 +101,7 @@
             <div>34 members</div>
           </button>
         </ion-col>
-      </ion-row>
+      </ion-row>-->
       
     </ion-card>
   </ion-list>
@@ -100,7 +120,7 @@
      <ion-row>
     <ion-col>
       <button ion-button block>
-        JOIN ENTOURAGE
+        JOIN GROUP
       </button>
     </ion-col>
   </ion-row>
@@ -123,7 +143,7 @@
      <ion-row>
     <ion-col>
       <button ion-button block>
-        JOIN ENTOURAGE
+        JOIN GROUP
       </button>
     </ion-col>
   </ion-row>
@@ -133,7 +153,9 @@
 </div>
 
  <ion-fab bottom right>
-    <button ion-fab><ion-icon name="add"></ion-icon></button>
+    <button ion-fab (click)="openAddGroup()">
+      <ion-icon name="add"></ion-icon>
+    </button>
   </ion-fab>
 
 </ion-content>

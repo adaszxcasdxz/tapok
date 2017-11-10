@@ -9,7 +9,7 @@ export class FireBaseService {
   user;
 
   constructor(public tapok: AngularFireDatabase) {
-    this.user = "Henry Eguia";
+    this.user = "Kurt Bryan Torregosa";
   }
 
   setUser(name){
@@ -26,6 +26,14 @@ export class FireBaseService {
 
   addEvent(name){
     this.tapok.list('/events/').push(name);
+  }
+
+  getGroup(){
+    return this.tapok.list('/groups/');
+  }
+
+  addGroup(name){
+    this.tapok.list('/groups/').push(name);
   }
 
 }
