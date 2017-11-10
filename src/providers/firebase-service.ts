@@ -64,4 +64,12 @@ export class FireBaseService {
     });
   }
 
+  getGroup(){
+    return this.tapok.list('/groups/');
+  }
+
+  addGroup(name){
+    this.tapok.list('/groups/').push(name);
+  }
+  
 }
