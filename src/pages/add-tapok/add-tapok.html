@@ -33,7 +33,7 @@
             <ion-col (click)="endDate()">
                 <div class="extra-label" *ngIf="addEndDate == false">Add End Date</div>
                 <div *ngIf="addEndDate == true">
-                    <div class="detail-label"><span>x</span> End Date</div>
+                    <div class="detail-label">End Date | Cancel</div>
                     <ion-input class="detail" [(ngModel)]="endDate" type="date"></ion-input>
                 </div>
             </ion-col>
@@ -46,7 +46,7 @@
             <ion-col (click)="endTime()">
                 <div class="extra-label" *ngIf="addEndTime == false">Add End Time</div>
                 <div *ngIf="addEndTime == true">
-                    <div class="detail-label"><span>x</span> End Time</div>
+                    <div class="detail-label">End Time | Cancel</div>
                     <ion-col>
                         <ion-datetime class="detail-datetime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
                     </ion-col>
@@ -70,7 +70,7 @@
                 <button class="tapok-button" (click)="generateTapok()" ion-button large>{{ label }}</button>
             </ion-col>
             <ion-col>
-                <button class="tapok-button" (click)="generateTapok()" ion-button outline large>Cancel</button>
+                <button class="tapok-button" (click)="cancel()" ion-button outline large>Cancel</button>
             </ion-col>
         </ion-row>
     </div>

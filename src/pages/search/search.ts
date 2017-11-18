@@ -31,7 +31,7 @@ export class SearchPage {
   }
 
   openTapokContent(event){
-    this.navCtrl.push('TapokContent', {param1: event});
+    this.navCtrl.push('TapokContent', {param1: event.$key});
   }
 
   dismiss(){

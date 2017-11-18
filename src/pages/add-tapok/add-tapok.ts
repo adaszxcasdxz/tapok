@@ -60,12 +60,16 @@ export class AddTapok {
 			this.firebaseService.addEvent(this.event);
 		else
 			this.firebaseService.editEvent(this.key, this.event);
-		this.viewCtrl.dismiss();
+		this.cancel();
 		let alert = this.alertCtrl.create({
 			title: 'Tapok Added',
 			buttons: [ 'OK' ]
 		});
 		alert.present();
+	}
+
+	cancel(){
+		this.viewCtrl.dismiss();
 	}
 
 	editTapokInfo(){
