@@ -21,6 +21,7 @@ export class TapokPage {
       public modalCtrl: ModalController, public firebaseService: FireBaseService) {
     this.toggled = false;
     this.Event = this.firebaseService.getEvent();
+    console.log(Event);
     this.user = firebaseService.user;
   }
 

@@ -21,6 +21,7 @@ export class AddTapok {
 	description = '';
 	tapok = 0;
 	search_key = '';
+	timestamp = '';
 
 	addEndDate = false;
 	addEndTime = false;
@@ -40,7 +41,7 @@ export class AddTapok {
 		this.viewCtrl.dismiss();
 	}
 
-	generateTapok() {
+	addTapok() {
 		this.event={
 			"host": this.host,
 			"name": this.name,
@@ -49,23 +50,43 @@ export class AddTapok {
 			"venue": this.venue,
 			"description": this.description,
 			"tapok": this.tapok,
-			"search_key": this.name.toLowerCase()
+			"search_key": this.name.toLowerCase(),
+			"timestamp": 0-Date.now()
 		};
-
-		this.chat={
-			"name": this.name,
-		}
 
 		if(this.label == "Add Tapok")
 			this.firebaseService.addEvent(this.event);
-		else
-			this.firebaseService.editEvent(this.key, this.event);
-		this.viewCtrl.dismiss();
+		this.cancel();
 		let alert = this.alertCtrl.create({
 			title: 'Tapok Added',
 			buttons: [ 'OK' ]
 		});
 		alert.present();
+	}
+
+	editTapok(){
+		this.event={
+			"host": this.host,
+			"name": this.name,
+			"date": this.date,
+			"time": this.time,
+			"venue": this.venue,
+			"description": this.description,
+			"search_key": this.name.toLowerCase(),
+			"timestamp": 0-Date.now()
+		};
+
+		this.firebaseService.editEvent(this.key, this.event);
+		this.cancel();
+		let alert = this.alertCtrl.create({
+			title: 'Tapok Edited',
+			buttons: [ 'OK' ]
+		});
+		alert.present();
+	}
+
+	cancel(){
+		this.viewCtrl.dismiss();
 	}
 
 	editTapokInfo(){
