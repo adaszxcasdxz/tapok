@@ -18,7 +18,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="background" fullscreen>
+<ion-content class="background">
 <div [ngSwitch]="group">
   <ion-list *ngSwitchCase="'mygroup'">
     <ion-card *ngFor="let group of Group | async" text-center>
@@ -29,14 +29,14 @@
               <div class="box"></div>
             </ion-col>
           </ion-row>
-          <ion-row>
+          <ion-row text-center>
             <ion-col class="title-col" width-50>  
                 <div class="title">{{ group.gname }}</div>
             </ion-col> 
           </ion-row>
-          <ion-row>
+          <ion-row text-center>
             <ion-col>
-                <div class="sched">{{ group.gdescr }}</div>  
+                <div class="descr-col">{{ group.gdescr }}</div>  
             </ion-col> 
           </ion-row>
         </ion-item>
