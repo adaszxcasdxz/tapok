@@ -66,8 +66,11 @@
             </ion-col>
         </ion-row>
         <ion-row class="buttons" text-center>
-            <ion-col>
-                <button class="tapok-button" (click)="generateTapok()" ion-button large>{{ label }}</button>
+            <ion-col *ngIf="label == 'Add Tapok'">
+                <button class="tapok-button" (click)="addTapok()" ion-button large>{{ label }}</button>
+            </ion-col>
+            <ion-col *ngIf="label == 'Edit Tapok'">
+                <button class="tapok-button" (click)="editTapok()" ion-button large>{{ label }}</button>
             </ion-col>
             <ion-col>
                 <button class="tapok-button" (click)="cancel()" ion-button outline large>Cancel</button>

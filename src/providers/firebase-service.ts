@@ -20,7 +20,11 @@ export class FireBaseService {
   }
 
   getEvent(){
-    return this.tapok.list('/events/');
+    return this.tapok.list('/events/',{
+      query:{
+        orderByChild: 'timestamp'
+      }
+    });
   }
 
   getSpecificEvent(key){
