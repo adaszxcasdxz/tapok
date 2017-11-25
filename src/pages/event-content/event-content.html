@@ -1,0 +1,49 @@
+<ion-header>
+    <ion-navbar>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-card text-center>        
+        <img src="assets/img/frisbee-game.jpg">
+
+        <ion-row class="row-status">
+            <ion-col>
+                <button (click)="tapok(event)" ion-button icon-left round clear>
+                    <ion-icon name="happy"></ion-icon>
+                    <div class>Tapok {{ event.tapok }}</div>
+                </button> 
+            </ion-col>
+            <ion-col>
+                <button ion-button icon-left round clear>
+                    <ion-icon name="share"></ion-icon>
+                    <div class="share">Share</div>
+                </button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h1>{{ event.name }}</h1>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <div class="sched">{{ event.date }}| {{ event.time }} </div>
+                <p><ion-icon name="pin"></ion-icon>  {{ event.venue }}</p>          
+            </ion-col>
+        </ion-row>
+        <ion-row text-justify padding>
+            <ion-col>
+                <p>Description:<br>{{ event.description }}</p>
+            </ion-col>
+        </ion-row>
+    </ion-card>
+
+    <ion-fab bottom right>
+        <button ion-fab (click)="openChatContent()">
+          <ion-icon name="chatboxes"></ion-icon>
+        </button>
+      </ion-fab>
+
+</ion-content>

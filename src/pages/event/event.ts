@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
-import { ChatContent } from '../chat-content/chat-content';
+//import { ChatContent } from '../chat-content/chat-content';
 import { FireBaseService } from '../../providers/firebase-service';
 
 @IonicPage()
@@ -38,5 +38,9 @@ export class EventPage {
       tapok--;
 
     this.firebaseService.addTapok(event.$key, status, tapok, this.user, attendeeKey);
+  }
+
+  openEventContent(event){
+    this.navCtrl.push('EventContent', {param1: event.$key});
   }
 }

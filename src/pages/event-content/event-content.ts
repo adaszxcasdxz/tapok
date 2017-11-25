@@ -1,0 +1,50 @@
+import { Component } from '@angular/core';
+import { IonicPage, NavController, ViewController, AlertController, NavParams, ModalController } from 'ionic-angular';
+import { FireBaseService } from '../../providers/firebase-service';
+import { ChatContent } from '../chat-content/chat-content';
+
+@IonicPage()
+@Component({
+  selector: 'event-content',
+  templateUrl: 'event-content.html'
+})
+export class EventContent {
+
+  event: any;
+  key: any;
+  user: any;
+
+  constructor(
+    public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
+    public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService
+  ){
+    this.user = this.firebaseService.getUser();
+    this.key = navParams.get('param1');
+    this.event = this.firebaseService.getSpecificEvent(this.key);
+    this.event.forEach(events=> {
+      this.event = events;
+    });
+  }
+
+  tapok(event){
+    var status = "false";
+    var tapok = event.tapok;
+    var attendeeKey;
+
+    for(var attendees in event.attendees){
+      if(event.attendees[attendees] == this.user){
+        status = "true";
+        attendeeKey = attendees;
+        break;
+      }
+    }
+
+    if(status == "false")
+      tapok++;
+    else
+      tapok--;
+
+    this.firebaseService.addTapok(event.$key, status, tapok, this.user, attendeeKey);
+  }
+  
+}
