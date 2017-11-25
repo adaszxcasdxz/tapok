@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
-import { ChatContent } from '../chat-content/chat-content';
 import { FireBaseService } from '../../providers/firebase-service';
 
 @IonicPage()
@@ -21,7 +20,7 @@ export class EventPage {
     this.user = firebaseService.user;
   }
 
-  tapok(event){
+  tapok(event, attendKey){
     var status = "false";
     var tapok = event.tapok;
     var attendeeKey;
@@ -44,6 +43,6 @@ export class EventPage {
       "key": event.$key
     }
 
-    this.firebaseService.addTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey);
+    this.firebaseService.userTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey, attendKey);
   }
 }

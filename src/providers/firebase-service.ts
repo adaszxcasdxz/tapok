@@ -62,6 +62,21 @@ export class FireBaseService {
     }
   }
 
+  userTapok(atevent, eventKey, status, value, attendee, attendeeKey, attendKey){
+    this.tapok.object('events/'+eventKey).update({
+      attending: status,
+      tapok: value
+    });
+    if(status == "false"){
+      this.tapok.list('events/'+eventKey+'/attendees/').push(attendee);
+      this.tapok.list('/users/'+this.user).push(event);
+    }
+    else{
+      this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).remove();
+      this.tapok.object('/users/'+this.user+'/'+attendKey).remove();
+    }
+  }
+
   deleteTapok(eventKey){
     this.tapok.object('events/'+eventKey).remove();
   }
