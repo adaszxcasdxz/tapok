@@ -25,16 +25,18 @@
                 <ion-input class="name" [(ngModel)]="name" type="text"></ion-input>
             </ion-col>  
         </ion-row>
-        <ion-row align-items-start>
+        <ion-row>
             <ion-col>
                 <div class="detail-label">Start Date</div>
-                <ion-input class="detail" [(ngModel)]="date" type="date"></ion-input>
+                <ion-datetime [(ngModel)]="date" class="detail" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
             </ion-col> 
             <ion-col (click)="endDate()">
                 <div class="extra-label" *ngIf="addEndDate == false">Add End Date</div>
                 <div *ngIf="addEndDate == true">
                     <div class="detail-label">End Date | Cancel</div>
-                    <ion-input class="detail" [(ngModel)]="endDate" type="date"></ion-input>
+                    <ion-col>
+                        <ion-datetime [(ngModel)]="date" class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
+                    </ion-col>
                 </div>
             </ion-col>
         </ion-row>
