@@ -11,11 +11,13 @@ import { FireBaseService } from '../../providers/firebase-service';
 export class EventPage {
 
   Event: any;
+  Attending: any;
   user: any;
   attendees: any;
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService) {
     this.Event = this.firebaseService.getEvent();
+    this.Attending = this.firebaseService.getUserEvents();
     this.user = firebaseService.user;
   }
 
@@ -23,6 +25,7 @@ export class EventPage {
     var status = "false";
     var tapok = event.tapok;
     var attendeeKey;
+    var eventKey;
 
     for(var attendees in event.attendees){
       if(event.attendees[attendees] == this.user){
@@ -37,6 +40,10 @@ export class EventPage {
     else
       tapok--;
 
-    this.firebaseService.addTapok(event.$key, status, tapok, this.user, attendeeKey);
+    eventKey = {
+      "key": event.$key
+    }
+
+    this.firebaseService.addTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey);
   }
 }

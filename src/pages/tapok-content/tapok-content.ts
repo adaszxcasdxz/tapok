@@ -58,6 +58,7 @@ export class TapokContent {
     var status = "false";
     var tapok = event.tapok;
     var attendeeKey;
+    var eventKey;
 
     for(var attendees in event.attendees){
       if(event.attendees[attendees] == this.user){
@@ -72,7 +73,11 @@ export class TapokContent {
     else
       tapok--;
 
-    this.firebaseService.addTapok(event.$key, status, tapok, this.user, attendeeKey);
+    eventKey = {
+      "key": event.$key
+    }
+
+    this.firebaseService.addTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey);
   }
   
 }

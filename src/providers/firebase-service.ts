@@ -8,7 +8,7 @@ export class FireBaseService {
   user;
 
   constructor(public tapok: AngularFireDatabase) {
-    this.user = "Kurt Torregosa";
+    this.user = "Henry Eguia";
   }
 
   setUser(name){
@@ -35,6 +35,10 @@ export class FireBaseService {
     this.tapok.list('/events/').push(name);
   }
 
+  getUserEvents(){
+    return this.tapok.list('/users/'+this.user);
+  }
+
   addChat(key, message){
     this.tapok.list('/events/'+key+'/chat').push(message);
   }
@@ -43,15 +47,19 @@ export class FireBaseService {
     this.tapok.object('events/'+eventKey).update(info);
   }
 
-  addTapok(eventKey, status, value, attendee, attendeeKey){
+  addTapok(event, eventKey, status, value, attendee, attendeeKey){
     this.tapok.object('events/'+eventKey).update({
       attending: status,
       tapok: value
     });
-    if(status == "false")
+    if(status == "false"){
       this.tapok.list('events/'+eventKey+'/attendees/').push(attendee);
-    else
+      this.tapok.list('/users/'+this.user).push(event);
+    }
+    else{
       this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).remove();
+      this.tapok.object('/users/'+this.user).remove();
+    }
   }
 
   deleteTapok(eventKey){
