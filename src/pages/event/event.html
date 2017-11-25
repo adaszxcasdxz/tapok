@@ -9,48 +9,50 @@
 <ion-content class="background" fullscreen>
   <div [ngSwitch]="pages">
     <ion-list>
-      <ion-card *ngFor="let event of Event | async" text-center>
-        <div  (click)="openEventContent(event)">
-          <ion-item>
-            <ion-avatar item-start>
-              <img class="user-avatar" src="assets/img/user.png">
-            </ion-avatar>
-            <ion-label>
-              <h2><strong>{{ event.host }}</strong></h2>
-            </ion-label>
-          </ion-item>
-          <ion-row>
-            <ion-col>
-              <div class="box"></div>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col class="title-col" width-50>  
-                <div class="title">{{ event.name }}</div>
-            </ion-col> 
-          </ion-row>
-          <ion-row>
-            <ion-col>
-                <div class="sched">{{ event.date }} | {{ event.time }}</div>
-                <p><ion-icon name="pin"></ion-icon>  {{ event.venue }}</p>    
-            </ion-col> 
-          </ion-row>
+      <div *ngFor="let event of Event | async" text-center>
+        <div *ngFor="let attend of Attending | async">
+          <ion-card  *ngIf="attend.key == event.$key" (click)="openTapokContent(event)">
+            <ion-item>
+              <ion-avatar item-start>
+                <img class="user-avatar" src="assets/img/user.png">
+              </ion-avatar>
+              <ion-label>
+                <h2><strong>{{ event.host }}</strong></h2>
+              </ion-label>
+            </ion-item>
+            <ion-row>
+              <ion-col>
+                <div class="box"></div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="title-col" width-50>  
+                  <div class="title">{{ event.name }}</div>
+              </ion-col> 
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                  <div class="sched">{{ event.date }} | {{ event.time }}</div>
+                  <p><ion-icon name="pin"></ion-icon>  {{ event.venue }}</p>    
+              </ion-col> 
+            </ion-row>
+            <ion-row class="status-row">
+              <ion-col>
+                <button (click)="tapok(event, attend.$key)" ion-button icon-left round clear>
+                  <ion-icon name="happy"></ion-icon>
+                  <div>Tapok {{ event.tapok }}</div>
+                </button> 
+              </ion-col>
+              <ion-col>
+                  <button ion-button icon-left round clear>
+                      <ion-icon name="share"></ion-icon>
+                      <div class="share">Share</div>
+                  </button> 
+              </ion-col>
+            </ion-row>
+          </ion-card>
         </div>
-        <ion-row class="status-row">
-          <ion-col>
-            <button (click)="tapok(event)" ion-button icon-left round clear>
-              <ion-icon name="happy"></ion-icon>
-              <div>Tapok {{ event.tapok }}</div>
-            </button> 
-          </ion-col>
-          <ion-col>
-              <button ion-button icon-left round clear>
-                  <ion-icon name="share"></ion-icon>
-                  <div class="share">Share</div>
-              </button> 
-          </ion-col>
-        </ion-row>
-      </ion-card>
+      </div>
     </ion-list>
   </div>
 </ion-content>
