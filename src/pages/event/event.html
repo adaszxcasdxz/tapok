@@ -1,73 +1,57 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Events
+  <ion-navbar hide-on-scroll="true" no-border-bottom>  
+    <ion-title text-center>
+      <div class="nav-title">My Events</div>
     </ion-title>
   </ion-navbar>
-</ion-header>
+</ion-header>  
 
-<ion-content padding>
-  <ion-card (click)="openChatContent()">
-  <ion-item>
-    <ion-avatar item-start>
-      <ion-icon name="trophy"></ion-icon>
-    </ion-avatar>
-    <h2><b>FRISBEE GAME</b></h2>
-    <p></p>
-  </ion-item>
-  <ion-card-content>
-    <p>Henry: When are we going to meet, Kurt?</p>
-    <p>Carmelle: See you!</p>
-  </ion-card-content>
-
-  <ion-row>
-    <ion-col>
-      <button ion-button icon-left clear small>
-        <ion-icon name="people"></ion-icon>
-        <div>12</div>
-      </button>
-    </ion-col>
-    <ion-col></ion-col>
-    <ion-col></ion-col>
-    <ion-col></ion-col>
-    <ion-col></ion-col>
-    <ion-col>
-      <button ion-button icon-right clear small>
-        <ion-icon name="star" class="icon-star"></ion-icon>
-      </button>
-    </ion-col>
-  </ion-row>
-</ion-card>
-
-<ion-card>
-  <ion-item>
-    <ion-avatar item-start>
-      <ion-icon name="beer"></ion-icon>
-    </ion-avatar>
-    <h2><b>DRINK WITH US</b></h2>
-    <p></p>
-  </ion-item>
-  <ion-card-content>
-    <p>Kurt: I WANT SMIRNOFF!!!</p>
-    <p>Henry: Let's drink our pain away</p>
-  </ion-card-content>
-
-  <ion-row>
-    <ion-col>
-      <button ion-button icon-left clear small>
-        <ion-icon name="people"></ion-icon>
-        <div>5</div>
-      </button>
-    </ion-col>
-    <ion-col></ion-col>
-    <ion-col></ion-col>
-    <ion-col></ion-col>
-    <ion-col></ion-col>
-    <ion-col>
-      <button ion-button icon-right clear small>
-        <ion-icon name="egg" class="icon-egg"></ion-icon>
-      </button>
-    </ion-col>
-  </ion-row>
-</ion-card>
+<ion-content class="background" fullscreen>
+  <div [ngSwitch]="pages">
+    <ion-list>
+      <ion-card *ngFor="let event of Event | async" text-center>
+        <div  (click)="openTapokContent(event)">
+          <ion-item>
+            <ion-avatar item-start>
+              <img class="user-avatar" src="assets/img/user.png">
+            </ion-avatar>
+            <ion-label>
+              <h2><strong>{{ event.host }}</strong></h2>
+            </ion-label>
+          </ion-item>
+          <ion-row>
+            <ion-col>
+              <div class="box"></div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="title-col" width-50>  
+                <div class="title">{{ event.name }}</div>
+            </ion-col> 
+          </ion-row>
+          <ion-row>
+            <ion-col>
+                <div class="sched">{{ event.date }} | {{ event.time }}</div>
+                <p><ion-icon name="pin"></ion-icon>  {{ event.venue }}</p>    
+            </ion-col> 
+          </ion-row>
+        </div>
+        <ion-row class="status-row">
+          <ion-col>
+            <button (click)="tapok(event)" ion-button icon-left round clear>
+              <ion-icon name="happy"></ion-icon>
+              <div>Tapok {{ event.tapok }}</div>
+            </button> 
+          </ion-col>
+          <ion-col>
+              <button ion-button icon-left round clear>
+                  <ion-icon name="share"></ion-icon>
+                  <div class="share">Share</div>
+              </button> 
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-list>
+  </div>
 </ion-content>
+

@@ -16,12 +16,18 @@ import { FireBaseService } from '../../providers/firebase-service';
 
 export class GroupAddPage {
 
+  key: any;
   group: any;
+  
+  host = '';
   gname = '';
   gdescr = '';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
      public firebaseService:FireBaseService, public viewCtrl: ViewController) {
+        this.host = firebaseService.user;
+        if(this.group != undefined)
+				  this.editGroupInfo();
   }
 
   dismiss() {
@@ -41,6 +47,31 @@ export class GroupAddPage {
     });
     alert.present();
   }
+
+  editGroup(){
+		this.group={
+			"name": this.gname,
+			"description": this.gdescr
+		};
+
+		this.firebaseService.editEvent(this.key, this.group);
+		this.cancel();
+		let alert = this.alertCtrl.create({
+			title: 'Changes Saved.',
+			buttons: [ 'OK' ]
+		});
+		alert.present();
+  }
+  
+  cancel(){
+		this.viewCtrl.dismiss();
+  }
+  
+  editGroupInfo(){
+		this.key = this.group.$key;
+		this.gname = this.group.gname;
+		this.gdescr = this.group.gdescr;
+	}
 
   ionViewDidLoad() {
     console.log('Test');

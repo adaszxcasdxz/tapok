@@ -8,7 +8,7 @@ export class FireBaseService {
   user;
 
   constructor(public tapok: AngularFireDatabase) {
-    this.user = "Henry Eguia";
+    this.user = "Kurt Torregosa";
   }
 
   setUser(name){
