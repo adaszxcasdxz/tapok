@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ViewController, AlertController, NavParams, ModalController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
-import { ChatContent } from '../chat-content/chat-content';
 
 @IonicPage()
 @Component({
@@ -50,6 +49,12 @@ export class EventContent {
     }
 
     this.firebaseService.addTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey);
+  }
+
+  openChatContent()
+  {
+    let modal = this.modalCtrl.create('ChatContent', { label: 'Chat',  event: this.event});
+    modal.present();
   }
   
 }

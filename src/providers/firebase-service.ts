@@ -98,5 +98,10 @@ export class FireBaseService {
   addGroup(name){
     this.tapok.list('/groups/').push(name);
   }
+
+  sendMessage(message, key){
+    this.tapok.list('events/'+key+'/chat/').push(message);
+
+  }
   
 }
