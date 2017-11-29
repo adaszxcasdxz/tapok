@@ -14,11 +14,16 @@ export class ChatContent {
   user: any;
   Message: any;
   chat: any;
+  eKey: any;
+  msgDisplay: any;
+  List:any;
 
   constructor(public viewCtrl: ViewController, public navCtrl: NavController, 
     public firebaseService: FireBaseService, public params: NavParams) {
     this.event = params.get('event');
     console.log(this.event);
+    this.eKey=this.event.$key;
+    this.List=this.firebaseService.getChat(this.eKey);
   }
 
   dismiss() {
@@ -29,7 +34,7 @@ export class ChatContent {
     this.chat={
       "message": this.Message,
       "sentBy": this.firebaseService.getUser(),
-      "timestamp": 0-Date.now(),
+      "timestamp": Date.now(),
     }
     this.firebaseService.sendMessage(this.chat, this.event.$key);
     this.Message="";

@@ -14,16 +14,27 @@
 </ion-header>
 
 <ion-content>
-  <ion-footer>
-    <ion-item>
-      <ion-textarea [(ngModel)]="Message" placeholder="Type message here..."></ion-textarea>
-    </ion-item>
-    <ion-item>
+  <section class="messages">
+    <div class="message">
+      <ion-card *ngFor="let List of List | async" text-center>
+        <h2>{{ List.sentBy }}</h2>
+        <p class = "sent" >{{ List.message }}</p>
+        <p class="time"><span class="entypo-clock"></span> {{ List.timestamp }} </p>
+      </ion-card>
+    </div>
+  </section>
+
+  <ion-footer keyboard-attach class="bar-stable item-input-inset">
+      <ion-item>
+        <ion-textarea class="text" [(ngModel)]="Message" placeholder="Type message here..."></ion-textarea>
+      </ion-item>
+      
+      <ion-item>
         <ion-buttons>
-            <button (click)="sendMessage()" ion-button>
+            <button (click)="sendMessage()" ion-button clear>
                 <ion-icon name="send" item-end class="icon-customize"></ion-icon>
             </button>  
         </ion-buttons>
-    </ion-item>
+      </ion-item>
   </ion-footer>
 </ion-content>

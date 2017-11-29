@@ -101,7 +101,14 @@ export class FireBaseService {
 
   sendMessage(message, key){
     this.tapok.list('events/'+key+'/chat/').push(message);
+  }
 
+  getChat(eventKey){
+    return this.tapok.list('/events/'+eventKey+'/chat/',{
+      query:{
+        orderByChild: 'timestamp'
+      }
+    });
   }
   
 }

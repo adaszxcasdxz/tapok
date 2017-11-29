@@ -17,7 +17,40 @@
     font-size: .8em;
 }
 
-.icon-customize
+.text
 {
-    color: orange;
+    position: fixed;
+}
+
+.sent {
+  font-weight: 300;
+}
+.chat {
+  width: 300px;
+  background: #fff;
+  margin: 0 auto;
+}
+
+.messages {
+  padding: 10px;
+}
+.message {
+  float: left;
+  width: 100%;
+  margin: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+.message p {
+  font-size: 0.8em;
+  width: 90%;
+  margin: 5px 0;
+}
+
+p.time {
+  color: rgba(0,0,0,0.5);
+  font-weight: 400;
+}
+h2 {
+  font-size: 1em;
+  font-weight: 400;
 }
