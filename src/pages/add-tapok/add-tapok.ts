@@ -113,22 +113,33 @@ export class AddTapok {
 			this.addEndTime = false;	
 	}
 
-	openCamera(){
+	openGallery(){
 		const options: CameraOptions = {
 			quality: 100,
 			destinationType: this.camera.DestinationType.DATA_URL,
 			encodingType: this.camera.EncodingType.JPEG,
 			mediaType: this.camera.MediaType.PICTURE,
-			sourceType: 1
+			sourceType: 0
 		  }
 		  
-		  this.camera.getPicture(options).then((imageData) => {
-		   // imageData is either a base64 encoded string or a file URI
-		   // If it's base64:
-		   //let base64Image = 'data:image/jpeg;base64,' + imageData;
-		   this.firebaseService.uploadPhoto(imageData, this.name); 
-		  }, (err) => {
-		   // Handle error
-		  });
+		  this.uploadPhoto(options);
+	}
+
+	openCamera(){
+		const options: CameraOptions = {
+			quality: 100,
+			destinationType: this.camera.DestinationType.DATA_URL,
+			encodingType: this.camera.EncodingType.JPEG,
+			mediaType: this.camera.MediaType.PICTURE
+		  }
+
+		  this.uploadPhoto(options);
+	}
+
+	uploadPhoto(options){
+		this.camera.getPicture(options).then((imageData) => {
+			this.firebaseService.uploadPhoto(imageData, this.name); 
+		}, (err) => {
+		});
 	}
 }
