@@ -15,7 +15,7 @@
 <ion-content>
     <ion-row>
         <ion-col>
-            <div class="box"></div>
+            <div (click)="openCamera()" class="box"></div>
         </ion-col>
     </ion-row>
     <div padding>
@@ -35,7 +35,7 @@
                 <div *ngIf="addEndDate == true">
                     <div class="detail-label">End Date | Cancel</div>
                     <ion-col>
-                        <ion-datetime [(ngModel)]="date" class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
+                        <ion-datetime class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
                     </ion-col>
                 </div>
             </ion-col>
