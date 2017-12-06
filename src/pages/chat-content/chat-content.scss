@@ -1,25 +1,44 @@
-.members
+.bubble-left
 {
-    background-color: orange;
-    padding:.5em;
-    color: white;
-    border-radius: 1em;
-    font-size: .8em;
+  float: left;
+  margin-left: 45px;
+  background-color: orange;
+  padding:.5em;
+  color: white;
+  border-radius: 1em;
+  font-size: .8em;
+  word-wrap: break-word;
+  text-align: left;
 }
 
-.user
+.bubble-right
 {
-    text-align: right;
-    background-color:#F0F0EF  ;
-    padding:.5em;
-    color: black;
-    border-radius: 1em;
-    font-size: .8em;
+  float: right;
+  margin-right: 45px;
+  text-align: right;
+  background-color:#F0F0EF  ;
+  padding:.5em;
+  color: black;
+  border-radius: 1em;
+  font-size: .8em;
+  word-wrap: break-word;
+}
+
+.chatFooter
+{
+  border:3px;
+  color: orange;
+}
+
+.icon-customize
+{
+  color: white;
+  border:0px;
 }
 
 .text
 {
-    position: fixed;
+    position: absolute;
 }
 
 .sent {

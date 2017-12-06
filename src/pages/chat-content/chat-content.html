@@ -13,28 +13,45 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <section class="messages">
-    <div class="message">
-      <ion-card *ngFor="let List of List | async" text-center>
-        <h2>{{ List.sentBy }}</h2>
+<ion-content #content padding class="chatPage">
+  <div class="message">
+    <ion-list no-lines>
+      <ion-item *ngFor="let List of List | async" text-center>
+          <p class="bubble-left" *ngIf="List.sentBy === user">
+            {{List.sentBy}}<br>{{List.message}}
+            <br>{{ List.timestamp | date: 'MM/dd/yyyy h:mma' }}
+          </p>
+          <p class="bubble-right" *ngIf="List.sentBy !== user">
+            {{List.sentBy}}<br>{{List.message}}
+            <br>{{ List.timestamp | date: 'MM/dd/yyyy h:mma' }}
+          </p>
+        <!--<h2>{{ List.sentBy }}</h2>
         <p class = "sent" >{{ List.message }}</p>
-        <p class="time"><span class="entypo-clock"></span> {{ List.timestamp }} </p>
-      </ion-card>
-    </div>
-  </section>
-
-  <ion-footer keyboard-attach class="bar-stable item-input-inset">
-      <ion-item>
-        <ion-textarea class="text" [(ngModel)]="Message" placeholder="Type message here..."></ion-textarea>
+        <p class>="time"><span class="entypo-clock"></span> {{ List.timestamp | date: 'MM/dd/yyyy h:mma' }} </p>-->
       </ion-item>
-      
-      <ion-item>
-        <ion-buttons>
-            <button (click)="sendMessage()" ion-button clear>
-                <ion-icon name="send" item-end class="icon-customize"></ion-icon>
-            </button>  
-        </ion-buttons>
-      </ion-item>
-  </ion-footer>
+    </ion-list>
+  </div>
 </ion-content>
+
+<!--<ion-footer keyboard-attach class="bar-stable item-input-inset">
+    <ion-item>
+      <ion-input class="text" [(ngModel)]="Message" placeholder="Type message here..."></ion-input>
+      <ion-icon (click)="sendMessage()" name="send" item-right class="icon-customize"></ion-icon>
+    </ion-item>
+</ion-footer>-->
+
+<ion-footer class="chatPageFooter">
+    <ion-toolbar>
+      <ion-item>
+        <div item-content style="width:100%;">
+          <ion-textarea placeholder="Type message here..." lineHeight="22" [(ngModel)]="Message"></ion-textarea>
+        </div>
+      </ion-item>
+  
+      <ion-buttons right clear>
+        <button (click)="sendMessage()" clear>
+          <ion-icon name="send" class="icon-customize" clear></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>

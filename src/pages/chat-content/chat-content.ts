@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, ViewController, NavParams } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
+import { Content } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -8,7 +9,7 @@ import { FireBaseService } from '../../providers/firebase-service';
   templateUrl: 'chat-content.html'
 })
 export class ChatContent {
-
+  @ViewChild (Content) content: Content;
 	event: any;
   timestamp = '';
   user: any;
@@ -19,11 +20,17 @@ export class ChatContent {
   List:any;
 
   constructor(public viewCtrl: ViewController, public navCtrl: NavController, 
-    public firebaseService: FireBaseService, public params: NavParams) {
+    public firebaseService: FireBaseService,public params: NavParams) {
     this.event = params.get('event');
     console.log(this.event);
     this.eKey=this.event.$key;
     this.List=this.firebaseService.getChat(this.eKey);
+  }
+
+  ionViewDidEnter(){
+    setTimeout(() => {
+      this.content.scrollToBottom(300);
+    });    
   }
 
   dismiss() {
