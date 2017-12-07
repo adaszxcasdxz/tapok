@@ -51,9 +51,17 @@
         <ion-row class="status-row">
           <ion-col>
             <button (click)="tapok(event)" ion-button icon-left round clear>
-              <ion-icon name="happy"></ion-icon>
-              <div>Tapok {{ event.tapok }}</div>
+                <ion-icon name="happy"></ion-icon>
+                <div>Tapok {{ event.tapok }}</div>
             </button> 
+            <!--<div *ngFor="let user of User | async">
+                <div *ngIf="user.key==event.$key; else addTapok">
+                    <button (click)="tapok(event, user.$key)" ion-button icon-left round clear>
+                        <ion-icon name="happy"></ion-icon>
+                        <div>Tapok {{ event.tapok }}</div>
+                    </button>         
+                </div>
+            </div>-->
           </ion-col>
           <ion-col>
               <button ion-button icon-left round clear>

@@ -65,7 +65,7 @@ export class FireBaseService {
     }
   }
 
-  userTapok(atevent, eventKey, status, value, attendee, attendeeKey, attendKey){
+  userTapok(event, eventKey, status, value, attendee, attendeeKey, attendKey){
     this.tapok.object('events/'+eventKey).update({
       attending: status,
       tapok: value
@@ -108,6 +108,10 @@ export class FireBaseService {
     }
     const storageRef = this.firebaseApp.storage().ref(name+'.jpg');
     storageRef.putString(image, 'base64', metadata);
+  }
+
+  getUsers(){
+    return this.tapok.list('/users/'+this.user);
   }
   
 }
