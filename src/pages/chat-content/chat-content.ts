@@ -23,6 +23,7 @@ export class ChatContent {
     public firebaseService: FireBaseService,public params: NavParams) {
     this.event = params.get('event');
     console.log(this.event);
+    this.user = this.firebaseService.getUser();
     this.eKey=this.event.$key;
     this.List=this.firebaseService.getChat(this.eKey);
   }

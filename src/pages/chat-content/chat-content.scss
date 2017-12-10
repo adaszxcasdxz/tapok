@@ -1,75 +1,41 @@
 .bubble-left
 {
-  float: left;
-  margin-left: 45px;
   background-color: orange;
   padding:.5em;
-  color: white;
   border-radius: 1em;
   font-size: .8em;
-  word-wrap: break-word;
-  text-align: left;
+  margin-left: 3.5em;
+  //float: left;
+}
+
+
+.bubble-left p
+{
+  color:white;
 }
 
 .bubble-right
 {
-  float: right;
-  margin-right: 45px;
-  text-align: right;
   background-color:#F0F0EF  ;
   padding:.5em;
   color: black;
   border-radius: 1em;
   font-size: .8em;
-  word-wrap: break-word;
+  margin-right: 3.5em;
+  //float: right;
 }
 
-.chatFooter
+.icon_u
 {
-  border:3px;
-  color: orange;
+  width:.1em;
+  height:.1em;
+  margin-top:.5em;
 }
 
-.icon-customize
-{
-  color: white;
-  border:0px;
+#sentByLeft{
+  margin-left: 4.5em;
 }
 
-.text
-{
-    position: absolute;
-}
-
-.sent {
-  font-weight: 300;
-}
-.chat {
-  width: 300px;
-  background: #fff;
-  margin: 0 auto;
-}
-
-.messages {
-  padding: 10px;
-}
-.message {
-  float: left;
-  width: 100%;
-  margin: 10px 0;
-  border-bottom: 1px solid #ccc;
-}
-.message p {
-  font-size: 0.8em;
-  width: 90%;
-  margin: 5px 0;
-}
-
-p.time {
-  color: rgba(0,0,0,0.5);
-  font-weight: 400;
-}
-h2 {
-  font-size: 1em;
-  font-weight: 400;
+#sentByRight{
+  margin-right: 4.5em;
 }
