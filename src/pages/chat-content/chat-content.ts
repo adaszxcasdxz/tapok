@@ -16,7 +16,7 @@ export class ChatContent {
   Message: any;
   chat: any;
   eKey: any;
-  msgDisplay: any;
+  //msgDisplay: any;
   List:any;
 
   constructor(public viewCtrl: ViewController, public navCtrl: NavController, 
@@ -44,6 +44,9 @@ export class ChatContent {
       "sentBy": this.firebaseService.getUser(),
       "timestamp": Date.now(),
     }
+    setTimeout(() => {
+      this.content.scrollToBottom(300);//300ms animation speed
+    });
     this.firebaseService.sendMessage(this.chat, this.event.$key);
     this.Message="";
 
