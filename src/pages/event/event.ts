@@ -45,4 +45,8 @@ export class EventPage {
 
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey, attendKey);
   }
+
+  openEventContent(event){
+    this.navCtrl.push('EventContent', {param1: event.$key});
+  }
 }

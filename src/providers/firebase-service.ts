@@ -114,4 +114,16 @@ export class FireBaseService {
     return this.tapok.list('/users/'+this.user);
   }
   
+  sendMessage(message, key){
+    this.tapok.list('events/'+key+'/chat/').push(message);
+  }
+
+  getChat(eventKey){
+    return this.tapok.list('/events/'+eventKey+'/chat/',{
+      query:{
+        orderByChild: 'timestamp'
+      }
+    });
+  }
+  
 }
