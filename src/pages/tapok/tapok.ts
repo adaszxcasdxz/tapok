@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, PopoverController, ModalController } from 'ionic-angular';
 import { Filter } from '../filter/filter';
 import { FireBaseService } from '../../providers/firebase-service';
-import { FirebaseListObservable } from 'angularfire2/database';
 
 @IonicPage()
 @Component({
@@ -11,15 +10,28 @@ import { FirebaseListObservable } from 'angularfire2/database';
 })
 export class TapokPage {
 
-  Event: FirebaseListObservable<any[]>;
+  Event: any;
   pages: string = "list";
   public toggled = false;
+  user: any;
+  attendees: any;
+  User: any;
+  userEventKeys: any;
+
 
   constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, 
       public modalCtrl: ModalController, public firebaseService: FireBaseService) {
     this.toggled = false;
     this.Event = this.firebaseService.getEvent();
+    this.User = this.firebaseService.getUsers();
+    this.user = firebaseService.user;
+
+    this.User.map(users => {
+     this.userEventKeys = users;
+    }).subscribe(data => {
+      data;
+    });
   }
 
   toggleSearch(){
@@ -27,7 +39,7 @@ export class TapokPage {
   }
   
   openTapokContent(event){
-    this.navCtrl.push('TapokContent', {param1: event});
+    this.navCtrl.push('TapokContent', {param1: event.$key});
   }
 
   showFilterPopOver(myTapok){
@@ -38,12 +50,46 @@ export class TapokPage {
   }
 
   openAddTapok(){
-    let modal = this.modalCtrl.create('AddTapok');
+    let modal = this.modalCtrl.create('AddTapok', { label: 'Add Tapok' });
     modal.present();
   }
 
-  tapok(){
-    
+  openSearch(){
+    let modal = this.modalCtrl.create('SearchPage');
+    modal.present();
+  }
+
+  tapok(event){
+    var status = "false";
+    var tapok = event.tapok;
+    var attendeeKey;
+    var eventKey;
+    var userKey;
+
+    for(var attendees in event.attendees){
+      if(event.attendees[attendees] == this.user){
+        status = "true";
+        attendeeKey = attendees;
+        break;
+      }
+    }
+
+    for(var userEventKey in this.userEventKeys){
+      if(this.userEventKeys[userEventKey].key == event.$key){
+        userKey = this.userEventKeys[userEventKey].$key;
+      }
+    }
+
+    if(status == "false")
+      tapok++;
+    else
+      tapok--;
+
+    eventKey = {
+      "key": event.$key
+    }
+
+    this.firebaseService.userTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey, userKey);
   }
 }
 

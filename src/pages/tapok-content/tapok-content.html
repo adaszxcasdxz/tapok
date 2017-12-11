@@ -1,8 +1,13 @@
 <ion-header>
     <ion-navbar>
-        <ion-buttons right>
-            <button (click)="editTapok()" ion-button clear>
-                EDIT
+        <ion-buttons right large>
+            <button class="button-header" (click)="editTapok()" ion-button icon-only round>
+                <ion-icon name="create"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons right large>
+            <button class="button-header" (click)="deleteTapok()" ion-button icon-only round>
+                <ion-icon name="trash"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -15,9 +20,9 @@
 
         <ion-row class="row-status">
             <ion-col>
-                <button ion-button icon-left round clear>
+                <button (click)="tapok(event)" ion-button icon-left round clear>
                     <ion-icon name="happy"></ion-icon>
-                    <div class>Tapok 21</div>
+                    <div class>Tapok {{ event.tapok }}</div>
                 </button> 
             </ion-col>
             <ion-col>

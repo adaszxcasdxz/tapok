@@ -7,12 +7,61 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>search</ion-title>
+    <ion-searchbar [(ngModel)]="search" [showCancelButton]="shouldShowCancel" 
+    (ionInput)="onInput()"></ion-searchbar>
+    <ion-buttons end>
+      <button (click)="dismiss()" ion-button icon-only clear>
+          cancel
+      </button>
+  </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+
+  <ion-card *ngFor="let result of Result | async" text-center>
+    <div  (click)="openTapokContent(result)">
+      <ion-item>
+        <ion-avatar item-start>
+          <img class="user-avatar" src="assets/img/user.png">
+        </ion-avatar>
+        <ion-label>
+          <h2><strong>{{ result.host }}</strong></h2>
+        </ion-label>
+      </ion-item>
+      <ion-row>
+        <ion-col>
+          <div class="box"></div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="title-col" width-50>  
+            <div class="title">{{ result.name }}</div>
+        </ion-col> 
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <div class="sched">{{ result.date }} | {{ result.time }}</div>
+            <p><ion-icon name="pin"></ion-icon>  {{ result.venue }}</p>    
+        </ion-col> 
+      </ion-row>
+    </div>
+    <ion-row class="status-row">
+      <ion-col>
+        <button (click)="tapok(result)" ion-button icon-left round clear>
+          <ion-icon name="happy"></ion-icon>
+          <div>Tapok {{ result.tapok }}</div>
+        </button> 
+      </ion-col>
+      <ion-col>
+          <button ion-button icon-left round clear>
+              <ion-icon name="share"></ion-icon>
+              <div class="share">Share</div>
+          </button> 
+      </ion-col>
+    </ion-row>
+  </ion-card>
 
 </ion-content>

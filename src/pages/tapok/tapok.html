@@ -5,7 +5,7 @@
     </ion-title>
 
     <ion-buttons right>
-        <button (click)="toggleSearch()" ion-button icon-only round clear>
+        <button (click)="openSearch()" ion-button icon-only round clear>
           <ion-icon class="search-icon" name="search"></ion-icon>
         </button>
     </ion-buttons> 
@@ -50,10 +50,18 @@
         </div>
         <ion-row class="status-row">
           <ion-col>
-            <button (click)="tapok()" ion-button icon-left round clear>
-              <ion-icon name="happy"></ion-icon>
-              <div>Tapok 21</div>
+            <button (click)="tapok(event)" ion-button icon-left round clear>
+                <ion-icon name="happy"></ion-icon>
+                <div>Tapok {{ event.tapok }}</div>
             </button> 
+            <!--<div *ngFor="let user of User | async">
+                <div *ngIf="user.key==event.$key; else addTapok">
+                    <button (click)="tapok(event, user.$key)" ion-button icon-left round clear>
+                        <ion-icon name="happy"></ion-icon>
+                        <div>Tapok {{ event.tapok }}</div>
+                    </button>         
+                </div>
+            </div>-->
           </ion-col>
           <ion-col>
               <button ion-button icon-left round clear>
