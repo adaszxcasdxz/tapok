@@ -1,5 +1,6 @@
 add-tapok{
     .name-label{
+        margin-bottom: .3em;
         color: #F8A055;
         font-size: 1.5em;
     }
@@ -7,13 +8,13 @@ add-tapok{
     .name{
         color: #353C3F;
         font-size: 1.5em;
-        background-color: #EBEBEB; 
+        border: 1px solid gray;
         border-radius: .1em;
     }
 
-    input{
+    /*input{
         text-align: center;
-    }
+    }*/
 
     .box{
         background-color: gray;
@@ -27,6 +28,7 @@ add-tapok{
     } 
 
     .detail-label{
+        margin: .3em;
         color: #F8A055;
         font-size: 1.2em;  
     }
@@ -34,15 +36,41 @@ add-tapok{
     .detail{
         color: #353C3F;
         font-size: 1.2em;
-        background-color: #EBEBEB; 
+        border: 1px solid gray;
         border-radius: .3em;
+    }
+
+    .detail:focus{
+        outline: none;
+        background-color: red;
+        border: 1px solid #F8A055;
+    }
+
+    .detail-datetime{
+        margin-top: -1em;
+        color: #353C3F;
+        font-size: 1.2em;
+        border: 1px solid gray;
+        border-radius: .3em;
+    }
+
+    .extra-label{
+        margin-top: 2em; 
+        margin-right: 2em;
+        text-align: center;
+        color: #F8A055;
+        font-size: 1.2em;  
     }
 
     .description{
         color: #353C3F;
-        font-size:1.3em;
-        background-color: #EBEBEB; 
+        font-size: 1.2em;
+        border: 1px solid gray;
         border-radius: .3em;
+    }
+
+    .buttons{
+        margin-top: 1em;
     }
 }
 

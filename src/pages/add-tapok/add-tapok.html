@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>
-            Add Tapok
+            {{label}}
         </ion-title>
         
         <ion-buttons end>
@@ -12,7 +12,7 @@
     </ion-toolbar>
 </ion-header>
     
-<ion-content text-center>
+<ion-content>
     <ion-row>
         <ion-col>
             <div class="box"></div>
@@ -21,18 +21,38 @@
     <div padding>
         <ion-row>
             <ion-col>
-                <div class="name-label">Tapok Name</div>
+                <div class="name-label"><b>Tapok Name</b></div>
                 <ion-input class="name" [(ngModel)]="name" type="text"></ion-input>
             </ion-col>  
         </ion-row>
-        <ion-row align-items-start>
+        <ion-row>
             <ion-col>
-                <div class="detail-label">Date</div>
-                <ion-input class="detail" [(ngModel)]="date" type="date"></ion-input>
+                <div class="detail-label">Start Date</div>
+                <ion-datetime [(ngModel)]="date" class="detail" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
             </ion-col> 
+            <ion-col (click)="endDate()">
+                <div class="extra-label" *ngIf="addEndDate == false">Add End Date</div>
+                <div *ngIf="addEndDate == true">
+                    <div class="detail-label">End Date | Cancel</div>
+                    <ion-col>
+                        <ion-datetime [(ngModel)]="date" class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
+                    </ion-col>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
             <ion-col>
-                <div class="detail-label">Time</div>
+                <div class="detail-label">Start Time</div>
                 <ion-datetime class="detail" [(ngModel)]="time" displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="eventTime" placeholder="00:00 MM"></ion-datetime>
+            </ion-col>
+            <ion-col (click)="endTime()">
+                <div class="extra-label" *ngIf="addEndTime == false">Add End Time</div>
+                <div *ngIf="addEndTime == true">
+                    <div class="detail-label">End Time | Cancel</div>
+                    <ion-col>
+                        <ion-datetime class="detail-datetime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
+                    </ion-col>
+                </div>
             </ion-col>
         </ion-row>
         <ion-row>
@@ -47,10 +67,15 @@
                 <ion-textarea class="description" [(ngModel)]="description"></ion-textarea>
             </ion-col>
         </ion-row>
-
-        <ion-row>
+        <ion-row class="buttons" text-center>
+            <ion-col *ngIf="label == 'Add Tapok'">
+                <button class="tapok-button" (click)="addTapok()" ion-button large>{{ label }}</button>
+            </ion-col>
+            <ion-col *ngIf="label == 'Edit Tapok'">
+                <button class="tapok-button" (click)="editTapok()" ion-button large>{{ label }}</button>
+            </ion-col>
             <ion-col>
-                <button class="tapok-button" (click)="addTapok()" ion-button>ADD TAPOK</button>
+                <button class="tapok-button" (click)="cancel()" ion-button outline large>Cancel</button>
             </ion-col>
         </ion-row>
     </div>

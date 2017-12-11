@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { GroupContent } from './group-content';
+import { EventContent } from './event-content';
 
 @NgModule({
   declarations: [
-    GroupContent,
+    EventContent,
   ],
   imports: [
-    IonicPageModule.forChild(GroupContent),
+    IonicPageModule.forChild(EventContent),
   ],
   exports: [
-    GroupContent
+    EventContent
   ]
 })
-export class GroupContentModule {}
+export class EventContentModule {}
