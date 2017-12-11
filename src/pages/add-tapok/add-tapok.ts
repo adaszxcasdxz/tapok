@@ -18,6 +18,8 @@ export class AddTapok {
 	name = '';
 	date = '';
 	time = '';
+	enddate = '';
+	endtime = '';
 	venue = '';
 	description = '';
 	tapok = 0;
@@ -48,6 +50,8 @@ export class AddTapok {
 			"name": this.name,
 			"date": this.date,
 			"time": this.time,
+			"endtime": this.endtime,
+			"enddate": this.enddate,
 			"venue": this.venue,
 			"description": this.description,
 			"tapok": this.tapok,
@@ -71,6 +75,8 @@ export class AddTapok {
 			"name": this.name,
 			"date": this.date,
 			"time": this.time,
+			"endtime": this.endtime,
+			"enddate": this.enddate,
 			"venue": this.venue,
 			"description": this.description,
 			"search_key": this.name.toLowerCase(),
@@ -95,22 +101,33 @@ export class AddTapok {
 		this.name = this.event.name;
 		this.date = this.event.date;
 		this.time = this.event.time;
+		this.enddate = this.event.enddate;
+		this.endtime = this.event.endtime;
 		this.venue = this.event.venue;
 		this.description = this.event.description;
+
+		if(this.event.enddate != "")
+			this.addEndDate = true;
+		if(this.event.endtime != "")
+			this.addEndTime = true;
 	}
 
 	endDate(){
 		if(this.addEndDate == false)
 			this.addEndDate = true;
-		else
+		else{
 			this.addEndDate = false;
+			this.enddate = '';
+		}
 	}
 
 	endTime(){
 		if(this.addEndTime == false)
 			this.addEndTime = true;
-		else
+		else{
 			this.addEndTime = false;	
+			this.endtime = '';
+		}
 	}
 
 	openGallery(){
