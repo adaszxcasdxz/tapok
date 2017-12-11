@@ -4,10 +4,10 @@ import { FireBaseService } from '../../providers/firebase-service';
 
 @IonicPage()
 @Component({
-  selector: 'tapok-content',
-  templateUrl: 'tapok-content.html'
+  selector: 'event-content',
+  templateUrl: 'event-content.html'
 })
-export class TapokContent {
+export class EventContent {
 
   event: any;
   key: any;
@@ -23,35 +23,6 @@ export class TapokContent {
     this.event.forEach(events=> {
       this.event = events;
     });
-  }
-
-  editTapok(){
-    let modal = this.modalCtrl.create('AddTapok', { tapok: this.event, label: "Edit Tapok" });
-    modal.present();
-  }
-
-  deleteTapok(){
-    let confirm = this.alertCtrl.create({
-      title: 'Tapok Deleted',
-      buttons: [ 'OK' ]
-    });
-    let alert = this.alertCtrl.create({
-      title: 'Delete Tapok?',
-      buttons: [ 
-        {
-          text: 'YES',
-          handler: () => {
-            this.firebaseService.deleteTapok(this.event.$key);
-            this.navCtrl.setRoot('TapokPage');
-            confirm.present();
-          }
-        },
-        {
-          text: 'NO',
-        }
-      ]
-    });
-    alert.present(); 
   }
 
   tapok(event){
@@ -78,6 +49,12 @@ export class TapokContent {
     }
 
     this.firebaseService.addTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey);
+  }
+
+  openChatContent()
+  {
+    let modal = this.modalCtrl.create('ChatContent', { label: 'Chat',  event: this.event});
+    modal.present();
   }
   
 }

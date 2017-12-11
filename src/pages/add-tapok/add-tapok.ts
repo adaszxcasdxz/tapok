@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, ViewController, AlertController, NavParams } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 //import { FirebaseListObservable } from 'angularfire2/database';
 
 @IonicPage()
@@ -29,7 +30,7 @@ export class AddTapok {
 	chat: any;
 
 	constructor(public viewCtrl: ViewController, public alertCtrl: AlertController, 
-		public firebaseService: FireBaseService, public params: NavParams) {
+		public firebaseService: FireBaseService, public params: NavParams, public camera: Camera) {
 			this.host = firebaseService.user;
 			this.label = params.get('label');
 			this.event = params.get('tapok');
@@ -110,5 +111,35 @@ export class AddTapok {
 			this.addEndTime = true;
 		else
 			this.addEndTime = false;	
+	}
+
+	openGallery(){
+		const options: CameraOptions = {
+			quality: 100,
+			destinationType: this.camera.DestinationType.DATA_URL,
+			encodingType: this.camera.EncodingType.JPEG,
+			mediaType: this.camera.MediaType.PICTURE,
+			sourceType: 0
+		  }
+		  
+		  this.uploadPhoto(options);
+	}
+
+	openCamera(){
+		const options: CameraOptions = {
+			quality: 100,
+			destinationType: this.camera.DestinationType.DATA_URL,
+			encodingType: this.camera.EncodingType.JPEG,
+			mediaType: this.camera.MediaType.PICTURE
+		  }
+
+		  this.uploadPhoto(options);
+	}
+
+	uploadPhoto(options){
+		this.camera.getPicture(options).then((imageData) => {
+			this.firebaseService.uploadPhoto(imageData, this.name); 
+		}, (err) => {
+		});
 	}
 }
