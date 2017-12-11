@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { FirebaseApp } from 'angularfire2';
 import 'rxjs/add/operator/map';
+//import * as firebase from 'firebase/app';
+import 'firebase/storage';
 
 @Injectable()
 export class FireBaseService {
 
   user;
 
-  constructor(public tapok: AngularFireDatabase) {
+  constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp) {
     this.user = "Carmelle Ann Felicio";
   }
 
@@ -62,7 +65,7 @@ export class FireBaseService {
     }
   }
 
-  userTapok(atevent, eventKey, status, value, attendee, attendeeKey, attendKey){
+  userTapok(event, eventKey, status, value, attendee, attendeeKey, attendKey){
     this.tapok.object('events/'+eventKey).update({
       attending: status,
       tapok: value
@@ -99,6 +102,18 @@ export class FireBaseService {
     this.tapok.list('/groups/').push(name);
   }
 
+  uploadPhoto(image, name){
+    var metadata = {
+      contentType: 'image/jpeg'
+    }
+    const storageRef = this.firebaseApp.storage().ref(name+'.jpg');
+    storageRef.putString(image, 'base64', metadata);
+  }
+
+  getUsers(){
+    return this.tapok.list('/users/'+this.user);
+  }
+  
   sendMessage(message, key){
     this.tapok.list('events/'+key+'/chat/').push(message);
   }
