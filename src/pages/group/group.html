@@ -6,7 +6,7 @@
       MY GROUPS
     </ion-segment-button> 
     <ion-segment-button value="recommended">
-      RECOMMENDED 
+      ALL GROUPS
     </ion-segment-button> 
   </ion-segment>
 </div>
@@ -18,7 +18,6 @@
   <ion-list *ngSwitchCase="'mygroup'">
     <ion-card *ngFor="let group of Group | async" text-center>
       <div (click)="openGroupContent(group)">
-        <ion-item>
           <ion-row>
             <ion-col>
               <div class="box"></div>
@@ -29,12 +28,12 @@
                 <div class="title">{{ group.gname }}</div>
             </ion-col> 
           </ion-row>
+          <hr>
           <ion-row text-center>
             <ion-col>
                 <div class="descr-col">{{ group.gdescr }}</div>  
             </ion-col> 
           </ion-row>
-        </ion-item>
       </div>
     </ion-card>
   </ion-list>

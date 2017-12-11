@@ -5,9 +5,9 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-<ion-toolbar>
+    <ion-toolbar>
         <ion-title>
-            Add Group
+            {{ label }}
         </ion-title>
         
         <ion-buttons end>
@@ -37,15 +37,21 @@
       <ion-row text-justify>
         <ion-col>
           <div class="detail-label">Description</div>
-          <ion-textarea class="detail" [(ngModel)]="gdescr" type="date"></ion-textarea>
+          <ion-textarea class="detail" [(ngModel)]="gdescr" type="text"></ion-textarea>
         </ion-col>
       </ion-row>
 
-      <ion-row>
-        <ion-col>
-          <button class="tapok-button" (click)="addGroup()" ion-button>ADD TAPOK</button>
-        </ion-col>
-      </ion-row>
+      <ion-row class="buttons" text-center>
+            <ion-col *ngIf="label == 'Add Group'">
+                <button class="tapok-button" (click)="addGroup()" ion-button large>{{ label }}</button>
+            </ion-col>
+            <ion-col *ngIf="label == 'Edit Group'">
+                <button class="tapok-button" (click)="editGroup()" ion-button large>{{ label }}</button>
+            </ion-col>
+            <ion-col>
+                <button class="tapok-button" (click)="cancel()" ion-button outline large>Cancel</button>
+            </ion-col>
+        </ion-row>
 
     </div>
 </ion-content>

@@ -5,6 +5,11 @@
             <ion-icon name="create"></ion-icon>
         </button>
     </ion-buttons>
+    <ion-buttons right large>
+        <button class="button-header" (click)="deleteGroup()" ion-button icon-only round>
+            <ion-icon name="trash"></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
     <ion-toolbar no-border-top>
         <div padding>
@@ -24,51 +29,56 @@
 </ion-header>
 
 <ion-content>
-        <div [ngSwitch]="groupcont">
-            <ion-list *ngSwitchCase="'posts'">
-                    <img src="assets/img/capstone.jpg">
-                     <ion-row>
-                        <ion-col>
-                            <h1>{{ group.gname }}</h1>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row text-justify padding>
-                        <ion-col>
-                            <div class="descr-col">Description:<br>{{ group.gdescr }}</div>
-                        </ion-col>
-                    </ion-row>
-
-                    <ion-item>
-                        <ion-input type="text" placeholder="Post something..."></ion-input>
-                    </ion-item>
+    <div [ngSwitch]="groupcont">
+        <ion-list *ngSwitchCase="'posts'">
+            <img src="assets/img/capstone.jpg">
+                <ion-row text-center>
+                    <ion-col>
+                        <h1>{{ group.gname }}</h1>
+                        <div class="descr-col">{{ group.gdescr }}</div>
+                    </ion-col>
+                    <!---<ion-col text-justify padding>
+                        
+                    </ion-col>-->
+                </ion-row>
+                <!--ion-row >-->
+                    
+                <!---</ion-row>-->
+                <br><hr><br>
               
-                <ion-card>
-                     <ion-item>
-                    <ion-avatar item-start large>
-                        <img class="item-avatar" src="assets/img/kurt.jpg">
-                    </ion-avatar>
-                    <h2 class="names">Kurt Torregosa</h2>
-                    <p>3 mins ago</p>
-
+                 <ion-card *ngFor="let posts of post | async">
+                    <ion-item>
+                        <ion-avatar item-start large>
+                            <img class="item-avatar" src="assets/img/kurt.jpg">
+                        </ion-avatar>
+                        <h2 class="names">{{ posts.poster }}</h2>
+                        <p>{{ posts.timestamp | date: 'MM/dd/yyyy h:mma' }}</p>
                     </ion-item>
-                    <ion-card-content>
-                        Hey guys! Just checking if any of y'all have found a place for
-                        the next meet-up? A place with fast wifi is preferable. Also, 
-                        somewhere where there isn't a lot of people :)
-                    </ion-card-content>
+                    
+                    <ion-buttons float-right>
+                            <button class="del-post" (click)="deletePost(posts)" ion-button clear>
+                                <ion-icon name="trash"></ion-icon>
+                            </button>
+                    </ion-buttons>
+
+                    <ion-row>
+                        <ion-card-content>
+                            {{ posts.post }}
+                        </ion-card-content>
+                    </ion-row>
 
                     <ion-row>
                         <ion-col>
-                        <button ion-button icon-left clear small>
-                            <ion-icon name="thumbs-up"></ion-icon>
-                            <div>Like</div>
-                        </button>
+                            <button ion-button icon-left clear small (click)="openAddComment(group, posts)">
+                                <ion-icon name="text"></ion-icon>
+                                <div>Comment</div>
+                            </button>
                         </ion-col>
 
                         <ion-col>
-                        <button ion-button icon-left clear small>
-                            <ion-icon name="text"></ion-icon>
-                            <div>Comment</div>
+                        <button ion-button icon-left clear small (click)="openComment(group, posts)">
+                            <ion-icon name="open"></ion-icon>
+                            <div>View Comments</div>
                         </button>
                         </ion-col>
                     </ion-row>
@@ -111,42 +121,34 @@
         <div [ngSwitch]="groupcont">
             <ion-list *ngSwitchCase="'events'">
                 <img src="assets/img/capstone.jpg">
-                    <div class="group-title">
-                        Capstone
-                    </div>
-                    <div class="overlay1"></div>
 
                 <ion-card>
                     <ion-card-content>
-                    <ion-card-title>
-                        <ion-icon name="school"></ion-icon>
-                            Study Out
+                        <ion-card-title>
+                            <ion-icon name="school"></ion-icon>
+                                Study Out
                         </ion-card-title>
-
-                    <ion-item>
-                        <p><ion-icon name="pin"></ion-icon>  Silliman University Library</p>
-                    </ion-item>
-
-                    <ion-item>
-                        <p><ion-icon name="time"></ion-icon>  2:00PM - 5:00PM</p>
-                    </ion-item>
+                        <ion-item>
+                            <p><ion-icon name="pin"></ion-icon>  Silliman University Library</p>
+                        </ion-item>
+                        <ion-item>
+                            <p><ion-icon name="time"></ion-icon>  2:00PM - 5:00PM</p>
+                        </ion-item>
                     </ion-card-content>
                 </ion-card>
 
                 <ion-card>
                     <ion-card-content>
-                    <ion-card-title>
-                        <ion-icon name="school"></ion-icon>
-                            Documentation 
-                        </ion-card-title>
-
-                    <ion-item>
-                        <p><ion-icon name="pin"></ion-icon>  Doltz Hall, Silliman University</p>
-                    </ion-item>
-
-                    <ion-item>
-                        <p><ion-icon name="time"></ion-icon>  9:00AM - 11:00AM</p>
-                    </ion-item>
+                        <ion-card-title>
+                            <ion-icon name="school"></ion-icon>
+                                Documentation 
+                            </ion-card-title>
+                            <ion-item>
+                                <p><ion-icon name="pin"></ion-icon>  Doltz Hall, Silliman University</p>
+                            </ion-item>
+                            <ion-item>
+                                <p><ion-icon name="time"></ion-icon>  9:00AM - 11:00AM</p>
+                            </ion-item>
                     </ion-card-content>
                 </ion-card>
             </ion-list>
@@ -155,10 +157,6 @@
         <div [ngSwitch]="groupcont">
             <ion-list *ngSwitchCase="'members'">
                  <img src="assets/img/capstone.jpg">
-                    <div class="group-title">
-                        Capstone
-                    </div>
-                    <div class="overlay1"></div>
 
                 <ion-card>
                     <ion-item>
@@ -189,8 +187,14 @@
                             <button ion-button item-end clear large><ion-icon name="mail"></ion-icon></button>
                     </ion-item>
                 </ion-card>
-
-                
             </ion-list>
         </div>
 </ion-content>
+
+<ion-footer>
+    <ion-fab bottom right>
+        <button ion-fab (click)="openGroupPost(group)">
+            <ion-icon name="send"></ion-icon>
+        </button>
+    </ion-fab>
+<ion-footer>

@@ -1,0 +1,31 @@
+<ion-header>
+<ion-toolbar>
+        <ion-title>
+            Add a Post
+        </ion-title>
+        
+        <ion-buttons end>
+            <button (click)="dismiss()" ion-button icon-only clear>
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+    <ion-row>
+        <ion-col>
+            <ion-textarea class="postbox" [(ngModel)]="post" type="text"></ion-textarea>
+        </ion-col>  
+    </ion-row>
+    <br>
+    <ion-row text-center>
+        <ion-col>
+            <button (click)="addPost(post)" ion-button medium>
+                SEND POST
+            </button>
+        </ion-col>
+    </ion-row>
+
+</ion-content>
