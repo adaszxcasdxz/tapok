@@ -19,8 +19,8 @@
       <ion-item *ngFor="let List of List | async" text-center>
         <ion-grid style="margin:0;">
         <ion-row *ngIf="List.sentBy === user" text-wrap>
-          <ion-col style="width:50%;"></ion-col>
-          <ion-col text-wrap style="width:50%;">
+          <ion-col></ion-col>
+          <ion-col text-wrap style="width:85%;">
               <ion-avatar float-right>
                   <img class="icon_u" src="assets/img/user.png">
                 </ion-avatar>
@@ -35,7 +35,7 @@
         </ion-row>
 
         <ion-row *ngIf="List.sentBy !== user">
-          <ion-col text-wrap style="width:50%;">
+          <ion-col text-wrap style="width:85%;">
             <ion-avatar float-left>
               <img class="icon_u" src="assets/img/user.png">
             </ion-avatar>
@@ -47,7 +47,7 @@
                 {{ List.timestamp | date:'MM/dd/yyyy h:mma' }}
               </p>
           </ion-col>
-          <ion-col style="width:50%;"></ion-col>
+          <ion-col></ion-col>
         </ion-row>
       </ion-grid>
       </ion-item>
@@ -63,9 +63,9 @@
         </div>
       </ion-item>
   
-      <ion-buttons right clear>
-        <button (click)="sendMessage()" clear ion-button large>
-          <ion-icon name="send" class="icon-customize" clear></ion-icon>
+      <ion-buttons right clear x-large>
+        <button (click)="sendMessage()" clear ion-button x-large>
+          <ion-icon name="send" class="icon-customize" clear x-large></ion-icon>
         </button>
       </ion-buttons>
     </ion-toolbar>

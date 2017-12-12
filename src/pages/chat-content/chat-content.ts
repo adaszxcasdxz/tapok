@@ -20,12 +20,15 @@ export class ChatContent {
   List:any;
 
   constructor(public viewCtrl: ViewController, public navCtrl: NavController, 
-    public firebaseService: FireBaseService,public params: NavParams) {
+    public firebaseService: FireBaseService,public params: NavParams) {    
     this.event = params.get('event');
     console.log(this.event);
     this.user = this.firebaseService.getUser();
     this.eKey=this.event.$key;
-    this.List=this.firebaseService.getChat(this.eKey);
+    this.List=this.firebaseService.getChat(this.eKey, this.content);
+    setTimeout(() => {
+      this.content.scrollToBottom(300);
+    });
   }
 
   ionViewDidEnter(){
