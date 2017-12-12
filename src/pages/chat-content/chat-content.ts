@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, ViewController, NavParams } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
+import { FirebaseApp } from 'angularfire2';
 import { Content } from 'ionic-angular';
 
 @IonicPage()
@@ -17,10 +18,11 @@ export class ChatContent {
   chat: any;
   eKey: any;
   //msgDisplay: any;
-  List:any;
+  List: any;
+  listen: any;
 
   constructor(public viewCtrl: ViewController, public navCtrl: NavController, 
-    public firebaseService: FireBaseService,public params: NavParams) {
+    public firebaseService: FireBaseService,public params: NavParams, public firebaseApp: FirebaseApp) {
     this.event = params.get('event');
     console.log(this.event);
     this.user = this.firebaseService.getUser();
@@ -32,10 +34,16 @@ export class ChatContent {
     setTimeout(() => {
       this.content.scrollToBottom(300);
     });    
+
+    this.firebaseApp.database().ref("events/"+this.eKey+"/chat").on('value', snapshot => {
+      setTimeout(() => {
+        this.content.scrollToBottom(300);
+      }); 
+    });
   }
 
   dismiss() {
-		this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss();
   }
   
   sendMessage(){
@@ -49,6 +57,5 @@ export class ChatContent {
     });
     this.firebaseService.sendMessage(this.chat, this.event.$key);
     this.Message="";
-
   }
 }

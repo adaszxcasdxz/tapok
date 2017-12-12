@@ -22,7 +22,7 @@
   <div [ngSwitch]="pages">
     <ion-list *ngSwitchCase="'list'">
       <ion-card *ngFor="let event of Event | async" text-center>
-        <div  (click)="openTapokContent(event)">
+        <div (click)="openTapokContent(event)">
           <ion-item>
             <ion-avatar item-start>
               <img class="user-avatar" src="assets/img/user.png">
@@ -49,7 +49,7 @@
           </ion-row>
         </div>
         <ion-row class="status-row">
-          <ion-col>
+          <ion-col> 
             <button (click)="tapok(event)" ion-button icon-left round clear>
                 <ion-icon name="happy"></ion-icon>
                 <div>Tapok {{ event.tapok }}</div>
