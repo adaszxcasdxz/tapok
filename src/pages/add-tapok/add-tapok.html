@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>
-            {{ label }}
+            {{label}}
         </ion-title>
         
         <ion-buttons end>
@@ -15,7 +15,19 @@
 <ion-content>
     <ion-row>
         <ion-col>
-            <div class="box"></div>
+            <div (click)="openCamera()" class="box"></div>
+        </ion-col>
+    </ion-row>
+    <ion-row text-center>
+        <ion-col>
+            <button (click)="openGallery()" ion-button icon-left round large clear>
+                <ion-icon name="image"></ion-icon>
+            </button> 
+        </ion-col>
+        <ion-col>
+            <button (click)="openCamera()" ion-button icon-left round large clear>
+                <ion-icon name="camera"></ion-icon>
+            </button> 
         </ion-col>
     </ion-row>
     <div padding>
@@ -35,7 +47,7 @@
                 <div *ngIf="addEndDate == true">
                     <div class="detail-label">End Date | Cancel</div>
                     <ion-col>
-                        <ion-datetime [(ngModel)]="date" class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
+                        <ion-datetime [(ngModel)]="enddate" class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
                     </ion-col>
                 </div>
             </ion-col>
@@ -50,7 +62,7 @@
                 <div *ngIf="addEndTime == true">
                     <div class="detail-label">End Time | Cancel</div>
                     <ion-col>
-                        <ion-datetime class="detail-datetime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
+                        <ion-datetime [(ngModel)]="endtime" class="detail-datetime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
                     </ion-col>
                 </div>
             </ion-col>

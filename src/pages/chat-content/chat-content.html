@@ -1,92 +1,72 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Frisbee Game
-    </ion-title>
-  </ion-navbar>
-
-  <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="chatTabs"> 
-      <ion-segment-button value = "Chat">
+  <ion-toolbar>
+      <ion-navbar>
+      <ion-title>
         Chat
-      </ion-segment-button>
-      <ion-segment-button value="Details">
-        Details
-      </ion-segment-button>
-    </ion-segment>
+      </ion-title>
+      <ion-buttons end>
+          <button (click)="dismiss()" ion-button icon-only clear>
+              <ion-icon name="close"></ion-icon>
+          </button>
+      </ion-buttons>
+    </ion-navbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <div [ngSwitch]="chatTabs">
-      <ion-item no-lines *ngSwitchCase="'Chat'">
-        <ion-avatar item-start>
-          <img src="assets/img/henry.jpg">
-        </ion-avatar>
-        <div class="members" item-start>Let's play guys!</div>
+<ion-content class="chatPage">
+  <div class="message">
+    <ion-list no-lines>
+      <ion-item *ngFor="let List of List | async" text-center>
+        <ion-grid style="margin:0;">
+        <ion-row *ngIf="List.sentBy === user" text-wrap>
+          <ion-col style="width:50%;"></ion-col>
+          <ion-col text-wrap style="width:50%;">
+              <ion-avatar float-right>
+                  <img class="icon_u" src="assets/img/user.png">
+                </ion-avatar>
+            <p style="text-align: right; font-size: .7em;"  id="sentByRight">{{List.sentBy}}</p>
+            <div class="bubble-right" style="text-align:right;">
+                {{List.message}}
+            </div>
+            <p style="text-align:left; color:black; font-size:.7em;">
+              {{ List.timestamp | date:'MM/dd/yyyy h:mma' }}
+            </p>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="List.sentBy !== user">
+          <ion-col text-wrap style="width:50%;">
+            <ion-avatar float-left>
+              <img class="icon_u" src="assets/img/user.png">
+            </ion-avatar>
+            <p style="text-align: left; font-size: .7em;" id="sentByLeft">{{List.sentBy}}</p>
+            <div class="bubble-left" style="color: white; text-align:left;">
+                {{List.message}}
+            </div>
+            <p style="text-align:right; color:black; font-size:.7em;">
+                {{ List.timestamp | date:'MM/dd/yyyy h:mma' }}
+              </p>
+          </ion-col>
+          <ion-col style="width:50%;"></ion-col>
+        </ion-row>
+      </ion-grid>
       </ion-item>
-
-      <ion-item no-lines *ngSwitchCase="'Chat'">
-        <div class="user" item-end>G!</div>
-        <ion-avatar item-end>
-          <img src="assets/img/carmelle.jpg">
-        </ion-avatar>
-      </ion-item>
-
-      <ion-item no-lines *ngSwitchCase="'Chat'">
-        <ion-avatar item-start>
-          <img src="assets/img/kurt.jpg">
-        </ion-avatar>
-        <div class="members" item-start>Okay!</div>
-      </ion-item>
-
-      <ion-item no-lines *ngSwitchCase="'Chat'">
-        <div class="user" item-end>Ballfield guys, don't forget!</div>
-        <ion-avatar item-end>
-          <img src="assets/img/carmelle.jpg">
-        </ion-avatar>
-      </ion-item>
-
-      <ion-item no-lines *ngSwitchCase="'Chat'">
-        <ion-avatar item-start>
-          <img src="assets/img/henry.jpg">
-        </ion-avatar>
-        <div class="members" item-start>When are we going to meet, Kurt?</div>
-      </ion-item>
-
-      <ion-item no-lines *ngSwitchCase="'Chat'">
-        <div class="user" item-end>See you!</div>
-        <ion-avatar item-end>
-          <img src="assets/img/carmelle.jpg">
-        </ion-avatar>
-      </ion-item>
-
-      <ion-footer *ngSwitchCase="'Chat'">
-        <ion-item>
-          <ion-textarea placeholder="Type message here..."></ion-textarea>
-          <ion-icon name="send" item-end class="icon-customize"></ion-icon>
-        </ion-item>
-      </ion-footer>
-      
-      <div *ngSwitchCase="'Details'">
-        <ion-card>
-          <img src="assets/img/frisbee-game.jpg">
-          <div class="kuyog-title">
-              Frisbee Game
-          </div>
-          
-          <div class="overlay"></div>
-        </ion-card>
-
-      <ion-card>
-        <ion-item>
-            <p><ion-icon name="pin"></ion-icon>  Ballfield, Silliman University</p>
-        </ion-item>
-
-        <ion-item>
-            <p><ion-icon name="time"></ion-icon>  3:00PM - 5:00PM</p>
-        </ion-item>
-      </ion-card>
-    </div>
+    </ion-list>
   </div>
 </ion-content>
+
+<ion-footer class="chatPageFooter">
+    <ion-toolbar>
+      <ion-item>
+        <div item-content style="width:100%;">
+          <ion-textarea placeholder="Type message here..." [(ngModel)]="Message"></ion-textarea>
+        </div>
+      </ion-item>
+  
+      <ion-buttons right clear>
+        <button (click)="sendMessage()" clear ion-button large>
+          <ion-icon name="send" class="icon-customize" clear></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
