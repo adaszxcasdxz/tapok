@@ -17,7 +17,8 @@ export class TapokPage {
   attendees: any;
   User: any;
   userEventKeys: any;
-
+  Attending: any;
+  Events: any;
 
   constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, 
@@ -25,6 +26,7 @@ export class TapokPage {
     this.toggled = false;
     this.Event = this.firebaseService.getEvent();
     this.User = this.firebaseService.getUsers();
+    this.Attending = this.firebaseService.getUserEvents();
     this.user = firebaseService.user;
 
     this.User.map(users => {
@@ -32,6 +34,12 @@ export class TapokPage {
     }).subscribe(data => {
       data;
     });
+
+    this.Event.map(events => {
+      this.Events = events.attendees;
+     }).subscribe(data => {
+       data;
+     });
   }
 
   toggleSearch(){
@@ -90,6 +98,7 @@ export class TapokPage {
     }
 
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey, userKey);
+    console.log(this.Events);
   }
 }
 
