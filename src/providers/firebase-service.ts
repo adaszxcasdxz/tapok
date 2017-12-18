@@ -27,6 +27,11 @@ export class FireBaseService {
       query:{
         orderByChild: 'timestamp'
       }
+    }).map((attendees) =>{
+      return attendees.map(attendee =>{
+        attendee.attendees = this.tapok.list('/events/'+attendee.$key+'/attendees/');
+        return attendee;
+      });
     });
   }
 
