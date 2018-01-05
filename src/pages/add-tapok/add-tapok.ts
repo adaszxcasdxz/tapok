@@ -29,7 +29,10 @@ export class AddTapok {
 
 	loading: any;
 	selectedPhoto: any;
-	photo:any;
+	photo = '';
+
+	keyword: any;
+	word: any;
 
 	addEndDate = false;
 	addEndTime = false;
@@ -60,6 +63,8 @@ export class AddTapok {
 	}
 
 	addTapok() {
+		var i, eventKey;
+
 		this.event={
 			"host": this.host,
 			"name": this.name,
@@ -77,7 +82,16 @@ export class AddTapok {
 		};
 
 		if(this.label == "Add Tapok")
-			this.firebaseService.addEvent(this.event);
+			eventKey = this.firebaseService.addEvent(this.event);
+		this.word = this.name.split(" ");
+		for(i=0;i<this.word.length;i++){
+			this.keyword={
+				"keyword": this.word[i].toLowerCase(),
+				"key": eventKey
+			};
+			this.firebaseService.addKeyword(this.keyword);
+		}
+		
 		this.cancel();
 		let alert = this.alertCtrl.create({
 			title: 'Tapok Added',

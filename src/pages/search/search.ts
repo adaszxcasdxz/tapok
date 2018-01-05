@@ -21,11 +21,13 @@ export class SearchPage {
   user: any;
   User: any;
   userEventKeys: any;
+  Event: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
     public firebaseService: FireBaseService
   ) {
     this.user = firebaseService.user;
+    this.Event = this.firebaseService.getEvent();
     this.User = this.firebaseService.getUsers();
     
     this.User.map(users => {

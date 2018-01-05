@@ -40,7 +40,9 @@ export class FireBaseService {
   }
 
   addEvent(name){
-    this.tapok.list('/events/').push(name);
+    var Key;
+    Key = this.tapok.list('/events/').push(name).key;
+    return Key;
   }
 
   getUserEvents(){
@@ -89,10 +91,30 @@ export class FireBaseService {
     this.tapok.object('events/'+eventKey).remove();
   }
 
-  searchTapok(search){
-    return this.tapok.list('/events',{
+  addKeyword(word){
+    var Key;
+    Key = this.tapok.list('keywords/').push(word).key;
+    return Key;
+  }
+
+  getKeywords(keywordKey){
+    return this.tapok.list('/keywords/',{ 
+      preserveSnapshot: true,
       query: {
-        orderByChild: 'search_key',
+        orderByChild: "key",
+        equalTo: keywordKey
+      }
+    });
+  }
+
+  deleteKeyword(key){
+    this.tapok.object('/keywords/'+key).remove();
+  }
+
+  searchTapok(search){
+    return this.tapok.list('/keywords/',{
+      query: {
+        orderByChild: 'keyword',
         startAt: search,
         endAt: search+'\uf8ff'
       },
