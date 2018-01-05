@@ -27,12 +27,12 @@ export class FireBaseService {
       query:{
         orderByChild: 'timestamp'
       }
-    }).map((attendees) =>{
+    })/*.map((attendees) =>{
       return attendees.map(attendee =>{
         attendee.attendees = this.tapok.list('/events/'+attendee.$key+'/attendees/');
         return attendee;
       });
-    });
+    });*/
   }
 
   getSpecificEvent(key){
@@ -107,12 +107,19 @@ export class FireBaseService {
     this.tapok.list('/groups/').push(name);
   }
 
-  uploadPhoto(image, name){
+  uploadPhoto(image){
+    var dlURL;
     var metadata = {
       contentType: 'image/jpeg'
     }
-    const storageRef = this.firebaseApp.storage().ref(name+'.jpg');
-    storageRef.putString(image, 'base64', metadata);
+    const storageRef = this.firebaseApp.storage().ref().child('images/uploaded.png').put(image);
+    //storageRef.putString(image, 'base64', metadata);
+    //dlURL = storageRef.child('some text').getDownloadURL;
+    return storageRef;
+  }
+
+  photoToggle(key, toggle){
+    this.tapok.object('events/'+key).update(toggle);
   }
 
   getUsers(){
