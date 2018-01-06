@@ -4,7 +4,7 @@
   padding:.5em;
   border-radius: 1em;
   font-size: 1em;
-  margin-left: 3.5em;
+  margin-left: 3em;
   //float: left;
 }
 
@@ -21,7 +21,7 @@
   color: black;
   border-radius: 1em;
   font-size: 1em;
-  margin-right: 3.5em;
+  margin-right: 3em;
   //float: right;
 }
 
@@ -38,4 +38,8 @@
 
 #sentByRight{
   margin-right: 5em;
+}
+
+.chatPage{
+  position: relative;
 }

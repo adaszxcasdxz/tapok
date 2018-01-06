@@ -20,7 +20,7 @@
         <ion-grid style="margin:0;">
         <ion-row *ngIf="List.sentBy === user" text-wrap>
           <ion-col></ion-col>
-          <ion-col text-wrap style="width:85%;">
+          <ion-col text-wrap style="width:55%;">
               <ion-avatar float-right>
                   <img class="icon_u" src="assets/img/user.png">
                 </ion-avatar>
@@ -35,7 +35,7 @@
         </ion-row>
 
         <ion-row *ngIf="List.sentBy !== user">
-          <ion-col text-wrap style="width:85%;">
+          <ion-col text-wrap style="width:55%;">
             <ion-avatar float-left>
               <img class="icon_u" src="assets/img/user.png">
             </ion-avatar>
@@ -59,13 +59,13 @@
     <ion-toolbar>
       <ion-item>
         <div item-content style="width:100%;">
-          <ion-textarea placeholder="Type message here..." [(ngModel)]="Message"></ion-textarea>
+          <ion-textarea placeholder="Type message here..." [(ngModel)]="Message" autofocus></ion-textarea>
         </div>
       </ion-item>
   
       <ion-buttons right clear x-large>
-        <button (click)="sendMessage()" clear ion-button x-large>
-          <ion-icon name="send" class="icon-customize" clear x-large></ion-icon>
+        <button (click)="sendMessage()" clear ion-button>
+          <ion-icon name="send" clear style="font-size:x-large;"></ion-icon>
         </button>
       </ion-buttons>
     </ion-toolbar>
