@@ -31,90 +31,79 @@
 <ion-content>
     <div [ngSwitch]="groupcont">
         <ion-list *ngSwitchCase="'posts'">
-            <img src="assets/img/capstone.jpg">
-                <ion-row text-center>
-                    <ion-col>
-                        <h1>{{ group.gname }}</h1>
-                        <div class="descr-col">{{ group.gdescr }}</div>
-                    </ion-col>
-                    <!---<ion-col text-justify padding>
-                        
-                    </ion-col>-->
-                </ion-row>
-                <!--ion-row >-->
-                    
-                <!---</ion-row>-->
-                <br><hr><br>
-              
-                 <ion-card *ngFor="let posts of post | async">
-                    <ion-item>
+            <div class="contentbg">  
+                <img src="assets/img/capstone.jpg">
+                    <div class="gheader">
+                        <ion-row text-center>
+                            <ion-col>
+                                <div class="name-col"><b>{{ group.gname }}</b></div>
+                                <hr> 
+                                <div class="descr-col"><i>{{ group.gdescr }}</i></div>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+
+                    <ion-card *ngFor="let posts of post | async">
+                        <div class="postcontent">
+                            <ion-item>
+                                <ion-avatar item-start medium>
+                                    <img class="profilepic" src="assets/img/kurt.jpg">
+                                </ion-avatar>
+                                <h2 class="names">{{ posts.poster }}</h2>
+                                <p>{{ posts.datetime | date: 'MM/dd/yyyy h:mma' }}</p>
+                            </ion-item>
+
+                            <ion-buttons medium float-right>
+                                    <button class="del-post1" (click)="editPost(posts)" ion-button clear>
+                                        <ion-icon name="create"></ion-icon>
+                                    </button>
+                            </ion-buttons>
+
+                            <ion-buttons medium float-right>
+                                    <button class="del-post2" (click)="deletePost(posts)" ion-button clear>
+                                        <ion-icon name="trash"></ion-icon>
+                                    </button>
+                            </ion-buttons>
+
+                            <ion-row>
+                                <ion-card-content>
+                                    {{ posts.post }}
+                                </ion-card-content>
+                            </ion-row>
+
+                            <ion-row>
+                                <ion-col>
+                                    <button ion-button icon-left clear small (click)="openAddComment(group, posts)">
+                                        <ion-icon name="text"></ion-icon>
+                                        <div>Comment</div>
+                                    </button>
+                                </ion-col>
+
+                                <ion-col>
+                                <button ion-button icon-left clear small (click)="openComment(group, posts)">
+                                    <ion-icon name="open"></ion-icon>
+                                    <div>View Comments</div>
+                                </button>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                    </ion-card>
+
+
+                    <ion-card>
+                        <ion-item>
                         <ion-avatar item-start large>
-                            <img class="item-avatar" src="assets/img/kurt.jpg">
+                            <img class="profilepic" src="assets/img/kurt.jpg">
                         </ion-avatar>
-                        <h2 class="names">{{ posts.poster }}</h2>
-                        <p>{{ posts.timestamp | date: 'MM/dd/yyyy h:mma' }}</p>
-                    </ion-item>
-                    
-                    <ion-buttons float-right>
-                            <button class="del-post" (click)="deletePost(posts)" ion-button clear>
-                                <ion-icon name="trash"></ion-icon>
-                            </button>
-                    </ion-buttons>
+                        <h2 class="names">Kurt Torregosa</h2>
+                        <p>01/01/2018 2:34PM</p>
 
-                    <ion-row>
+                        </ion-item>
                         <ion-card-content>
-                            {{ posts.post }}
+                            Kurt Torregosa created the group.
                         </ion-card-content>
-                    </ion-row>
-
-                    <ion-row>
-                        <ion-col>
-                            <button ion-button icon-left clear small (click)="openAddComment(group, posts)">
-                                <ion-icon name="text"></ion-icon>
-                                <div>Comment</div>
-                            </button>
-                        </ion-col>
-
-                        <ion-col>
-                        <button ion-button icon-left clear small (click)="openComment(group, posts)">
-                            <ion-icon name="open"></ion-icon>
-                            <div>View Comments</div>
-                        </button>
-                        </ion-col>
-                    </ion-row>
-                </ion-card>
-
-
-                <ion-card>
-                     <ion-item>
-                    <ion-avatar item-start large>
-                        <img class="item-avatar" src="assets/img/carm.jpg">
-                    </ion-avatar>
-                    <h2 class="names">Carmelle Felicio</h2>
-                    <p>55 mins ago</p>
-
-                    </ion-item>
-                    <ion-card-content>
-                        Who's up for a study out tonight? I'll create an
-                        activity later on. I'll share it to the group :D
-                    </ion-card-content>
-
-                    <ion-row>
-                        <ion-col>
-                        <button ion-button icon-left clear small>
-                            <ion-icon name="thumbs-up"></ion-icon>
-                            <div>Like</div>
-                        </button>
-                        </ion-col>
-
-                        <ion-col>
-                        <button ion-button icon-left clear small>
-                            <ion-icon name="text"></ion-icon>
-                            <div>Comment</div>
-                        </button>
-                        </ion-col>
-                    </ion-row>
-                </ion-card>
+                    </ion-card>
+                </div>
             </ion-list>
         </div>
 

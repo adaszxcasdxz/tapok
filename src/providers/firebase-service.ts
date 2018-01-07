@@ -58,6 +58,14 @@ export class FireBaseService {
     this.tapok.object('groups/'+groupKey).update(info);
   }
 
+  editPosts(groupKey, postKey, info){
+    this.tapok.object('/groups/'+groupKey+'/posts/'+postKey).update(info);
+  }
+
+  editComments(groupKey, postKey, comKey, info){
+    this.tapok.object('/groups/'+groupKey+'/posts/'+postKey+'/comments/'+comKey).update(info);
+  }
+
   addTapok(event, eventKey, status, value, attendee, attendeeKey){
     this.tapok.object('events/'+eventKey).update({
       attending: status,
@@ -115,7 +123,11 @@ export class FireBaseService {
   }
 
   getGroup(){
-    return this.tapok.list('/groups/');
+    return this.tapok.list('/groups/',{
+      query:{
+        orderByChild: 'timestamp'
+      }
+    });
   }
 
   addGroup(name){
@@ -170,5 +182,11 @@ export class FireBaseService {
     }); //groups key posts key comments
   }
 
-  
+  addUserGroup(key){
+    this.tapok.list('/users/' + this.user + '/groupKey/').push(key);
+  }
+
+  getUserGroup(){
+    return this.tapok.list('/users/'+this.user+'/groupKey/');
+  }  
 }

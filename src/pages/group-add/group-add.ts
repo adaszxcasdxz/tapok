@@ -24,6 +24,7 @@ export class GroupAddPage {
   admin = '';
   gname = '';
   gdescr = '';
+  timestamp = '';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
      public firebaseService:FireBaseService, public viewCtrl: ViewController, public params: NavParams) {
@@ -42,7 +43,8 @@ export class GroupAddPage {
     this.group={
       "gname": this.gname,
       "gdescr": this.gdescr,
-      "admin": this.admin
+      "admin": this.admin,
+      "timestamp": 0-Date.now()
     }
 
     if(this.label == "Add Group")

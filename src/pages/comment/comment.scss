@@ -1,20 +1,43 @@
 page-comment {
-    .commentbox{
-        padding: 12px;
+    .commentbg{
+        padding: 0.1em;
     }
+
     .names{
         color: midnightblue;
         font-size: large;
-        margin-left: 4.2em;
+        margin-left: 0.1em;
         margin-top:0.5em;
     }
+
     .timestamp{
         left: 5em;
     }
+
     .item-avatar{
         border-radius: 5em;
     }
+
     .post{
+        margin-top: -1em;
         size: 12px;
+    }
+
+    .del-com1{
+        position: fixed;
+        right: 3.5em;
+        top: -4.2em;
+        height: 20px;
+        width: 18px;
+        z-index: -100;
+    }
+
+    .del-com2{
+        position: fixed;
+        right: 0.5em;
+        top: -4.2em;
+        height: 20px;
+        width: 18px;
+        z-index: -100;
     }
 }

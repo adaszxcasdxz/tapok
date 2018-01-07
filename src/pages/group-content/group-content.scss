@@ -102,24 +102,7 @@
     }
 }
 
-.post{
-    top: 4em;
-}
 
-.descr-col{
-    font-size: 16px;
-}
-
-.postbox{
-    left: 3em;
-    width: 5px;
-}
-
-.del-post{
-    top: -6em;
-    height: 20px;
-    width: 18px;
-}
 
 group-content{
     .button-header{
@@ -131,5 +114,56 @@ group-content{
 
     .row-status{
         background-color: #FCFCFC;
+    }
+
+    .post{
+    top: 4em;
+    }
+
+    .descr-col{
+        font-size: 1em;
+    }
+
+    .name-col{
+        font-size: 2em;
+    }
+
+    .gheader{
+        padding-left: 2em;
+        padding-right: 2em;
+        padding-bottom: 1em;
+        padding-top: .5em;
+    }
+
+    .postbox{
+        left: 3em;
+        width: 5px;
+    }
+
+    .del-post1{
+        position: fixed;
+        right: 3.5em;
+        top: -4.2em;
+        height: 20px;
+        width: 18px;
+        z-index: -100;
+    }
+
+    .del-post2{
+        position: fixed;
+        right: 0.5em;
+        top: -4.2em;
+        height: 20px;
+        width: 18px;
+        z-index: -100;
+    }
+
+    .profilepic{
+            width: 5em;
+            height: 5em;
+    }
+    
+    .postcontent{
+        padding: .2em;
     }
 }

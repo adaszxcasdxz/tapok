@@ -27,9 +27,6 @@ export class GroupContent {
       this.group.forEach(groups=> {
         this.group = groups;
       });
-      
-    console.log(this.group.$key);
-    console.log(this.post);
   }
 
   editGroup(){
@@ -37,8 +34,14 @@ export class GroupContent {
     modal.present();
   }
 
+  editPost(post){
+    console.log(post.$key);
+    let modal = this.modalCtrl.create('GroupPost', {tapokGroup: this.group, tapokPost: post, label: "Edit Post"});
+    modal.present();
+  }
+
   openGroupPost(group){
-        this.navCtrl.push('GroupPost', {param1: group.$key});
+        this.navCtrl.push('GroupPost', { param1: group.$key, label: 'Add Post' });
   }
 
   openComment(group, post){
@@ -46,7 +49,7 @@ export class GroupContent {
   }
 
   openAddComment(group, post){
-        this.navCtrl.push('CommentAddPage', {param1: group.$key, param2: post.$key});
+        this.navCtrl.push('CommentAddPage', {param1: group.$key, param2: post.$key, label: 'Add Comment'});
   }
 
   deleteGroup(){
@@ -96,6 +99,4 @@ export class GroupContent {
     });
     alert.present(); 
   }
-
-
 }

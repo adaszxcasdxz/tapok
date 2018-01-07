@@ -23,9 +23,14 @@ export class CommentAddPage {
   groupkey: any;
   postkey: any;
   commenter: any;
+  gKey: any;
+  pKey: any;
+  cKey: any;
+  label: any;
 
   host = '';
   timestamp = '';
+  datetime = '';
 
   constructor(
     public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
@@ -33,8 +38,12 @@ export class CommentAddPage {
   ) {
     this.host = firebaseService.user;
     this.commenter = firebaseService.user;
+    this.label = navParams.get('label');
     this.groupkey = navParams.get('param1');
     this.postkey = navParams.get('param2');
+    this.gKey = navParams.get('tapokGroup');
+    this.pKey = navParams.get('tapokPost');
+    this.cKey = navParams.get('tapokCom');
     //this.comment = this.firebaseService.getComment(this.groupkey, this.postkey);
   }
 
@@ -42,9 +51,13 @@ export class CommentAddPage {
     this.post={
       "comment": this.comment,
       "commenter": this.commenter,
-      "timestamp": 0-Date.now()
+      "timestamp": 0-Date.now(),
+      "datetime": Date.now()
     }
-    this.firebaseService.addComment(this.post, this.groupkey, this.postkey);
+
+
+    if(this.label == "Add Comment")
+        this.firebaseService.addComment(this.post, this.groupkey, this.postkey);
     
     let alert = this.alertCtrl.create({
 			title: 'Comment Sent!',
@@ -52,6 +65,23 @@ export class CommentAddPage {
     });
     alert.present();
     this.dismiss();
+  }
+
+  editComment(posts){
+    this.comment={
+      "comment": this.comment,
+      "datetime": Date.now()
+    }
+    console.log(this.gKey);
+    console.log(this.pKey);
+    console.log(this.cKey);
+    this.firebaseService.editComments(this.gKey, this.pKey, this.cKey, this.comment);
+    let alert = this.alertCtrl.create({
+        title: 'Changes Saved!',
+        buttons: [ 'OK' ]
+      });
+      alert.present();
+      this.dismiss();
   }
 
   dismiss() {

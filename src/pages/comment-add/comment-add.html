@@ -1,7 +1,7 @@
 <ion-header>
 <ion-toolbar>
         <ion-title>
-            Leave Comment
+            {{ label }}
         </ion-title>
         
         <ion-buttons end>
@@ -21,9 +21,14 @@
     </ion-row>
     <br>
     <ion-row text-center>
-        <ion-col>
+        <ion-col *ngIf="label == 'Add Comment'">
             <button (click)="addComment(posts)" ion-button medium>
                 SEND COMMENT
+            </button>
+        </ion-col>
+        <ion-col *ngIf="label == 'Edit Comment'">
+            <button (click)="editComment(posts)" ion-button medium>
+                SAVE CHANGES
             </button>
         </ion-col>
     </ion-row>
