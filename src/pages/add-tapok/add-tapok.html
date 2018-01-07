@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>
-            {{ label }}
+            {{label}}
         </ion-title>
         
         <ion-buttons end>
@@ -15,7 +15,21 @@
 <ion-content>
     <ion-row>
         <ion-col>
-            <div class="box"></div>
+            <div class="box" *ngIf="photo!=''">
+                <img class="photo" src="{{ photo }}">
+            </div>
+          </ion-col>
+    </ion-row>
+    <ion-row text-center>
+        <ion-col>
+            <button (click)="openGallery()" ion-button icon-left round large clear>
+                <ion-icon name="image"></ion-icon>
+            </button> 
+        </ion-col>
+        <ion-col>
+            <button (click)="openCamera()" ion-button icon-left round large clear>
+                <ion-icon name="camera"></ion-icon>
+            </button> 
         </ion-col>
     </ion-row>
     <div padding>
@@ -25,16 +39,18 @@
                 <ion-input class="name" [(ngModel)]="name" type="text"></ion-input>
             </ion-col>  
         </ion-row>
-        <ion-row align-items-start>
+        <ion-row>
             <ion-col>
                 <div class="detail-label">Start Date</div>
-                <ion-input class="detail" [(ngModel)]="date" type="date"></ion-input>
+                <ion-datetime [(ngModel)]="date" class="detail" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
             </ion-col> 
             <ion-col (click)="endDate()">
                 <div class="extra-label" *ngIf="addEndDate == false">Add End Date</div>
                 <div *ngIf="addEndDate == true">
                     <div class="detail-label">End Date | Cancel</div>
-                    <ion-input class="detail" [(ngModel)]="endDate" type="date"></ion-input>
+                    <ion-col>
+                        <ion-datetime [(ngModel)]="enddate" class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
+                    </ion-col>
                 </div>
             </ion-col>
         </ion-row>
@@ -48,7 +64,7 @@
                 <div *ngIf="addEndTime == true">
                     <div class="detail-label">End Time | Cancel</div>
                     <ion-col>
-                        <ion-datetime class="detail-datetime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
+                        <ion-datetime [(ngModel)]="endtime" class="detail-datetime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
                     </ion-col>
                 </div>
             </ion-col>

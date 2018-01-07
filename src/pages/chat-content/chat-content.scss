@@ -1,23 +1,41 @@
-.members
+.bubble-left
 {
-    background-color: orange;
-    padding:.5em;
-    color: white;
-    border-radius: 1em;
-    font-size: .8em;
+  background-color: orange;
+  padding:.5em;
+  border-radius: 1em;
+  font-size: .8em;
+  margin-left: 3.5em;
+  //float: left;
 }
 
-.user
+
+.bubble-left p
 {
-    text-align: right;
-    background-color:#F0F0EF  ;
-    padding:.5em;
-    color: black;
-    border-radius: 1em;
-    font-size: .8em;
+  color:white;
 }
 
-.icon-customize
+.bubble-right
 {
-    color: orange;
+  background-color:#F0F0EF  ;
+  padding:.5em;
+  color: black;
+  border-radius: 1em;
+  font-size: .8em;
+  margin-right: 3.5em;
+  //float: right;
+}
+
+.icon_u
+{
+  width:.1em;
+  height:.1em;
+  margin-top:.5em;
+}
+
+#sentByLeft{
+  margin-left: 4.5em;
+}
+
+#sentByRight{
+  margin-right: 4.5em;
 }
