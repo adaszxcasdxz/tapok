@@ -27,7 +27,12 @@ export class FireBaseService {
       query:{
         orderByChild: 'timestamp'
       }
-    });
+    })/*.map((attendees) =>{
+      return attendees.map(attendee =>{
+        attendee.attendees = this.tapok.list('/events/'+attendee.$key+'/attendees/');
+        return attendee;
+      });
+    });*/
   }
 
   getSpecificEvent(key){
@@ -39,7 +44,9 @@ export class FireBaseService {
   }
 
   addEvent(name){
-    this.tapok.list('/events/').push(name);
+    var Key;
+    Key = this.tapok.list('/events/').push(name).key;
+    return Key;
   }
 
   getUserEvents(){
@@ -111,11 +118,31 @@ export class FireBaseService {
   deleteComment(groupKey, postKey, commentKey){
     this.tapok.object('groups/'+groupKey+'/posts/'+postKey+'/comments/'+commentKey).remove();
   }
+  
+  addKeyword(word){
+    var Key;
+    Key = this.tapok.list('keywords/').push(word).key;
+    return Key;
+  }
+
+  getKeywords(keywordKey){
+    return this.tapok.list('/keywords/',{ 
+      preserveSnapshot: true,
+      query: {
+        orderByChild: "key",
+        equalTo: keywordKey
+      }
+    });
+  }
+
+  deleteKeyword(key){
+    this.tapok.object('/keywords/'+key).remove();
+  }
 
   searchTapok(search){
-    return this.tapok.list('/events',{
+    return this.tapok.list('/keywords/',{
       query: {
-        orderByChild: 'search_key',
+        orderByChild: 'keyword',
         startAt: search,
         endAt: search+'\uf8ff'
       },
@@ -134,12 +161,19 @@ export class FireBaseService {
     this.tapok.list('/groups/').push(name);
   }
 
-  uploadPhoto(image, name){
+  uploadPhoto(image, key){
+    var dlURL;
     var metadata = {
       contentType: 'image/jpeg'
     }
-    const storageRef = this.firebaseApp.storage().ref(name+'.jpg');
-    storageRef.putString(image, 'base64', metadata);
+    const storageRef = this.firebaseApp.storage().ref().child('images/'+key+'.jpg').put(image);
+    //storageRef.putString(image, 'base64', metadata);
+    //dlURL = storageRef.child('some text').getDownloadURL;
+    return storageRef;
+  }
+
+  photoToggle(key, toggle){
+    this.tapok.object('events/'+key).update(toggle);
   }
 
   getUsers(){
@@ -189,4 +223,11 @@ export class FireBaseService {
   getUserGroup(){
     return this.tapok.list('/users/'+this.user+'/groupKey/');
   }  
+
+  addImageName(){
+    var key;
+
+    key = this.tapok.list('imageName').push(Date.now());
+    return key;
+  }
 }

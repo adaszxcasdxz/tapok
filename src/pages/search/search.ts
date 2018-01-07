@@ -19,11 +19,22 @@ export class SearchPage {
   search: any;
   Result: any;
   user: any;
+  User: any;
+  userEventKeys: any;
+  Event: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
     public firebaseService: FireBaseService
   ) {
     this.user = firebaseService.user;
+    this.Event = this.firebaseService.getEvent();
+    this.User = this.firebaseService.getUsers();
+    
+    this.User.map(users => {
+    this.userEventKeys = users;
+    }).subscribe(data => {
+      data;
+    });
   }
 
   ionViewDidLoad() {
@@ -50,12 +61,19 @@ export class SearchPage {
     var tapok = event.tapok;
     var attendeeKey;
     var eventKey;
+    var userKey;
 
     for(var attendees in event.attendees){
       if(event.attendees[attendees] == this.user){
         status = "true";
         attendeeKey = attendees;
         break;
+      }
+    }
+
+    for(var userEventKey in this.userEventKeys){
+      if(this.userEventKeys[userEventKey].key == event.$key){
+        userKey = this.userEventKeys[userEventKey].$key;
       }
     }
 
@@ -68,6 +86,6 @@ export class SearchPage {
       "key": event.$key
     }
 
-    this.firebaseService.addTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey);
+    this.firebaseService.userTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey, userKey);
   }
 }

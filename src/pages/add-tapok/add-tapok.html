@@ -15,8 +15,10 @@
 <ion-content>
     <ion-row>
         <ion-col>
-            <div (click)="openCamera()" class="box"></div>
-        </ion-col>
+            <div class="box" *ngIf="photo!=''">
+                <img class="photo" src="{{ photo }}">
+            </div>
+          </ion-col>
     </ion-row>
     <ion-row text-center>
         <ion-col>
@@ -47,7 +49,7 @@
                 <div *ngIf="addEndDate == true">
                     <div class="detail-label">End Date | Cancel</div>
                     <ion-col>
-                        <ion-datetime class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
+                        <ion-datetime [(ngModel)]="enddate" class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
                     </ion-col>
                 </div>
             </ion-col>
@@ -62,7 +64,7 @@
                 <div *ngIf="addEndTime == true">
                     <div class="detail-label">End Time | Cancel</div>
                     <ion-col>
-                        <ion-datetime class="detail-datetime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
+                        <ion-datetime [(ngModel)]="endtime" class="detail-datetime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
                     </ion-col>
                 </div>
             </ion-col>

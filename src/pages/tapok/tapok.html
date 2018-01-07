@@ -22,23 +22,32 @@
   <div [ngSwitch]="pages">
     <ion-list *ngSwitchCase="'list'">
       <ion-card *ngFor="let event of Event | async" text-center>
-        <div  (click)="openTapokContent(event)">
-          <ion-item>
-            <ion-avatar item-start>
-              <img class="user-avatar" src="assets/img/user.png">
-            </ion-avatar>
-            <ion-label>
-              <h2><strong>{{ event.host }}</strong></h2>
-            </ion-label>
-          </ion-item>
-          <ion-row>
-            <ion-col>
-              <div class="box"></div>
-            </ion-col>
-          </ion-row>
+        <ion-item>
+          <ion-avatar item-start>
+            <img class="user-avatar" src="assets/img/user.png">
+          </ion-avatar>
+          <ion-label>
+            <h2><strong>{{ event.host }}</strong></h2>
+          </ion-label>
+        </ion-item>
+        <ion-row *ngIf="event.photo != ''">
+          <ion-col (click)="viewPic(event.photo)">
+          <!--<ion-col (click)="toggle(event.$key, event.toggle)">
+            <div *ngIf="event.toggle == 'false'">
+                see photo
+            </div>
+            <div *ngIf="event.toggle == 'true'">-->
+              <div class="box">
+                <img class="photo" src="{{ event.photo }}">
+              </div>
+              <!--<br>hide photo
+            </div>-->
+          </ion-col>
+        </ion-row>
+        <div (click)="openTapokContent(event)">
           <ion-row>
             <ion-col class="title-col" width-50>  
-                <div class="title">{{ event.name }}</div>
+              <div class="title">{{ event.name }}</div>                
             </ion-col> 
           </ion-row>
           <ion-row>
@@ -49,19 +58,21 @@
           </ion-row>
         </div>
         <ion-row class="status-row">
-          <ion-col>
-            <button (click)="tapok(event)" ion-button icon-left round clear>
-                <ion-icon name="happy"></ion-icon>
-                <div>Tapok {{ event.tapok }}</div>
-            </button> 
-            <!--<div *ngFor="let user of User | async">
-                <div *ngIf="user.key==event.$key; else addTapok">
-                    <button (click)="tapok(event, user.$key)" ion-button icon-left round clear>
-                        <ion-icon name="happy"></ion-icon>
-                        <div>Tapok {{ event.tapok }}</div>
-                    </button>         
-                </div>
+          <ion-col> 
+            <!--<div *ngFor="let attend of event.attendees | async">
+              <ng-container *ngIf="attend.name == user;else notJoined">  
+                <button (click)="tapok(event, attend)" ion-button icon-left round clear>
+                  <ion-icon name="happy"></ion-icon>
+                  <div>Joined {{ event.tapok }}</div>
+                </button> 
+              </ng-container>
             </div>-->
+            <!--<ng-template #notJoined>-->
+              <button class="notjoined" (click)="tapok(event)" ion-button icon-left round clear>
+                  <ion-icon name="happy"></ion-icon>
+                  <div>Tapok {{ event.tapok }}</div>
+              </button>
+            <!--</ng-template>-->
           </ion-col>
           <ion-col>
               <button ion-button icon-left round clear>
