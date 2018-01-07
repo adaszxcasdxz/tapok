@@ -79,6 +79,11 @@ export class TapokContent {
     alert.present(); 
   }
 
+  viewPic(photo){
+    let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
+    modal.present();
+  }
+
   tapok(event){
     var status = "false";
     var tapok = event.tapok;

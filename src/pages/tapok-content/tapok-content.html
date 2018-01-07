@@ -16,7 +16,20 @@
 <ion-content>
 
     <ion-card text-center>        
-        <img src="assets/img/frisbee-game.jpg">
+        <ion-row *ngIf="event.photo != ''">
+            <ion-col (click)="viewPic(event.photo)">
+            <!--<ion-col (click)="toggle(event.$key, event.toggle)">
+              <div *ngIf="event.toggle == 'false'">
+                  see photo
+              </div>
+              <div *ngIf="event.toggle == 'true'">-->
+                <div class="box">
+                  <img class="photo" src="{{ event.photo }}">
+                </div>
+                <!--<br>hide photo
+              </div>-->
+            </ion-col>
+        </ion-row>
 
         <ion-row class="row-status">
             <ion-col>

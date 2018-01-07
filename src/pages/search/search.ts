@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 
 /**
@@ -24,7 +24,7 @@ export class SearchPage {
   Event: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
-    public firebaseService: FireBaseService
+    public firebaseService: FireBaseService, public modalCtrl: ModalController
   ) {
     this.user = firebaseService.user;
     this.Event = this.firebaseService.getEvent();
@@ -54,6 +54,11 @@ export class SearchPage {
       this.Result = this.firebaseService.searchTapok(this.search.toLowerCase());
     else
       this.Result = null;
+  }
+
+  viewPic(photo){
+    let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
+    modal.present();
   }
 
   tapok(event){
