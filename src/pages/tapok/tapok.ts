@@ -46,6 +46,11 @@ export class TapokPage {
     this.firebaseService.photoToggle(key, this.photoToggle);
   }
 
+  viewPic(photo){
+    let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
+    modal.present();
+  }
+
   openTapokContent(event){
     this.navCtrl.push('TapokContent', {param1: event.$key});
   }

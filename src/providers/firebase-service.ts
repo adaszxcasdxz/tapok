@@ -129,12 +129,12 @@ export class FireBaseService {
     this.tapok.list('/groups/').push(name);
   }
 
-  uploadPhoto(image){
+  uploadPhoto(image, key){
     var dlURL;
     var metadata = {
       contentType: 'image/jpeg'
     }
-    const storageRef = this.firebaseApp.storage().ref().child('images/uploaded.png').put(image);
+    const storageRef = this.firebaseApp.storage().ref().child('images/'+key+'.jpg').put(image);
     //storageRef.putString(image, 'base64', metadata);
     //dlURL = storageRef.child('some text').getDownloadURL;
     return storageRef;
@@ -159,5 +159,11 @@ export class FireBaseService {
       }
     });
   }
-  
+
+  addImageName(){
+    var key;
+
+    key = this.tapok.list('imageName').push(Date.now());
+    return key;
+  }
 }

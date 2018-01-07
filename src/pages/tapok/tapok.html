@@ -30,17 +30,18 @@
             <h2><strong>{{ event.host }}</strong></h2>
           </ion-label>
         </ion-item>
-        <ion-row>
-          <ion-col (click)="toggle(event.$key, event.toggle)">
+        <ion-row *ngIf="event.photo != ''">
+          <ion-col (click)="viewPic(event.photo)">
+          <!--<ion-col (click)="toggle(event.$key, event.toggle)">
             <div *ngIf="event.toggle == 'false'">
                 see photo
             </div>
-            <div *ngIf="event.toggle == 'true'">
+            <div *ngIf="event.toggle == 'true'">-->
               <div class="box">
                 <img class="photo" src="{{ event.photo }}">
               </div>
-              <br>hide photo
-            </div>
+              <!--<br>hide photo
+            </div>-->
           </ion-col>
         </ion-row>
         <div (click)="openTapokContent(event)">

@@ -208,10 +208,11 @@ export class AddTapok {
 	}
 
 	upload() {
+		var key = this.firebaseService.addImageName();
+
 		if (this.selectedPhoto) {
-		  this.dlURL = this.firebaseService.uploadPhoto(this.selectedPhoto);
-		  this.dlURL.then(this.onSuccess, this.onError);
-		  
+		  this.dlURL = this.firebaseService.uploadPhoto(this.selectedPhoto, key);
+		  this.dlURL.then(this.onSuccess, this.onError);  
 		}
 	  }
 }
