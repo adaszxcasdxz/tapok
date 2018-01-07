@@ -63,10 +63,16 @@
         </div>
       </ion-item>
   
-      <ion-buttons right clear x-large>
-        <button (click)="sendMessage()" clear ion-button>
-          <ion-icon name="send" clear style="font-size:x-large;"></ion-icon>
+      <ion-buttons right clear x-large *ngIf="Message == ''">
+        <button clear ion-button>
+          <ion-icon name="send" clear style="font-size:x-large; color:lightgrey;"></ion-icon>
         </button>
       </ion-buttons>
+
+      <ion-buttons right clear x-large *ngIf="Message !== ''">
+          <button (click)="sendMessage()" clear ion-button>
+            <ion-icon name="send" clear style="font-size:x-large;"></ion-icon>
+          </button>
+        </ion-buttons>
     </ion-toolbar>
   </ion-footer>

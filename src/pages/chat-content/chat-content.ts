@@ -3,7 +3,6 @@ import { IonicPage, NavController, ViewController, NavParams } from 'ionic-angul
 import { FireBaseService } from '../../providers/firebase-service';
 import { FirebaseApp } from 'angularfire2';
 import { Content } from 'ionic-angular';
-import { Keyboard } from '@ionic-native/keyboard';
 
 @IonicPage()
 @Component({
@@ -15,12 +14,11 @@ export class ChatContent {
 	event: any;
   timestamp = '';
   user: any;
-  Message: any;
+  Message = '';
   chat: any;
   eKey: any;
   List: any;
   listen: any;
-  keyboard: Keyboard;
 
   constructor(public viewCtrl: ViewController, public navCtrl: NavController, 
     public firebaseService: FireBaseService,public params: NavParams, public firebaseApp: FirebaseApp) {
@@ -36,7 +34,7 @@ export class ChatContent {
 
   ionViewDidEnter(){
     setTimeout(() => {
-      this.content.scrollToBottom(300);
+      this.content.scrollToBottom(0);
     });    
 
     this.firebaseApp.database().ref("events/"+this.eKey+"/chat").on('value', snapshot => {
