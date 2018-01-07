@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { ViewController, NavController, IonicPage, AlertController, NavParams } from 'ionic-angular';
+import { ViewController, NavController, IonicPage, AlertController, NavParams, LoadingController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 /**
  * Generated class for the GroupAddPage page.
@@ -20,14 +21,29 @@ export class GroupAddPage {
   group: any;
   label: any;
   user: any;
+
+  loading: any;
+  selectedPhoto: any;
+  dlURL: any;
+  photo = '';
   
   admin = '';
   gname = '';
   gdescr = '';
   timestamp = '';
 
+  onSuccess = (snapshot) => {
+		this.photo = snapshot.downloadURL;
+		this.loading.dismiss();
+	}
+	
+	onError = (error) => {
+		console.log('error', error);
+		this.loading.dismiss();
+	}
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
-     public firebaseService:FireBaseService, public viewCtrl: ViewController, public params: NavParams) {
+     public firebaseService:FireBaseService, public viewCtrl: ViewController, public camera: Camera, public params: NavParams, public loadingCtrl: LoadingController) {
         this.admin = firebaseService.user;
         this.label = params.get('label');
 			  this.group = params.get('tapok');
@@ -85,5 +101,60 @@ export class GroupAddPage {
   ionViewDidLoad() {
     console.log('Test');
   }
+
+  openGallery(){
+		const options: CameraOptions = {
+			quality: 100,
+			destinationType: this.camera.DestinationType.DATA_URL,
+			encodingType: this.camera.EncodingType.JPEG,
+			mediaType: this.camera.MediaType.PICTURE,
+			sourceType: 0
+		  }
+		  
+		  this.uploadPhoto(options);
+	}
+
+	openCamera(){
+		const options: CameraOptions = {
+			quality: 100,
+			destinationType: this.camera.DestinationType.DATA_URL,
+			encodingType: this.camera.EncodingType.JPEG,
+			mediaType: this.camera.MediaType.PICTURE
+		  }
+
+		  this.uploadPhoto(options);
+	}
+
+	uploadPhoto(options){
+		this.camera.getPicture(options).then((imageData) => {
+			this.loading = this.loadingCtrl.create({
+				content: 'Please wait...'
+			});
+			this.loading.present();
+
+			this.selectedPhoto = this.dateURItoBlob('data:image/jpeg;base64,' + imageData);
+
+			this.upload();
+		}, (err) => {
+		});
+	}
+
+	dateURItoBlob(dataURI){
+		let binary = atob(dataURI.split(',')[1]);
+		let array = [];
+		for (let i = 0; i < binary.length; i++) {
+		  array.push(binary.charCodeAt(i));
+		}
+		return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+	}
+
+	upload() {
+		var key = this.firebaseService.addImageName();
+
+		if (this.selectedPhoto) {
+		  this.dlURL = this.firebaseService.uploadPhoto(this.selectedPhoto, key);
+		  this.dlURL.then(this.onSuccess, this.onError);  
+		}
+	  }
 
 }

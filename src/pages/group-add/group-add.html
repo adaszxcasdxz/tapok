@@ -22,10 +22,23 @@
 <ion-content text-center>
    <ion-row>
         <ion-col>
-            <div class="box"></div>
+            <div class="box" *ngIf="photo!=''">
+                <img class="photo" src="{{ photo }}">
+            </div>
+          </ion-col>
+    </ion-row>
+    <ion-row text-center>
+        <ion-col>
+            <button (click)="openGallery()" ion-button icon-left round large clear>
+                <ion-icon name="image"></ion-icon>
+            </button> 
+        </ion-col>
+        <ion-col>
+            <button (click)="openCamera()" ion-button icon-left round large clear>
+                <ion-icon name="camera"></ion-icon>
+            </button> 
         </ion-col>
     </ion-row>
-    <div>
 
       <ion-row>
         <ion-col>
@@ -52,6 +65,4 @@
                 <button class="tapok-button" (click)="cancel()" ion-button outline large>Cancel</button>
             </ion-col>
         </ion-row>
-
-    </div>
 </ion-content>

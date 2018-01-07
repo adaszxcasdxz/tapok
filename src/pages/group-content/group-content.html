@@ -32,7 +32,9 @@
     <div [ngSwitch]="groupcont">
         <ion-list *ngSwitchCase="'posts'">
             <div class="contentbg">  
-                <img src="assets/img/capstone.jpg">
+                <div class="box">
+                    <img class="photo" src="{{ group.photo }}">
+                </div>
                     <div class="gheader">
                         <ion-row text-center>
                             <ion-col>
