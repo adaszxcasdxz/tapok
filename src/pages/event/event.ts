@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, ModalController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 
 @IonicPage()
@@ -14,7 +14,7 @@ export class EventPage {
   user: any;
   attendees: any;
 
-  constructor(public navCtrl: NavController, public firebaseService: FireBaseService) {
+  constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public modalCtrl: ModalController) {
     this.Event = this.firebaseService.getEvent();
     this.Attending = this.firebaseService.getUserEvents();
     this.user = firebaseService.user;
@@ -44,6 +44,11 @@ export class EventPage {
     }
 
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey, attendKey);
+  }
+
+  viewPic(photo){
+    let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
+    modal.present();
   }
 
   openEventContent(event){

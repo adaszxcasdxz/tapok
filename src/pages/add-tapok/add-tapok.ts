@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, AlertController, NavParams } from 'ionic-angular';
+import { IonicPage, ViewController, AlertController, NavParams, LoadingController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 //import { FirebaseListObservable } from 'angularfire2/database';
@@ -25,14 +25,32 @@ export class AddTapok {
 	tapok = 0;
 	search_key = '';
 	timestamp = '';
+	dlURL: any;
+
+	loading: any;
+	selectedPhoto: any;
+	photo = '';
+
+	keyword: any;
+	word: any;
 
 	addEndDate = false;
 	addEndTime = false;
 
+	onSuccess = (snapshot) => {
+		this.photo = snapshot.downloadURL;
+		this.loading.dismiss();
+	}
+	
+	onError = (error) => {
+		console.log('error', error);
+		this.loading.dismiss();
+	}
+
 	chat: any;
 
 	constructor(public viewCtrl: ViewController, public alertCtrl: AlertController, 
-		public firebaseService: FireBaseService, public params: NavParams, public camera: Camera) {
+		public firebaseService: FireBaseService, public params: NavParams, public camera: Camera, public loadingCtrl: LoadingController) {
 			this.host = firebaseService.user;
 			this.label = params.get('label');
 			this.event = params.get('tapok');
@@ -45,9 +63,13 @@ export class AddTapok {
 	}
 
 	addTapok() {
+		var i, eventKey;
+
 		this.event={
 			"host": this.host,
 			"name": this.name,
+			"photo": this.photo,
+			"toggle": "false",
 			"date": this.date,
 			"time": this.time,
 			"endtime": this.endtime,
@@ -60,7 +82,16 @@ export class AddTapok {
 		};
 
 		if(this.label == "Add Tapok")
-			this.firebaseService.addEvent(this.event);
+			eventKey = this.firebaseService.addEvent(this.event);
+		this.word = this.name.split(" ");
+		for(i=0;i<this.word.length;i++){
+			this.keyword={
+				"keyword": this.word[i].toLowerCase(),
+				"key": eventKey
+			};
+			this.firebaseService.addKeyword(this.keyword);
+		}
+		
 		this.cancel();
 		let alert = this.alertCtrl.create({
 			title: 'Tapok Added',
@@ -155,8 +186,33 @@ export class AddTapok {
 
 	uploadPhoto(options){
 		this.camera.getPicture(options).then((imageData) => {
-			this.firebaseService.uploadPhoto(imageData, this.name); 
+			this.loading = this.loadingCtrl.create({
+				content: 'Please wait...'
+			});
+			this.loading.present();
+
+			this.selectedPhoto = this.dateURItoBlob('data:image/jpeg;base64,' + imageData);
+
+			this.upload();
 		}, (err) => {
 		});
 	}
+
+	dateURItoBlob(dataURI){
+		let binary = atob(dataURI.split(',')[1]);
+		let array = [];
+		for (let i = 0; i < binary.length; i++) {
+		  array.push(binary.charCodeAt(i));
+		}
+		return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+	}
+
+	upload() {
+		var key = this.firebaseService.addImageName();
+
+		if (this.selectedPhoto) {
+		  this.dlURL = this.firebaseService.uploadPhoto(this.selectedPhoto, key);
+		  this.dlURL.then(this.onSuccess, this.onError);  
+		}
+	  }
 }
