@@ -60,7 +60,8 @@ export class GroupAddPage {
       "gname": this.gname,
       "gdescr": this.gdescr,
       "admin": this.admin,
-      "timestamp": 0-Date.now()
+			"timestamp": 0-Date.now(),
+			"photo": this.photo
     }
 
     if(this.label == "Add Group")

@@ -33,13 +33,28 @@ export class GroupPage{
         this.usergroup={
             "key": key
         }  
-        this.firebaseService.addUserGroup(this.usergroup);  
-        let alert = this.alertCtrl.create({
-			title: 'Group Joined.',
+        
+        let confirm = this.alertCtrl.create({
+			title: 'Group Joined!',
 			buttons: [ 'OK' ]
-		});
-    alert.present();
-    this.navCtrl.setRoot('GroupPage');
+        });
+        let alert = this.alertCtrl.create({
+        title: 'Join Group?',
+        buttons: [ 
+            {
+            text: 'YES',
+            handler: () => {
+                this.firebaseService.addUserGroup(this.usergroup);  
+                this.navCtrl.setRoot('GroupPage');
+                confirm.present();
+            }
+            },
+            {
+            text: 'NO',
+            }
+        ]
+        });
+        alert.present();
     }
 
     openAddGroup(){
