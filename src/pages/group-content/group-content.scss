@@ -102,36 +102,7 @@
     }
 }
 
-.wp{
-    .event-title{
-        top: 5.2em;
-        left: .5em;
-    }
 
-    .overlay{
-        padding-right: 20.89em;
-        padding-bottom: 3.6em;
-    }
-
-    .overlay1{
-        padding-right: 22.3em;
-        padding-bottom: 3.6em;
-    }
-
-    .group-title{
-        top: 4.5em;
-        left: .6em;
-    }
-
-    .names{
-        color: midnightblue;
-        left: 3em;
-    }
-}
-
-.post{
-    top: 4em;
-}
 
 group-content{
     .button-header{
@@ -143,5 +114,65 @@ group-content{
 
     .row-status{
         background-color: #FCFCFC;
+    }
+
+    .post{
+    top: 4em;
+    }
+
+    .descr-col{
+        font-size: 1em;
+    }
+
+    .name-col{
+        font-size: 2em;
+    }
+
+    .gheader{
+        padding-left: 2em;
+        padding-right: 2em;
+        padding-bottom: 1em;
+        padding-top: .5em;
+    }
+
+    .postbox{
+        left: 3em;
+        width: 5px;
+    }
+
+    .del-post1{
+        position: fixed;
+        right: 3.5em;
+        top: -4.2em;
+        height: 20px;
+        width: 18px;
+        z-index: -100;
+    }
+
+    .del-post2{
+        position: fixed;
+        right: 0.5em;
+        top: -4.2em;
+        height: 20px;
+        width: 18px;
+        z-index: -100;
+    }
+
+    .profilepic{
+            width: 5em;
+            height: 5em;
+    }
+    
+    .postcontent{
+        padding: .2em;
+    }
+
+    .box{
+        width: 23.5em; 
+        height: 14.5em; 
+        overflow: hidden;
+    }
+    .photo{
+        width: 100%;
     }
 }

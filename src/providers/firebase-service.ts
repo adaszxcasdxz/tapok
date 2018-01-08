@@ -11,7 +11,11 @@ export class FireBaseService {
   user;
 
   constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp) {
+<<<<<<< HEAD
     this.user = "Carmelle Ann Felicio";
+=======
+    this.user = "Kurt Torregosa";
+>>>>>>> kurt
   }
 
   setUser(name){
@@ -39,6 +43,10 @@ export class FireBaseService {
     return this.tapok.object('/events/'+key);
   }
 
+  getSpecificGroup(key){
+    return this.tapok.object('/groups/'+key);
+  }
+
   addEvent(name){
     var Key;
     Key = this.tapok.list('/events/').push(name).key;
@@ -55,6 +63,18 @@ export class FireBaseService {
 
   editEvent(eventKey, info){
     this.tapok.object('events/'+eventKey).update(info);
+  }
+
+  editGroups(groupKey, info){
+    this.tapok.object('groups/'+groupKey).update(info);
+  }
+
+  editPosts(groupKey, postKey, info){
+    this.tapok.object('/groups/'+groupKey+'/posts/'+postKey).update(info);
+  }
+
+  editComments(groupKey, postKey, comKey, info){
+    this.tapok.object('/groups/'+groupKey+'/posts/'+postKey+'/comments/'+comKey).update(info);
   }
 
   addTapok(event, eventKey, status, value, attendee, attendeeKey){
@@ -91,6 +111,18 @@ export class FireBaseService {
     this.tapok.object('events/'+eventKey).remove();
   }
 
+  deleteGroup(groupKey){
+    this.tapok.object('groups/'+groupKey).remove();
+  }
+
+  deletePost(groupKey, postKey){
+    this.tapok.object('groups/'+groupKey+'/posts/'+postKey).remove();
+  }
+
+  deleteComment(groupKey, postKey, commentKey){
+    this.tapok.object('groups/'+groupKey+'/posts/'+postKey+'/comments/'+commentKey).remove();
+  }
+  
   addKeyword(word){
     var Key;
     Key = this.tapok.list('keywords/').push(word).key;
@@ -122,7 +154,11 @@ export class FireBaseService {
   }
 
   getGroup(){
-    return this.tapok.list('/groups/');
+    return this.tapok.list('/groups/',{
+      query:{
+        orderByChild: 'timestamp'
+      }
+    });
   }
 
   addGroup(name){
@@ -159,6 +195,38 @@ export class FireBaseService {
       }
     });
   }
+  
+  addPost(post, key){ //comment, groupkey, postkey
+    this.tapok.list('/groups/' + key + '/posts/').push(post);
+  }
+
+  addComment(comment, groupkey, postkey){
+    this.tapok.list('/groups/' + groupkey + '/posts/' + postkey + '/comments/').push(comment);
+  }
+
+  getPost(key){
+    return this.tapok.list('/groups/' + key + '/posts/',{
+      query:{
+        orderByChild: 'timestamp'
+      }
+    }); //groups key posts key comments
+  }
+
+  getComment(groupkey, postkey){
+    return this.tapok.list('/groups/' + groupkey + '/posts/' + postkey + '/comments/',{
+      query:{
+        orderByChild: 'timestamp'
+      }
+    }); //groups key posts key comments
+  }
+
+  addUserGroup(key){
+    this.tapok.list('/users/' + this.user + '/groupKey/').push(key);
+  }
+
+  getUserGroup(){
+    return this.tapok.list('/users/'+this.user+'/groupKey/');
+  }  
 
   addImageName(){
     var key;

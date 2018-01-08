@@ -21,6 +21,7 @@ page-group{
     .descr-col{
         color: #1E1E20;
         margin: .5em;
+        bottom: 3em;
     }
 
     .title-col{
@@ -29,6 +30,20 @@ page-group{
 
     .nav-title{
         color: white;
+    }
+
+    .background{
+        padding-bottom: 5em;
+    }
+
+    .join-but{
+        width: 80%;
+        bottom: 0.5em;
+    }
+
+    .groupbg{
+        background-color: snow;
+        padding: 1em;
     }
 }
 

@@ -9,11 +9,12 @@ import { FireBaseService } from '../../providers/firebase-service';
 })
 export class GroupContent {
 
-  //groupcont: string = "posts";
-
+  groupcont: string = "posts";
   group: any;
+  post: any;
   key: any;
   user: any;
+  comment: any;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -21,10 +22,11 @@ export class GroupContent {
   ){
       this.user = this.firebaseService.getUser();
       this.key = navParams.get('param1');
-      this.group = this.firebaseService.getSpecificEvent(this.key);
+      this.post = this.firebaseService.getPost(this.key);
+      this.group = this.firebaseService.getSpecificGroup(this.key);
       this.group.forEach(groups=> {
         this.group = groups;
-    });
+      });
   }
 
   editGroup(){
@@ -32,13 +34,69 @@ export class GroupContent {
     modal.present();
   }
 
-  /*tapok(){
-    this.viewCtrl.dismiss();
-    let alert = this.alertCtrl.create({
-    title: 'Group Joined',
-    buttons: ['OK']
-    });
-    alert.present();
-  }*/
+  editPost(post){
+    console.log(post.$key);
+    let modal = this.modalCtrl.create('GroupPost', {tapokGroup: this.group, tapokPost: post, label: "Edit Post"});
+    modal.present();
+  }
 
+  openGroupPost(group){
+        this.navCtrl.push('GroupPost', { param1: group.$key, label: 'Add Post' });
+  }
+
+  openComment(group, post){
+        this.navCtrl.push('CommentPage', {param1: group.$key, param2: post.$key});
+  }
+
+  openAddComment(group, post){
+        this.navCtrl.push('CommentAddPage', {param1: group.$key, param2: post.$key, label: 'Add Comment'});
+  }
+
+  deleteGroup(){
+    let confirm = this.alertCtrl.create({
+      title: 'Group Disbanded',
+      buttons: [ 'OK' ]
+    });
+    let alert = this.alertCtrl.create({
+      title: 'Disband Group?',
+      buttons: [ 
+        {
+          text: 'YES',
+          handler: () => {
+            this.firebaseService.deleteGroup(this.group.$key);
+            this.navCtrl.setRoot('GroupPage');
+            confirm.present();
+          }
+        },
+        {
+          text: 'NO',
+        }
+      ]
+    });
+    alert.present(); 
+  }
+
+  deletePost(posts){
+    let confirm = this.alertCtrl.create({
+      title: 'Post Deleted',
+      buttons: [ 'OK' ]
+    });
+    let alert = this.alertCtrl.create({
+      title: 'Delete Post?',
+      buttons: [ 
+        {
+          text: 'YES',
+          handler: () => {
+            this.firebaseService.deletePost(this.group.$key, posts.$key);
+            //this.navCtrl.setRoot('GroupContent');
+            confirm.present();
+          }
+        },
+        {
+          text: 'NO',
+        }
+      ]
+    });
+    alert.present(); 
+  }
 }
