@@ -33,7 +33,7 @@
         <ion-list *ngSwitchCase="'posts'">
             <div class="contentbg">  
                 <div class="box">
-                    <img class="photo" src="{{ group.photo }}">
+                    <img (click)="viewPic(group.photo)" class="photo" src="{{ group.photo }}">
                 </div>
                     <div class="gheader">
                         <ion-row text-center>

@@ -54,7 +54,7 @@ export class ChatContent {
       "sentBy": this.firebaseService.getUser(),
       "timestamp": Date.now(),
     }
-    //this.keyboard.close();
+    
     setTimeout(() => {
       this.content.scrollToBottom(300);//300ms animation speed
     });
