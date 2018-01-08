@@ -56,5 +56,10 @@ export class EventContent {
     let modal = this.modalCtrl.create('ChatContent', { label: 'Chat',  event: this.event});
     modal.present();
   }
+
+  viewPic(photo){
+    let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
+    modal.present();
+  }
   
 }

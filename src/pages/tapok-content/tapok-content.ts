@@ -13,18 +13,30 @@ export class TapokContent {
   key: any;
   user: any;
   User: any;
+  Keyword: any;
+  keyword: any[] = [];
   userEventKeys: any;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
     public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService
   ){
+    var i = 0;
+
     this.user = this.firebaseService.getUser();
     this.key = navParams.get('param1');
     this.event = this.firebaseService.getSpecificEvent(this.key);
     this.event.forEach(events=> {
       this.event = events;
     });
+    this.Keyword = this.firebaseService.getKeywords(this.event.$key);
+    this.Keyword.subscribe(snapshots => {
+      snapshots.forEach(snapshot => {
+        this.keyword[i] = snapshot.key;
+        i++;
+      });
+    });
+
     this.User = this.firebaseService.getUsers();
 
     this.User.map(users => {
@@ -40,6 +52,8 @@ export class TapokContent {
   }
 
   deleteTapok(){
+    var i;
+
     let confirm = this.alertCtrl.create({
       title: 'Tapok Deleted',
       buttons: [ 'OK' ]
@@ -51,6 +65,8 @@ export class TapokContent {
           text: 'YES',
           handler: () => {
             this.firebaseService.deleteTapok(this.event.$key);
+            for(i=0;i<this.keyword.length;i++)
+              this.firebaseService.deleteKeyword(this.keyword[i]);  
             this.navCtrl.setRoot('TapokPage');
             confirm.present();
           }
@@ -61,6 +77,11 @@ export class TapokContent {
       ]
     });
     alert.present(); 
+  }
+
+  viewPic(photo){
+    let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
+    modal.present();
   }
 
   tapok(event){

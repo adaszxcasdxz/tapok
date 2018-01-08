@@ -15,8 +15,10 @@
 <ion-content>
     <ion-row>
         <ion-col>
-            <div (click)="openCamera()" class="box"></div>
-        </ion-col>
+            <div class="box" *ngIf="photo!=''">
+                <img class="photo" src="{{ photo }}">
+            </div>
+          </ion-col>
     </ion-row>
     <ion-row text-center>
         <ion-col>
