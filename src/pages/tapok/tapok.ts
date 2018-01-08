@@ -11,6 +11,7 @@ import { FireBaseService } from '../../providers/firebase-service';
 export class TapokPage {
 
   Event: any;
+  User: any;
   pages: string = "list";
   public toggled = false;
   user: any;
@@ -26,7 +27,14 @@ export class TapokPage {
     this.toggled = false;
     this.Event = this.firebaseService.getEvent();
     this.Attending = this.firebaseService.getUserEvents();
+    this.User = this.firebaseService.getUsers();
     this.user = firebaseService.user;
+
+    this.User.map(users => {
+      this.userEventKeys = users;
+      }).subscribe(data => {
+        data;
+      });
   }
 
   toggleSearch(){
