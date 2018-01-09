@@ -27,9 +27,9 @@ export class ChatContent {
       this.user = this.firebaseService.getUser();
       this.eKey=this.event.$key;
       this.List=this.firebaseService.getChat(this.eKey, this.content);
-      setTimeout(() => {
+      /*setTimeout(() => {
         this.content.scrollToBottom(300);
-      });
+      });*/
   }
 
   ionViewDidEnter(){
