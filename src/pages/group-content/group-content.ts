@@ -52,7 +52,7 @@ export class GroupContent {
         this.navCtrl.push('CommentAddPage', {param1: group.$key, param2: post.$key, label: 'Add Comment'});
   }
 
-  viewPic(photo){
+   viewPic(photo){
     let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
     modal.present();
   }

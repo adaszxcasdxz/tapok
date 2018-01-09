@@ -111,7 +111,9 @@
 
         <div [ngSwitch]="groupcont">
             <ion-list *ngSwitchCase="'events'">
-                <img src="assets/img/capstone.jpg">
+                <div class="box">
+                    <img (click)="viewPic(group.photo)" class="photo" src="{{ group.photo }}">
+                </div>
 
                 <ion-card>
                     <ion-card-content>
@@ -147,7 +149,9 @@
 
         <div [ngSwitch]="groupcont">
             <ion-list *ngSwitchCase="'members'">
-                 <img src="assets/img/capstone.jpg">
+                 <div class="box">
+                    <img (click)="viewPic(group.photo)" class="photo" src="{{ group.photo }}">
+                </div>
 
                 <ion-card>
                     <ion-item>

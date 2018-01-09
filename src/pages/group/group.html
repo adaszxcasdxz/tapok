@@ -25,19 +25,28 @@
                   <div class="box"></div>
                 </ion-col>
               </ion-row>-->
-              <div class="groupbg">
-                <ion-row text-center>
-                  <ion-col class="title-col" width-50>  
-                      <div class="title"><b>{{ group.gname }}</b></div>
-                  </ion-col> 
-                </ion-row>
-                <hr>    
-                <ion-row text-center>
-                  <ion-col>
-                      <div class="descr-col"><i>{{ group.gdescr }}</i></div>  
-                  </ion-col> 
-                </ion-row>
-              </div>
+            <!---<div class=overlaybox>-->
+              <div class="box" [style.background-image]="'url(' + group.photo + ')'">
+                </div>
+              <!---</div>-->
+                
+                <div class="gname">
+                  <ion-row text-center>
+                    <ion-col class="title-col" width-50>  
+                        <div class="title"><b>{{ group.gname }}</b></div>
+                    </ion-col> 
+                  </ion-row>
+                  <hr>    
+
+                  <ion-row class="gdescrip"text-center>
+                    <ion-col>
+                        <div class="descr-col"><i>{{ group.gdescr }}</i></div>  
+                    </ion-col> 
+                  </ion-row>
+                  </div>
+                
+                
+                
           </div>
         </ion-card>
       </div>
@@ -54,6 +63,10 @@
             </ion-col>
           </ion-row>-->
       <div class="groupbg">
+
+            <div class="box" [style.background-image]="'url(' + group.photo + ')'">
+            </div>
+            
             <ion-row text-center>
               <ion-col class="title-col" width-50>  
                   <div class="title"><b>{{ group.gname }}</b></div>
