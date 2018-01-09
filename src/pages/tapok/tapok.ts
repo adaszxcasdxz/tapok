@@ -18,12 +18,17 @@ export class TapokPage {
   attendees: any;
   userEventKeys: any;
   Attending: any;
-  Events: any;
   photoToggle: any;
+  eventTest: any[] = [];
+  userTest: any[] = [];
+  status: any[] = [];
+  index = 0;
 
   constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, 
       public modalCtrl: ModalController, public firebaseService: FireBaseService) {
+    var i = 0, y = 0;
+
     this.toggled = false;
     this.Event = this.firebaseService.getEvent();
     this.Attending = this.firebaseService.getUserEvents();
@@ -35,6 +40,46 @@ export class TapokPage {
       }).subscribe(data => {
         data;
       });
+
+    this.User.subscribe(snapshot => {
+      this.userTest.length = 0;
+      i = 0;
+      snapshot.forEach(snap => {
+        this.userTest[i] = snap.key;
+        i++;
+      })
+      this.test();
+    });
+
+    this.Event.subscribe(snapshots => {
+      this.eventTest.length = 0;
+      y = 0;
+      snapshots.forEach(snapshot => {
+        this.eventTest[y] = snapshot.$key;
+        y++;
+      })
+      this.test();
+    });
+
+    console.log(this.userTest);
+    console.log(this.eventTest);
+  }
+
+  test(){
+    this.status.length = 0;
+
+    for(var x=0;x<this.eventTest.length;x++){
+      for(var z=0;z<this.userTest.length;z++){
+        if(this.eventTest[x]!=this.userTest[z])
+          this.status[x] = "TAPOK";
+        else{
+          this.status[x] = "JOINED";
+          break;
+        }
+        
+      }
+    }
+    console.log(this.status);
   }
 
   toggleSearch(){

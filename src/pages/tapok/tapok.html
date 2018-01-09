@@ -21,7 +21,7 @@
 <ion-content class="background" fullscreen>
   <div [ngSwitch]="pages">
     <ion-list *ngSwitchCase="'list'">
-      <ion-card *ngFor="let event of Event | async" text-center>
+      <ion-card *ngFor="let event of Event | async; let i = index;" text-center>
         <ion-item>
           <ion-avatar item-start>
             <img class="user-avatar" src="assets/img/user.png">
@@ -70,8 +70,9 @@
             <!--<ng-template #notJoined>-->
               <button class="notjoined" (click)="tapok(event)" ion-button icon-left round clear>
                   <ion-icon name="happy"></ion-icon>
-                  <div>Tapok {{ event.tapok }}</div>
+                  <div>{{ status[i] }} {{ event.tapok }}</div>
               </button>
+              <div class="increment">{{ i+1 }}</div>
             <!--</ng-template>-->
           </ion-col>
           <ion-col>
