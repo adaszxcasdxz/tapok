@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, PopoverController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, PopoverController, ModalController, AlertController } from 'ionic-angular';
 import { Filter } from '../filter/filter';
 import { FireBaseService } from '../../providers/firebase-service';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 
 @IonicPage()
 @Component({
@@ -18,12 +19,17 @@ export class TapokPage {
   attendees: any;
   userEventKeys: any;
   Attending: any;
-  Events: any;
   photoToggle: any;
+  eventTest: any[] = [];
+  userTest: any[] = [];
+  status: any[] = [];
+  index = 0;
 
   constructor(
-      public navCtrl: NavController, public popoverCtrl: PopoverController, 
-      public modalCtrl: ModalController, public firebaseService: FireBaseService) {
+      public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
+      public modalCtrl: ModalController, public firebaseService: FireBaseService, private photoViewer: PhotoViewer) {
+    var i = 0, y = 0;
+
     this.toggled = false;
     this.Event = this.firebaseService.getEvent();
     this.Attending = this.firebaseService.getUserEvents();
@@ -35,6 +41,45 @@ export class TapokPage {
       }).subscribe(data => {
         data;
       });
+
+    this.User.subscribe(snapshot => {
+      this.userTest.length = 0;
+      i = 0;
+      snapshot.forEach(snap => {
+        this.userTest[i] = snap.key;
+        i++;
+      })
+      this.test();
+    });
+
+    this.Event.subscribe(snapshots => {
+      this.eventTest.length = 0;
+      y = 0;
+      snapshots.forEach(snapshot => {
+        this.eventTest[y] = snapshot.$key;
+        y++;
+      })
+      this.test();
+    });
+
+    console.log(this.userTest);
+    console.log(this.eventTest);
+  }
+
+  test(){
+    this.status.length = 0;
+
+    for(var x=0;x<this.eventTest.length;x++){
+      for(var z=0;z<this.userTest.length;z++){
+        if(this.eventTest[x]!=this.userTest[z])
+          this.status[x] = "TAPOK";
+        else{
+          this.status[x] = "JOINED";
+          break;
+        }
+        
+      }
+    }
   }
 
   toggleSearch(){
@@ -57,6 +102,7 @@ export class TapokPage {
   viewPic(photo){
     let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
     modal.present();
+    //this.photoViewer.show(photo);
   }
 
   openTapokContent(event){
@@ -80,6 +126,27 @@ export class TapokPage {
     modal.present();
   }
 
+  confirm(event, status){
+    if(status == "TAPOK"){
+      let alert = this.alertCtrl.create({
+        title: 'Join Event?',
+        buttons: [ 
+          {
+            text: 'YES',
+            handler: () => {
+            this.tapok(event);
+            }
+          },
+          {
+            text: 'NO',
+          }
+        ]
+      });
+      alert.present();
+    }else
+      this.tapok(event);
+  }
+
   tapok(event){
     var status = "false";
     var tapok = event.tapok;
@@ -88,7 +155,6 @@ export class TapokPage {
     var userKey;
     var attendee;
 
-    //if(attended == null){
       for(var attendees in event.attendees){
         if(event.attendees[attendees] == this.user){
           status = "true";
@@ -97,10 +163,6 @@ export class TapokPage {
           break;
        }
       }
-    /*}else{
-      status = "true";
-      attendeeKey = attended.$key;
-    }*/
 
     for(var userEventKey in this.userEventKeys){
       if(this.userEventKeys[userEventKey].key == event.$key){

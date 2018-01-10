@@ -35,13 +35,13 @@
     <div padding>
         <ion-row>
             <ion-col>
-                <div class="name-label"><b>Tapok Name</b></div>
+                <div class="name-label"><b>*Tapok Name</b></div>
                 <ion-input class="name" [(ngModel)]="name" type="text"></ion-input>
             </ion-col>  
         </ion-row>
         <ion-row>
             <ion-col>
-                <div class="detail-label">Start Date</div>
+                <div class="detail-label">*Start Date</div>
                 <ion-datetime [(ngModel)]="date" class="detail" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
             </ion-col> 
             <ion-col (click)="endDate()">
@@ -49,14 +49,14 @@
                 <div *ngIf="addEndDate == true">
                     <div class="detail-label">End Date | Cancel</div>
                     <ion-col>
-                        <ion-datetime [(ngModel)]="enddate" class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
+                        <ion-datetime [(ngModel)]="enddate" min="{{ date }}"class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
                     </ion-col>
                 </div>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
-                <div class="detail-label">Start Time</div>
+                <div class="detail-label">*Start Time</div>
                 <ion-datetime class="detail" [(ngModel)]="time" displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="eventTime" placeholder="00:00 MM"></ion-datetime>
             </ion-col>
             <ion-col (click)="endTime()">
@@ -71,7 +71,7 @@
         </ion-row>
         <ion-row>
             <ion-col>
-                <div class="detail-label">Venue</div>
+                <div class="detail-label">*Venue</div>
                 <ion-input class="detail" [(ngModel)]="venue" type="text"></ion-input>
             </ion-col>
         </ion-row>
@@ -82,9 +82,11 @@
             </ion-col>
         </ion-row>
         <ion-row class="buttons" text-center>
-            <ion-col *ngIf="label == 'Add Tapok'">
-                <button class="tapok-button" (click)="addTapok()" ion-button large>{{ label }}</button>
-            </ion-col>
+            <div *ngIf="name!=''&&venue!=''">
+                <ion-col *ngIf="label == 'Add Tapok'">
+                    <button class="tapok-button" (click)="addTapok()" ion-button large>{{ label }}</button>
+                </ion-col>
+            </div>
             <ion-col *ngIf="label == 'Edit Tapok'">
                 <button class="tapok-button" (click)="editTapok()" ion-button large>{{ label }}</button>
             </ion-col>

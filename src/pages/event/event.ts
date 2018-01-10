@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, ModalController, AlertController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 
 @IonicPage()
@@ -13,11 +13,33 @@ export class EventPage {
   Attending: any;
   user: any;
   attendees: any;
+  eventTest: any[] = [];
+  userTest: any[] = [];
+  status: any[] = [];
+  index = 0;
 
-  constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public modalCtrl: ModalController, public alertCtrl: AlertController) {
     this.Event = this.firebaseService.getEvent();
     this.Attending = this.firebaseService.getUserEvents();
     this.user = firebaseService.user;
+  }
+
+  confirm(event, key){
+      let alert = this.alertCtrl.create({
+        title: 'Leave Event?',
+        buttons: [ 
+          {
+            text: 'YES',
+            handler: () => {
+            this.tapok(event, key);
+            }
+          },
+          {
+            text: 'NO',
+          }
+        ]
+      });
+      alert.present();
   }
 
   tapok(event, attendKey){

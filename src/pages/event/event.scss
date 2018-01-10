@@ -12,8 +12,9 @@ ion-card{
 }
 
 .box{
-    width: 23.5em; 
-    height: 14.5em; 
+    height: 32vh !important;
+    width: auto !important;
+    align-items: center;
     overflow: hidden;
 }
 .photo{

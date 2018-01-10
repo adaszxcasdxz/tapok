@@ -12,17 +12,70 @@ export class EventContent {
   event: any;
   key: any;
   user: any;
+  User: any;
+  userEventKeys: any;
+  userTest: any[] = [];
+  status: any;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
     public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService
   ){
+    var i=0;
+
     this.user = this.firebaseService.getUser();
     this.key = navParams.get('param1');
     this.event = this.firebaseService.getSpecificEvent(this.key);
     this.event.forEach(events=> {
       this.event = events;
     });
+
+    this.User = this.firebaseService.getUsers();
+
+    this.User.subscribe(snapshot => {
+      this.userTest.length = 0;
+      i = 0;
+      snapshot.forEach(snap => {
+        this.userTest[i] = snap.key;
+        i++;
+      })
+      this.test();
+    });
+  }
+
+  test(){
+    this.status;
+    
+    for(var z=0;z<this.userTest.length;z++){
+      if(this.key!=this.userTest[z])
+        this.status = "TAPOK";
+      else{
+        this.status = "JOINED";
+        break;
+      }   
+    }
+  }
+
+  confirm(event, status){
+    if(status == "JOINED"){
+      let alert = this.alertCtrl.create({
+        title: 'Leave Event?',
+        buttons: [ 
+          {
+            text: 'YES',
+            handler: () => {
+            this.tapok(event);
+            this.navCtrl.push('EventPage');
+            }
+          },
+          {
+            text: 'NO',
+          }
+        ]
+      });
+      alert.present();
+    }else
+      this.tapok(event);
   }
 
   tapok(event){

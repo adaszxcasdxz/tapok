@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, ViewController, AlertController, NavParams, LoadingController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import * as moment from 'moment';
 //import { FirebaseListObservable } from 'angularfire2/database';
 
 @IonicPage()
@@ -16,8 +17,8 @@ export class AddTapok {
 	event: any;
 	host = '';
 	name = '';
-	date = '';
-	time = '';
+	date = moment().format('YYYY-MM-DD');
+	time = moment().format('hh:mm');
 	enddate = '';
 	endtime = '';
 	venue = '';
