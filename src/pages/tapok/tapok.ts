@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, PopoverController, ModalController, AlertController } from 'ionic-angular';
 import { Filter } from '../filter/filter';
 import { FireBaseService } from '../../providers/firebase-service';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 
 @IonicPage()
 @Component({
@@ -26,7 +27,7 @@ export class TapokPage {
 
   constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
-      public modalCtrl: ModalController, public firebaseService: FireBaseService) {
+      public modalCtrl: ModalController, public firebaseService: FireBaseService, private photoViewer: PhotoViewer) {
     var i = 0, y = 0;
 
     this.toggled = false;
@@ -101,6 +102,7 @@ export class TapokPage {
   viewPic(photo){
     let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
     modal.present();
+    //this.photoViewer.show(photo);
   }
 
   openTapokContent(event){
