@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, PopoverController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, PopoverController, ModalController, AlertController } from 'ionic-angular';
 import { Filter } from '../filter/filter';
 import { FireBaseService } from '../../providers/firebase-service';
 
@@ -25,7 +25,7 @@ export class TapokPage {
   index = 0;
 
   constructor(
-      public navCtrl: NavController, public popoverCtrl: PopoverController, 
+      public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
       public modalCtrl: ModalController, public firebaseService: FireBaseService) {
     var i = 0, y = 0;
 
@@ -79,7 +79,6 @@ export class TapokPage {
         
       }
     }
-    console.log(this.status);
   }
 
   toggleSearch(){
@@ -125,6 +124,27 @@ export class TapokPage {
     modal.present();
   }
 
+  confirm(event, status){
+    if(status == "TAPOK"){
+      let alert = this.alertCtrl.create({
+        title: 'Join Event?',
+        buttons: [ 
+          {
+            text: 'YES',
+            handler: () => {
+            this.tapok(event);
+            }
+          },
+          {
+            text: 'NO',
+          }
+        ]
+      });
+      alert.present();
+    }else
+      this.tapok(event);
+  }
+
   tapok(event){
     var status = "false";
     var tapok = event.tapok;
@@ -133,7 +153,6 @@ export class TapokPage {
     var userKey;
     var attendee;
 
-    //if(attended == null){
       for(var attendees in event.attendees){
         if(event.attendees[attendees] == this.user){
           status = "true";
@@ -142,10 +161,6 @@ export class TapokPage {
           break;
        }
       }
-    /*}else{
-      status = "true";
-      attendeeKey = attended.$key;
-    }*/
 
     for(var userEventKey in this.userEventKeys){
       if(this.userEventKeys[userEventKey].key == event.$key){

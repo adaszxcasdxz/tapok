@@ -47,12 +47,17 @@
         <div (click)="openTapokContent(event)">
           <ion-row>
             <ion-col class="title-col" width-50>  
-              <div class="title">{{ event.name }}</div>                
+              <div class="title"><b>{{ event.name }}</b></div>                
             </ion-col> 
           </ion-row>
           <ion-row>
             <ion-col>
-                <div class="sched">{{ event.date }} | {{ event.time }}</div>
+                <div class="sched">
+                  {{ event.date }}
+                  <span *ngIf="event.enddate!=''"> <b>—</b> {{ event.enddate }}</span> <b>|</b> 
+                  {{ event.time }}
+                  <span *ngIf="event.endtime!=''"> <b>—</b> {{ event.endtime }}</span>
+                </div>
                 <p><ion-icon name="pin"></ion-icon>  {{ event.venue }}</p>    
             </ion-col> 
           </ion-row>
@@ -68,7 +73,7 @@
               </ng-container>
             </div>-->
             <!--<ng-template #notJoined>-->
-              <button class="notjoined" (click)="tapok(event)" ion-button icon-left round clear>
+              <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left round clear>
                   <ion-icon name="happy"></ion-icon>
                   <div>{{ status[i] }} {{ event.tapok }}</div>
               </button>
