@@ -20,16 +20,16 @@
 
 
 <ion-content>
-  <div *ngFor="let event of Event | async">
-    <div *ngFor="let result of Result | async">
-      <ion-card *ngIf="event.$key == result.key"  text-center>
-        <div  (click)="openTapokContent(event)">
+  <div *ngFor="let res of result">
+    <div *ngFor="let event of Event | async; let i = index;">
+      <ion-card *ngIf="event.$key == res"  text-center>
+        <div (click)="openTapokContent(event)">
           <ion-item>
             <ion-avatar item-start>
               <img class="user-avatar" src="assets/img/user.png">
             </ion-avatar>
             <ion-label>
-              <h2><strong>{{ event.host }}</strong></h2>
+              <h2><strong>{{ event.host }} {{ i }}</strong></h2>
             </ion-label>
           </ion-item>
           <ion-row *ngIf="event.photo != ''">
@@ -48,7 +48,7 @@
         </ion-row>
           <ion-row>
             <ion-col class="title-col" width-50>  
-                <div class="title">{{ event.name }}</div>
+                <div class="title"><b>{{ event.name }}</b></div>
             </ion-col> 
           </ion-row>
           <ion-row>
@@ -60,9 +60,9 @@
         </div>
         <ion-row class="status-row">
           <ion-col>
-            <button (click)="tapok(event)" ion-button icon-left round clear>
+            <button (click)="confirm(event, status[i])" ion-button icon-left round clear>
               <ion-icon name="happy"></ion-icon>
-              <div>Tapok {{ event.tapok }}</div>
+              <div>{{ status[i] }} {{ event.tapok }}</div>
             </button> 
           </ion-col>
           <ion-col>

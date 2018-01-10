@@ -16,6 +16,8 @@ export class TapokContent {
   Keyword: any;
   keyword: any[] = [];
   userEventKeys: any;
+  userTest: any[] = [];
+  status: any;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -44,6 +46,29 @@ export class TapokContent {
      }).subscribe(data => {
        data;
      });
+
+     this.User.subscribe(snapshot => {
+      this.userTest.length = 0;
+      i = 0;
+      snapshot.forEach(snap => {
+        this.userTest[i] = snap.key;
+        i++;
+      })
+      this.test();
+    });
+  }
+
+  test(){
+    this.status;
+    
+    for(var z=0;z<this.userTest.length;z++){
+      if(this.key!=this.userTest[z])
+        this.status = "TAPOK";
+      else{
+        this.status = "JOINED";
+        break;
+      }   
+    }
   }
 
   editTapok(){
@@ -83,7 +108,28 @@ export class TapokContent {
     let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
     modal.present();
   }
-
+  
+  confirm(event, status){
+    if(status == "TAPOK"){
+      let alert = this.alertCtrl.create({
+        title: 'Join Event?',
+        buttons: [ 
+          {
+            text: 'YES',
+            handler: () => {
+            this.tapok(event);
+            }
+          },
+          {
+            text: 'NO',
+          }
+        ]
+      });
+      alert.present();
+    }else
+      this.tapok(event);
+  }
+  
   tapok(event){
     var status = "false";
     var tapok = event.tapok;
