@@ -30,21 +30,6 @@
               </div>-->
             </ion-col>
         </ion-row>
-
-        <ion-row class="row-status">
-            <ion-col>
-                <button (click)="confirm(event, status)" ion-button icon-left round clear>
-                    <ion-icon name="happy"></ion-icon>
-                    <div class>{{ status }} {{ event.tapok }}</div>
-                </button> 
-            </ion-col>
-            <ion-col>
-                <button ion-button icon-left round clear>
-                    <ion-icon name="share"></ion-icon>
-                    <div class="share">Share</div>
-                </button>
-            </ion-col>
-        </ion-row>
         <ion-row>
             <ion-col>
                 <h1><b>{{ event.name }}</b></h1>
@@ -56,10 +41,24 @@
                 <p><ion-icon name="pin"></ion-icon>  {{ event.venue }}</p>          
             </ion-col>
         </ion-row>
+        <ion-row>
+                <ion-col>
+                    <button (click)="confirm(event, status)" ion-button icon-left round clear>
+                        <ion-icon name="happy"></ion-icon>
+                        <div class>{{ status }} {{ event.tapok }}</div>
+                    </button> 
+                </ion-col>
+                <ion-col>
+                    <button ion-button icon-left round clear>
+                        <ion-icon name="share"></ion-icon>
+                        <div class="share">Share</div>
+                    </button>
+                </ion-col>
+        </ion-row>
         <ion-row text-justify padding>
-            <ion-col>
-                <p>Description:<br>{{ event.description }}</p>
-            </ion-col>
+                <ion-col>
+                    <p>Description:<br>{{ event.description }}</p>
+                </ion-col>
         </ion-row>
     </ion-card>
 

@@ -15,13 +15,30 @@ export class EventPage {
   attendees: any;
   eventTest: any[] = [];
   userTest: any[] = [];
-  status: any[] = [];
+  status: any;
   index = 0;
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public modalCtrl: ModalController, public alertCtrl: AlertController) {
     this.Event = this.firebaseService.getEvent();
     this.Attending = this.firebaseService.getUserEvents();
     this.user = firebaseService.user;
+    console.log(this.Attending);
+
+    this.Attending.subscribe(snapshot => {
+      this.userTest.length = 0;
+      var i = 0;
+      snapshot.forEach(snap => {
+        this.userTest[i] = snap.key;
+        i++;
+      })
+      this.test();
+    });
+  }
+
+  test(){
+    this.status = "true";
+    if(this.userTest[0] == null)
+      this.status = "false";
   }
 
   confirm(event, key){
@@ -74,6 +91,6 @@ export class EventPage {
   }
 
   openEventContent(event){
-    this.navCtrl.push('EventContent', {param1: event.$key});
+    this.navCtrl.push('TapokContent', {param1: event.$key});
   }
 }

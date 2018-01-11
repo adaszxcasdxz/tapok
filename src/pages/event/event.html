@@ -7,6 +7,9 @@
 </ion-header>  
 
 <ion-content class="background" fullscreen>
+  <div *ngIf="status == 'false'">
+    You have not joined any events.
+  </div>
   <div [ngSwitch]="pages">
     <ion-list>
       <div *ngFor="let event of Event | async" text-center>

@@ -34,7 +34,7 @@ export class TapokPage {
     this.Event = this.firebaseService.getEvent();
     this.Attending = this.firebaseService.getUserEvents();
     this.User = this.firebaseService.getUsers();
-    this.user = firebaseService.user;
+    this.user = firebaseService.getUser();
 
     this.User.map(users => {
       this.userEventKeys = users;
@@ -62,22 +62,20 @@ export class TapokPage {
       this.test();
     });
 
+  
     console.log(this.userTest);
     console.log(this.eventTest);
   }
 
   test(){
     this.status.length = 0;
-
     for(var x=0;x<this.eventTest.length;x++){
+      this.status[x] = "TAPOK";
       for(var z=0;z<this.userTest.length;z++){
-        if(this.eventTest[x]!=this.userTest[z])
-          this.status[x] = "TAPOK";
-        else{
+        if(this.eventTest[x]==this.userTest[z]){
           this.status[x] = "JOINED";
           break;
-        }
-        
+        } 
       }
     }
   }
