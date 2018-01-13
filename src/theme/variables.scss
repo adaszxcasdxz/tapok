@@ -40,7 +40,7 @@ $colors: (
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
-  kuyog-orange: #FF8D3F
+  tapok: #FF8D3F
 );
 
 
@@ -51,6 +51,8 @@ $colors: (
 $card-ios-background-color: #FFFFFF ;
 $card-ios-border-radius: 5px;
 $card-ios-margin-bottom: 20px;
+
+$badge-ios-background-color: #FF8D3F;
 
 $tabs-ios-tab-color-inactive: #353C3F;
 $tabs-ios-tab-color-active: #FF8D3F;
@@ -69,6 +71,8 @@ $segment-button-ios-text-color-activated: #FFFFFF;
 $card-md-background-color: #FFFFFF ;
 $card-md-border-radius: 5px;
 $card-md-margin-bottom: 20px;
+
+$badge-md-background-color: #FF8D3F;
 
 $tabs-md-tab-color-inactive: #353C3F;
 $tabs-md-tab-color-active: #FF8D3F;

@@ -1,6 +1,14 @@
 <ion-header>
     <ion-navbar>
-        <ion-buttons right large>
+        <ion-segment [(ngModel)]="tabs">
+            <ion-segment-button value="info">
+                Info
+            </ion-segment-button> 
+            <ion-segment-button value="chat">
+                Chat 
+            </ion-segment-button> 
+        </ion-segment>
+        <!--<ion-buttons right large>
             <button class="button-header" (click)="editTapok()" ion-button icon-only round>
                 <ion-icon name="create"></ion-icon>
             </button>
@@ -9,58 +17,79 @@
             <button class="button-header" (click)="deleteTapok()" ion-button icon-only round>
                 <ion-icon name="trash"></ion-icon>
             </button>
+        </ion-buttons>-->
+        <ion-buttons right large>
+            <button class="button-header" (click)="popOver($event)" ion-button icon-only round>
+                <ion-icon name="settings"></ion-icon>
+            </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
 
-<ion-content>
-
-    <ion-card text-center>        
-        <ion-row *ngIf="event.photo != ''">
+<ion-content text-center>  
+    <ion-row *ngIf="event.photo != ''">
             <ion-col (click)="viewPic(event.photo)">
             <!--<ion-col (click)="toggle(event.$key, event.toggle)">
-              <div *ngIf="event.toggle == 'false'">
-                  see photo
-              </div>
-              <div *ngIf="event.toggle == 'true'">-->
-                <div class="box">
-                  <img class="photo" src="{{ event.photo }}">
+                <div *ngIf="event.toggle == 'false'">
+                    see photo
                 </div>
+                <div *ngIf="event.toggle == 'true'">-->
+                <div class="box">
+                    <img class="photo" src="{{ event.photo }}">
+                </div>    
                 <!--<br>hide photo
-              </div>-->
+                </div>-->
             </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col>
-                <h1><b>{{ event.name }}</b></h1>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col>
-                <div class="sched">{{ event.date }}| {{ event.time }} </div>
-                <p><ion-icon name="pin"></ion-icon>  {{ event.venue }}</p>          
-            </ion-col>
-        </ion-row>
-        <ion-row>
-                <ion-col>
-                    <button (click)="confirm(event, status)" ion-button icon-left round clear>
-                        <ion-icon name="happy"></ion-icon>
-                        <div class>{{ status }} {{ event.tapok }}</div>
-                    </button> 
-                </ion-col>
-                <ion-col>
-                    <button ion-button icon-left round clear>
-                        <ion-icon name="share"></ion-icon>
-                        <div class="share">Share</div>
-                    </button>
-                </ion-col>
-        </ion-row>
-        <ion-row text-justify padding>
-                <ion-col>
-                    <p>Description:<br>{{ event.description }}</p>
-                </ion-col>
-        </ion-row>
-    </ion-card>
+    </ion-row>      
+    <ion-row>
+        <ion-col>
+            <div class="title"><h1><b><hr>{{ event.name }}<hr></b></h1></div>
+        </ion-col>
+    </ion-row>
+    <ion-item text-center no-padding>
+        <div class="sched">
+            <p><ion-icon name = "calendar"></ion-icon>
+            {{ event.date }}
+            <span *ngIf="event.enddate!=''"> <b>—</b> {{ event.enddate }} </span> |  
+            <ion-icon name = "time"></ion-icon>
+                {{ event.time }}
+            <span *ngIf="event.endtime!=''"> <b>—</b> {{ event.endtime }}</span><br><br>
+            <ion-icon name = "pin"></ion-icon>
+                {{ event.venue }}</p>
+        </div> 
+    </ion-item>
+    <ion-row>
+        <ion-col>
+            <button (click)="confirm(event, status)" ion-button icon-left outline>
+                <div class>{{ event.tapok }} Attendees</div>
+            </button> 
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
+            <button (click)="confirm(event, status)" ion-button icon-left round clear>
+                <ion-icon name="happy"></ion-icon>
+                <div *ngIf="status == 'TAPOK'">
+                    Join
+                </div>
+                <div *ngIf="status == 'JOINED'">
+                    Leave
+                </div>
+            </button> 
+        </ion-col>
+        <ion-col>
+            <button ion-button icon-left round clear>
+                <ion-icon name="share"></ion-icon>
+                <div class="share">Share</div>
+            </button>
+        </ion-col>
+    </ion-row>
+    <ion-row class="description" no-padding text-justify>
+        <ion-col>
+            <hr><b>Description:</b><br>{{ event.description }}<hr>
+        </ion-col>
+    </ion-row>
+
 
     <!--<ion-footer>
             <div padding>

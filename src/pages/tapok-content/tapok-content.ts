@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ViewController, AlertController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, AlertController, NavParams, ModalController, PopoverController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
+import { Popover } from 'ionic-angular/components/popover/popover';
 
 @IonicPage()
 @Component({
@@ -18,13 +19,14 @@ export class TapokContent {
   userEventKeys: any;
   userTest: any[] = [];
   status: any;
+  tabs: any;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
-    public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService
+    public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService, public popoverCtrl: PopoverController
   ){
     var i = 0;
-
+    this.tabs = 'info';
     this.user = this.firebaseService.getUser();
     this.key = navParams.get('param1');
     this.event = this.firebaseService.getSpecificEvent(this.key);
@@ -69,6 +71,21 @@ export class TapokContent {
         break;
       }   
     }
+  }
+
+  popOver(event){
+    let popover = this.popoverCtrl.create('PopoverPage', {event: this.event, keyword: this.keyword});
+    popover.present({
+      ev: event
+    });
+
+    popover.onDidDismiss(data => {
+      console.log(data);
+      if(data=='edit')
+        this.editTapok();
+      if(data=='delete')
+        this.deleteTapok();
+    });
   }
 
   editTapok(){

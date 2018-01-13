@@ -27,7 +27,7 @@ export class TapokPage {
 
   constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
-      public modalCtrl: ModalController, public firebaseService: FireBaseService, private photoViewer: PhotoViewer) {
+      public modalCtrl: ModalController, public firebaseService: FireBaseService, public photoViewer: PhotoViewer) {
     var i = 0, y = 0;
 
     this.toggled = false;
@@ -62,7 +62,6 @@ export class TapokPage {
       this.test();
     });
 
-  
     console.log(this.userTest);
     console.log(this.eventTest);
   }
@@ -98,9 +97,11 @@ export class TapokPage {
   }
 
   viewPic(photo){
-    let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
-    modal.present();
+    /*let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
+    modal.present();*/
     //this.photoViewer.show(photo);
+    this.photoViewer.show('https://mysite.com/path/to/image.jpg');
+    this.photoViewer.show('https://mysite.com/path/to/image.jpg', 'My image title', {share: false});
   }
 
   openTapokContent(event){
