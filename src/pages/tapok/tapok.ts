@@ -27,14 +27,18 @@ export class TapokPage {
 
   constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
+<<<<<<< HEAD
       public modalCtrl: ModalController, public firebaseService: FireBaseService) {
+=======
+      public modalCtrl: ModalController, public firebaseService: FireBaseService, public photoViewer: PhotoViewer) {
+>>>>>>> henry
     var i = 0, y = 0;
 
     this.toggled = false;
     this.Event = this.firebaseService.getEvent();
     this.Attending = this.firebaseService.getUserEvents();
     this.User = this.firebaseService.getUsers();
-    this.user = firebaseService.user;
+    this.user = firebaseService.getUser();
 
     this.User.map(users => {
       this.userEventKeys = users;
@@ -68,16 +72,13 @@ export class TapokPage {
 
   test(){
     this.status.length = 0;
-
     for(var x=0;x<this.eventTest.length;x++){
+      this.status[x] = "TAPOK";
       for(var z=0;z<this.userTest.length;z++){
-        if(this.eventTest[x]!=this.userTest[z])
-          this.status[x] = "TAPOK";
-        else{
+        if(this.eventTest[x]==this.userTest[z]){
           this.status[x] = "JOINED";
           break;
-        }
-        
+        } 
       }
     }
   }
@@ -100,9 +101,11 @@ export class TapokPage {
   }
 
   viewPic(photo){
-    let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
-    modal.present();
+    /*let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
+    modal.present();*/
     //this.photoViewer.show(photo);
+    this.photoViewer.show('https://mysite.com/path/to/image.jpg');
+    this.photoViewer.show('https://mysite.com/path/to/image.jpg', 'My image title', {share: false});
   }
 
   openTapokContent(event){
