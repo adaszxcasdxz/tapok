@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, ViewController, AlertController, NavParams, LoadingController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import * as moment from 'moment';
 //import { FirebaseListObservable } from 'angularfire2/database';
 
 @IonicPage()
@@ -16,10 +17,14 @@ export class AddTapok {
 	event: any;
 	host = '';
 	name = '';
-	date = '';
-	time = '';
+	date = moment().format();
+	mDate: any;
+	time = moment().format();
+	mTime: any;
 	enddate = '';
+	mEndDate: any;
 	endtime = '';
+	mEndTime: any;
 	venue = '';
 	description = '';
 	tapok = 0;
@@ -65,15 +70,27 @@ export class AddTapok {
 	addTapok() {
 		var i, eventKey;
 
+		this.mDate = moment(this.date).format('MMM DD');
+		this.mTime = moment(this.time).format('hh:mm a');
+		
+		if(this.enddate != '')
+			this.mEndDate = moment(this.enddate).format('MMM DD');
+		else
+			this.mEndDate = '';
+		if(this.endtime != '')
+			this.mEndTime = moment(this.endtime).format('hh:mm a');
+		else
+			this.mEndTime = '';
+
 		this.event={
 			"host": this.host,
 			"name": this.name,
 			"photo": this.photo,
 			"toggle": "false",
-			"date": this.date,
-			"time": this.time,
-			"endtime": this.endtime,
-			"enddate": this.enddate,
+			"date": this.mDate,
+			"time": this.mTime,
+			"endtime": this.mEndTime,
+			"enddate": this.mEndDate,
 			"venue": this.venue,
 			"description": this.description,
 			"tapok": this.tapok,
@@ -144,8 +161,10 @@ export class AddTapok {
 	}
 
 	endDate(){
-		if(this.addEndDate == false)
+		if(this.addEndDate == false){
 			this.addEndDate = true;
+			this.enddate = moment().format();
+		}
 		else{
 			this.addEndDate = false;
 			this.enddate = '';
@@ -153,8 +172,10 @@ export class AddTapok {
 	}
 
 	endTime(){
-		if(this.addEndTime == false)
+		if(this.addEndTime == false){
 			this.addEndTime = true;
+			this.endtime = moment().format();
+		}
 		else{
 			this.addEndTime = false;	
 			this.endtime = '';

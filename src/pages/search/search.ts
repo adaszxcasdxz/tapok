@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController, AlertController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 
 /**
@@ -22,10 +22,18 @@ export class SearchPage {
   User: any;
   userEventKeys: any;
   Event: any;
+  result: any[] = [];
+  index = 0;
+  userTest: any[] = [];
+  eventTest: any[] = [] ;
+  status: any[] = [] ;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
-    public firebaseService: FireBaseService
+    public firebaseService: FireBaseService, public modalCtrl: ModalController, public alertCtrl: AlertController
   ) {
+    var i, y;
+
+    this.index = 0;
     this.user = firebaseService.user;
     this.Event = this.firebaseService.getEvent();
     this.User = this.firebaseService.getUsers();
@@ -35,6 +43,42 @@ export class SearchPage {
     }).subscribe(data => {
       data;
     });
+
+    this.User.subscribe(snapshot => {
+      this.userTest.length = 0;
+      i = 0;
+      snapshot.forEach(snap => {
+        this.userTest[i] = snap.key;
+        i++;
+      })
+      this.test();
+    });
+
+    this.Event.subscribe(snapshots => {
+      this.eventTest.length = 0;
+      y = 0;
+      snapshots.forEach(snapshot => {
+        this.eventTest[y] = snapshot.$key;
+        y++;
+      })
+      this.test();
+    });
+  }
+
+  test(){
+    this.status.length = 0;
+
+    for(var x=0;x<this.eventTest.length;x++){
+      for(var z=0;z<this.userTest.length;z++){
+        if(this.eventTest[x]!=this.userTest[z])
+          this.status[x] = "TAPOK";
+        else{
+          this.status[x] = "JOINED";
+          break;
+        }
+        
+      }
+    }
   }
 
   ionViewDidLoad() {
@@ -50,10 +94,50 @@ export class SearchPage {
   }
 
   onInput(){
-    if(this.search != "")
+    if(this.search != ""){
+      var i;
+
       this.Result = this.firebaseService.searchTapok(this.search.toLowerCase());
-    else
+      this.Result.subscribe(snapshot => {
+        this.result.length = 0;
+        i = 0;
+        snapshot.forEach(snap => {
+          this.result[i] = snap.key;
+          i++;
+        })
+        this.test();
+      });
+    }
+    else{
       this.Result = null;
+      this.result = [""];
+    }
+  }
+
+  viewPic(photo){
+    let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
+    modal.present();
+  }
+
+  confirm(event, status){
+    if(status == "TAPOK"){
+      let alert = this.alertCtrl.create({
+        title: 'Join Event?',
+        buttons: [ 
+          {
+            text: 'YES',
+            handler: () => {
+            this.tapok(event);
+            }
+          },
+          {
+            text: 'NO',
+          }
+        ]
+      });
+      alert.present();
+    }else
+      this.tapok(event);
   }
 
   tapok(event){

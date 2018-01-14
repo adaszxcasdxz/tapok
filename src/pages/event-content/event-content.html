@@ -6,20 +6,18 @@
 <ion-content>
 
     <ion-card text-center>        
-        <img src="assets/img/frisbee-game.jpg">
-
-        <ion-row class="row-status">
-            <ion-col>
-                <button (click)="tapok(event)" ion-button icon-left round clear>
-                    <ion-icon name="happy"></ion-icon>
-                    <div class>Tapok {{ event.tapok }}</div>
-                </button> 
-            </ion-col>
-            <ion-col>
-                <button ion-button icon-left round clear>
-                    <ion-icon name="share"></ion-icon>
-                    <div class="share">Share</div>
-                </button>
+        <ion-row *ngIf="event.photo != ''">
+            <ion-col (click)="viewPic(event.photo)">
+            <!--<ion-col (click)="toggle(event.$key, event.toggle)">
+              <div *ngIf="event.toggle == 'false'">
+                  see photo
+              </div>
+              <div *ngIf="event.toggle == 'true'">-->
+                <div class="box">
+                  <img class="photo" src="{{ event.photo }}">
+                </div>
+                <!--<br>hide photo
+              </div>-->
             </ion-col>
         </ion-row>
         <ion-row>
@@ -37,6 +35,20 @@
             <ion-col>
                 <p>Description:<br>{{ event.description }}</p>
             </ion-col>
+        </ion-row>
+        <ion-row class="row-status">
+                <ion-col>
+                    <button (click)="confirm(event, status)" ion-button icon-left round clear>
+                        <ion-icon name="happy"></ion-icon>
+                        <div class>Tapok {{ event.tapok }}</div>
+                    </button> 
+                </ion-col>
+                <ion-col>
+                    <button ion-button icon-left round clear>
+                        <ion-icon name="share"></ion-icon>
+                        <div class="share">Share</div>
+                    </button>
+                </ion-col>
         </ion-row>
     </ion-card>
 

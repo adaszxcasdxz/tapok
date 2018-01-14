@@ -9,4 +9,14 @@ tapok-content{
     .row-status{
         background-color: #FCFCFC;
     }
+
+    .box{
+        height: 32vh !important;
+        width: auto !important;
+        align-items: center;
+        overflow: hidden;
+    }
+    .photo{
+        width: 100%;
+    }
 }

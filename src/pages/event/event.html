@@ -7,11 +7,14 @@
 </ion-header>  
 
 <ion-content class="background" fullscreen>
+  <div *ngIf="status == 'false'">
+    You have not joined any events.
+  </div>
   <div [ngSwitch]="pages">
     <ion-list>
       <div *ngFor="let event of Event | async" text-center>
         <div *ngFor="let attend of Attending | async">
-          <ion-card  *ngIf="attend.key == event.$key" (click)="openEventContent(event)">
+          <ion-card *ngIf="attend.key == event.$key">
             <ion-item>
               <ion-avatar item-start>
                 <img class="user-avatar" src="assets/img/user.png">
@@ -20,27 +23,38 @@
                 <h2><strong>{{ event.host }}</strong></h2>
               </ion-label>
             </ion-item>
-            <ion-row>
-              <ion-col>
-                <div class="box"></div>
+            <ion-row *ngIf="event.photo != ''">
+              <ion-col (click)="viewPic(event.photo)">
+              <!--<ion-col (click)="toggle(event.$key, event.toggle)">
+                <div *ngIf="event.toggle == 'false'">
+                    see photo
+                </div>
+                <div *ngIf="event.toggle == 'true'">-->
+                  <div class="box">
+                    <img class="photo" src="{{ event.photo }}">
+                  </div>
+                  <!--<br>hide photo
+                </div>-->
               </ion-col>
             </ion-row>
-            <ion-row>
-              <ion-col class="title-col" width-50>  
-                  <div class="title">{{ event.name }}</div>
-              </ion-col> 
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                  <div class="sched">{{ event.date }} | {{ event.time }}</div>
-                  <p><ion-icon name="pin"></ion-icon>  {{ event.venue }}</p>    
-              </ion-col> 
-            </ion-row>
+            <div (click)="openEventContent(event)">
+              <ion-row>
+                <ion-col class="title-col" width-50>  
+                    <div class="title"><b>{{ event.name }}</b></div>
+                </ion-col> 
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                    <div class="sched">{{ event.date }} | {{ event.time }}</div>
+                    <p><ion-icon name="pin"></ion-icon>  {{ event.venue }}</p>    
+                </ion-col> 
+              </ion-row>
+            </div>
             <ion-row class="status-row">
               <ion-col>
-                <button (click)="tapok(event, attend.$key)" ion-button icon-left round clear>
+                <button (click)="confirm(event, attend.$key)" ion-button icon-left round clear>
                   <ion-icon name="happy"></ion-icon>
-                  <div>Tapok {{ event.tapok }}</div>
+                  <div>JOINED {{ event.tapok }}</div>
                 </button> 
               </ion-col>
               <ion-col>

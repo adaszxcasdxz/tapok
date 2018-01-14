@@ -9,6 +9,30 @@ tapok-content{
     .row-status{
         background-color: #FCFCFC;
     }
+
+    .box{
+        height: 32vh !important;
+        width: auto !important;
+        align-items: center;
+        overflow: hidden;
+    }
+    .photo{
+        width: 100%;
+    }
+
+    .sched{
+        color: #1E1E20;
+        margin: .5em;
+    }
+
+    .title{
+        color: #2F2E33;
+    }
+
+    ion-item .item-inner{
+        padding: 0px !important;
+        border-bottom: 0px!important;
+     }
 }
 
 
