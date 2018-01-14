@@ -25,7 +25,7 @@ export class TabsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FireBaseService) {
     this.username = navParams.get('username');
-    this.firebaseService.setUser(this.username);
+    this.firebaseService.getUser();
   }
 
   ionViewDidLoad() {
