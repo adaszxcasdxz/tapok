@@ -102,9 +102,11 @@ export class AddTapok {
 	}
 
 	editTapok(){
+		var eventKey;
 		this.event={
 			"host": this.host,
 			"name": this.name,
+			"photo": this.photo,
 			"date": this.date,
 			"time": this.time,
 			"endtime": this.endtime,
@@ -114,6 +116,15 @@ export class AddTapok {
 			"search_key": this.name.toLowerCase(),
 			"timestamp": 0-Date.now()
 		};
+
+		this.word = this.name.split(" ");
+		for(let i=0;i<this.word.length;i++){
+			this.keyword={
+				"keyword": this.word[i].toLowerCase(),
+				"key": eventKey
+			};
+			this.firebaseService.addKeyword(this.keyword);
+		}
 
 		this.firebaseService.editEvent(this.key, this.event);
 		this.cancel();
