@@ -1,17 +1,25 @@
 page-comment {
-    .commentbg{
-        padding: 0.1em;
+    .combox{
+        width: 100%;
     }
 
     .names{
         color: midnightblue;
         font-size: medium;
-        margin-left: 0.1em;
         margin-top:0.5em;
+        position: absolute;
+        top: 10%;
+        padding-left: 1.7em;
     }
 
     .timestamp{
-        left: 5em;
+        position: absolute;
+        top: 2.9em;
+        padding-left: 5.5em;
+    }
+
+    .profilepic{
+        margin-left: 1.5em;
     }
 
     .item-avatar{
@@ -19,25 +27,18 @@ page-comment {
     }
 
     .post{
-        margin-top: -1em;
-        size: 12px;
+        margin-top: 1em;
+        padding-right: 1em;
+        padding-left: 2em;
+        size: 15px;
     }
 
     .del-com1{
         position: fixed;
-        right: 2.5em;
-        top: -5.7em;
-        height: 20px;
-        width: 18px;
-        z-index: -100;
-    }
-
-    .del-com2{
-        position: fixed;
-        right: 0.3em;
-        top: -5.7em;
-        height: 20px;
-        width: 18px;
+        right: -0.6em;
+        top: -4em;
+        height: 3em;
+        width: 3em;
         z-index: -100;
     }
 }

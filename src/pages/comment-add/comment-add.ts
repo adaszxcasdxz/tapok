@@ -51,7 +51,7 @@ export class CommentAddPage {
     this.post={
       "comment": this.comment,
       "commenter": this.commenter,
-      "timestamp": 0-Date.now(),
+      "timestamp": Date.now(),
       "datetime": Date.now()
     }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ViewController, AlertController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, AlertController, NavParams, ModalController, ActionSheetController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 
 @IonicPage()
@@ -18,7 +18,8 @@ export class GroupContent {
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
-    public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService
+    public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService,
+    public actionCtrl: ActionSheetController
   ){
       this.user = this.firebaseService.getUser();
       this.key = navParams.get('param1');
@@ -27,6 +28,28 @@ export class GroupContent {
       this.group.forEach(groups=> {
         this.group = groups;
       });
+  }
+
+  presentActionSheetPost(posts){
+    let actionSheet = this.actionCtrl.create({
+        buttons: [
+          {
+            text: 'Edit',
+            handler: () => {
+              this.editPost(posts);
+              console.log('Edit');
+              //this.firebaseService.editPost(post);
+            }
+          }, {
+            text: 'Delete',
+            handler: () => {
+              this.deletePost(posts);
+              console.log('Delete');
+            }
+          }
+        ]
+    });
+    actionSheet.present();
   }
 
   editGroup(){
