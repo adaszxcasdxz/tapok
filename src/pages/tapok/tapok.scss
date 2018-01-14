@@ -13,8 +13,9 @@ page-tapok{
     }
     
     .box{
-        width: 23.5em; 
-        height: 14.5em; 
+        height: 32vh !important;
+        width: auto !important;
+        align-items: center;
         overflow: hidden;
     }
     .photo{
@@ -36,6 +37,27 @@ page-tapok{
 
     .search-icon{
         color: white;
+    }
+
+    .increment{
+        display: none;
+    }
+
+    .chip-label{
+        margin-left: .2em;
+    }
+
+    .chip-label-date{
+        margin-left: .2em;
+        margin-right: 1em;
+    }
+
+    .location{
+        padding-top: 1em;
+    }
+
+    .details{
+        font-size: 16px;
     }
 }
 

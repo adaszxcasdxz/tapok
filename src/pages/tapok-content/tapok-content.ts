@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ViewController, AlertController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, AlertController, NavParams, ModalController, PopoverController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
+import { Popover } from 'ionic-angular/components/popover/popover';
 
 @IonicPage()
 @Component({
@@ -16,13 +17,16 @@ export class TapokContent {
   Keyword: any;
   keyword: any[] = [];
   userEventKeys: any;
+  userTest: any[] = [];
+  status: any;
+  tabs: any;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
-    public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService
+    public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService, public popoverCtrl: PopoverController
   ){
     var i = 0;
-
+    this.tabs = 'info';
     this.user = this.firebaseService.getUser();
     this.key = navParams.get('param1');
     this.event = this.firebaseService.getSpecificEvent(this.key);
@@ -44,6 +48,44 @@ export class TapokContent {
      }).subscribe(data => {
        data;
      });
+
+     this.User.subscribe(snapshot => {
+      this.userTest.length = 0;
+      i = 0;
+      snapshot.forEach(snap => {
+        this.userTest[i] = snap.key;
+        i++;
+      })
+      this.test();
+    });
+  }
+
+  test(){
+    this.status;
+    
+    for(var z=0;z<this.userTest.length;z++){
+      if(this.key!=this.userTest[z])
+        this.status = "TAPOK";
+      else{
+        this.status = "JOINED";
+        break;
+      }   
+    }
+  }
+
+  popOver(event){
+    let popover = this.popoverCtrl.create('PopoverPage', {event: this.event, keyword: this.keyword});
+    popover.present({
+      ev: event
+    });
+
+    popover.onDidDismiss(data => {
+      console.log(data);
+      if(data=='edit')
+        this.editTapok();
+      if(data=='delete')
+        this.deleteTapok();
+    });
   }
 
   editTapok(){
@@ -79,6 +121,32 @@ export class TapokContent {
     alert.present(); 
   }
 
+  viewPic(photo){
+    let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
+    modal.present();
+  }
+  
+  confirm(event, status){
+    if(status == "TAPOK"){
+      let alert = this.alertCtrl.create({
+        title: 'Join Event?',
+        buttons: [ 
+          {
+            text: 'YES',
+            handler: () => {
+            this.tapok(event);
+            }
+          },
+          {
+            text: 'NO',
+          }
+        ]
+      });
+      alert.present();
+    }else
+      this.tapok(event);
+  }
+  
   tapok(event){
     var status = "false";
     var tapok = event.tapok;

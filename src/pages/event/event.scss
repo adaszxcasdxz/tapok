@@ -12,9 +12,13 @@ ion-card{
 }
 
 .box{
-    background-color: gray;
+    height: 32vh !important;
+    width: auto !important;
+    align-items: center;
+    overflow: hidden;
+}
+.photo{
     width: 100%;
-    height: 14em;
 }
 
 .sched{
