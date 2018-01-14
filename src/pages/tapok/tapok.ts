@@ -52,7 +52,7 @@ export class TapokPage {
   }
 
   openTapokContent(event){
-    this.navCtrl.push('TapokContent', {param1: event.$key}); //
+    this.navCtrl.push('TapokContent', {param1: event.$key}); 
   }
 
   showFilterPopOver(myTapok){
