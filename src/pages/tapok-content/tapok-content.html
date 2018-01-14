@@ -46,25 +46,40 @@
             <div class="title"><h1><b><hr>{{ event.name }}<hr></b></h1></div>
         </ion-col>
     </ion-row>
-    <ion-item text-center no-padding>
-        <div class="sched">
-            <p><ion-icon name = "calendar"></ion-icon>
-            {{ event.date }}
-            <span *ngIf="event.enddate!=''"> <b>—</b> {{ event.enddate }} </span> |  
-            <ion-icon name = "time"></ion-icon>
-                {{ event.time }}
-            <span *ngIf="event.endtime!=''"> <b>—</b> {{ event.endtime }}</span><br><br>
-            <ion-icon name = "pin"></ion-icon>
-                {{ event.venue }}</p>
-        </div> 
-    </ion-item>
     <ion-row>
-        <ion-col>
-            <button (click)="confirm(event, status)" ion-button icon-left outline>
-                <div class>{{ event.tapok }} Attendees</div>
-            </button> 
-        </ion-col>
-    </ion-row>
+                <ion-col>
+                  <span *ngIf="event.enddate==''">
+                    <ion-chip>
+                      <ion-icon name = "calendar" color="secondary"></ion-icon>
+                    </ion-chip><span class="chip-label-date">{{ event.date }}</span>
+                  </span>
+                  <span *ngIf="event.enddate!=''">
+                    <ion-chip>   
+                      <ion-icon name = "calendar" color="secondary"></ion-icon>                     
+                    </ion-chip><span class="chip-label-date">{{ event.date }}  <b>-</b> {{ event.enddate }}</span>
+                  </span>   
+                  <span *ngIf="event.endtime==''">
+                    <ion-chip>
+                      <ion-icon name = "time" color="danger"></ion-icon>                    
+                    </ion-chip><span class="chip-label">{{ event.time }}</span>
+                  </span>
+                  <span *ngIf="event.endtime!=''">
+                    <ion-chip>   
+                        <ion-icon name = "time" color="danger"></ion-icon>                      
+                    </ion-chip><span class="chip-label">{{ event.time }}  <b>-</b> {{ event.endtime }}</span>
+                  </span>
+                  <br>
+                  <ion-chip>
+                    <ion-icon name = "pin"></ion-icon>                    
+                  </ion-chip><span class="chip-label">{{ event.venue }}</span>
+                  <br>
+                  <button (click)="confirm(event, status)" ion-button icon-left outline small>
+                    <div *ngIf="event.tapok > 1">{{ event.tapok }} Attendees</div>
+                    <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
+                    <div *ngIf="event.tapok == 0">No Attendees</div>
+                  </button>
+                </ion-col> 
+              </ion-row>
     <ion-row>
         <ion-col>
             <button (click)="confirm(event, status)" ion-button icon-left round clear>
