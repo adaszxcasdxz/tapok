@@ -27,12 +27,14 @@ export class SearchPage {
   userTest: any[] = [];
   eventTest: any[] = [] ;
   status: any[] = [] ;
+  tabs: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
     public firebaseService: FireBaseService, public modalCtrl: ModalController, public alertCtrl: AlertController
   ) {
     var i, y;
 
+    this.tabs = "events";
     this.index = 0;
     this.user = firebaseService.user;
     this.Event = this.firebaseService.getEvent();
@@ -93,11 +95,19 @@ export class SearchPage {
     this.viewCtrl.dismiss();
   }
 
+  changeTab(tab){
+    this.tabs = tab;
+    this.onInput();
+  }
+
   onInput(){
     if(this.search != ""){
       var i;
 
-      this.Result = this.firebaseService.searchTapok(this.search.toLowerCase());
+      if(this.tabs == "events")
+        this.Result = this.firebaseService.searchTapok(this.search.toLowerCase());
+      else if(this.tabs == "tags")
+        this.Result = this.firebaseService.searchTag(this.search.toLowerCase());
       this.Result.subscribe(snapshot => {
         this.result.length = 0;
         i = 0;

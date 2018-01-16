@@ -31,6 +31,12 @@ export class AddTapok {
 	search_key = '';
 	timestamp = '';
 	dlURL: any;
+	tags = 'false';
+
+	temp: any;
+	tag: any;
+	Tags: any;
+	tagsTest: any[] = [];
 
 	loading: any;
 	selectedPhoto: any;
@@ -56,20 +62,43 @@ export class AddTapok {
 
 	constructor(public viewCtrl: ViewController, public alertCtrl: AlertController, 
 		public firebaseService: FireBaseService, public params: NavParams, public camera: Camera, public loadingCtrl: LoadingController) {
-			this.host = firebaseService.user;
-			this.label = params.get('label');
-			this.event = params.get('tapok');
-			if(this.event != undefined)
-				this.editTapokInfo();
+		var y = 0;
+
+		this.host = firebaseService.user;
+		this.label = params.get('label');
+		this.event = params.get('tapok');
+		this.Tags = this.firebaseService.getTempTag();
+		if(this.event != undefined)
+			this.editTapokInfo();
 	}
 
 	dismiss() {
 		this.viewCtrl.dismiss();
 	}
 
-	addTapok() {
-		var i, eventKey;
+	addTag(){
+		this.tag = {
+			"tags": this.temp
+		}
+		this.temp = '';
+		this.tags = 'true';
+		this.firebaseService.addTempTag(this.tag);
+	}
 
+	deleteTag(key){
+		this.firebaseService.deleteTempTag(key);
+	}
+
+	addTapok() {
+		var i, y, eventKey;
+		this.Tags.subscribe(snapshots => {
+			this.tagsTest.length = 0;
+			y = 0;
+			snapshots.forEach(snapshot => {
+				this.tagsTest[y] = snapshot.tags;
+				y++;
+			})
+		});
 		this.mDate = moment(this.date).format('MMM DD');
 		this.mTime = moment(this.time).format('hh:mm a');
 		
@@ -93,6 +122,7 @@ export class AddTapok {
 			"enddate": this.mEndDate,
 			"venue": this.venue,
 			"description": this.description,
+			"tags": this.tags,
 			"tapok": this.tapok,
 			"search_key": this.name.toLowerCase(),
 			"timestamp": 0-Date.now()
@@ -108,6 +138,16 @@ export class AddTapok {
 			};
 			this.firebaseService.addKeyword(this.keyword);
 		}
+
+		for(i=0;i<this.tagsTest.length;i++){
+			this.tag={
+				"tag": this.tagsTest[i].toLowerCase(),
+				"key": eventKey
+			}
+			this.firebaseService.addTag(this.tag);
+			if(i+1 == this.tagsTest.length)
+				this.firebaseService.deleteAllTempTag();
+		}		
 		
 		this.cancel();
 		let alert = this.alertCtrl.create({

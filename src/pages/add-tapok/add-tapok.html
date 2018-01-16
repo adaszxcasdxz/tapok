@@ -75,6 +75,30 @@
                 <ion-input class="detail" [(ngModel)]="venue" type="text"></ion-input>
             </ion-col>
         </ion-row>
+        <ion-row>
+            <ion-col col-8>
+                <div class="detail-label">Tags</div>
+                <ion-input class="detail" [(ngModel)]="temp" type="text"></ion-input>
+            </ion-col>
+            <ion-col>
+                <div class="detail-label-add">Add</div>
+                <button class="tapok-button" (click)="addTag()" ion-button outline>
+                    <ion-icon name="add"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+        <ion-col>
+            <div *ngIf="tag!=''">
+                <span *ngFor="let tags of Tags | async">
+                    <ion-chip color="primary">
+                        <ion-label>{{ tags.tags }}</ion-label>
+                        <button ion-button clear color="light" (click)="deleteTag(tags.$key)">
+                            <ion-icon name="close-circle"></ion-icon>
+                        </button>
+                    </ion-chip>
+                </span>
+            </div>
+        </ion-col>
         <ion-row text-justify>
             <ion-col>
                 <div class="detail-label">Description</div>

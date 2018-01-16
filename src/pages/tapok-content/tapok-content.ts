@@ -20,12 +20,14 @@ export class TapokContent {
   userTest: any[] = [];
   status: any;
   tabs: any;
+  Tags: any;
+  tag: any[] = [];
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
     public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService, public popoverCtrl: PopoverController
   ){
-    var i = 0;
+    var i = 0,y = 0;
     this.tabs = 'info';
     this.user = this.firebaseService.getUser();
     this.key = navParams.get('param1');
@@ -34,10 +36,18 @@ export class TapokContent {
       this.event = events;
     });
     this.Keyword = this.firebaseService.getKeywords(this.event.$key);
+    this.Tags = this.firebaseService.getTags(this.event.$key);
     this.Keyword.subscribe(snapshots => {
       snapshots.forEach(snapshot => {
         this.keyword[i] = snapshot.key;
         i++;
+      });
+    });
+
+    this.Tags.subscribe(snapshots => {
+      snapshots.forEach(snapshot => {
+        this.tag[y] = snapshot.key;
+        y++;
       });
     });
 
@@ -94,7 +104,7 @@ export class TapokContent {
   }
 
   deleteTapok(){
-    var i;
+    var i, y;
 
     let confirm = this.alertCtrl.create({
       title: 'Tapok Deleted',
@@ -109,6 +119,8 @@ export class TapokContent {
             this.firebaseService.deleteTapok(this.event.$key);
             for(i=0;i<this.keyword.length;i++)
               this.firebaseService.deleteKeyword(this.keyword[i]);  
+            for(y=0;y<this.tag.length;y++)
+              this.firebaseService.deleteTag(this.tag[y]);  
             this.navCtrl.setRoot('TapokPage');
             confirm.present();
           }

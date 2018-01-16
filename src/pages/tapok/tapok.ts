@@ -3,7 +3,8 @@ import { IonicPage, NavController, PopoverController, ModalController, AlertCont
 import { Filter } from '../filter/filter';
 import { FireBaseService } from '../../providers/firebase-service';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
-
+import * as moment from 'moment';
+import {Observable} from 'rxjs/Rx';
 @IonicPage()
 @Component({
   selector: 'page-tapok',
@@ -24,6 +25,7 @@ export class TapokPage {
   userTest: any[] = [];
   status: any[] = [];
   index = 0;
+  Tags: any;
 
   constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
@@ -33,8 +35,12 @@ export class TapokPage {
     this.toggled = false;
     this.Event = this.firebaseService.getEvent();
     this.Attending = this.firebaseService.getUserEvents();
+    this.Tags = this.firebaseService.getTag();
     this.User = this.firebaseService.getUsers();
     this.user = firebaseService.getUser();
+
+    /*Observable.interval(1000)
+    .subscribe((val) => { console.log(moment().format('hh:mm:ss').toString()); });*/
 
     this.User.map(users => {
       this.userEventKeys = users;

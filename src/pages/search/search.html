@@ -13,13 +13,23 @@
       <button (click)="dismiss()" ion-button icon-only clear>
           cancel
       </button>
-  </ion-buttons>
+    </ion-buttons>
+    <br>
+      <button (click)="changeTab('events')" ion-button small>
+        <div *ngIf="tabs=='events'" class="isActive">Events</div>
+        <div *ngIf="tabs!='events'">Events</div>
+      </button>
+
+      <button (click)="changeTab('tags')" ion-button small>
+          <div *ngIf="tabs=='tags'" class="isActive">tags</div>
+          <div *ngIf="tabs!='tags'">tags</div>
+      </button>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content>
+<ion-content text-center>
   <div *ngFor="let res of result">
     <div *ngFor="let event of Event | async; let i = index;">
       <ion-card *ngIf="event.$key == res"  text-center>
