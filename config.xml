@@ -87,4 +87,8 @@
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="cordova-plugin-camera" spec="^3.0.0" />
     <plugin name="com-sarriaroman-photoviewer" spec="^1.1.11" />
+    <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
+        <variable name="APP_ID" value="1942708989279988" />
+        <variable name="APP_NAME" value="TAPOK" />
+    </plugin>
 </widget>

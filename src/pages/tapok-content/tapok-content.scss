@@ -33,6 +33,56 @@ tapok-content{
         padding: 0px !important;
         border-bottom: 0px!important;
      }
+
+     .bubble-left
+     {
+       background-color: orange;
+       padding:.5em;
+       border-radius: 1em;
+       font-size: 1em;
+       margin-left: 3em;
+       //float: left;
+     }
+     
+     
+     .bubble-left p
+     {
+       color:white;
+     }
+     
+     .bubble-right
+     {
+       background-color:#F0F0EF  ;
+       padding:.5em;
+       color: black;
+       border-radius: 1em;
+       font-size: 1em;
+       margin-right: 3em;
+       //float: right;
+     }
+     
+     .icon_u
+     {
+       width:.1em;
+       height:.1em;
+       margin-top:.5em;
+     }
+     
+     #sentByLeft{
+       margin-left: 5em;
+     }
+     
+     #sentByRight{
+       margin-right: 5em;
+     }
+     
+     .chatPage{
+       position: fixed;
+     }
+
+     ion-footer{
+         position: relative;
+     }
 }
 
 

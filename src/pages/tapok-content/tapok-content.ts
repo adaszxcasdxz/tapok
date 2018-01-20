@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, ViewController, AlertController, NavParams, ModalController, PopoverController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import { Popover } from 'ionic-angular/components/popover/popover';
+import { FirebaseApp } from 'angularfire2';
+import { Content } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -9,7 +11,7 @@ import { Popover } from 'ionic-angular/components/popover/popover';
   templateUrl: 'tapok-content.html'
 })
 export class TapokContent {
-
+  @ViewChild (Content) content: Content;
   event: any;
   key: any;
   user: any;
@@ -20,16 +22,26 @@ export class TapokContent {
   userTest: any[] = [];
   status: any;
   tabs: any;
+  timestamp = '';
+  Message = '';
+  chat: any;
+  List: any;
+  listen: any;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
-    public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService, public popoverCtrl: PopoverController
+    public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService, 
+    public popoverCtrl: PopoverController, public firebaseApp: FirebaseApp
   ){
     var i = 0;
     this.tabs = 'info';
     this.user = this.firebaseService.getUser();
     this.key = navParams.get('param1');
     this.event = this.firebaseService.getSpecificEvent(this.key);
+    //this.event = params.get('event');
+    console.log(this.event);
+    this.user = this.firebaseService.getUser();
+    this.List=this.firebaseService.getChat(this.key, this.content);
     this.event.forEach(events=> {
       this.event = events;
     });
@@ -125,6 +137,13 @@ export class TapokContent {
     let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
     modal.present();
   }
+
+  //openChatContent()
+  //{
+    //this.navCtrl.push('GroupContent', {param1: event.$key});
+    //let modal = this.modalCtrl.create('ChatContent', { label: 'Chat',  event: this.event});
+    //modal.present();
+ // }
   
   confirm(event, status){
     if(status == "TAPOK"){
@@ -179,5 +198,36 @@ export class TapokContent {
 
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey, userKey);
   }
+
+  ionViewDidEnter(){
+    setTimeout(() => {
+      this.content.scrollToBottom(0);
+    });    
+
+    this.firebaseApp.database().ref("events/"+this.key+"/chat").on('value', snapshot => {
+      setTimeout(() => {
+        this.content.scrollToBottom(300);
+      }); 
+    });
+  }
+
+  ionViewWillEnter(){
+      setTimeout(() => {
+        this.content.scrollToBottom(300);
+      }); 
+  }
   
+  sendMessage(){
+    this.chat={
+      "message": this.Message,
+      "sentBy": this.firebaseService.getUser(),
+      "timestamp": Date.now(),
+    }
+    
+    setTimeout(() => {
+      this.content.scrollToBottom(300);//300ms animation speed
+    });
+    this.firebaseService.sendMessage(this.chat, this.key);
+    this.Message="";
+  }
 }

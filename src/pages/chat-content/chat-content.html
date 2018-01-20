@@ -17,7 +17,7 @@
         <ion-grid style="margin:0;">
         <ion-row *ngIf="List.sentBy === user" text-wrap>
           <ion-col></ion-col>
-          <ion-col text-wrap style="width:55%;">
+          <ion-col text-wrap col-auto>
               <ion-avatar float-right>
                   <img class="icon_u" src="assets/img/user.png">
                 </ion-avatar>
@@ -32,7 +32,7 @@
         </ion-row>
 
         <ion-row *ngIf="List.sentBy !== user">
-          <ion-col text-wrap style="width:55%;">
+          <ion-col text-wrap col-auto>
             <ion-avatar float-left>
               <img class="icon_u" src="assets/img/user.png">
             </ion-avatar>

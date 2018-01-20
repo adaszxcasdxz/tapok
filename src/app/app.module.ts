@@ -15,6 +15,7 @@ import { HttpModule } from '@angular/http';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { FireBaseService } from './../providers/firebase-service';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 
 var kuyogFirebase = {
     apiKey: "AIzaSyB2_PG9pR5KVs9qs1JRH-zA15EuivDxPwA",
@@ -48,7 +49,9 @@ var kuyogFirebase = {
     FireBaseService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Camera,
-    PhotoViewer
+    PhotoViewer,
+    Facebook
+    //FacebookLoginResponse
   ]
 })
 export class AppModule {}

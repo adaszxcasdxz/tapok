@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "^4.4.3",
     "@ionic-native/camera": "^4.5.0",
     "@ionic-native/core": "3.12.1",
+    "@ionic-native/facebook": "^4.5.2",
     "@ionic-native/geolocation": "^4.2.1",
     "@ionic-native/keyboard": "^4.5.2",
     "@ionic-native/photo-viewer": "^4.5.2",
@@ -34,6 +35,7 @@
     "cordova-plugin-camera": "^3.0.0",
     "cordova-plugin-compat": "^1.0.0",
     "cordova-plugin-device": "^1.1.4",
+    "cordova-plugin-facebook4": "^1.9.1",
     "cordova-plugin-geolocation": "^2.4.3",
     "cordova-plugin-ionic-webview": "^1.1.15",
     "cordova-plugin-splashscreen": "^4.0.3",
@@ -67,7 +69,11 @@
       "cordova-plugin-geolocation": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-camera": {},
-      "com-sarriaroman-photoviewer": {}
+      "com-sarriaroman-photoviewer": {},
+      "cordova-plugin-facebook4": {
+        "APP_ID": "1942708989279988",
+        "APP_NAME": "TAPOK"
+      }
     },
     "platforms": [
       "android"

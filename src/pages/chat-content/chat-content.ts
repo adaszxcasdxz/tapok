@@ -44,6 +44,14 @@ export class ChatContent {
     });
   }
 
+  ionViewWillEnter(){
+    this.firebaseApp.database().ref("events/"+this.eKey+"/chat").on('value', snapshot => {
+      setTimeout(() => {
+        this.content.scrollToBottom(300);
+      }); 
+    });
+  }
+
   dismiss() {
     this.viewCtrl.dismiss();
   }

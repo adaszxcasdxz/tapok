@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
 import 'rxjs/add/operator/map';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 //import * as firebase from 'firebase/app';
 import 'firebase/storage';
 
