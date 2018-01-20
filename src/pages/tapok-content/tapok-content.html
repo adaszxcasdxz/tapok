@@ -128,12 +128,12 @@
                         <ion-grid style="margin:0;">
                             <ion-row *ngIf="List.sentBy === user" text-wrap>
                                 <ion-col></ion-col>
-                                <ion-col text-wrap col-auto>
+                                <ion-col text-wrap col-auto style="max-width:80%;">
                                     <ion-avatar float-right>
                                         <img class="icon_u" src="assets/img/user.png">
                                     </ion-avatar>
                                     <p style="text-align: right; font-size: .7em;"  id="sentByRight">{{List.sentBy}}</p>
-                                    <div class="bubble-right" style="text-align:right;">
+                                    <div class="bubble-right" style="text-align:left;">
                                         {{List.message}}
                                     </div>
                                     <p style="text-align:left; color:black; font-size:.7em;">
@@ -143,7 +143,7 @@
                             </ion-row>
                     
                             <ion-row *ngIf="List.sentBy !== user">
-                                <ion-col text-wrap col-auto>
+                                <ion-col text-wrap col-auto style="max-width:80%;">
                                     <ion-avatar float-left>
                                         <img class="icon_u" src="assets/img/user.png">
                                     </ion-avatar>

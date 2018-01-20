@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, Platform } from 'ionic-angular';
+import * as firebase from 'firebase/app';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Facebook } from '@ionic-native/facebook';
 
 /**
  * Generated class for the LoginPage page.
@@ -14,18 +17,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-
-  username: any;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  loginData = {
+    email: '',
+    password: ''
+  }
+  constructor(public navCtrl: NavController, private afAuth: AngularFireAuth, private toastCtrl: ToastController,
+    private facebook: Facebook, private platform: Platform) {
   }
 
-  login(){
-    this.navCtrl.push('TabsPage', {username: this.username});
+  loginFacebook() {
+    if (this.platform.is('cordova')) {
+      return this.facebook.login(['email', 'public_profile']).then(res => {
+        const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
+        return firebase.auth().signInWithCredential(facebookCredential);
+      })
+    }
+    else {
+      return this.afAuth.auth
+        .signInWithPopup(new firebase.auth.FacebookAuthProvider())
+        .then(res => console.log(res));
+    }
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }
-
 }
