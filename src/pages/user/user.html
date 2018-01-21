@@ -19,9 +19,9 @@
     <ion-card *ngSwitchCase="'me'">
       <ion-item>
         <ion-avatar large>
-          <img class="item-avatar" src="assets/img/carmelle.jpg">
+          <img class="item-avatar" src="assets/img/user.png">
         </ion-avatar>
-        <h2>Carmelle Felicio</h2>
+        <h2>{{ username }}</h2>
         <p>carm143</p>
       </ion-item>
     
@@ -35,6 +35,7 @@
       </ion-item>
     </ion-card-content>
     </ion-card>
+    <button class="tapok-button" (click)="logout()" ion-button large full>Logout</button>
 
     <ion-item-group *ngSwitchCase="'friends'">
       <ion-list>

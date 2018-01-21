@@ -6,6 +6,8 @@ import { ViewController } from 'ionic-angular';
 })
 export class Filter{
 
+    popOver: any;
+
     constructor(public viewCtrl: ViewController){
 
     }

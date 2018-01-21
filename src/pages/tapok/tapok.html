@@ -5,14 +5,14 @@
     </ion-title>
 
     <ion-buttons right>
-        <button (click)="toggleSearch()" ion-button icon-only round clear>
+        <button (click)="openSearch()" ion-button icon-only round clear>
           <ion-icon class="search-icon" name="search"></ion-icon>
         </button>
     </ion-buttons> 
 
     <ion-buttons left>
-        <button (click)="showFilterPopOver()" ion-button icon-only round clear>
-          <ion-icon class="search-icon" name="eye"></ion-icon>
+        <button (click)="openMap()" ion-button icon-only round clear>
+          <ion-icon class="search-icon" name="map"></ion-icon>
         </button>
     </ion-buttons> 
   </ion-navbar>
@@ -21,48 +21,90 @@
 <ion-content class="background" fullscreen>
   <div [ngSwitch]="pages">
     <ion-list *ngSwitchCase="'list'">
-      <ion-card *ngFor="let event of Event | async" text-center>
-        <div  (click)="openTapokContent(event)">
-          <ion-item>
-            <ion-avatar item-start>
-              <img class="user-avatar" src="assets/img/user.png">
-            </ion-avatar>
-            <ion-label>
-              <h2><strong>{{ event.host }}</strong></h2>
-            </ion-label>
-          </ion-item>
-          <ion-row>
-            <ion-col>
-              <div class="box"></div>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col class="title-col" width-50>  
-                <div class="title">{{ event.name }}</div>
-            </ion-col> 
-          </ion-row>
-          <ion-row>
-            <ion-col>
-                <div class="sched">{{ event.date }} | {{ event.time }}</div>
-                <p><ion-icon name="pin"></ion-icon>  {{ event.venue }}</p>    
-            </ion-col> 
-          </ion-row>
+      <div *ngFor="let event of Event | async; let i = index;">
+        <div *ngIf="status[i] == 'TAPOK'">
+          <ion-card text-center>
+            <ion-item>
+              <ion-avatar item-start>
+                <img class="user-avatar" src="assets/img/user.png">
+              </ion-avatar>
+              <ion-label>
+                <h2><strong>{{ event.host }}</strong></h2>
+              </ion-label>
+            </ion-item>
+            <div *ngIf="event.photo != ''" class="box" text-center>
+              <div (click)="viewPic(event.photo)">
+              <!--<div (click)="toggle(event.$key, event.toggle)">
+                <div *ngIf="event.toggle == 'false'">
+                    see photo
+                </div>
+                <div *ngIf="event.toggle == 'true'">-->
+                  <img class="photo" src="{{ event.photo }}">
+                  <!--<br>hide photo
+                </div>-->
+              </div>
+            </div>
+            <span (click)="openTapokContent(event)">
+              <ion-row>
+                <ion-col class="title-col" width-50>  
+                  <div class="title"><b><hr>{{ event.name }}<hr></b></div>            
+                </ion-col> 
+              </ion-row>
+              <ion-col class="details" padding>
+                <span *ngIf="event.enddate==''">
+                  <ion-icon name="calendar" color="secondary"></ion-icon>
+                  <span class="chip-label-date">{{ event.date }}</span>
+                </span>
+                <span *ngIf="event.enddate!=''">   
+                  <ion-icon name = "calendar" color="secondary"></ion-icon>                     
+                  <span class="chip-label-date">{{ event.date }}  <b>-</b> {{ event.enddate }}</span>
+                </span>   
+                <span *ngIf="event.endtime==''">
+                  <ion-icon name = "time" color="danger"></ion-icon>                    
+                  <span class="chip-label">{{ event.time }}</span>
+                </span>
+                <span *ngIf="event.endtime!=''">
+                  <ion-icon name = "time" color="danger"></ion-icon>                      
+                  <span class="chip-label">{{ event.time }}  <b>-</b> {{ event.endtime }}</span>
+                </span>              
+                <div class="location">
+                  <ion-icon name = "pin" color="primary"></ion-icon>                    
+                  <span class="chip-label">{{ event.venue }}</span>
+                </div>
+                <br>
+                <button (click)="confirm(event, status)" ion-button icon-left outline small>
+                  <div *ngIf="event.tapok > 1">{{ event.tapok }} Attendees</div>
+                  <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
+                  <div *ngIf="event.tapok == 0">No Attendees</div>
+                </button>
+                <br *ngIf="event.tags != 'true'">
+                <span *ngIf="event.tags == 'true'" text-left padding>
+                  <p class="tags"><ion-icon name = "pricetag" color="dark"></ion-icon>  Tags:<br>
+                  <span *ngFor="let tag of Tags | async">
+                    <span *ngIf="tag.key == event.$key">
+                      <ion-badge>{{ tag.tag }} </ion-badge>
+                    </span>
+                  </span>
+                  </p>
+                </span>
+              </ion-col> 
+            </span>
+              <ion-col>
+                <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left round clear>
+                  <ion-icon name="happy"></ion-icon>
+                    JOIN
+                </button>
+                <div class="increment">{{ i+1 }}</div>
+              </ion-col>
+              <ion-col>
+                <button ion-button icon-left round clear>
+                    <ion-icon name="share"></ion-icon>
+                    <div class="share">Share</div>
+                </button> 
+              </ion-col>
+          </ion-card>
         </div>
-        <ion-row class="status-row">
-          <ion-col>
-            <button (click)="tapok()" ion-button icon-left round clear>
-              <ion-icon name="happy"></ion-icon>
-              <div>Tapok 21</div>
-            </button> 
-          </ion-col>
-          <ion-col>
-              <button ion-button icon-left round clear>
-                  <ion-icon name="share"></ion-icon>
-                  <div class="share">Share</div>
-              </button> 
-          </ion-col>
-        </ion-row>
-      </ion-card>
+      </div>
     </ion-list>
   </div>
 

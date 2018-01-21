@@ -13,4 +13,4 @@ import { GroupContent } from './group-content';
     GroupContent
   ]
 })
-export class SearchPageModule {}
+export class GroupContentModule {}

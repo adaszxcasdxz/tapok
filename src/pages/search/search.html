@@ -7,12 +7,87 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>search</ion-title>
+    <ion-searchbar [(ngModel)]="search" [showCancelButton]="shouldShowCancel" 
+    (ionInput)="onInput()"></ion-searchbar>
+    <ion-buttons right>
+      <button (click)="dismiss()" ion-button icon-only clear>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content text-center>
+  <ion-row>
+    <ion-col class="tab-bar" text-left>
+      <span class="tabs" (click)="changeTab('events')">
+        <b><span *ngIf="tabs=='events'" class="isActive">Events</span>
+        <span *ngIf="tabs!='events'">Events</span></b>
+      </span>
+
+      <span class="tabs" (click)="changeTab('tags')">
+          <b><span *ngIf="tabs=='tags'" class="isActive">Tags</span>
+          <span *ngIf="tabs!='tags'">Tags</span></b>
+      </span>
+    </ion-col>
+  </ion-row>
+  <div class="space"></div>
+  <div *ngFor="let res of result">
+    <div *ngFor="let event of Event | async; let i = index;">
+      <ion-card *ngIf="event.$key == res"  text-center>
+        <div (click)="openTapokContent(event)">
+          <ion-item>
+            <ion-avatar item-start>
+              <img class="user-avatar" src="assets/img/user.png">
+            </ion-avatar>
+            <ion-label>
+              <h2><strong>{{ event.host }} {{ i }}</strong></h2>
+            </ion-label>
+          </ion-item>
+          <ion-row *ngIf="event.photo != ''">
+            <ion-col (click)="viewPic(event.photo)">
+            <!--<ion-col (click)="toggle(event.$key, event.toggle)">
+              <div *ngIf="event.toggle == 'false'">
+                  see photo
+              </div>
+              <div *ngIf="event.toggle == 'true'">-->
+                <div class="box">
+                  <img class="photo" src="{{ event.photo }}">
+                </div>
+                <!--<br>hide photo
+              </div>-->
+            </ion-col>
+        </ion-row>
+          <ion-row>
+            <ion-col class="title-col" width-50>  
+                <div class="title"><b>{{ event.name }}</b></div>
+            </ion-col> 
+          </ion-row>
+          <ion-row>
+            <ion-col>
+                <div class="sched">{{ event.date }} | {{ event.time }}</div>
+                <p><ion-icon name="pin"></ion-icon>  {{ event.venue }}</p>    
+            </ion-col> 
+          </ion-row>
+        </div>
+        <ion-row class="status-row">
+          <ion-col>
+            <button (click)="confirm(event, status[i])" ion-button icon-left round clear>
+              <ion-icon name="happy"></ion-icon>
+              <div>{{ status[i] }} {{ event.tapok }}</div>
+            </button> 
+          </ion-col>
+          <ion-col>
+              <button ion-button icon-left round clear>
+                  <ion-icon name="share"></ion-icon>
+                  <div class="share">Share</div>
+              </button> 
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </div>
+  </div>
 
 </ion-content>
