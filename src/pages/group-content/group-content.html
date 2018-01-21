@@ -10,6 +10,11 @@
             <ion-icon name="trash"></ion-icon>
         </button>
     </ion-buttons>
+    <ion-buttons right large>
+        <button class="button-header" (click)="leaveGroup()" ion-button icon-only round>
+            <ion-icon name="exit"></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
     <ion-toolbar no-border-top>
         <div padding>
@@ -45,7 +50,7 @@
                         </ion-row>
                     </div>
 
-                    <ion-card *ngFor="let posts of post | async">
+                    <ion-card *ngFor="let posts of post | async; let i = index">
                         <div class="postcontent">
                             <ion-item>
                                 <ion-avatar item-start medium>
@@ -82,6 +87,13 @@
                                 </button>
                                 </ion-col>
                             </ion-row>
+                            <hr class="line">
+                                <ion-row>
+                                    <ion-col>
+                                        <p class="commenter">{{ latestCommenter[i] }}</p> 
+                                        <p class="latest" text-wrap> {{ latestComment[i] }} <span class="unnum"> {{ i+1 }}</span></p>
+                                    </ion-col>
+                                </ion-row>
                         </div>
                     </ion-card>
 

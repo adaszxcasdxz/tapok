@@ -221,8 +221,16 @@ export class FireBaseService {
   }
 
   getUserGroup(){
-    return this.tapok.list('/users/'+this.user+'/groupKey/');
+    return this.tapok.list('/users/'+this.user+'/groupKey/',{
+      query:{
+        orderByChild: 'timejoin'
+      }
+    });
   }  
+
+  leaveUserGroup(gKey){
+    this.tapok.list('users/'+this.user+'/groupKey/'+gKey).remove();
+  }
 
   addImageName(){
     var key;

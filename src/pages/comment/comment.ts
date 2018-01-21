@@ -22,6 +22,8 @@ export class CommentPage {
   post: any;
   group: any;
   commenter: any;
+  commentTest: any[] = [];
+  latestComment: any;
   
   host = '';
 
@@ -30,6 +32,8 @@ export class CommentPage {
     public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService,
     public actionCtrl: ActionSheetController
   ) {
+    var y = 0;
+
     this.host = firebaseService.user;
     this.commenter = firebaseService.user;
     this.groupkey = navParams.get('param1');
@@ -39,6 +43,24 @@ export class CommentPage {
     this.post = this.firebaseService.getPost(this.key);
     this.group = this.firebaseService.getSpecificGroup(this.key);
     //console.log(this.post.$key);'
+    console.log(this.comment);
+
+    this.comment.subscribe(snapshots => {
+      this.commentTest.length = 0;
+      y = 0;
+      snapshots.forEach(snapshot => {
+        this.commentTest[y] = snapshot;
+        this.latestComment = this.commentTest[y];
+        y++;
+      })
+      this.test();
+    });
+
+    console.log(this.latestComment);
+  }
+
+  test(){
+    console.log(this.commentTest);
   }
 
   presentActionSheetCom(comments){

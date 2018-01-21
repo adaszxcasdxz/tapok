@@ -51,16 +51,20 @@ page-group{
 
     .photo{
         width: 3em;
-        height: 50%;
+        height: 30%;
     }
 
-    .box{
+    .boxpic{
         width: 100%; 
         height: 8em; 
         overflow: hidden;
         background-position: center;
         background-size: cover;
         background-color: black;
+    }
+
+    .inc{
+        display: none;
     }
 }
 

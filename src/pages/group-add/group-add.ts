@@ -77,7 +77,8 @@ export class GroupAddPage {
   editGroup(){
 		this.group={
 			"gname": this.gname,
-			"gdescr": this.gdescr
+			"gdescr": this.gdescr,
+			"photo": this.photo
 		};
 
 		this.firebaseService.editGroups(this.key, this.group);
@@ -97,6 +98,7 @@ export class GroupAddPage {
 		this.key = this.group.$key;
 		this.gname = this.group.gname;
 		this.gdescr = this.group.gdescr;
+		this.photo = this.group.photo;
 	}
 
   ionViewDidLoad() {

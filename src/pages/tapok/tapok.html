@@ -21,8 +21,8 @@
 <ion-content class="background" fullscreen>
   <div [ngSwitch]="pages">
     <ion-list *ngSwitchCase="'list'">
-      <div *ngFor="let event of Event | async; let i = index;">
-        <div *ngIf="status[i] == 'TAPOK'">
+      <div *ngFor="let event of Event | async; let i = index;"> <!---->
+        <div *ngIf="status[i] == 'TAPOK'"> 
           <ion-card text-center>
             <ion-item>
               <ion-avatar item-start>
