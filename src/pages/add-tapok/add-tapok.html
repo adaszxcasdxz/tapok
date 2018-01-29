@@ -69,9 +69,15 @@
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col>
+            <ion-col col-8>
                 <div class="detail-label"><b>Venue</b></div>
                 <ion-input class="detail" [(ngModel)]="venue" type="text"></ion-input>
+            </ion-col>
+            <ion-col>
+                <br>
+                <button class="tapok-button" (click)="getLocation()" ion-button clear large outline>
+                    <ion-icon name="add-circle"></ion-icon>
+                </button>
             </ion-col>
         </ion-row>
         <ion-row>

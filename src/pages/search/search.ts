@@ -16,11 +16,7 @@ import { FireBaseService } from '../../providers/firebase-service';
 })
 export class SearchPage {
 
-<<<<<<< HEAD
   search = '';
-=======
-  search: any;
->>>>>>> f881edc1d191e075755446c4ee18b78d16f4f7fd
   Result: any;
   user: any;
   User: any;

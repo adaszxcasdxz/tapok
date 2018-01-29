@@ -36,11 +36,7 @@ export class TapokContent {
       this.event = events;
     });
     this.Keyword = this.firebaseService.getKeywords(this.event.$key);
-<<<<<<< HEAD
     this.Tags = this.firebaseService.getTag();
-=======
-    this.Tags = this.firebaseService.getTags(this.event.$key);
->>>>>>> f881edc1d191e075755446c4ee18b78d16f4f7fd
     this.Keyword.subscribe(snapshots => {
       snapshots.forEach(snapshot => {
         this.keyword[i] = snapshot.key;

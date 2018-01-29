@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, ViewController, AlertController, NavParams, LoadingController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Geolocation } from '@ionic-native/geolocation';
 import * as moment from 'moment';
 //import { FirebaseListObservable } from 'angularfire2/database';
 
@@ -32,6 +33,8 @@ export class AddTapok {
 	timestamp = '';
 	dlURL: any;
 	tags = 'false';
+	lat: any;
+	long: any;
 
 	temp: any;
 	tag: any;
@@ -61,7 +64,7 @@ export class AddTapok {
 	chat: any;
 
 	constructor(public viewCtrl: ViewController, public alertCtrl: AlertController, 
-		public firebaseService: FireBaseService, public params: NavParams, public camera: Camera, public loadingCtrl: LoadingController) {
+		public firebaseService: FireBaseService, public params: NavParams, public camera: Camera, public loadingCtrl: LoadingController, public geolocation: Geolocation) {
 		var y = 0;
 
 		this.host = firebaseService.user;
@@ -74,6 +77,13 @@ export class AddTapok {
 
 	dismiss() {
 		this.viewCtrl.dismiss();
+	}
+
+	getLocation(){
+		this.geolocation.getCurrentPosition().then((position) => {
+			this.lat = position.coords.latitude;
+			this.long = position.coords.longitude;
+		});
 	}
 
 	addTag(){
@@ -125,7 +135,9 @@ export class AddTapok {
 			"tags": this.tags,
 			"tapok": this.tapok,
 			"search_key": this.name.toLowerCase(),
-			"timestamp": 0-Date.now()
+			"timestamp": 0-Date.now(),
+			"latitude": this.lat,
+			"longitude": this.long
 		};
 
 		if(this.label == "Add Tapok")

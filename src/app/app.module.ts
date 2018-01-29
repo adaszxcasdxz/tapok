@@ -10,13 +10,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Camera } from '@ionic-native/camera';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { HttpModule } from '@angular/http';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { FireBaseService } from './../providers/firebase-service';
 
-import { GoogleMaps } from '@ionic-native/google-maps';
+//import { GoogleMaps } from '@ionic-native/google-maps';
 
 var kuyogFirebase = {
     apiKey: "AIzaSyB2_PG9pR5KVs9qs1JRH-zA15EuivDxPwA",
@@ -50,8 +51,8 @@ var kuyogFirebase = {
     FireBaseService,
     Camera,
     PhotoViewer,
-    GoogleMaps,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Geolocation,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}
