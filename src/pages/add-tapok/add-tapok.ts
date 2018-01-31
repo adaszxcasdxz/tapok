@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, ViewController, AlertController, NavParams, LoadingController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -6,12 +6,16 @@ import { Geolocation } from '@ionic-native/geolocation';
 import * as moment from 'moment';
 //import { FirebaseListObservable } from 'angularfire2/database';
 
+declare var google;
 @IonicPage()
 @Component({
 	selector: 'add-tapok',
 	templateUrl: 'add-tapok.html'
 })
 export class AddTapok {
+	@ViewChild('autocomplete') autocompleteElement: ElementRef;
+	autocomplete;
+
 	label: any;
 	key: any;
 
@@ -73,6 +77,23 @@ export class AddTapok {
 		this.Tags = this.firebaseService.getTempTag();
 		if(this.event != undefined)
 			this.editTapokInfo();
+
+	}
+
+	ngOnInit() {
+		this.autocomplete = new google.maps.places.Autocomplete(this.autocompleteElement.nativeElement);
+		console.log('addpage');
+
+		this.autocomplete.addListener('place_changed', function(){
+			console.log('test');
+		});
+	}
+
+	listen(){
+		console.log('listen');
+		
+		var place = this.autocomplete.getPlace();
+		console.log(place.geometry.location.lng());
 	}
 
 	dismiss() {

@@ -43,12 +43,7 @@ add-tapok{
         font-size: 1.2em;
         border: 1px solid gray;
         border-radius: .3em;
-    }
-
-    .detail:focus{
-        outline: none;
-        background-color: red;
-        border: 1px solid #F8A055;
+        padding: 1em;
     }
 
     .detail-datetime{

@@ -25,7 +25,7 @@ export class MapPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform, public geolocation: Geolocation, public firebaseService: FireBaseService) {
     var y;
 
-    this.Event = this.firebaseService.getEvent();
+    this.Event = this.firebaseService.getEvent();      
 
     this.Event.subscribe(snapshots => {
       this.lat.length = 0;
