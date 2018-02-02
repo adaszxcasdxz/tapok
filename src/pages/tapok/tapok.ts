@@ -22,8 +22,8 @@ export class TapokPage {
   photoToggle: any;
   eventTest: any[] = [];
   userTest: any[] = [];
-  status: any[] = [];
-  index = 0;
+  status: any[] = []; //
+  index = 0; //
 
   constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
@@ -31,9 +31,9 @@ export class TapokPage {
     var i = 0, y = 0;
 
     this.toggled = false;
-    this.Event = this.firebaseService.getEvent();
+    this.Event = this.firebaseService.getEvent(); //
     this.Attending = this.firebaseService.getUserEvents();
-    this.User = this.firebaseService.getUsers();
+    this.User = this.firebaseService.getUsers(); //
     this.user = firebaseService.getUser();
 
     this.User.map(users => {
@@ -42,7 +42,7 @@ export class TapokPage {
         data;
       });
 
-    this.User.subscribe(snapshot => {
+    this.User.subscribe(snapshot => { //
       this.userTest.length = 0;
       i = 0;
       snapshot.forEach(snap => {
@@ -50,9 +50,9 @@ export class TapokPage {
         i++;
       })
       this.test();
-    });
+    }); //
 
-    this.Event.subscribe(snapshots => {
+    this.Event.subscribe(snapshots => { //
       this.eventTest.length = 0;
       y = 0;
       snapshots.forEach(snapshot => {
@@ -60,13 +60,13 @@ export class TapokPage {
         y++;
       })
       this.test();
-    });
+    }); //
 
     console.log(this.userTest);
     console.log(this.eventTest);
   }
 
-  test(){
+  test(){ //
     this.status.length = 0;
     for(var x=0;x<this.eventTest.length;x++){
       this.status[x] = "TAPOK";
@@ -77,7 +77,7 @@ export class TapokPage {
         } 
       }
     }
-  }
+  } //
 
   toggleSearch(){
     this.toggled = this.toggled ? false : true;
@@ -105,7 +105,7 @@ export class TapokPage {
   }
 
   openTapokContent(event){
-    this.navCtrl.push('TapokContent', {param1: event.$key}); //
+    this.navCtrl.push('TapokContent', {param1: event.$key}); 
   }
 
   showFilterPopOver(myTapok){

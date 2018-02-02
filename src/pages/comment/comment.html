@@ -12,39 +12,27 @@
 
 </ion-header>
 
-
-<ion-content padding>
-    <ion-card *ngFor="let comments of comment | async"> 
-      <div class="commentbg">
-            <ion-row>
-                <ion-col>
-                  <ion-item>
-                    <ion-avatar item-start small>
-                            <img class="profilepic" src="assets/img/kurt.jpg">
+<ion-content>
+    <ion-list> 
+      <div *ngFor="let comments of comment | async" class="commentbg">
+        <ion-item no-padding>
+          <div class="combox">
+                    <ion-avatar item-start>
+                            <img class="profilepic" src="assets/img/kurt.jpg" medium>
                     </ion-avatar>
-                  <p class="names">{{ comments.commenter }}</p>
-                  <p>{{ comments.datetime | date: 'MM/dd/yyyy h:mma' }}</p>
-                  </ion-item>
-                </ion-col>
-            </ion-row>
-
-            <ion-buttons medium float-right>
-                <button class="del-com1" (click)="editComment(comments)" ion-button clear>
-                    <ion-icon name="create"></ion-icon>
-                </button>
-            </ion-buttons>
+                  <h2 class="names">{{ comments.commenter }}</h2>
+                  <p class="timestamp">{{ comments.datetime | date: 'MM/dd/yyyy h:mma' }}</p>
+               </div>
 
             <ion-buttons float-right>
-                <button class="del-com2" (click)="deleteComment(comments)" ion-button clear>
-                    <ion-icon name="trash"></ion-icon>
+                <button class="del-com1" (click)="presentActionSheetCom(comments)" ion-button large clear>
+                    <ion-icon name="more"></ion-icon>
                 </button>
             </ion-buttons>
 
-            <ion-row class="post">
-              <ion-card-content>
-                {{ comments.comment }}
-              </ion-card-content>
-            </ion-row> 
+            <p class="post" text-wrap>{{ comments.comment }}</p>
+
+          </ion-item>
       </div>
-    </ion-card>
+    </ion-list>
 </ion-content>

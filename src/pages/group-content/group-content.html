@@ -10,6 +10,11 @@
             <ion-icon name="trash"></ion-icon>
         </button>
     </ion-buttons>
+    <ion-buttons right large>
+        <button class="button-header" (click)="leaveGroup()" ion-button icon-only round>
+            <ion-icon name="exit"></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
     <ion-toolbar no-border-top>
         <div padding>
@@ -45,7 +50,7 @@
                         </ion-row>
                     </div>
 
-                    <ion-card *ngFor="let posts of post | async">
+                    <ion-card *ngFor="let posts of post | async; let i = index">
                         <div class="postcontent">
                             <ion-item>
                                 <ion-avatar item-start medium>
@@ -55,15 +60,9 @@
                                 <p>{{ posts.datetime | date: 'MM/dd/yyyy h:mma' }}</p>
                             </ion-item>
 
-                            <ion-buttons medium float-right>
-                                    <button class="del-post1" (click)="editPost(posts)" ion-button clear>
-                                        <ion-icon name="create"></ion-icon>
-                                    </button>
-                            </ion-buttons>
-
-                            <ion-buttons medium float-right>
-                                    <button class="del-post2" (click)="deletePost(posts)" ion-button clear>
-                                        <ion-icon name="trash"></ion-icon>
+                            <ion-buttons float-right>
+                                    <button class="del-post2" (click)="presentActionSheetPost(posts)" ion-button large clear>
+                                        <ion-icon name="more"></ion-icon>
                                     </button>
                             </ion-buttons>
 
@@ -74,20 +73,27 @@
                             </ion-row>
 
                             <ion-row>
-                                <ion-col>
+                                <ion-col class="del-post1"> 
                                     <button ion-button icon-left clear small (click)="openAddComment(group, posts)">
                                         <ion-icon name="text"></ion-icon>
-                                        <div>Comment</div>
+                                        <div class="del-post1"> Comment</div>
                                     </button>
                                 </ion-col>
 
-                                <ion-col>
+                                <ion-col class="del-post1">
                                 <button ion-button icon-left clear small (click)="openComment(group, posts)">
                                     <ion-icon name="open"></ion-icon>
-                                    <div>View Comments</div>
+                                    <div class="del-post1">View Comments</div>
                                 </button>
                                 </ion-col>
                             </ion-row>
+                            <hr class="line">
+                                <ion-row>
+                                    <ion-col>
+                                        <p class="commenter">{{ latestCommenter[i] }}</p> 
+                                        <p class="latest" text-wrap> {{ latestComment[i] }} <span class="unnum"> {{ i+1 }}</span></p>
+                                    </ion-col>
+                                </ion-row>
                         </div>
                     </ion-card>
 

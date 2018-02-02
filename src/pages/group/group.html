@@ -20,15 +20,8 @@
       <div *ngFor="let ugroup of uGroup | async">
         <ion-card *ngIf="ugroup.key == group.$key" text-center>
           <div (click)="openGroupContent(group)">
-              <!---<ion-row>
-                <ion-col>
-                  <div class="box"></div>
-                </ion-col>
-              </ion-row>-->
-            <!---<div class=overlaybox>-->
-              <div class="box" [style.background-image]="'url(' + group.photo + ')'">
-                </div>
-              <!---</div>-->
+
+              <div class="boxpic" [style.background-image]="'url(' + group.photo + ')'"></div>
                 
                 <div class="gname">
                   <ion-row text-center>
@@ -43,11 +36,16 @@
                         <div class="descr-col"><i>{{ group.gdescr }}</i></div>  
                     </ion-col> 
                   </ion-row>
+                  
                   </div>
-                
-                
-                
           </div>
+                    <ion-row>
+                      <ion-col>
+                        <button class="join-but" ion-button outline medium (click)="leaveGroup(ugroup.$key)">
+                            LEAVE GROUP
+                        </button>
+                      </ion-col>
+                    </ion-row>
         </ion-card>
       </div>
     </div>
@@ -56,36 +54,37 @@
   <!--End of My Groups-->
 
   <ion-list *ngSwitchCase="'recommended'">
-    <ion-card *ngFor="let group of Group | async" text-center>
-          <!---<ion-row>
-            <ion-col>
-              <div class="box"></div>
-            </ion-col>
-          </ion-row>-->
-      <div class="groupbg">
+    <ion-card *ngFor="let group of Group | async; let i = index;" text-center>
+      <div *ngIf="status[i] == 'UNJOINED'">
+          <div class="inc">{{ i+1 }}</div>
+        <div class="groupbg">
 
-            <div class="box" [style.background-image]="'url(' + group.photo + ')'">
-            </div>
+              <div class="boxpic" [style.background-image]="'url(' + group.photo + ')'">
+              </div>
+              
+                
+
+              <ion-row text-center>
+                <ion-col class="title-col" width-50>  
+                    <div class="title"><b>{{ group.gname }}</b></div>
+                </ion-col> 
+              </ion-row>
+              <hr>
+              <ion-row text-center>
+                <ion-col>
+                    <div class="descr-col"><i>{{ group.gdescr }}</i></div>  
+                </ion-col> 
+              </ion-row>
+              
             
-            <ion-row text-center>
-              <ion-col class="title-col" width-50>  
-                  <div class="title"><b>{{ group.gname }}</b></div>
-              </ion-col> 
-            </ion-row>
-            <hr>
-            <ion-row text-center>
+            <ion-row>
               <ion-col>
-                  <div class="descr-col"><i>{{ group.gdescr }}</i></div>  
-              </ion-col> 
+                <button class="join-but" ion-button outline medium (click)="joinGroup(group.$key, group.gname)">
+                    JOIN GROUP
+                </button>
+              </ion-col>
             </ion-row>
-          
-          <ion-row>
-            <ion-col>
-              <button class="join-but" ion-button outline medium (click)="joinGroup(group.$key)">
-                  JOIN GROUP
-              </button>
-            </ion-col>
-          </ion-row>
+        </div>
       </div>
     </ion-card>
   </ion-list>
