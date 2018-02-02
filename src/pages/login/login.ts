@@ -19,10 +19,10 @@ import { TabsPage } from '../tabs/tabs';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  loginData = {
+  /*loginData = {
     email: '',
     password: ''
-  }
+  }*/
   userData: any;
   userProfileRef: any;
 
@@ -38,13 +38,21 @@ export class LoginPage {
       return this.facebook.login(['email', 'public_profile']).then(res => {
         const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
         return firebase.auth().signInWithCredential(facebookCredential);
-      })
-      //this.navCtrl.push(TabsPage);
+      }).then((user)=>{
+      this.userProfileRef.child(firebase.auth().currentUser.uid).set({
+        id:firebase.auth().currentUser.uid,
+        email: user.email,
+        displayName:user.displayName,
+        profilePictureURL:user.photoURL
+      });
+      this.navCtrl.setRoot('TabsPage');
+      console.log("success");
+    })
     }
     else {
       return this.afAuth.auth
         .signInWithPopup(new firebase.auth.FacebookAuthProvider())
-        .then(res => console.log(res));
+        .then(res => console.log(res))
     }*/
     //this.navCtrl.push(TabsPage);
 
