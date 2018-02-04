@@ -131,6 +131,10 @@ export class TapokPage {
     modal.present();
   }
 
+  showAttendees(key){
+    this.navCtrl.push('AttendeesPage', { key: key  });
+  }
+
   confirm(event, status){
     if(status == "TAPOK"){
       let alert = this.alertCtrl.create({
@@ -160,14 +164,14 @@ export class TapokPage {
     var userKey;
     var attendee;
 
-      for(var attendees in event.attendees){
-        if(event.attendees[attendees] == this.user){
-          status = "true";
-          attendeeKey = attendees;
-          console.log(event.attendees[attendees]);
-          break;
-       }
+    for(var attendees in event.attendees){
+      if(event.attendees[attendees].name == this.user){
+        status = "true";
+        attendeeKey = attendees;
+        console.log(event.attendees[attendees]);
+        break;
       }
+    }
 
     for(var userEventKey in this.userEventKeys){
       if(this.userEventKeys[userEventKey].key == event.$key){
@@ -185,10 +189,11 @@ export class TapokPage {
     }
 
     attendee = {
-      "name": this.user
+      "name": this.user,
+      "privelage": "member"
     }
 
-    this.firebaseService.userTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey, userKey);
+    this.firebaseService.userTapok(eventKey, event.$key, status, tapok, attendee, attendeeKey, userKey);
   }
 }
 

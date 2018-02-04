@@ -1,39 +1,62 @@
-.title{
-    color: #2F2E33;
-}
+page-about{
+   .title{
+        color: #2F2E33;
+    }
 
-ion-card{
-    border-top: 1.5px solid #F8A055;
-}
+    ion-card{
+        border-top: 1.5px solid #F8A055;
+    }
 
-.title{
-    color: #353C3F;
-    font-size: 2em; 
-}
+    .title{
+        color: #353C3F;
+        font-size: 2em; 
+    }
 
-.box{
-    height: 32vh !important;
-    width: auto !important;
-    align-items: center;
-    overflow: hidden;
-}
-.photo{
-    width: 100%;
-}
+    .box{
+        height: 32vh !important;
+        width: auto !important;
+        align-items: center;
+        overflow: hidden;
+    }
+    .photo{
+        width: 100%;
+    }
 
-.sched{
-    color: #1E1E20;
-    margin: .5em;
-}
+    .sched{
+        color: #1E1E20;
+        margin: .5em;
+    }
 
-.title-col{
-    color: #F8A055;
-}
+    .title-col{
+        color: #F8A055;
+    }
 
-.nav-title{
-    color: white;
-}
+    .nav-title{
+        color: white;
+    }
 
-.search-icon{
-    color: white;
+    .search-icon{
+        color: white;
+    }
+
+    .increment{
+        display: none;
+    }
+
+    .chip-label{
+        margin-left: .2em;
+    }
+
+    .chip-label-date{
+        margin-left: .2em;
+        margin-right: 1em;
+    }
+
+    .location{
+        padding-top: 1em;
+    }
+
+    .details{
+        font-size: 15px;
+    }
 }

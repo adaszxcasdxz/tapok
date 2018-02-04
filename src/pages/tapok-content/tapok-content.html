@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <ion-segment [(ngModel)]="tabs">
+        <ion-segment *ngIf="access == 'ok'" [(ngModel)]="tabs">
             <ion-segment-button value="info">
                 Info
             </ion-segment-button> 
@@ -18,7 +18,7 @@
                 <ion-icon name="trash"></ion-icon>
             </button>
         </ion-buttons>-->
-        <ion-buttons right large>
+        <ion-buttons *ngIf="access == 'ok'" right large>
             <button class="button-header" (click)="popOver($event)" ion-button icon-only round>
                 <ion-icon name="more"></ion-icon>
             </button>

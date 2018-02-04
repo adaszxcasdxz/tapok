@@ -33,7 +33,7 @@ export class AddTapok {
 	mEndTime: any;
 	venue = '';
 	description = '';
-	tapok = 0;
+	tapok = 1;
 	search_key = '';
 	timestamp = '';
 	dlURL: any;

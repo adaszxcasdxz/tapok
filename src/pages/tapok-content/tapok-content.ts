@@ -22,6 +22,8 @@ export class TapokContent {
   tabs: any;
   Tags: any;
   tag: any[] = [];
+  Attendees: any;
+  access: any;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -32,6 +34,16 @@ export class TapokContent {
     this.user = this.firebaseService.getUser();
     this.key = navParams.get('param1');
     this.event = this.firebaseService.getSpecificEvent(this.key);
+    this.Attendees = this.firebaseService.getAttendees(this.key);
+    
+    this.Attendees.subscribe(snapshot => {
+      snapshot.forEach(snap => {
+        if(this.user == snap.name && (snap.privelage == 'main_admin' || snap.privelage == 'admin')){
+          this.access = 'ok'; 
+        }
+      })
+    });
+
     this.event.forEach(events=> {
       this.event = events;
     });

@@ -42,6 +42,15 @@ export class FireBaseService {
   addEvent(name){
     var Key;
     Key = this.tapok.list('/events/').push(name).key;
+    var admin = {
+      'name': this.user,
+      'privelage': 'main_admin'
+    }
+    this.tapok.list('events/'+Key+'/attendees').push(admin);
+    var obj = {
+      "key": Key
+    }
+    this.tapok.list('/users/'+this.user).push(obj);
     return Key;
   }
 
@@ -55,21 +64,6 @@ export class FireBaseService {
 
   editEvent(eventKey, info){
     this.tapok.object('events/'+eventKey).update(info);
-  }
-
-  addTapok(event, eventKey, status, value, attendee, attendeeKey){
-    this.tapok.object('events/'+eventKey).update({
-      attending: status,
-      tapok: value
-    });
-    if(status == "false"){
-      this.tapok.list('events/'+eventKey+'/attendees/').push(attendee);
-      this.tapok.list('/users/'+this.user).push(event);
-    }
-    else{
-      this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).remove();
-      this.tapok.object('/users/'+this.user).remove();
-    }
   }
 
   userTapok(event, eventKey, status, value, attendee, attendeeKey, attendKey){
@@ -213,5 +207,29 @@ export class FireBaseService {
 
   getTag(){
     return this.tapok.list('tags/');
+  }
+
+  getAttendees(key){
+    return this.tapok.list('events/'+key+'/attendees');
+  }
+
+  addAdmin(eventKey, attendeeKey){
+    this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).update({
+      'privelage': 'admin'
+    });
+  }
+
+  removeAdmin(eventKey, attendeeKey){
+    this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).update({
+      'privelage': 'member'
+    });
+  }
+
+  kickAttendee(eventKey, attendeeKey, userKey, value){
+    this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).remove();
+    this.tapok.object('users/'+this.user+'/'+userKey).remove();
+    this.tapok.object('events/'+eventKey).update({
+      'tapok': value
+    });
   }
 }

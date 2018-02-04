@@ -17,11 +17,17 @@ export class EventPage {
   userTest: any[] = [];
   status: any;
   index = 0;
+  Tags: any;
+  User: any;
+  userEventKeys: any;
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public modalCtrl: ModalController, public alertCtrl: AlertController) {
     this.Event = this.firebaseService.getEvent();
     this.Attending = this.firebaseService.getUserEvents();
+    this.User = this.firebaseService.getUsers();
     this.user = firebaseService.user;
+    this.Tags = this.firebaseService.getTag();
+    
     console.log(this.Attending);
 
     this.Attending.subscribe(snapshot => {
@@ -33,6 +39,12 @@ export class EventPage {
       })
       this.test();
     });
+
+    this.User.map(users => {
+      this.userEventKeys = users;
+      }).subscribe(data => {
+        data;
+    });
   }
 
   test(){
@@ -41,14 +53,23 @@ export class EventPage {
       this.status = "false";
   }
 
-  confirm(event, key){
+  openTapokContent(event){
+    this.navCtrl.push('TapokContent', {param1: event.$key});
+  }
+
+  showAttendees(key){
+    this.navCtrl.push('AttendeesPage', { key: key  });
+  }
+
+  confirm(event, status){
+    if(status != "TAPOK"){
       let alert = this.alertCtrl.create({
         title: 'Leave Event?',
         buttons: [ 
           {
             text: 'YES',
             handler: () => {
-            this.tapok(event, key);
+            this.tapok(event);
             }
           },
           {
@@ -57,19 +78,30 @@ export class EventPage {
         ]
       });
       alert.present();
+    }else
+      this.tapok(event);
   }
 
-  tapok(event, attendKey){
+  tapok(event){
     var status = "false";
     var tapok = event.tapok;
     var attendeeKey;
     var eventKey;
+    var userKey;
+    var attendee;
 
     for(var attendees in event.attendees){
-      if(event.attendees[attendees] == this.user){
+      if(event.attendees[attendees].name == this.user){
         status = "true";
         attendeeKey = attendees;
+        console.log(event.attendees[attendees]);
         break;
+      }
+    }
+
+    for(var userEventKey in this.userEventKeys){
+      if(this.userEventKeys[userEventKey].key == event.$key){
+        userKey = this.userEventKeys[userEventKey].$key;
       }
     }
 
@@ -82,7 +114,12 @@ export class EventPage {
       "key": event.$key
     }
 
-    this.firebaseService.userTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey, attendKey);
+    attendee = {
+      "name": this.user,
+      "privelage": 'member'
+    }
+
+    this.firebaseService.userTapok(eventKey, event.$key, status, tapok, attendee, attendeeKey, userKey);
   }
 
   viewPic(photo){
