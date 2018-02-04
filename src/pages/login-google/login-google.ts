@@ -29,7 +29,7 @@ export class LoginGooglePage {
   isLoggedIn: boolean = false;
   //userProfile: any = null; 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public googlePlus: GooglePlus/*, public authProvider: AuthProvider*/) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public googlePlus: GooglePlus, public authProvider: AuthProvider) {
     /*AngularFireModule.initializeApp({
     apiKey: "AIzaSyDn-6txbosz7KRe6_rFZ8Lwj3Obh63JEik"
     });
