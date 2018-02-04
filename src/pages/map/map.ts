@@ -65,14 +65,8 @@ export class MapPage {
       });
 
       for(i = 0; i < this.lat.length; i++){
-        console.log(this.lat[i]);
         eventLocation[i] = new google.maps.LatLng(this.lat[i], this.long[i]);
-        /*let marker = new google.maps.Marker({
-        map: this.map,
-        animation: google.maps.Animation.DROP,
-        position: eventLocation[i]
-        });*/
-        this.addMarker(eventLocation[i], this.info[i]);
+        this.addMarker(eventLocation[i], this.info[i], this.lat[i]);
       }
 
     }, (err) => {
@@ -81,30 +75,55 @@ export class MapPage {
     
   }
 
-  addMarker(eventLocation, info){
-    
+  addMarker(eventLocation, info, lat){
+
      let marker = new google.maps.Marker({
        map: this.map,
        animation: google.maps.Animation.DROP,
        position: eventLocation
      });
     
-     let content = info.name;         
+     let content = info;         
     
-     this.addInfoWindow(marker, content);
+     this.addInfoWindow(marker, content, lat);
     
    }
 
-   addInfoWindow(marker, content){
-    
-     let infoWindow = new google.maps.InfoWindow({
-       content: content
-     });
-    
+   addInfoWindow(marker, content, lat){
+
+    //var contentString = '<div id="tap"><h3>'+content.name+'</h3><hr>'+content.date+'<br>'+content.time+'<hr>Attendees: '+content.tapok+'<br></div>';
+    var contentString = '';
+    var event: any[] = [];
+    var y = 0;
+
+    for(var i=0;i<this.info.length;i++){
+      if(this.info[i].latitude == lat){
+        contentString = contentString.concat('<div id="'+this.info[i].$key+'"><h3>'+this.info[i].name+'</h3><hr>'+this.info[i].date+'<br>'+this.info[i].time+'<hr>Attendees: '+this.info[i].tapok+'<br></div>');
+        event[y] = this.info[i].$key;
+        y++;
+      }
+    }
+
+    let infoWindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+
      google.maps.event.addListener(marker, 'click', () => {
        infoWindow.open(this.map, marker);
-     });
-    
-   }
+        google.maps.event.addListenerOnce(infoWindow, 'domready', () => {
+          for(var i=0;i<event.length;i++){
+            document.getElementById(event[i]).addEventListener('click', (ev) => {
+              this.openTapokContent(ev.toElement.id);
+              console.log(ev.toElement.id);
+            });
+            console.log(event[i].length);
+          }
+        });
+   });
+  }
+
+  openTapokContent(key){
+    this.navCtrl.push('TapokContent', {param1: key});
+  }
     
 }

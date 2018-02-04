@@ -15,6 +15,7 @@ declare var google;
 export class AddTapok {
 	@ViewChild('autocomplete') autocompleteElement: ElementRef;
 	autocomplete;
+	element: any;
 
 	label: any;
 	key: any;
@@ -38,7 +39,7 @@ export class AddTapok {
 	dlURL: any;
 	tags = 'false';
 	lat: any;
-	long: any;
+	lng: any;
 
 	temp: any;
 	tag: any;
@@ -80,20 +81,37 @@ export class AddTapok {
 
 	}
 
-	ngOnInit() {
+	ionViewDidLoad() {
 		this.autocomplete = new google.maps.places.Autocomplete(this.autocompleteElement.nativeElement);
-		console.log('addpage');
+
+		/*var request = {
+			location:
+		}
+		this.autocomplete.nearbySearch();*/
+		console.log(this.geolocation.getCurrentPosition());
+		console.log(this.autocomplete);
 
 		this.autocomplete.addListener('place_changed', function(){
 			console.log('test');
+			//var place = this.autocomplete.getPlace();
+			//console.log(place);
 		});
 	}
 
-	listen(){
-		console.log('listen');
-		
+	getLat(){
 		var place = this.autocomplete.getPlace();
-		console.log(place.geometry.location.lng());
+		if(place != undefined)
+			var lat = place.geometry.location.lat();
+
+		return lat;
+	}
+
+	getLng(){
+		var place = this.autocomplete.getPlace();
+		if(place != undefined)
+			var lng = place.geometry.location.lng();
+
+		return lng;
 	}
 
 	dismiss() {
@@ -103,7 +121,7 @@ export class AddTapok {
 	getLocation(){
 		this.geolocation.getCurrentPosition().then((position) => {
 			this.lat = position.coords.latitude;
-			this.long = position.coords.longitude;
+			this.lng = position.coords.longitude;
 		});
 	}
 
@@ -122,6 +140,15 @@ export class AddTapok {
 
 	addTapok() {
 		var i, y, eventKey;
+
+		if(this.autocomplete.getPlace != undefined){
+			this.lat = this.getLat();
+			this.lng = this.getLng();
+
+			this.venue = document.getElementById('autocomplete')["value"];
+			console.log(this.venue);
+		}
+
 		this.Tags.subscribe(snapshots => {
 			this.tagsTest.length = 0;
 			y = 0;
@@ -158,7 +185,7 @@ export class AddTapok {
 			"search_key": this.name.toLowerCase(),
 			"timestamp": 0-Date.now(),
 			"latitude": this.lat,
-			"longitude": this.long
+			"longitude": this.lng
 		};
 
 		if(this.label == "Add Tapok")
@@ -308,5 +335,5 @@ export class AddTapok {
 		  this.dlURL = this.firebaseService.uploadPhoto(this.selectedPhoto, key);
 		  this.dlURL.then(this.onSuccess, this.onError);  
 		}
-	  }
+	}
 }
