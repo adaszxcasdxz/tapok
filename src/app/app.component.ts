@@ -7,6 +7,16 @@ import kuyogFirebase from './app.module';
 import googlePlusApi from './app.module';
 import firebase from 'firebase';
 import { Unsubscribe } from '@firebase/util';
+import { AngularFireAuth } from 'angularfire2/auth';
+
+/*var kuyogFirebase = {
+    apiKey: "AIzaSyB2_PG9pR5KVs9qs1JRH-zA15EuivDxPwA",
+    authDomain: "tapok-83ffd.firebaseapp.com",
+    databaseURL: "https://tapok-83ffd.firebaseio.com",
+    projectId: "tapok-83ffd",
+    storageBucket: "tapok-83ffd.appspot.com",
+    messagingSenderId: "765761820847"
+  };*/
 
 @Component({
   templateUrl: 'app.html'
@@ -14,12 +24,13 @@ import { Unsubscribe } from '@firebase/util';
 export class MyApp {
   //rootPage:any = 'LoginPage';
   //rootPage:any = 'TabsPage';
-  rootPage: any; //
+  //rootPage: any; //
+  rootPage: any = 'LoginGooglePage';
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth) {
     //firebase.initializeApp(kuyogFirebase); //
 
-    const unsubscribe: Unsubscribe = firebase.auth().onAuthStateChanged(user => {
+    /*const unsubscribe = afAuth.auth.onAuthStateChanged(user => {
       if(!user){
         this.rootPage = 'LoginGooglePage';
         unsubscribe();
@@ -28,14 +39,18 @@ export class MyApp {
         this.rootPage = 'TabsPage';
         unsubscribe();
       }
-    }); //
-    
-    platform.ready().then(() => {
+    });*/
+
+      platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       //AngularFireModule.initializeApp(kuyogFirebase);
       statusBar.styleDefault();
       splashScreen.hide();
+      //firebase.initializeApp(kuyogFirebase);
     });
+    //}); 
+    
+    
   }
 }

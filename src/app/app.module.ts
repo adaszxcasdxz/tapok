@@ -8,6 +8,7 @@ import { Filter } from '../pages/filter/filter';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { GooglePlus } from '@ionic-native/google-plus';
+//import { LoginGooglePage } from '../pages/login-google/login-google';
 
 import { Camera } from '@ionic-native/camera';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
@@ -17,8 +18,10 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { FireBaseService } from './../providers/firebase-service';
 import firebase from 'firebase';
+import { AuthProvider } from '../providers/auth/auth';
+import { AngularFireAuth } from 'angularfire2/auth';
 
-//pang-google nga import goes here
+
 
 var kuyogFirebase = {
     apiKey: "AIzaSyB2_PG9pR5KVs9qs1JRH-zA15EuivDxPwA",
@@ -34,6 +37,7 @@ var googlePlusApi = "AIzaSyCooNeyvH1NkSn4Lz0J5N2Wy5ZwQzFS_Ns";
 @NgModule({
   declarations: [
     MyApp,
+    //LoginGooglePage,
     Filter,
   ],
   imports: [
@@ -41,21 +45,26 @@ var googlePlusApi = "AIzaSyCooNeyvH1NkSn4Lz0J5N2Wy5ZwQzFS_Ns";
     HttpModule,
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(kuyogFirebase),
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    //LoginGooglePage
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    Filter,
+    //LoginGooglePage,
+    Filter
+    //LoginGooglePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     GooglePlus,
+    AuthProvider,
     FireBaseService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Camera,
-    PhotoViewer
+    PhotoViewer,
+    AngularFireAuth
   ]
 })
 export class AppModule {

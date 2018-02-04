@@ -14,7 +14,7 @@
 
 
 <ion-content padding>
-  <button ion-button block color="danger" (click)="loginUser()" *ngIf="!userProfile">
+  <!--<button ion-button block color="danger" (click)="loginUser()" *ngIf="!userProfile">
     <ion-icon name="logo-googleplus"></ion-icon>
     Login with Gmail
   </button>
@@ -26,6 +26,25 @@
 
     <h2>{{ userProfile.displayName }}</h2>
     <h3>{{ userProfile.email }}</h3>
-  </ion-item>
+  </ion-item>-->
+
+  <!---<button ion-button block color="danger" (click)="loginWithGoogle()"><ion-icon name="logo-googleplus"> Login With Google</ion-icon></button>-->
+
+  <div *ngIf="isLoggedIn">
+    <h1> Welcome, {{displayName}}!</h1>
+    <p>Email: {{email}}<br>
+      Given Name: {{displayName}}</p>
+    <p>
+      <ion-avatar item-left>
+        <img src="{{photoURL}}">
+      </ion-avatar>
+    </p>
+    <p><button ion-button (click)="logout()">Logout From Google</button></p>
+  </div>
+
+  <div *ngIf="!isLoggedIn">
+    <p><button ion-button block color="danger" (click)="loginWithGoogle()">
+      <ion-icon name="logo-googleplus"></ion-icon>Login With Google</button></p>
+  </div>
 
 </ion-content>
