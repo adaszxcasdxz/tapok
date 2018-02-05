@@ -6,6 +6,7 @@ import { AngularFireModule } from 'angularfire2';
 import kuyogFirebase from './app.module';
 import googlePlusApi from './app.module';
 import firebase from 'firebase';
+//import { GooglePlus } from '@ionic-native/google-plus';
 import { Unsubscribe } from '@firebase/util';
 import { AngularFireAuth } from 'angularfire2/auth';
 
@@ -30,7 +31,8 @@ export class MyApp {
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth) {
     //firebase.initializeApp(kuyogFirebase); //
 
-    /*const unsubscribe = afAuth.auth.onAuthStateChanged(user => {
+    const unsubscribe = afAuth.auth.onAuthStateChanged(user => {
+      console.log(user);
       if(!user){
         this.rootPage = 'LoginGooglePage';
         unsubscribe();
@@ -39,7 +41,7 @@ export class MyApp {
         this.rootPage = 'TabsPage';
         unsubscribe();
       }
-    });*/
+    });
 
       platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.

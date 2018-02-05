@@ -28,9 +28,9 @@
     <h3>{{ userProfile.email }}</h3>
   </ion-item>-->
 
-  <!---<button ion-button block color="danger" (click)="loginWithGoogle()"><ion-icon name="logo-googleplus"> Login With Google</ion-icon></button>-->
+  <button ion-button block color="danger" (click)="loginWithGoogle()"><ion-icon name="logo-googleplus"> Login With Google</ion-icon></button>
 
-  <div *ngIf="isLoggedIn">
+  <!--<div *ngIf="isLoggedIn">
     <h1> Welcome, {{displayName}}!</h1>
     <p>Email: {{email}}<br>
       Given Name: {{displayName}}</p>
@@ -45,6 +45,6 @@
   <div *ngIf="!isLoggedIn">
     <p><button ion-button block color="danger" (click)="loginWithGoogle()">
       <ion-icon name="logo-googleplus"></ion-icon>Login With Google</button></p>
-  </div>
+  </div>-->
 
 </ion-content>

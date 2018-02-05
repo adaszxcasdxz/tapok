@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { GooglePlus } from '@ionic-native/google-plus';
+//import { GooglePlus } from '@ionic-native/google-plus';
 import { Observable } from "rxjs/Observable";
-import firebase from 'firebase/app'
+import * as firebase from 'firebase/app'
 
 /*
   Generated class for the AuthProvider provider.
@@ -13,18 +13,19 @@ import firebase from 'firebase/app'
 @Injectable()
 export class AuthProvider {
 
-  constructor(public googlePlus:GooglePlus) {
+  constructor(/*public googlePlus:GooglePlus*/) {
     console.log('Hello AuthProvider Provider');
   }
 
-  googleLogin(){
-    console.log("pls")
+  /*googleLogin(){
     return Observable.create(observer => {
       return this.googlePlus.login({
         'webClientId': '765761820847-odrnbes28kqoqsiml6s1rc77g0ci38v5.apps.googleusercontent.com',
         'offline': true
       })
       .then( res => {
+        console.log("pls");
+        alert("Successfully Logged In!");
         const firecreds = firebase.auth.GoogleAuthProvider.credential(res.idToken);
         firebase.auth().signInWithCredential(firecreds)
         .then( success => { observer.next(success); })
@@ -35,11 +36,13 @@ export class AuthProvider {
     })
   }
  //authResponse.accessToken
+
+
   logout(){
     firebase.auth().signOut().then(function() {
       alert("logout successful");
     }, function(error) {
       console.log(error);
     });
-  }
+  }*/
 }

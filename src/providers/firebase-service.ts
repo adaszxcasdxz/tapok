@@ -4,22 +4,44 @@ import { FirebaseApp } from 'angularfire2';
 import 'rxjs/add/operator/map';
 //import * as firebase from 'firebase/app';
 import 'firebase/storage';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class FireBaseService {
 
-  user;
+  user; 
+  uID;
 
-  constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp) {
-    this.user = "Kurt Torregosa";
+  constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp, public angularFireAuth: AngularFireAuth) {
+    //this.user = "Kurt Torregosa";
   }
 
   setUser(name){
     this.user = name;
   }
 
+  setUID(uid){
+    this.uID=uid;
+  }
+
   getUser(){
     return this.user;
+  }
+
+  getUserID(){
+    return this.angularFireAuth.auth.currentUser.uid;
+  }
+
+  getPhotoURL(){
+    return this.angularFireAuth.auth.currentUser.photoURL;
+  }
+
+  getEmail(){
+    return this.angularFireAuth.auth.currentUser.email;
+  }
+
+  loginUser(user){
+    this.tapok.list('/login/'+this.uID).push(user);
   }
 
   getEvent(){

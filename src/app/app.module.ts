@@ -7,11 +7,11 @@ import { Filter } from '../pages/filter/filter';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { GooglePlus } from '@ionic-native/google-plus';
+//import { GooglePlus } from '@ionic-native/google-plus';
 //import { LoginGooglePage } from '../pages/login-google/login-google';
 
 import { Camera } from '@ionic-native/camera';
-import { PhotoViewer } from '@ionic-native/photo-viewer';
+//import { PhotoViewer } from '@ionic-native/photo-viewer';
 
 import { HttpModule } from '@angular/http';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -20,10 +20,7 @@ import { FireBaseService } from './../providers/firebase-service';
 import firebase from 'firebase';
 import { AuthProvider } from '../providers/auth/auth';
 import { AngularFireAuth } from 'angularfire2/auth';
-
-
-
-var kuyogFirebase = {
+export const kuyogFirebase = {
     apiKey: "AIzaSyB2_PG9pR5KVs9qs1JRH-zA15EuivDxPwA",
     authDomain: "tapok-83ffd.firebaseapp.com",
     databaseURL: "https://tapok-83ffd.firebaseio.com",
@@ -58,13 +55,13 @@ var googlePlusApi = "AIzaSyCooNeyvH1NkSn4Lz0J5N2Wy5ZwQzFS_Ns";
   providers: [
     StatusBar,
     SplashScreen,
-    GooglePlus,
     AuthProvider,
     FireBaseService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Camera,
-    PhotoViewer,
-    AngularFireAuth
+    //PhotoViewer,
+    AngularFireAuth,
+    //GooglePlus
   ]
 })
 export class AppModule {
