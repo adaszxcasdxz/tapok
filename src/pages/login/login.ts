@@ -5,6 +5,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { App } from 'ionic-angular/components/app/app';
 import { TabsPage } from '../tabs/tabs';
+import { FireBaseService } from '../../providers/firebase-service';
 
 /**
  * Generated class for the LoginPage page.
@@ -19,64 +20,36 @@ import { TabsPage } from '../tabs/tabs';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  /*loginData = {
-    email: '',
-    password: ''
-  }*/
+ 
   userData: any;
-  userProfileRef: any;
+  //userProfileRef: any;
 
   constructor(public navCtrl: NavController, private afAuth: AngularFireAuth, private toastCtrl: ToastController,
-    private facebook: Facebook, private platform: Platform, public app: App) {
-      
+    private facebook: Facebook, private platform: Platform, public app: App, public firebaseService: FireBaseService) { 
   }
 
-  loginFacebook() {
-    //this.navCtrl.push(TabsPage);
+  loginWithFacebook(): Promise<any> {
+    return this.facebook.login(['email', 'public_profile'])
+      .then( response => {
+        const facebookCredential = firebase.auth.FacebookAuthProvider
+          .credential(response.authResponse.accessToken);
 
-    /*if (this.platform.is('cordova')) {
-      return this.facebook.login(['email', 'public_profile']).then(res => {
-        const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
-        return firebase.auth().signInWithCredential(facebookCredential);
-      }).then((user)=>{
-      this.userProfileRef.child(firebase.auth().currentUser.uid).set({
-        id:firebase.auth().currentUser.uid,
-        email: user.email,
-        displayName:user.displayName,
-        profilePictureURL:user.photoURL
-      });
-      this.navCtrl.setRoot('TabsPage');
-      console.log("success");
-    })
-    }
-    else {
-      return this.afAuth.auth
-        .signInWithPopup(new firebase.auth.FacebookAuthProvider())
-        .then(res => console.log(res))
-    }*/
-    //this.navCtrl.push(TabsPage);
-
-    /*this.facebook.login(['email', 'public_profile']).then((response: FacebookLoginResponse) => {
-      this.facebook.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)', []).then(profile => {
-        this.userData = {email: profile['email'], first_name: profile['first_name'], picture: profile['picture_large']['data']['url'], username: profile['name']}
-      });
-    });*/
-
-    //sign in to facebook
-    this.facebook.login(['email', 'public_profile']).then((result=>{
-      let credentials = firebase.auth.FacebookAuthProvider.credential(result.authResponse.accessToken) //'credential'
-      return firebase.auth().signInWithCredential(credentials);
-    })).then((user)=>{
-      this.userProfileRef.child(firebase.auth().currentUser.uid).set({
-        id:firebase.auth().currentUser.uid,
-        email: user.email,
-        displayName:user.displayName,
-        profilePictureURL:user.photoURL
-      });
-      this.navCtrl.setRoot(TabsPage);
-      console.log("success");
-    }).catch((error)=>{
-      alert(error);
-    })
+        firebase.auth().signInWithCredential(facebookCredential)
+          .then( success => { 
+            //alert("successfully logged in");
+            alert("Firebase success: " + JSON.stringify(success) + JSON.stringify(success.user_birthday)); 
+            this.firebaseService.setUser(this.afAuth.auth.currentUser.displayName);
+            this.firebaseService.setUID(this.afAuth.auth.currentUser.uid);
+            this.navCtrl.setRoot('TabsPage');
+            this.userData={
+              status:"logged in",
+              name:this.afAuth.auth.currentUser.displayName,
+              photo:this.afAuth.auth.currentUser.photoURL,
+              email:this.afAuth.auth.currentUser.email,
+              //bday:this.afAuth.auth.currentUser.user_birthday
+            }
+            this.firebaseService.loginUser(this.userData);
+          });
+      }).catch((error) => { console.log(error) });
   }
 }

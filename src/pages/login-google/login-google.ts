@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { GooglePlus } from '@ionic-native/google-plus';
-import firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import { FireBaseService } from '../../providers/firebase-service';
 import { AngularFireModule } from 'angularfire2';
 import { AppModule } from '../../app/app.module';

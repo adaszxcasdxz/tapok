@@ -27,6 +27,7 @@ export class TapokContent {
   chat: any;
   List: any;
   listen: any;
+  uid: any;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -36,6 +37,7 @@ export class TapokContent {
     var i = 0;
     this.tabs = 'info';
     this.user = this.firebaseService.getUser();
+    this.uid = this.firebaseService.getUserID();
     this.key = navParams.get('param1');
     this.event = this.firebaseService.getSpecificEvent(this.key);
     //this.event = params.get('event');
@@ -222,6 +224,8 @@ export class TapokContent {
       "message": this.Message,
       "sentBy": this.firebaseService.getUser(),
       "timestamp": Date.now(),
+      "uid": this.firebaseService.getUserID(),
+      "photo":this.firebaseService.getPhotoURL()
     }
     
     setTimeout(() => {

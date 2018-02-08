@@ -19,7 +19,7 @@
     <ion-card *ngSwitchCase="'me'">
       <ion-item>
         <ion-avatar large>
-          <img class="item-avatar" src="assets/img/user.png">
+          <img class="item-avatar" src="{{ photo }}">
         </ion-avatar>
         <h2>{{ username }}</h2>
         <p>carm143</p>
@@ -27,11 +27,11 @@
     
     <ion-card-content>
       <ion-item>
-        <p><ion-icon name="mail"></ion-icon> carmlleflc@gmail.com</p>
+        <p><ion-icon name="mail"></ion-icon>{{ email }}</p>
       </ion-item>
 
       <ion-item>
-        <p><ion-icon name="call"></ion-icon> 0936 456 1529</p>
+        <p><ion-icon name="call"></ion-icon>{{ number }}</p>
       </ion-item>
     </ion-card-content>
     </ion-card>

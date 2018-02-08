@@ -3,6 +3,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
 import 'rxjs/add/operator/map';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { AngularFireAuth } from 'angularfire2/auth';
 //import * as firebase from 'firebase/app';
 import 'firebase/storage';
 //import { AngularFireAuth } from 'angularfire2/auth';
@@ -11,17 +12,35 @@ import 'firebase/storage';
 export class FireBaseService {
 
   user;
+  uID;
 
-  constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp) {
-    this.user = "Henry Eguia";
+  constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp, private afAuth: AngularFireAuth) {
+    //this.user = afAuth.auth.currentUser.displayName;
+    //this.user="Carmelle Ann Felicio"
   }
 
   setUser(name){
-    this.user = name;
+    this.user=name;
+  }
+
+  setUID(uid){
+    this.uID=uid;
   }
 
   getUser(){
     return this.user;
+  }
+
+  getUserID(){
+    return this.afAuth.auth.currentUser.uid;
+  }
+
+  getPhotoURL(){
+    return this.afAuth.auth.currentUser.photoURL;
+  }
+
+  getEmail(){
+    return this.afAuth.auth.currentUser.email;
   }
 
   getEvent(){
@@ -181,6 +200,10 @@ export class FireBaseService {
   getUsers(){
     return this.tapok.list('/users/'+this.user);
   }
+
+  getUserss(){
+    return this.tapok.list('/users/'+this.afAuth.auth.currentUser.uid);
+  }
   
   sendMessage(message, key){
     this.tapok.list('events/'+key+'/chat/').push(message);
@@ -239,5 +262,9 @@ export class FireBaseService {
 
     key = this.tapok.list('imageName').push(Date.now());
     return key;
+  }
+
+  loginUser(user){
+    this.tapok.list('login/'+this.uID).push(user);
   }
 }
