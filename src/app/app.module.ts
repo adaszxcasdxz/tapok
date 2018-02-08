@@ -17,10 +17,15 @@ import { HttpModule } from '@angular/http';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { FireBaseService } from './../providers/firebase-service';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
 import { AuthProvider } from '../providers/auth/auth';
-import { AngularFireAuth } from 'angularfire2/auth';
-export const kuyogFirebase = {
+import { SocialSharing } from '@ionic-native/social-sharing';
+
+//pang-google nga import goes here
+
+var kuyogFirebase = {
     apiKey: "AIzaSyB2_PG9pR5KVs9qs1JRH-zA15EuivDxPwA",
     authDomain: "tapok-83ffd.firebaseapp.com",
     databaseURL: "https://tapok-83ffd.firebaseio.com",
@@ -60,8 +65,10 @@ var googlePlusApi = "AIzaSyCooNeyvH1NkSn4Lz0J5N2Wy5ZwQzFS_Ns";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Camera,
     //PhotoViewer,
+    Facebook,
     AngularFireAuth,
-    //GooglePlus
+    SocialSharing
+    //FacebookLoginResponse
   ]
 })
 export class AppModule {

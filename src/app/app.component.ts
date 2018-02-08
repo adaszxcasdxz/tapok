@@ -4,7 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireModule } from 'angularfire2';
 import kuyogFirebase from './app.module';
-import googlePlusApi from './app.module';
+//import googlePlusApi from './app.module';
 import firebase from 'firebase';
 //import { GooglePlus } from '@ionic-native/google-plus';
 import { Unsubscribe } from '@firebase/util';
@@ -24,17 +24,15 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class MyApp {
   //rootPage:any = 'LoginPage';
-  //rootPage:any = 'TabsPage';
-  //rootPage: any; //
   rootPage: any = 'LoginGooglePage';
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth) {
-    //firebase.initializeApp(kuyogFirebase); //
+    //firebase.initializeApp(kuyogFirebase);
 
     const unsubscribe = afAuth.auth.onAuthStateChanged(user => {
       console.log(user);
       if(!user){
-        this.rootPage = 'LoginGooglePage';
+        this.rootPage = 'LoginPage';
         unsubscribe();
       }
       else{

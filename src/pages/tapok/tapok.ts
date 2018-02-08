@@ -3,6 +3,7 @@ import { IonicPage, NavController, PopoverController, ModalController, AlertCont
 import { Filter } from '../filter/filter';
 import { FireBaseService } from '../../providers/firebase-service';
 //import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 @IonicPage()
 @Component({
@@ -27,7 +28,8 @@ export class TapokPage {
 
   constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
-      public modalCtrl: ModalController, public firebaseService: FireBaseService/*, public photoViewer: PhotoViewer*/) {
+      public modalCtrl: ModalController, public firebaseService: FireBaseService/*, public photoViewer: PhotoViewer*/,
+      private sharingVar: SocialSharing) {
     var i = 0, y = 0;
 
     this.toggled = false;
@@ -183,6 +185,14 @@ export class TapokPage {
     }
 
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey, userKey);
+  }
+
+  facebookShare(){
+    this.sharingVar.shareViaFacebook("Test?",null,null).then((success)=>{
+        alert("Success");
+      }).catch((error)=>{
+         alert(error)
+      })
   }
 }
 

@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
 import 'rxjs/add/operator/map';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { AngularFireAuth } from 'angularfire2/auth';
 //import * as firebase from 'firebase/app';
 import 'firebase/storage';
-import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class FireBaseService {
@@ -17,7 +18,7 @@ export class FireBaseService {
   }
 
   setUser(name){
-    this.user = name;
+    this.user=name;
   }
 
   setUID(uid){
@@ -42,7 +43,12 @@ export class FireBaseService {
 
   loginUser(user){
     this.tapok.list('/login/'+this.uID).push(user);
+    return this.angularFireAuth.auth.currentUser.uid;
   }
+
+  /*loginUser(user){
+    this.tapok.list('login/'+this.uID).push(user);
+  }*/
 
   getEvent(){
     return this.tapok.list('/events/',{
@@ -201,12 +207,16 @@ export class FireBaseService {
   getUsers(){
     return this.tapok.list('/users/'+this.user);
   }
+
+  getUserss(){
+    return this.tapok.list('/users/'+this.angularFireAuth.auth.currentUser.uid);
+  }
   
   sendMessage(message, key){
     this.tapok.list('events/'+key+'/chat/').push(message);
   }
 
-  getChat(eventKey){
+  getChat(eventKey, content){
     return this.tapok.list('/events/'+eventKey+'/chat/',{
       query:{
         orderByChild: 'timestamp'
