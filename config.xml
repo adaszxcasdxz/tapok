@@ -90,4 +90,8 @@
     <plugin name="cordova-plugin-googleplus" spec="^5.2.1">
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.765761820847-odrnbes28kqoqsiml6s1rc77g0ci38v5" />
     </plugin>
+    <plugin name="cordova-plugin-facebook4" spec="^1.7.4">
+        <variable name="APP_ID" value="1942708989279988" />
+        <variable name="APP_NAME" value="TAPOK" />
+    </plugin>
 </widget>

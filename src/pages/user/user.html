@@ -16,25 +16,24 @@
 
 <ion-content>
   <div [ngSwitch]="pages">
-    <ion-card *ngSwitchCase="'me'">
-      <ion-item>
-        <ion-avatar large>
+    <div *ngSwitchCase="'me'">
+      <ion-row text-center>
+        <ion-col>
           <img class="item-avatar" src="{{ photo }}">
-        </ion-avatar>
-        <h2>{{ username }}</h2>
-      </ion-item>
-    
-    <ion-card-content>
-      <ion-item>
-        <p><ion-icon name="mail"></ion-icon> {{ email }}</p>
-      </ion-item>
-
-      <ion-item>
-        <p><ion-icon name="call"></ion-icon> 0936 456 1529</p>
-      </ion-item>
-    </ion-card-content>
-    </ion-card>
-    <button class="tapok-button" (click)="logout()" ion-button large full>Logout</button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="username"><b>{{ username }}</b></div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <p class="mail"><ion-icon name="mail"></ion-icon> {{ email }}</p>
+        </ion-col>
+      </ion-row>
+    </div>
+    <button class="tapok-button" (click)="logout()" ion-button large>Logout</button>
 
     <ion-item-group *ngSwitchCase="'friends'">
       <ion-list>

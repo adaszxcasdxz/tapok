@@ -31,7 +31,7 @@ export class LoginGooglePage {
   email: any;
   photoURL: any;
   isLoggedIn: boolean = false;
-  //userProfile: any = null; 
+  userData: any; 
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public navParams: NavParams, public angularFireAuth: AngularFireAuth, public authProvider: AuthProvider) {
     /*AngularFireModule.initializeApp({
@@ -55,7 +55,7 @@ export class LoginGooglePage {
     .then((result) => {
       var token = result.credential.accessToken;
       var user = result.user;
-
+ 
       console.log(result.user);
       console.log(result.user.displayName); 
       console.log("Success");

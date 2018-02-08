@@ -21,6 +21,7 @@ export class UserPage {
     this.username = this.firebaseService.getUser();
     this.email = this.firebaseService.getEmail();
     this.photo = this.firebaseService.getPhotoURL();
+    console.log(this.username);
   }
 
   logout(){
