@@ -37,7 +37,7 @@ export class LoginPage {
         firebase.auth().signInWithCredential(facebookCredential)
           .then( success => { 
             //alert("successfully logged in");
-            alert("Firebase success: " + JSON.stringify(success) + JSON.stringify(success.user_birthday)); 
+            //alert("Firebase success: " + JSON.stringify(success) + JSON.stringify(success.user_birthday)); 
             this.firebaseService.setUser(this.afAuth.auth.currentUser.displayName);
             this.firebaseService.setUID(this.afAuth.auth.currentUser.uid);
             this.navCtrl.setRoot('TabsPage');

@@ -96,4 +96,22 @@
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.765761820847-odrnbes28kqoqsiml6s1rc77g0ci38v5" />
     </plugin>
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.2.1" />
+    <plugin name="ionic-plugin-deeplinks" spec="^1.0.15">
+        <variable name="URL_SCHEME" value="tapok" />
+        <variable name="DEEPLINK_SCHEME" value="https" />
+        <variable name="DEEPLINK_HOST" value="tapok.com" />
+        <variable name="ANDROID_PATH_PREFIX" value="/" />
+        <variable name="ANDROID_2_PATH_PREFIX" value="/" />
+        <variable name="ANDROID_3_PATH_PREFIX" value="/" />
+        <variable name="ANDROID_4_PATH_PREFIX" value="/" />
+        <variable name="ANDROID_5_PATH_PREFIX" value="/" />
+        <variable name="DEEPLINK_2_SCHEME" value=" " />
+        <variable name="DEEPLINK_2_HOST" value=" " />
+        <variable name="DEEPLINK_3_SCHEME" value=" " />
+        <variable name="DEEPLINK_3_HOST" value=" " />
+        <variable name="DEEPLINK_4_SCHEME" value=" " />
+        <variable name="DEEPLINK_4_HOST" value=" " />
+        <variable name="DEEPLINK_5_SCHEME" value=" " />
+        <variable name="DEEPLINK_5_HOST" value=" " />
+    </plugin>
 </widget>

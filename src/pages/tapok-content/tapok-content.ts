@@ -28,11 +28,12 @@ export class TapokContent {
   List: any;
   listen: any;
   uid: any;
+  tapokID: string;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
     public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService, 
-    public popoverCtrl: PopoverController, public firebaseApp: FirebaseApp
+    public popoverCtrl: PopoverController, public firebaseApp: FirebaseApp, private _params: NavParams
   ){
     var i = 0;
     this.tabs = 'info';
@@ -72,6 +73,8 @@ export class TapokContent {
       })
       this.test();
     });
+
+    this.tapokID = this.tapokID = _params.get('tapokID');
   }
 
   test(){

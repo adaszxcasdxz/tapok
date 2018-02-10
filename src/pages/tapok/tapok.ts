@@ -4,6 +4,7 @@ import { Filter } from '../filter/filter';
 import { FireBaseService } from '../../providers/firebase-service';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { NavParams } from 'ionic-angular/navigation/nav-params';
 
 @IonicPage()
 @Component({
@@ -25,6 +26,7 @@ export class TapokPage {
   userTest: any[] = [];
   status: any[] = []; //
   index = 0; //
+  tapokID: string
 
   constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
@@ -62,7 +64,7 @@ export class TapokPage {
         y++;
       })
       this.test();
-    }); //
+    }); 
 
     console.log(this.userTest);
     console.log(this.eventTest);
@@ -187,11 +189,13 @@ export class TapokPage {
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey, userKey);
   }
 
-  facebookShare(){
-    this.sharingVar.shareViaFacebook("Test?",null,null).then((success)=>{
-        alert("Success");
+  facebookShare(event){
+    //this.tapokID=(event.$key).toString();
+    this.sharingVar.shareViaFacebook("Check out this event-> tapok://tapok.com/tapok/"+event.$key,
+    null,null).then((success)=>{
+        //alert("Success");
       }).catch((error)=>{
-         alert(error)
+         alert(JSON.stringify(error))
       })
   }
 }
