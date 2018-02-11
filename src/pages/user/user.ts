@@ -26,6 +26,6 @@ export class UserPage {
 
   logout(){
     this.angularFireAuth.auth.signOut(); 
-    this.app.getRootNav().setRoot('LoginGooglePage');
+    this.app.getRootNav().setRoot('LoginPage');
   }
 }

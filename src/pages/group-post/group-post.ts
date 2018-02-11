@@ -23,6 +23,8 @@ export class GroupPost {
   label: any;
   postKey: any;
   groupKey: any;
+  photo: any;
+  posterid: any;
   
   host = '';
   poster = '';
@@ -33,13 +35,16 @@ export class GroupPost {
      public firebaseService:FireBaseService, public viewCtrl: ViewController, public params: NavParams) {
         this.host = firebaseService.user;
         this.user = firebaseService.user;
+        this.posterid = this.firebaseService.getUserID();
         //this.post = this.firebaseService.getPost(this.key);
         this.key = navParams.get('param1');
         this.label = navParams.get('label');
         this.postKey = navParams.get('tapokPost');
         this.groupKey = navParams.get('tapokGroup');
+        this.photo = this.firebaseService.getPhotoURL();
         //if(this.postKey != undefined)
-				  //this.editPostInfo();
+          //this.editPostInfo();
+        console.log(this.posterid);
   }
 
   addPost(){
@@ -47,7 +52,9 @@ export class GroupPost {
       "post": this.post,
       "poster": this.user,
       "timestamp": 0-Date.now(),
-      "datetime": Date.now()
+      "datetime": Date.now(),
+      "photo": this.photo,
+      "posterid": this.posterid,
     }
 
     if(this.label == "Add Post")

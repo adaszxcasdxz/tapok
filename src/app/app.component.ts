@@ -24,7 +24,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class MyApp {
   //rootPage:any = 'LoginPage';
-  rootPage: any = 'LoginGooglePage';
+  rootPage: any = 'LoginPage';
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth) {
     //firebase.initializeApp(kuyogFirebase);

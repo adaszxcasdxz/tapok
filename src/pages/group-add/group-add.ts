@@ -20,7 +20,9 @@ export class GroupAddPage {
   key: any;
   group: any;
   label: any;
-  user: any;
+	user: any;
+	usergroup: any;
+	test: any;
 
   loading: any;
   selectedPhoto: any;
@@ -30,7 +32,8 @@ export class GroupAddPage {
   admin = '';
   gname = '';
   gdescr = '';
-  timestamp = '';
+	timestamp = '';
+	adminid: any;
 
   onSuccess = (snapshot) => {
 		this.photo = snapshot.downloadURL;
@@ -44,7 +47,8 @@ export class GroupAddPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
      public firebaseService:FireBaseService, public viewCtrl: ViewController, public camera: Camera, public params: NavParams, public loadingCtrl: LoadingController) {
-        this.admin = firebaseService.user;
+				this.admin = firebaseService.user;
+				this.adminid = this.firebaseService.getUserID();
         this.label = params.get('label');
 			  this.group = params.get('tapok');
         if(this.group != undefined)
@@ -61,18 +65,39 @@ export class GroupAddPage {
       "gdescr": this.gdescr,
       "admin": this.admin,
 			"timestamp": 0-Date.now(),
-			"photo": this.photo
-    }
+			"photo": this.photo,
+			"adminid": this.adminid,
+		}
 
-    if(this.label == "Add Group")
+    if(this.label == "Add Group"){
 			this.firebaseService.addGroup(this.group);
+			//this.firebaseService.addUserGroup(this.usergroup);
+		}
+
+		this.test = this.group.$key;
+		console.log(this.test);
+
+		//this.test = this.firebaseService.getSpecificGroup(this.group.$key);
+		//console.log(this.test);
+		//this.addUserGroup(this.test);
 		this.cancel();
 		let alert = this.alertCtrl.create({
 			title: 'Group Created',
 			buttons: [ 'OK' ]
 		});
     alert.present();
-  }
+	}
+	
+	addUserGroup(key){
+		console.log(key);
+		this.usergroup={
+						"key": key,
+            "gname": this.gname,
+            "timejoin": 0-Date.now()
+    }  
+		
+		this.firebaseService.addUserGroup(this.usergroup);
+	}
 
   editGroup(){
 		this.group={

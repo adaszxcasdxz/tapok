@@ -24,6 +24,7 @@ export class CommentPage {
   commenter: any;
   commentTest: any[] = [];
   latestComment: any;
+  current: any;
   
   host = '';
 
@@ -35,6 +36,7 @@ export class CommentPage {
     var y = 0;
 
     this.host = firebaseService.user;
+    this.current = this.firebaseService.getUserID();
     this.commenter = firebaseService.user;
     this.groupkey = navParams.get('param1');
     this.postkey = navParams.get('param2')

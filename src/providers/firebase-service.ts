@@ -17,6 +17,8 @@ export class FireBaseService {
     //this.user = "Kurt Torregosa";
   }
 
+
+
   setUser(name){
     this.user=name;
   }
@@ -27,6 +29,10 @@ export class FireBaseService {
 
   getUser(){
     return this.user;
+  }
+
+  getuID(){
+    return this.user.$key;
   }
 
   getUserID(){
@@ -44,6 +50,20 @@ export class FireBaseService {
   loginUser(user){
     this.tapok.list('/login/'+this.uID).push(user);
     return this.angularFireAuth.auth.currentUser.uid;
+  }
+
+  getUsersList(){
+    return this.tapok.list('/login/');
+  }
+
+  getUserForBday(){
+    return this.tapok.list('/login/'+this.uID);
+  }
+
+  loginBirthday(age, key){
+    console.log(age);
+    console.log(key);
+    this.tapok.object('/login/'+this.uID+'/'+key+'/age').set(age);
   }
 
   /*loginUser(user){
@@ -262,6 +282,18 @@ export class FireBaseService {
 
   leaveUserGroup(gKey){
     this.tapok.list('users/'+this.user+'/groupKey/'+gKey).remove();
+  }
+
+  groupAttend(gKey, user){
+    this.tapok.list('/groupmember/' + gKey + '/gmember/').push(user);
+  }
+
+  removegroupAttend(gKey, user){
+    this.tapok.list('/groupmember/' + gKey + '/gmember/' + user).remove();
+  }
+
+  getgroupAttend(gKey){
+    return this.tapok.list('/groupmember/' + gKey + '/gmember/');
   }
 
   addImageName(){

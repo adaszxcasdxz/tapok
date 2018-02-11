@@ -21,7 +21,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
 import { AuthProvider } from '../providers/auth/auth';
-import { SocialSharing } from '@ionic-native/social-sharing';
+//import { SocialSharing } from '@ionic-native/social-sharing';
 
 //pang-google nga import goes here
 
@@ -66,8 +66,8 @@ var googlePlusApi = "AIzaSyCooNeyvH1NkSn4Lz0J5N2Wy5ZwQzFS_Ns";
     Camera,
     //PhotoViewer,
     Facebook,
-    AngularFireAuth,
-    SocialSharing
+    AngularFireAuth
+    //SocialSharing
     //FacebookLoginResponse
   ]
 })

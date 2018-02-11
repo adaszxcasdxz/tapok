@@ -5,14 +5,15 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>Tapok</ion-title>
-  </ion-navbar>
-
 </ion-header>
 
 
 <ion-content>
-  <button full ion-button (click)="loginWithFacebook()">Login with Facebook</button>
+  <button class="facebook" ion-button block (click)="loginWithFacebook()">
+    <ion-icon name="logo-facebook"></ion-icon>&nbsp;&nbsp; Login with Facebook
+  </button>
+
+  <button class="google" ion-button block color="danger" (click)="loginWithGoogle()">
+    <ion-icon name="logo-googleplus"></ion-icon>&nbsp;&nbsp; Login With Google
+  </button>
 </ion-content>
