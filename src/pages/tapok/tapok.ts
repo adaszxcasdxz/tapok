@@ -190,9 +190,10 @@ export class TapokPage {
   }
 
   facebookShare(event){
-    //this.tapokID=(event.$key).toString();
-    this.sharingVar.shareViaFacebookWithPasteMessageHint("Event Name: " +event.name,null,(event.photo).toString()).then((success)=>{
-        //alert("Success");
+    this.sharingVar.shareViaFacebookWithPasteMessageHint("Event Name: " +event.name+"\nVenue: "+event.venue+
+    "\nDate: "+event.date+"\nTime: "+event.time+"\n\nShared from Tapok",null,(event.photo).toString())
+    .then((success)=>{
+      
       }).catch((error)=>{
          alert(JSON.stringify(error))
       })
