@@ -191,8 +191,7 @@ export class TapokPage {
 
   facebookShare(event){
     //this.tapokID=(event.$key).toString();
-    this.sharingVar.shareViaFacebook("Check out this event-> tapok://tapok.com/tapok/"+event.$key,
-    null,null).then((success)=>{
+    this.sharingVar.shareViaFacebookWithPasteMessageHint("Event Name: " +event.name,null,(event.photo).toString()).then((success)=>{
         //alert("Success");
       }).catch((error)=>{
          alert(JSON.stringify(error))
