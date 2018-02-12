@@ -85,7 +85,7 @@
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-camera" spec="^3.0.0" />
-    <plugin name="com-sarriaroman-photoviewer" spec="^1.1.11" />
+    <plugin name="com-sarriaroman-photoviewer" spec="^1.1.15" />
     <plugin name="cordova-plugin-geolocation" spec="^2.4.3">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
     </plugin>

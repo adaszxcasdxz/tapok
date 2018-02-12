@@ -133,7 +133,7 @@ export class TapokContent {
               this.firebaseService.deleteKeyword(this.keyword[i]);  
             for(y=0;y<this.tag.length;y++)
               this.firebaseService.deleteTag(this.tag[y]);  
-            this.navCtrl.setRoot('TapokPage');
+            this.navCtrl.setRoot('EventPage');
             confirm.present();
           }
         },

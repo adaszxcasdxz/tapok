@@ -14,7 +14,7 @@ export class TapokPage {
 
   Event: any;
   User: any;
-  pages: string = "list";
+  pages: string = "upcoming";
   public toggled = false;
   user: any;
   attendees: any;
@@ -22,10 +22,13 @@ export class TapokPage {
   Attending: any;
   photoToggle: any;
   eventTest: any[] = [];
+  eventTime: any[] = [];
   userTest: any[] = [];
   status: any[] = [];
   index = 0;
   Tags: any;
+
+  timeStatus: any[] = [];
 
   constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
@@ -39,8 +42,48 @@ export class TapokPage {
     this.User = this.firebaseService.getUsers();
     this.user = firebaseService.getUser();
 
-    /*Observable.interval(1000)
-    .subscribe((val) => { console.log(moment().format('hh:mm:ss').toString()); });*/
+    Observable.interval(5000)
+    .subscribe((val) => {
+      //console.log(moment().format('hh:mm:ss').toString()); 
+      this.Event.subscribe(snapshots => {
+        this.eventTime.length = 0;
+        y = 0;
+        snapshots.forEach(snapshot => {
+          this.eventTime[y] = snapshot;          
+          var checkTime = moment().isSameOrAfter(moment(snapshot.time, 'hh:mm a'));
+          var checkDate = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
+          //if no end date and end time
+          if(checkTime && checkDate && snapshot.enddate == '')
+            this.timeStatus[y] = 'ongoing';
+          else
+            this.timeStatus[y] = 'upcoming';
+          //with end time but no end date
+          if(snapshot.endtime != '' && snapshot.enddate == ''){
+            var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
+            if(checkEnd)
+              this.timeStatus[y] = 'archived';
+          }
+          //with end date but no end time
+          if(snapshot.enddate != '' && snapshot.endtime == ''){
+            var checkEnd = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
+            if(checkEnd)
+              this.timeStatus[y] = 'ongoing';
+          }
+          //with end date and end time
+          if(snapshot.enddate != '' && snapshot.endtime != ''){
+            var checkEndDate = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
+            var checkEndTime = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
+            if(checkEndDate && !checkEndTime)
+              this.timeStatus[y] = 'ongoing';
+            else if( !checkEndTime && !checkEndTime)
+              this.timeStatus[y] = 'upcoming';
+            else if (checkEndDate && checkEndTime)
+              this.timeStatus[y] = 'archived';
+          }
+          y++;
+        })
+      });
+    });
 
     this.User.map(users => {
       this.userEventKeys = users;
@@ -66,6 +109,47 @@ export class TapokPage {
         y++;
       })
       this.test();
+    });
+  }
+
+  ionViewDidLoad(){
+    this.Event.subscribe(snapshots => {
+      this.eventTime.length = 0;
+      var y = 0;
+      snapshots.forEach(snapshot => {
+        this.eventTime[y] = snapshot;          
+        var checkTime = moment().isSameOrAfter(moment(snapshot.time, 'hh:mm a'));
+        var checkDate = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
+        //if no end date and end time
+        if(checkTime && checkDate && snapshot.enddate == '')
+          this.timeStatus[y] = 'ongoing';
+        else
+          this.timeStatus[y] = 'upcoming';
+        //with end time but no end date
+        if(snapshot.endtime != '' && snapshot.enddate == ''){
+          var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
+          if(checkEnd)
+            this.timeStatus[y] = 'archived';
+        }
+        //with end date but no end time
+        if(snapshot.enddate != '' && snapshot.endtime == ''){
+          var checkEnd = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
+          if(checkEnd)
+            this.timeStatus[y] = 'ongoing';
+        }
+        //with end date and end time
+        if(snapshot.enddate != '' && snapshot.endtime != ''){
+          var checkEndDate = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
+          var checkEndTime = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
+          if(checkEndDate && !checkEndTime)
+            this.timeStatus[y] = 'ongoing';
+          else if( !checkEndTime && !checkEndTime)
+            this.timeStatus[y] = 'upcoming';
+          else if (checkEndDate && checkEndTime)
+            this.timeStatus[y] = 'archived';
+        }
+        y++;
+      })
     });
   }
 

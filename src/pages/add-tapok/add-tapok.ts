@@ -79,17 +79,22 @@ export class AddTapok {
 		if(this.event != undefined)
 			this.editTapokInfo();
 
+		
 	}
 
 	ionViewDidLoad() {
-		this.autocomplete = new google.maps.places.Autocomplete(this.autocompleteElement.nativeElement);
+		this.geolocation.getCurrentPosition().then((position) => {
+			this.lat = position.coords.latitude;
+			this.lng = position.coords.longitude;
+		});
 
-		/*var request = {
-			location:
-		}
-		this.autocomplete.nearbySearch();*/
-		console.log(this.geolocation.getCurrentPosition());
-		console.log(this.autocomplete);
+		var defaultBounds = new google.maps.LatLngBounds(this.lat, this.lng);
+		var options = {
+			bounds: defaultBounds,
+			componentRestrictions: {country: "phl"}
+		};
+
+		this.autocomplete = new google.maps.places.Autocomplete(this.autocompleteElement.nativeElement, options);
 
 		this.autocomplete.addListener('place_changed', function(){
 			console.log('test');

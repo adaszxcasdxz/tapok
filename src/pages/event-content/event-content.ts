@@ -101,7 +101,7 @@ export class EventContent {
       "key": event.$key
     }
 
-    this.firebaseService.addTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey);
+    //this.firebaseService.addTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey);
   }
 
   openChatContent()

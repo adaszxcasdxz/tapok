@@ -48,7 +48,7 @@
                 <div *ngIf="addEndDate == true">
                     <div class="detail-label"><b>End Date | Cancel</b></div>
                     <ion-col>
-                        <ion-datetime [(ngModel)]="enddate" class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
+                        <ion-datetime [(ngModel)]="enddate" min="{{ date }}" class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
                     </ion-col>
                 </div>
             </ion-col>
@@ -63,22 +63,22 @@
                 <div *ngIf="addEndTime == true">
                     <div class="detail-label"><b>End Time | Cancel</b></div>
                     <ion-col>
-                        <ion-datetime [(ngModel)]="endtime" class="detail-datetime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
+                        <ion-datetime [(ngModel)]="endtime" min="{{ time }}" class="detail-datetime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
                     </ion-col>
                 </div>
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col col-8>
+            <ion-col>
                 <div class="detail-label"><b>Venue</b></div>
                 <input #autocomplete id="autocomplete" class="detail" [(ngModel)]="venue" type="text" />
             </ion-col>
-            <ion-col>
+            <!--<ion-col>
                 <br>
                 <button class="tapok-button" (click)="listen()" ion-button clear large outline>
                     <ion-icon name="add-circle"></ion-icon>
                 </button>
-            </ion-col>
+            </ion-col>-->
         </ion-row>
         <ion-row>
             <ion-col col-8>
