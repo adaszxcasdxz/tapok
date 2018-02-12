@@ -19,12 +19,15 @@ export class EventPage {
   userTest: any[] = [];
   status: any;
   index = 0;
+  index2 = 1;
   Tags: any;
   User: any;
   userEventKeys: any;
   pages: string = 'upcoming';
   timeStatus: any[] = [];
   eventTime: any[] = [];
+
+  upcomingStatus: any;
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public modalCtrl: ModalController, public alertCtrl: AlertController) {
     this.Event = this.firebaseService.getEvent();
@@ -37,6 +40,7 @@ export class EventPage {
     .subscribe((val) => {
       //console.log(moment().format('hh:mm:ss').toString()); 
       this.Event.subscribe(snapshots => {
+        this.upcomingStatus = false;
         this.eventTime.length = 0;
         var y = 0;
         snapshots.forEach(snapshot => {

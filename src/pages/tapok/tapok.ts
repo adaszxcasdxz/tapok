@@ -29,6 +29,7 @@ export class TapokPage {
   Tags: any;
 
   timeStatus: any[] = [];
+  memberStatus: any[] = [];
 
   constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
@@ -49,6 +50,13 @@ export class TapokPage {
         this.eventTime.length = 0;
         y = 0;
         snapshots.forEach(snapshot => {
+          if(snapshot.max_members != null){
+            if(snapshot.max_members<=snapshot.tapok){
+              this.memberStatus[y] = 'full';
+            }else{
+              this.memberStatus[y] = 'not_full';
+            }
+          }
           this.eventTime[y] = snapshot;          
           var checkTime = moment().isSameOrAfter(moment(snapshot.time, 'hh:mm a'));
           var checkDate = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));

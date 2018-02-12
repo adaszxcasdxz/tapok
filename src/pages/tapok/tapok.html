@@ -97,13 +97,19 @@
                   </span>
                   </p>
                 </span>
-                <ion-col>
+                <ion-col *ngIf="memberStatus[i] != 'full'">
                   <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left round clear>
                     <ion-icon name="happy"></ion-icon>
                       JOIN
                   </button>
-                  <div class="increment">{{ i+1 }}</div>
                 </ion-col>
+                <ion-col *ngIf="memberStatus[i] == 'full'">
+                    <button class="notjoined" ion-button icon-left round clear>
+                      <ion-icon name="happy"></ion-icon>
+                        FULL
+                    </button>
+                </ion-col>
+                <div class="increment">{{ i+1 }}</div>
                 <ion-col>
                   <button ion-button icon-left round clear>
                       <ion-icon name="share"></ion-icon>
@@ -183,13 +189,19 @@
                   </span>
                   </p>
                 </span>
-                <ion-col>
+                <ion-col *ngIf="memberStatus[i] == 'not_full'">
                   <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left round clear>
                     <ion-icon name="happy"></ion-icon>
                       JOIN
                   </button>
-                  <div class="increment">{{ i+1 }}</div>
                 </ion-col>
+                <ion-col *ngIf="memberStatus[i] == 'full'">
+                    <button class="notjoined" ion-button icon-left round clear>
+                      <ion-icon name="happy"></ion-icon>
+                        FULL
+                    </button>
+                </ion-col>
+                <div class="increment">{{ i+1 }}</div>
                 <ion-col>
                   <button ion-button icon-left round clear>
                       <ion-icon name="share"></ion-icon>

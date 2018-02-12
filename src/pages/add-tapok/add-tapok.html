@@ -80,34 +80,79 @@
                 </button>
             </ion-col>-->
         </ion-row>
-        <ion-row>
-            <ion-col col-8>
-                <div class="detail-label"><b>Tags</b></div>
-                <ion-input class="name" [(ngModel)]="temp" type="text"></ion-input>
-            </ion-col>
-            <ion-col>
-                <br>
-                <button class="tapok-button" (click)="addTag()" ion-button clear large outline>
-                    <ion-icon name="add-circle"></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
-        <ion-col *ngIf="tag!=''">
-            <span *ngFor="let tags of Tags | async">
-                <ion-chip color="primary">
-                    <ion-label>{{ tags.tags }}</ion-label>
-                    <button ion-button clear color="light" (click)="deleteTag(tags.$key)">
-                        <ion-icon name="close-circle"></ion-icon>
-                    </button>
-                </ion-chip>
-            </span>
-        </ion-col>
         <ion-row text-justify>
             <ion-col>
                 <div class="detail-label"><b>Description</b></div>
                 <ion-textarea class="description" [(ngModel)]="description"></ion-textarea>
             </ion-col>
         </ion-row>
+        <ion-row *ngIf="toggle == false" text-center>
+            <ion-col class="detail-label" (click)="toggleOptions()">
+                <u>Advanced Options</u>
+            </ion-col>
+        </ion-row>
+        <div *ngIf="toggle == true">
+            <ion-row text-center>
+                <ion-col class="detail-label">
+                    <b>Advanced Options</b>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-8>
+                    <div class="detail-label"><b>Tags</b></div>
+                    <ion-input class="name" [(ngModel)]="temp" type="text"></ion-input>
+                </ion-col>
+                <ion-col>
+                    <br>
+                    <button class="tapok-button" (click)="addTag()" ion-button clear large outline>
+                        <ion-icon name="add-circle"></ion-icon>
+                    </button>
+                </ion-col>
+            </ion-row>
+            <ion-col *ngIf="tag!=''">
+                <span *ngFor="let tags of Tags | async">
+                    <ion-chip color="primary">
+                        <ion-label>{{ tags.tags }}</ion-label>
+                        <button ion-button clear color="light" (click)="deleteTag(tags.$key)">
+                            <ion-icon name="close-circle"></ion-icon>
+                        </button>
+                    </ion-chip>
+                </span>
+            </ion-col>
+            <ion-row>
+                <ion-col>
+                    <ion-list>
+                        <ion-item>
+                            <ion-label>Unlimited Members</ion-label>
+                            <ion-toggle [(ngModel)]="toggleMembers"></ion-toggle>
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col *ngIf="toggleMembers == false">
+                    <ion-item>
+                        <ion-label><b>Max Members</b></ion-label>
+                        <ion-input [(ngModel)]="maxMembers" type="number"></ion-input>
+                    </ion-item> 
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label><b>Classification</b></ion-label>
+                        <ion-select [(ngModel)]="classification">
+                            <ion-option value="General">General</ion-option>
+                            <ion-option value="PG">PG</ion-option>
+                            <ion-option value="SPG">SPG</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row text-center>
+                <ion-col class="detail-label" (click)="toggleOptions()">
+                    <u>Cancel Advanced Options</u>
+                </ion-col>
+            </ion-row>
+        </div>  
         <ion-row class="buttons" text-center>
             <div *ngIf="name!=''&&venue!=''">
                 <ion-col *ngIf="label == 'Add Tapok'">

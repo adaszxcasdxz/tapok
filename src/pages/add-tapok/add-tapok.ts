@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, ViewController, AlertController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, ViewController, AlertController, NavParams, LoadingController, NavController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -36,6 +36,8 @@ export class AddTapok {
 	tapok = 1;
 	search_key = '';
 	timestamp = '';
+	maxMembers = null;
+	classification = 'General';
 	dlURL: any;
 	tags = 'false';
 	lat: any;
@@ -56,6 +58,9 @@ export class AddTapok {
 	addEndDate = false;
 	addEndTime = false;
 
+	toggle = false;
+	toggleMembers = true;
+
 	onSuccess = (snapshot) => {
 		this.photo = snapshot.downloadURL;
 		this.loading.dismiss();
@@ -68,7 +73,7 @@ export class AddTapok {
 
 	chat: any;
 
-	constructor(public viewCtrl: ViewController, public alertCtrl: AlertController, 
+	constructor(public viewCtrl: ViewController, public navCtrl: NavController, public alertCtrl: AlertController, 
 		public firebaseService: FireBaseService, public params: NavParams, public camera: Camera, public loadingCtrl: LoadingController, public geolocation: Geolocation) {
 		var y = 0;
 
@@ -103,6 +108,15 @@ export class AddTapok {
 		});
 	}
 
+	toggleOptions(){
+		if(this.toggle == false)
+			this.toggle = true;
+		else{
+			this.toggle = false;
+			this.maxMembers = null;
+		}
+	}
+
 	getLat(){
 		var place = this.autocomplete.getPlace();
 		if(place != undefined)
@@ -131,12 +145,14 @@ export class AddTapok {
 	}
 
 	addTag(){
-		this.tag = {
-			"tags": this.temp
+		if(this.temp!=null && this.temp!=''){
+			this.tag = {
+				"tags": this.temp
+			}
+			this.temp = '';
+			this.tags = 'true';
+			this.firebaseService.addTempTag(this.tag);
 		}
-		this.temp = '';
-		this.tags = 'true';
-		this.firebaseService.addTempTag(this.tag);
 	}
 
 	deleteTag(key){
@@ -146,7 +162,7 @@ export class AddTapok {
 	addTapok() {
 		var i, y, eventKey;
 
-		if(this.autocomplete.getPlace != undefined){
+		if(this.autocomplete.getPlace() != undefined){
 			this.lat = this.getLat();
 			this.lng = this.getLng();
 
@@ -174,6 +190,10 @@ export class AddTapok {
 		else
 			this.mEndTime = '';
 
+		if(this.maxMembers != null){
+			this.maxMembers = parseInt(this.maxMembers);
+		}
+
 		this.event={
 			"host": this.host,
 			"name": this.name,
@@ -187,6 +207,7 @@ export class AddTapok {
 			"description": this.description,
 			"tags": this.tags,
 			"tapok": this.tapok,
+			"max_members": this.maxMembers,
 			"search_key": this.name.toLowerCase(),
 			"timestamp": 0-Date.now(),
 			"latitude": this.lat,
@@ -214,10 +235,21 @@ export class AddTapok {
 				this.firebaseService.deleteAllTempTag();
 		}		
 		
-		this.cancel();
+		this.cancel(eventKey);
 		let alert = this.alertCtrl.create({
 			title: 'Tapok Added',
-			buttons: [ 'OK' ]
+			buttons: [ 
+				{
+					text: 'close'
+				},
+				{
+					text: 'VIEW EVENT',
+					handler: () => {
+						this.navCtrl.setRoot('TabsPage');
+						this.navCtrl.push('TapokContent', { param1: eventKey});
+					}
+				}
+			]
 		});
 		alert.present();
 	}
@@ -237,15 +269,10 @@ export class AddTapok {
 		};
 
 		this.firebaseService.editEvent(this.key, this.event);
-		this.cancel();
-		let alert = this.alertCtrl.create({
-			title: 'Tapok Edited',
-			buttons: [ 'OK' ]
-		});
-		alert.present();
+		this.cancel('adasd');
 	}
 
-	cancel(){
+	cancel(key){
 		this.viewCtrl.dismiss();
 	}
 
