@@ -18,11 +18,11 @@ import { HttpModule } from '@angular/http';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { FireBaseService } from './../providers/firebase-service';
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+//import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
-import { SocialSharing } from '@ionic-native/social-sharing';
-import { Deeplinks } from '@ionic-native/deeplinks';
+//import { SocialSharing } from '@ionic-native/social-sharing';
+//import { Deeplinks } from '@ionic-native/deeplinks';
 import { AuthProvider } from '../providers/auth/auth';
 
 //pang-google nga import goes here
@@ -65,10 +65,10 @@ var googlePlusApi = "AIzaSyCooNeyvH1NkSn4Lz0J5N2Wy5ZwQzFS_Ns";
     FireBaseService,
     Camera,
     PhotoViewer,
-    Facebook,
+    //Facebook,
     AngularFireAuth,
-    SocialSharing,
-    Deeplinks,
+    //SocialSharing,
+    //Deeplinks,
     Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

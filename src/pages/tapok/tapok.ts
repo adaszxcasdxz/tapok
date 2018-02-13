@@ -3,7 +3,7 @@ import { IonicPage, NavController, PopoverController, ModalController, AlertCont
 import { Filter } from '../filter/filter';
 import { FireBaseService } from '../../providers/firebase-service';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
-import { SocialSharing } from '@ionic-native/social-sharing';
+//import { SocialSharing } from '@ionic-native/social-sharing';
 import { NavParams } from 'ionic-angular/navigation/nav-params';
 
 import * as moment from 'moment';
@@ -39,7 +39,7 @@ export class TapokPage {
 
    constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
-      public modalCtrl: ModalController, public firebaseService: FireBaseService, public photoViewer: PhotoViewer, public platform: Platform, private sharingVar: SocialSharing) {
+      public modalCtrl: ModalController, public firebaseService: FireBaseService, public photoViewer: PhotoViewer, public platform: Platform, /*private sharingVar: SocialSharing*/) {
     var i = 0, y = 0;
 
     this.toggled = false;
@@ -186,7 +186,7 @@ export class TapokPage {
 
     popover.onDidDismiss(data => {
       if(data=='facebook')
-        this.facebookShare(event);
+        //this.facebookShare(event);
       if(data=='group')
         this.shareGroup();
     });
@@ -317,7 +317,7 @@ export class TapokPage {
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, attendee, attendeeKey, userKey);
   }
 
-  facebookShare(event){
+  /*facebookShare(event){
     this.sharingVar.shareViaFacebookWithPasteMessageHint("Event Name: " +event.name+"\nVenue: "+event.venue+
     "\nDate: "+event.date+"\nTime: "+event.time+"\n\nShared from Tapok",null,(event.photo).toString())
     .then((success)=>{
@@ -325,6 +325,6 @@ export class TapokPage {
       }).catch((error)=>{
          alert(JSON.stringify(error));
       })
-    }
+    }*/
 }
 
