@@ -59,7 +59,7 @@ export class TapokContent {
     
     this.Attendees.subscribe(snapshot => {
       snapshot.forEach(snap => {
-        if(this.user == snap.name && (snap.privelage == 'main_admin' || snap.privelage == 'admin')){
+        if(this.user == snap.name && (snap.privelage == 'main_admin' || snap.privelage == 'admin' ||snap.privelage == 'member')){
           this.access = 'ok'; 
         }
       })
