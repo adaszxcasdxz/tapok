@@ -174,6 +174,26 @@ export class TapokPage {
     }
   }
 
+  sharePopover(){
+    let popover = this.popoverCtrl.create('SharePopoverPage');
+    popover.present();
+
+    popover.onDidDismiss(data => {
+      if(data=='facebook')
+        this.shareFacebook();
+      if(data=='group')
+        this.shareGroup();
+    });
+  }
+
+  shareFacebook(){
+    console.log('facebook');
+  }
+
+  shareGroup(){
+    console.log('group');
+  }
+
   toggleSearch(){
     this.toggled = this.toggled ? false : true;
   }
