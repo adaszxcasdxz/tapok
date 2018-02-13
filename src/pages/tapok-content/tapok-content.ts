@@ -237,4 +237,27 @@ export class TapokContent {
     this.firebaseService.sendMessage(this.chat, this.key);
     this.Message="";
   }
+
+  popoverChat(event){
+    let popover = this.popoverCtrl.create('PopoverChatPage', {event: this.event, keyword: this.keyword});
+    popover.present({
+      ev: event
+    });
+
+    popover.onDidDismiss(data => {
+      console.log(data);
+      if(data=='smaller')
+        this.textSmaller();
+      if(data=='larger')
+        this.textLarger();
+    });
+  }
+
+  textSmaller(){
+
+  }
+
+  textLarger(){
+
+  }
 }
