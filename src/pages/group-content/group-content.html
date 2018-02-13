@@ -1,11 +1,11 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons right large>
+    <ion-buttons *ngIf="group.adminid === current" right large>
         <button class="button-header" (click)="editGroup()" ion-button icon-only round>
             <ion-icon name="create"></ion-icon>
         </button>
     </ion-buttons>
-    <ion-buttons right large>
+    <ion-buttons *ngIf="group.adminid === current" right large>
         <button class="button-header" (click)="deleteGroup()" ion-button icon-only round>
             <ion-icon name="trash"></ion-icon>
         </button>
@@ -54,13 +54,13 @@
                         <div class="postcontent">
                             <ion-item>
                                 <ion-avatar item-start medium>
-                                    <img class="profilepic" src="assets/img/kurt.jpg">
+                                    <img class="profilepic" src="{{ posts.photo }}">
                                 </ion-avatar>
                                 <h2 class="names">{{ posts.poster }}</h2>
                                 <p>{{ posts.datetime | date: 'MM/dd/yyyy h:mma' }}</p>
                             </ion-item>
 
-                            <ion-buttons float-right>
+                            <ion-buttons *ngIf="posts.posterid === current" float-right>
                                     <button class="del-post2" (click)="presentActionSheetPost(posts)" ion-button large clear>
                                         <ion-icon name="more"></ion-icon>
                                     </button>
@@ -101,14 +101,14 @@
                     <ion-card>
                         <ion-item>
                         <ion-avatar item-start large>
-                            <img class="profilepic" src="assets/img/kurt.jpg">
+                            <img class="profilepic" src="{{ group.userphoto }}">
                         </ion-avatar>
-                        <h2 class="names">Kurt Torregosa</h2>
-                        <p>01/01/2018 2:34PM</p>
+                        <h2 class="names">{{ group.admin }}</h2>
+                        <p>{{ group.datetime | date: 'MM/dd/yyyy h:mma' }}</p>
 
                         </ion-item>
                         <ion-card-content>
-                            Kurt Torregosa created the group.
+                            {{ group.admin }} created the group.
                         </ion-card-content>
                     </ion-card>
                 </div>
@@ -159,17 +159,17 @@
                     <img (click)="viewPic(group.photo)" class="photo" src="{{ group.photo }}">
                 </div>
 
-                <ion-card>
-                    <ion-item>
-                        <ion-avatar item-start large>
-                            <img class="item-avatar" src="assets/img/carm.jpg">
-                        </ion-avatar>
-                        <h2>Carmelle Felicio</h2>
-                        <button ion-button item-end clear large><ion-icon name="mail"></ion-icon></button>
-                    </ion-item>
-                </ion-card>
+                
+                <ion-list *ngFor="let gmembers of gmember | async">
+                        <span>
+                            <img class="ppic" src="{{ gmembers.photo }}">
+                            <p class="mname">{{ gmembers.name }}</p>
+                            <div *ngIf="group.adminid === gmembers.userid"><ion-icon class="adminsign" name="star" medium></ion-icon><hr></div>
+                        </span>
+                        <!--<button ion-button item-end clear large><ion-icon name="mail"></ion-icon></button>-->
+                </ion-list>
 
-                <ion-card>
+                <!---<ion-card>
                     <ion-item>
                         <ion-avatar item-start large>
                             <img class="item-avatar" src="assets/img/henry.jpg">
@@ -187,7 +187,7 @@
                             <h2>Kurt Torregosa</h2>
                             <button ion-button item-end clear large><ion-icon name="mail"></ion-icon></button>
                     </ion-item>
-                </ion-card>
+                </ion-card>-->
             </ion-list>
         </div>
 </ion-content>

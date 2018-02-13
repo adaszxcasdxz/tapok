@@ -27,10 +27,12 @@ export class CommentAddPage {
   pKey: any;
   cKey: any;
   label: any;
+  photo: any;
 
   host = '';
   timestamp = '';
   datetime = '';
+  commenterid: any;
 
   constructor(
     public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
@@ -38,12 +40,14 @@ export class CommentAddPage {
   ) {
     this.host = firebaseService.user;
     this.commenter = firebaseService.user;
+    this.commenterid = this.firebaseService.getUserID();
     this.label = navParams.get('label');
     this.groupkey = navParams.get('param1');
     this.postkey = navParams.get('param2');
     this.gKey = navParams.get('tapokGroup');
     this.pKey = navParams.get('tapokPost');
     this.cKey = navParams.get('tapokCom');
+    this.photo= this.firebaseService.getPhotoURL();
     //this.comment = this.firebaseService.getComment(this.groupkey, this.postkey);
   }
 
@@ -52,7 +56,9 @@ export class CommentAddPage {
       "comment": this.comment,
       "commenter": this.commenter,
       "timestamp": Date.now(),
-      "datetime": Date.now()
+      "datetime": Date.now(),
+      "photo": this.photo,
+      "commenterid": this.commenterid,
     }
 
 

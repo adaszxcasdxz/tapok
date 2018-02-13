@@ -6,18 +6,19 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { AngularFireAuth } from 'angularfire2/auth';
 //import * as firebase from 'firebase/app';
 import 'firebase/storage';
-//import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class FireBaseService {
 
-  user;
+  user; 
   uID;
 
   constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp, private afAuth: AngularFireAuth) {
     //this.user = afAuth.auth.currentUser.displayName;
     this.user="Carmelle Ann Felicio"
   }
+
+
 
   setUser(name){
     this.user=name;
@@ -31,6 +32,10 @@ export class FireBaseService {
     return this.user;
   }
 
+  getuID(){
+    return this.user.$key;
+  }
+
   getUserID(){
     return this.afAuth.auth.currentUser.uid;
   }
@@ -42,6 +47,29 @@ export class FireBaseService {
   getEmail(){
     return this.afAuth.auth.currentUser.email;
   }
+
+  loginUser(user){
+    this.tapok.list('/login/'+this.uID).push(user);
+    return this.afAuth.auth.currentUser.uid;
+  }
+
+  getUsersList(){
+    return this.tapok.list('/login/');
+  }
+
+  getUserForBday(){
+    return this.tapok.list('/login/'+this.uID);
+  }
+
+  loginBirthday(age, key){
+    console.log(age);
+    console.log(key);
+    this.tapok.object('/login/'+this.uID+'/'+key+'/age').set(age);
+  }
+
+  /*loginUser(user){
+    this.tapok.list('login/'+this.uID).push(user);
+  }*/
 
   getEvent(){
     return this.tapok.list('/events/',{
@@ -212,8 +240,17 @@ export class FireBaseService {
   }
 
   addGroup(name){
-    this.tapok.list('/groups/').push(name);
+    var Key;
+    Key = this.tapok.list('/groups/').push(name).key;
+    //this.addUserGroup(Key);
+    return Key;
   }
+
+  /*addEvent(name){
+    var Key;
+    Key = this.tapok.list('/events/').push(name).key;
+    return Key;
+  }*/
 
   uploadPhoto(image, key){
     var dlURL;
@@ -290,15 +327,23 @@ export class FireBaseService {
     this.tapok.list('users/'+this.user+'/groupKey/'+gKey).remove();
   }
 
+  groupAttend(gKey, user){
+    this.tapok.list('/groupmember/' + gKey + '/gmember/').push(user);
+  }
+
+  removegroupAttend(gKey, user){
+    this.tapok.list('/groupmember/' + gKey + '/gmember/' + user).remove();
+  }
+
+  getgroupAttend(gKey){
+    return this.tapok.list('/groupmember/' + gKey + '/gmember/');
+  }
+
   addImageName(){
     var key;
 
     key = this.tapok.list('imageName').push(Date.now());
     return key;
-  }
-
-  loginUser(user){
-    this.tapok.list('login/'+this.uID).push(user);
   }
   
   addTempTag(tag){

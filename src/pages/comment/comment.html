@@ -18,13 +18,13 @@
         <ion-item no-padding>
           <div class="combox">
                     <ion-avatar item-start>
-                            <img class="profilepic" src="assets/img/kurt.jpg" medium>
+                            <img class="profilepic" src="{{ comments.photo }}" medium>
                     </ion-avatar>
                   <h2 class="names">{{ comments.commenter }}</h2>
                   <p class="timestamp">{{ comments.datetime | date: 'MM/dd/yyyy h:mma' }}</p>
                </div>
 
-            <ion-buttons float-right>
+            <ion-buttons *ngIf="comments.commenterid === current" float-right>
                 <button class="del-com1" (click)="presentActionSheetCom(comments)" ion-button large clear>
                     <ion-icon name="more"></ion-icon>
                 </button>

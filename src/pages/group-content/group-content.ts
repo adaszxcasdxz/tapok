@@ -24,6 +24,9 @@ export class GroupContent {
   latestCommenter: any[] = [];
   ugroupkey: any;
   index = 0;
+  current: any;
+  posterid: any;
+  gmember: any;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -33,7 +36,10 @@ export class GroupContent {
       var y = 0, z = 0;
 
       this.user = this.firebaseService.getUser();
+      this.current = this.firebaseService.getUserID();
+      console.log(this.current)
       this.key = navParams.get('param1');
+      this.gmember = this.firebaseService.getgroupAttend(this.key);
       this.post = this.firebaseService.getPost(this.key);
       this.ugroupkey = this.firebaseService.getUserGroup();
       this.group = this.firebaseService.getSpecificGroup(this.key);

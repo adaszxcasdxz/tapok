@@ -1,0 +1,22 @@
+<!--
+  Generated template for the AddBirthdayPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Add Your Birthday</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div>
+    <div class="detail-label">Please enter your birthdate:</div>
+      <ion-datetime [(ngModel)]="bday" class="detail" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
+  </div>
+    <button class="tapok-button" (click)="addBirthday()" ion-button large>OK</button> 
+</ion-content>

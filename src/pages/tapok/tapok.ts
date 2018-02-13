@@ -226,6 +226,9 @@ export class TapokPage {
     modal.present();*/
     //this.photoVithis.platform.ready().then(() => {ewer.show(photo);
      this.photoViewer.show(photo);
+    //this.photoViewer.show(photo);
+    //this.photoViewer.show('https://mysite.com/path/to/image.jpg');
+    //this.photoViewer.show('https://mysite.com/path/to/image.jpg', 'My image title', {share: false});
   }
 
   openTapokContent(event){
@@ -320,8 +323,8 @@ export class TapokPage {
     .then((success)=>{
       
       }).catch((error)=>{
-         alert(JSON.stringify(error))
+         alert(JSON.stringify(error));
       })
-  }
+    }
 }
 
