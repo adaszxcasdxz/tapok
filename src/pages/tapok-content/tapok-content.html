@@ -1,64 +1,82 @@
 <ion-header>
-    <ion-navbar>
-        <ion-segment *ngIf="access === 'ok'" [(ngModel)]="tabs">
-            <ion-segment-button value="info">
-                Info
-            </ion-segment-button> 
-            <ion-segment-button value="chat">
-                Chat 
-            </ion-segment-button> 
-        </ion-segment>
-        <ion-buttons *ngIf="access === 'ok'" right large>
-            <button class="button-header" (click)="popOver($event)" ion-button icon-only round>
-                <ion-icon name="more"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
-</ion-header>
-
-<ion-content text-center padding>  
-<div>
-    <ion-row *ngIf="event.photo != ''">
-        <ion-col (click)="viewPic(event.photo)">
-            <div class="box">
-                <img class="photo" src="{{ event.photo }}">
-            </div>    
-        </ion-col>
-    </ion-row>      
+        <ion-navbar>
+            <ion-segment *ngIf="access == 'ok'" [(ngModel)]="tabs">
+                <ion-segment-button value="info">
+                    Info
+                </ion-segment-button> 
+                <ion-segment-button value="chat">
+                    Chat 
+                </ion-segment-button> 
+            </ion-segment>
+            <!--<ion-buttons right large>
+                <button class="button-header" (click)="editTapok()" ion-button icon-only round>
+                    <ion-icon name="create"></ion-icon>
+                </button>
+            </ion-buttons>
+            <ion-buttons right large>
+                <button class="button-header" (click)="deleteTapok()" ion-button icon-only round>
+                    <ion-icon name="trash"></ion-icon>
+                </button>
+            </ion-buttons>-->
+            <ion-buttons *ngIf="access == 'ok'" right large>
+                <button class="button-header" (click)="popOver($event)" ion-button icon-only round>
+                    <ion-icon name="more"></ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-navbar>
+    </ion-header>
     
-    <ion-row>
-        <ion-col>
-            <div class="title"><h1><b><hr>{{ event.name }}<hr></b></h1></div>
-        </ion-col>
-    </ion-row>
-
-    <ion-row>
+    <ion-content text-center padding>  
+        <ion-row *ngIf="event.photo != ''">
+            <ion-col (click)="viewPic(event.photo)">
+            <!--<ion-col (click)="toggle(event.$key, event.toggle)">
+                <div *ngIf="event.toggle == 'false'">
+                    see photo
+                </div>
+                <div *ngIf="event.toggle == 'true'">-->
+                <div class="box">
+                    <img class="photo" src="{{ event.photo }}">
+                </div>    
+                <!--<br>hide photo
+                </div>-->
+            </ion-col>
+        </ion-row>      
+        <ion-row>
+            <ion-col>
+                <div class="title"><h1><b><hr>{{ event.name }}<hr></b></h1></div>
+            </ion-col>
+        </ion-row>
         <ion-col class="details">
             <span *ngIf="event.enddate==''">
                 <ion-icon name="calendar" color="secondary"></ion-icon>
                 <span class="chip-label-date">{{ event.date }}</span>
             </span>
-            
             <span *ngIf="event.enddate!=''">   
                 <ion-icon name = "calendar" color="secondary"></ion-icon>                     
                 <span class="chip-label-date">{{ event.date }}  <b>-</b> {{ event.enddate }}</span>
-            </span>
-
+            </span>   
             <span *ngIf="event.endtime==''">
                 <ion-icon name = "time" color="danger"></ion-icon>                    
                 <span class="chip-label">{{ event.time }}</span>
             </span>
-        
             <span *ngIf="event.endtime!=''">
                 <ion-icon name = "time" color="danger"></ion-icon>                      
                 <span class="chip-label">{{ event.time }}  <b>-</b> {{ event.endtime }}</span>
             </span>              
-            
             <div class="location">
                 <ion-icon name = "pin" color="primary"></ion-icon>                    
                 <span class="chip-label">{{ event.venue }}</span>
             </div>
-        
+            <!--<div style="color: #488aff" (click)="toggleMap()" *ngIf="event.latitude!=null&&!toggle">
+                <p><u>Show Map</u></p>
+            </div>
+            <div *ngIf="!toggle">
+                <div *ngIf="event.latitude!=null" #map id="map"></div>
+            </div>
+            <div *ngIf="event.latitude!=null&&toggle" #map id="map"></div>
+            <div style="color: #488aff" (click)="toggleMap()" *ngIf="toggle">
+                <p><u>Hide Map</u></p>
+            </div>-->
             <div *ngIf="event.latitude!=null" #map id="map"></div>
             <br>
             <button (click)="showAttendees(event.$key)" ion-button icon-left outline small>
@@ -67,163 +85,46 @@
                     <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
                     <div *ngIf="event.tapok == 0">No Attendees</div>
                 </div>
-            
                 <div *ngIf="event.max_members != null">
                     <div *ngIf="event.tapok > 1">{{ event.tapok }} of {{ event.max_members }} Attendees</div>
                     <div *ngIf="event.tapok == 1">{{ event.tapok }} of {{ event.max_members }} Attendees</div>
                     <div *ngIf="event.tapok == 0">0 of {{ event.max_members }} Attendees</div>
                 </div>
             </button>
-        
-        <br *ngIf="event.tags != 'true'">
-        <span *ngIf="event.tags == 'true'" text-left padding>
+            <br *ngIf="event.tags != 'true'">
+            <span *ngIf="event.tags == 'true'" text-left padding>
             <p class="tags"><ion-icon name = "pricetag" color="dark"></ion-icon>  Tags:<br>
             <span *ngFor="let tag of Tags | async">
                 <span *ngIf="tag.key == event.$key">
-                    <ion-badge>{{ tag.tag }} </ion-badge>
+                <ion-badge>{{ tag.tag }} </ion-badge>
                 </span>
             </span>
             </p>
-        </span>
+            </span>
         </ion-col> 
-    </ion-row>
-
-    <ion-row>
         <ion-col>
             <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left round clear>
                 <ion-icon name="happy"></ion-icon>
                 JOIN
             </button>
         </ion-col>
-        
         <ion-col>
             <button ion-button icon-left round clear>
                 <ion-icon name="share"></ion-icon>
                 <div class="share">Share</div>
             </button> 
         </ion-col>
-    </ion-row>
-
-    <ion-row *ngIf="event.description!=''" no-padding text-justify>
-        <ion-col>
-            <hr><b>Description:</b><div class="description">{{ event.description }}</div><hr>
-        </ion-col>
-        <ion-col>
-            <span *ngIf="event.endtime!=''">
-                <ion-chip>   
-                    <ion-icon name = "time" color="danger"></ion-icon>                      
-                </ion-chip>
-                
-                <span class="chip-label">{{ event.time }}  <b>-</b> {{ event.endtime }}</span>
-            </span>
-            <br>
-            <ion-chip>
-                <ion-icon name = "pin"></ion-icon>                    
-            </ion-chip>
-            <span class="chip-label">{{ event.venue }}</span>
-            <br>
-            <button (click)="confirm(event, status)" ion-button icon-left outline small>
-                <div *ngIf="event.tapok > 1">{{ event.tapok }} Attendees</div>
-                <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
-                <div *ngIf="event.tapok == 0">No Attendees</div>
-            </button>
-        </ion-col> 
-    </ion-row>
-                
-    <ion-row>
-        <ion-col>
-            <button (click)="confirm(event, status)" ion-button icon-left round clear>
-                <ion-icon name="happy"></ion-icon>
-                    <div *ngIf="status == 'TAPOK'">
-                        Join
-                    </div>
-                    <div *ngIf="status == 'JOINED'">
-                        Leave
-                    </div>
-            </button> 
-        </ion-col>
-
-        <ion-col>
-            <button ion-button icon-left round clear>
-                <ion-icon name="share"></ion-icon>
-                    <div class="share">Share</div>
-            </button>
-        </ion-col>
-    </ion-row>
-
-    <ion-row class="description" no-padding text-justify>
-        <ion-col>
-            <hr><b>Description:</b><br>{{ event.description }}<hr>
-        </ion-col>
-    </ion-row>
-</div>
-        
-    <div *ngSwitchCase="'chat'">
-        <div class="message">
-            <button class="button-header" (click)="popoverChat($event)" ion-button icon-only round>
-                <ion-icon name="more"></ion-icon>
-            </button>
-            
-            <ion-list no-lines>
-                <ion-item *ngFor="let List of List | async" text-center>
-                    <ion-grid style="margin:0;">
-                        <ion-row *ngIf="List.uid === uid" text-wrap>
-                            <ion-col></ion-col>
-                            <ion-col text-wrap col-auto style="max-width:80%;">
-                                <ion-avatar float-right>
-                                    <img class="icon_u" src="{{List.photo}}">
-                                </ion-avatar>
-                                
-                                <p style="text-align: right; font-size: .7em;"  id="sentByRight">{{List.sentBy}}</p>
-                                <div class="bubble-right" style="text-align:left;">
-                                    {{List.message}}
-                                </div>
-                                <p style="text-align:left; color:black; font-size:.7em;">
-                                    {{ List.timestamp | date:'MM/dd/yyyy h:mma' }}
-                                </p>
-                            </ion-col>
-                        </ion-row>
-                    
-                        <ion-row *ngIf="List.uid !== uid">
-                            <ion-col text-wrap col-auto style="max-width:80%;">
-                                <ion-avatar float-left>
-                                    <img class="icon_u" src="{{List.photo}}">
-                                </ion-avatar>
-                                <p style="text-align: left; font-size: .7em;" id="sentByLeft">{{List.sentBy}}</p>
-                                <div class="bubble-left" style="color: white; text-align:left;">
-                                    {{List.message}}
-                                </div>
-                                <p style="text-align:right; color:black; font-size:.7em;">
-                                    {{ List.timestamp | date:'MM/dd/yyyy h:mma' }}
-                                </p>
-                            </ion-col>
-                            <ion-col></ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
-            </ion-list>
-        </div>
-                    
-        <ion-footer class="chatPageFooter">
-            <ion-toolbar>
-                <ion-item>
-                    <div item-content style="width:100%;">
-                        <ion-textarea placeholder="Type message here..." [(ngModel)]="Message" autofocus></ion-textarea>
-                    </div>
-                </ion-item>
-                    
-                <ion-buttons right clear x-large style="width:13%;" *ngIf="Message == ''">
-                    <button clear ion-button>
-                        <ion-icon name="send" clear style="font-size:xx-large; color:lightgrey;"></ion-icon>
-                    </button>
-                 </ion-buttons>
-                    
-                <ion-buttons right clear x-large style="width:13%;" *ngIf="Message !== ''">
-                    <button (click)="sendMessage()" clear ion-button>
-                        <ion-icon name="send" clear style="font-size:xx-large;"></ion-icon>
-                    </button>
-                </ion-buttons>
-            </ion-toolbar>
-        </ion-footer>
-    </div>
-</ion-content>
+        <ion-row *ngIf="event.description!=''" no-padding text-justify>
+            <ion-col>
+                <hr><b>Description:</b><div class="description">{{ event.description }}</div><hr>
+            </ion-col>
+        </ion-row>
+    
+    
+        <!--<ion-footer>
+                <div padding>
+                    <button class="kuyog-button" (click)="kuyog()" ion-button block>KUYOG</button>
+                </div>
+        </ion-footer>-->
+    
+    </ion-content>
