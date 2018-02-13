@@ -20,15 +20,19 @@ export class GroupAddPage {
   key: any;
   group: any;
   label: any;
-	user: any;
 	usergroup: any;
 	test: any;
 
   loading: any;
   selectedPhoto: any;
   dlURL: any;
-  photo = '';
-  
+  gphoto = '';
+	
+	userid: any;
+	photo: any;
+	user: any;
+	groupmember: any;
+
   admin = '';
   gname = '';
   gdescr = '';
@@ -36,7 +40,7 @@ export class GroupAddPage {
 	adminid: any;
 
   onSuccess = (snapshot) => {
-		this.photo = snapshot.downloadURL;
+		this.gphoto = snapshot.downloadURL;
 		this.loading.dismiss();
 	}
 	
@@ -49,6 +53,9 @@ export class GroupAddPage {
      public firebaseService:FireBaseService, public viewCtrl: ViewController, public camera: Camera, public params: NavParams, public loadingCtrl: LoadingController) {
 				this.admin = firebaseService.user;
 				this.adminid = this.firebaseService.getUserID();
+				this.userid = this.firebaseService.getUserID();
+				this.photo = this.firebaseService.getPhotoURL();
+				this.user = firebaseService.user;
         this.label = params.get('label');
 			  this.group = params.get('tapok');
         if(this.group != undefined)
@@ -65,13 +72,28 @@ export class GroupAddPage {
       "gdescr": this.gdescr,
       "admin": this.admin,
 			"timestamp": 0-Date.now(),
-			"photo": this.photo,
+			"datetime": Date.now(),
+			"userphoto": this.photo,
+			"photo": this.gphoto,
 			"adminid": this.adminid,
 		}
 
     if(this.label == "Add Group"){
-			this.firebaseService.addGroup(this.group);
-			//this.firebaseService.addUserGroup(this.usergroup);
+			var key = this.firebaseService.addGroup(this.group);
+			this.usergroup={
+            "key": key,
+            "gname": this.gname,
+            "timejoin": 0-Date.now()
+			}  
+
+			this.groupmember={
+                    "name": this.admin,
+                    "photo": this.photo,
+                    "userid": this.userid
+                }
+					
+			this.firebaseService.addUserGroup(this.usergroup);
+			this.firebaseService.groupAttend(key, this.groupmember);
 		}
 
 		this.test = this.group.$key;
@@ -103,7 +125,7 @@ export class GroupAddPage {
 		this.group={
 			"gname": this.gname,
 			"gdescr": this.gdescr,
-			"photo": this.photo
+			"photo": this.gphoto
 		};
 
 		this.firebaseService.editGroups(this.key, this.group);
@@ -123,7 +145,7 @@ export class GroupAddPage {
 		this.key = this.group.$key;
 		this.gname = this.group.gname;
 		this.gdescr = this.group.gdescr;
-		this.photo = this.group.photo;
+		this.gphoto = this.group.photo;
 	}
 
   ionViewDidLoad() {

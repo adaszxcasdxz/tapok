@@ -206,8 +206,17 @@ export class FireBaseService {
   }
 
   addGroup(name){
-    this.tapok.list('/groups/').push(name);
+    var Key;
+    Key = this.tapok.list('/groups/').push(name).key;
+    //this.addUserGroup(Key);
+    return Key;
   }
+
+  /*addEvent(name){
+    var Key;
+    Key = this.tapok.list('/events/').push(name).key;
+    return Key;
+  }*/
 
   uploadPhoto(image, key){
     var dlURL;

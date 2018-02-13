@@ -101,14 +101,14 @@
                     <ion-card>
                         <ion-item>
                         <ion-avatar item-start large>
-                            <img class="profilepic" src="assets/img/kurt.jpg">
+                            <img class="profilepic" src="{{ group.userphoto }}">
                         </ion-avatar>
-                        <h2 class="names">Kurt Torregosa</h2>
-                        <p>01/01/2018 2:34PM</p>
+                        <h2 class="names">{{ group.admin }}</h2>
+                        <p>{{ group.datetime | date: 'MM/dd/yyyy h:mma' }}</p>
 
                         </ion-item>
                         <ion-card-content>
-                            Kurt Torregosa created the group.
+                            {{ group.admin }} created the group.
                         </ion-card-content>
                     </ion-card>
                 </div>
