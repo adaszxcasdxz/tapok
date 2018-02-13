@@ -52,14 +52,11 @@ var googlePlusApi = "AIzaSyCooNeyvH1NkSn4Lz0J5N2Wy5ZwQzFS_Ns";
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(kuyogFirebase),
     IonicModule.forRoot(MyApp),
-    //LoginGooglePage
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    //LoginGooglePage,
     Filter
-    //LoginGooglePage
   ],
   providers: [
     StatusBar,
@@ -67,12 +64,11 @@ var googlePlusApi = "AIzaSyCooNeyvH1NkSn4Lz0J5N2Wy5ZwQzFS_Ns";
     AuthProvider,
     FireBaseService,
     Camera,
-    //PhotoViewer,
+    PhotoViewer,
     Facebook,
     AngularFireAuth,
     SocialSharing,
     Deeplinks,
-    //FacebookLoginResponse
     Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
