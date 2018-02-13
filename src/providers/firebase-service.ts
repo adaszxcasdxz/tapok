@@ -16,7 +16,7 @@ export class FireBaseService {
 
   constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp, private afAuth: AngularFireAuth) {
     //this.user = afAuth.auth.currentUser.displayName;
-    //this.user="Carmelle Ann Felicio"
+    this.user="Carmelle Ann Felicio"
   }
 
   setUser(name){

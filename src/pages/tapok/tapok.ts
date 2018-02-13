@@ -186,15 +186,15 @@ export class TapokPage {
 
     popover.onDidDismiss(data => {
       if(data=='facebook')
-        this.shareFacebook();
+        this.facebookShare(event);
       if(data=='group')
         this.shareGroup();
     });
   }
 
-  shareFacebook(){
+  /*shareFacebook(event){
     console.log('facebook');
-  }
+  }*/
 
   shareGroup(){
     console.log('group');

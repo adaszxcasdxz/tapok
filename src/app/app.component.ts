@@ -17,8 +17,8 @@ import { Deeplinks } from '@ionic-native/deeplinks';
 })
 export class MyApp {
   //rootPage:any = 'LoginPage';
-  //rootPage:any = 'TabsPage';
-  rootPage:any = 'LoginPage';
+  rootPage:any = 'TabsPage';
+  //rootPage:any = 'LoginPage';
   //rootPage:any = 'TabsPage';
   //rootPage:any;
   @ViewChild(Nav) nav:Nav;
