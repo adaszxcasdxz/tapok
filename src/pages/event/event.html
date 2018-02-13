@@ -14,9 +14,9 @@
 </ion-header>  
 
 <ion-content class="background" fullscreen>
-  <div *ngIf="upcomingStatus == false">
+  <!--<div *ngIf="upcomingStatus == false">
     You have not joined any events.
-  </div>
+  </div>-->
   <div [ngSwitch]="pages">
     <div *ngFor="let event of Event | async; let i = index" text-center>
       <div *ngFor="let attend of Attending | async">
@@ -74,9 +74,16 @@
                 </ion-col> 
               </span>
               <button (click)="showAttendees(event.$key)" ion-button icon-left outline small>
-                <div *ngIf="event.tapok > 1">{{ event.tapok }} Attendees</div>
-                <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
-                <div *ngIf="event.tapok == 0">No Attendees</div>
+                <div *ngIf="event.max_members == null">
+                  <div *ngIf="event.tapok > 1">{{ event.tapok }} Attendees</div>
+                  <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
+                  <div *ngIf="event.tapok == 0">No Attendees</div>
+                </div>
+                <div *ngIf="event.max_members != null">
+                  <div *ngIf="event.tapok > 1">{{ event.tapok }} of {{ event.max_members }} Attendees</div>
+                  <div *ngIf="event.tapok == 1">{{ event.tapok }} of {{ event.max_members }} Attendee</div>
+                  <div *ngIf="event.tapok == 0">0 of {{ event.max_members }} Attendees</div>
+                </div>
               </button>
               <br *ngIf="event.tags != 'true'">
               <span *ngIf="event.tags == 'true'" text-left padding>
@@ -158,9 +165,16 @@
                   </ion-col> 
                 </span>
                 <button (click)="showAttendees(event.$key)" ion-button icon-left outline small>
-                  <div *ngIf="event.tapok > 1">{{ event.tapok }} Attendees</div>
-                  <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
-                  <div *ngIf="event.tapok == 0">No Attendees</div>
+                  <div *ngIf="event.max_members == null">
+                    <div *ngIf="event.tapok > 1">{{ event.tapok }} Attendees</div>
+                    <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
+                    <div *ngIf="event.tapok == 0">No Attendees</div>
+                  </div>
+                  <div *ngIf="event.max_members != null">
+                    <div *ngIf="event.tapok > 1">{{ event.tapok }} of {{ event.max_members }} Attendees</div>
+                    <div *ngIf="event.tapok == 1">{{ event.tapok }} of {{ event.max_members }} Attendees</div>
+                    <div *ngIf="event.tapok == 0">0 of {{ event.max_members }} Attendees</div>
+                  </div>
                 </button>
                 <br *ngIf="event.tags != 'true'">
                 <span *ngIf="event.tags == 'true'" text-left padding>

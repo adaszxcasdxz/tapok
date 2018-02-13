@@ -40,8 +40,8 @@ export class AddTapok {
 	classification = 'General';
 	dlURL: any;
 	tags = 'false';
-	lat: any;
-	lng: any;
+	lat = null;
+	lng = null;
 
 	temp: any;
 	tag: any;
@@ -88,14 +88,14 @@ export class AddTapok {
 	}
 
 	ionViewDidLoad() {
-		this.geolocation.getCurrentPosition().then((position) => {
+		/*this.geolocation.getCurrentPosition().then((position) => {
 			this.lat = position.coords.latitude;
 			this.lng = position.coords.longitude;
-		});
+		});*/
 
-		var defaultBounds = new google.maps.LatLngBounds(this.lat, this.lng);
+		//var defaultBounds = new google.maps.LatLngBounds(this.lat, this.lng);
 		var options = {
-			bounds: defaultBounds,
+			//bounds: defaultBounds,
 			componentRestrictions: {country: "phl"}
 		};
 

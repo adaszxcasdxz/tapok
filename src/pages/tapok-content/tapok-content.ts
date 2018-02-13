@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, ViewController, AlertController, NavParams, ModalController, PopoverController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import { Popover } from 'ionic-angular/components/popover/popover';
+import { Geolocation } from '@ionic-native/geolocation';
+
+declare var google;
 
 @IonicPage()
 @Component({
@@ -24,10 +27,17 @@ export class TapokContent {
   tag: any[] = [];
   Attendees: any;
   access: any;
+  @ViewChild('map') mapElement: ElementRef;
+  map: any;
+  lat: any[] = [];
+  long: any[] = [];
+  info: any[] = []; 
+  currentLocation: any;
+  toggle = false;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
-    public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService, public popoverCtrl: PopoverController
+    public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService, public popoverCtrl: PopoverController, public geolocation: Geolocation
   ){
     var i = 0,y = 0;
     this.tabs = 'info';
@@ -80,6 +90,8 @@ export class TapokContent {
       })
       this.test();
     });
+    if(this.event.latitude != null)
+      this.loadMap();
   }
 
   test(){
@@ -93,6 +105,13 @@ export class TapokContent {
         break;
       }   
     }
+  }
+
+  toggleMap(){
+    if(this.toggle)
+      this.toggle = false;
+    else
+      this.toggle = true;
   }
 
   popOver(event){
@@ -145,9 +164,39 @@ export class TapokContent {
     alert.present(); 
   }
 
+  loadMap(){
+    var i, eventLocation: any[] = [];
+    this.geolocation.getCurrentPosition().then((position) => {
+      
+      let latLng = new google.maps.LatLng(this.event.latitude, this.event.longitude);
+
+      let mapOptions = {
+        center: latLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      
+      this.currentLocation = new google.maps.Marker({
+        map: this.map,
+        animation: google.maps.Animation.DROP,
+        position: latLng
+      });
+
+    }, (err) => {
+      console.log(err);
+    });
+    
+  }
+
   viewPic(photo){
     let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
     modal.present();
+  }
+
+  showAttendees(key){
+    this.navCtrl.push('AttendeesPage', { key: key  });
   }
   
   confirm(event, status){

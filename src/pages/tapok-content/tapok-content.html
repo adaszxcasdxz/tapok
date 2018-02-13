@@ -26,20 +26,20 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content text-center>  
+<ion-content text-center padding>  
     <ion-row *ngIf="event.photo != ''">
-            <ion-col (click)="viewPic(event.photo)">
-            <!--<ion-col (click)="toggle(event.$key, event.toggle)">
-                <div *ngIf="event.toggle == 'false'">
-                    see photo
-                </div>
-                <div *ngIf="event.toggle == 'true'">-->
-                <div class="box">
-                    <img class="photo" src="{{ event.photo }}">
-                </div>    
-                <!--<br>hide photo
-                </div>-->
-            </ion-col>
+        <ion-col (click)="viewPic(event.photo)">
+        <!--<ion-col (click)="toggle(event.$key, event.toggle)">
+            <div *ngIf="event.toggle == 'false'">
+                see photo
+            </div>
+            <div *ngIf="event.toggle == 'true'">-->
+            <div class="box">
+                <img class="photo" src="{{ event.photo }}">
+            </div>    
+            <!--<br>hide photo
+            </div>-->
+        </ion-col>
     </ion-row>      
     <ion-row>
         <ion-col>
@@ -67,11 +67,29 @@
             <ion-icon name = "pin" color="primary"></ion-icon>                    
             <span class="chip-label">{{ event.venue }}</span>
         </div>
+        <!--<div style="color: #488aff" (click)="toggleMap()" *ngIf="event.latitude!=null&&!toggle">
+            <p><u>Show Map</u></p>
+        </div>
+        <div *ngIf="!toggle">
+            <div *ngIf="event.latitude!=null" #map id="map"></div>
+        </div>
+        <div *ngIf="event.latitude!=null&&toggle" #map id="map"></div>
+        <div style="color: #488aff" (click)="toggleMap()" *ngIf="toggle">
+            <p><u>Hide Map</u></p>
+        </div>-->
+        <div *ngIf="event.latitude!=null" #map id="map"></div>
         <br>
-        <button (click)="confirm(event, status)" ion-button icon-left outline small>
-            <div *ngIf="event.tapok > 1">{{ event.tapok }} Attendees</div>
-            <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
-            <div *ngIf="event.tapok == 0">No Attendees</div>
+        <button (click)="showAttendees(event.$key)" ion-button icon-left outline small>
+            <div *ngIf="event.max_members == null">
+                <div *ngIf="event.tapok > 1">{{ event.tapok }} Attendees</div>
+                <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
+                <div *ngIf="event.tapok == 0">No Attendees</div>
+            </div>
+            <div *ngIf="event.max_members != null">
+                <div *ngIf="event.tapok > 1">{{ event.tapok }} of {{ event.max_members }} Attendees</div>
+                <div *ngIf="event.tapok == 1">{{ event.tapok }} of {{ event.max_members }} Attendees</div>
+                <div *ngIf="event.tapok == 0">0 of {{ event.max_members }} Attendees</div>
+            </div>
         </button>
         <br *ngIf="event.tags != 'true'">
         <span *ngIf="event.tags == 'true'" text-left padding>
@@ -96,9 +114,9 @@
             <div class="share">Share</div>
         </button> 
     </ion-col>
-    <ion-row class="description" no-padding text-justify>
+    <ion-row *ngIf="event.description!=''" no-padding text-justify>
         <ion-col>
-            <hr><b>Description:</b><br>{{ event.description }}<hr>
+            <hr><b>Description:</b><div class="description">{{ event.description }}</div><hr>
         </ion-col>
     </ion-row>
 
