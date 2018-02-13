@@ -42,6 +42,27 @@ page-search {
     .increment{
         display: none;
     }
+
+    .isActive{
+        color: #F8A055;
+        border-bottom: 2px solid #F8A055;
+    }
+
+    .tab-bar{
+        background-color: white;
+        position: fixed;
+        z-index: 1;
+    }
+
+    .tabs{
+        color: dark;
+        margin-left: 1em;
+        margin-top: .5em;
+    }
+
+    .space{
+        margin-bottom: 2.5em;
+    }
 }
 
 
