@@ -11,6 +11,7 @@ import { GooglePlus } from '@ionic-native/google-plus';
 
 import { Camera } from '@ionic-native/camera';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { HttpModule } from '@angular/http';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -23,6 +24,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { Deeplinks } from '@ionic-native/deeplinks';
 
 //pang-google nga import goes here
+
+//import { GoogleMaps } from '@ionic-native/google-maps';
 
 var kuyogFirebase = {
     apiKey: "AIzaSyB2_PG9pR5KVs9qs1JRH-zA15EuivDxPwA",
@@ -57,14 +60,15 @@ var googlePlusApi = "AIzaSyCooNeyvH1NkSn4Lz0J5N2Wy5ZwQzFS_Ns";
     SplashScreen,
     GooglePlus,
     FireBaseService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
     Camera,
     PhotoViewer,
     Facebook,
     AngularFireAuth,
     SocialSharing,
-    Deeplinks
+    Deeplinks,
     //FacebookLoginResponse
+    Geolocation,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {

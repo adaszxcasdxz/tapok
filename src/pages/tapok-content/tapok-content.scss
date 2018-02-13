@@ -34,51 +34,37 @@ tapok-content{
         border-bottom: 0px!important;
      }
 
-     .bubble-left
-     {
-       background-color: orange;
-       padding:.5em;
-       border-radius: 1em;
-       font-size: 1em;
-       margin-left: 3em;
-       //float: left;
-     }
-     
-     
-     .bubble-left p
-     {
-       color:white;
-     }
-     
-     .bubble-right
-     {
-       background-color:#F0F0EF  ;
-       padding:.5em;
-       color: black;
-       border-radius: 1em;
-       font-size: 1em;
-       margin-right: 3em;
-       //float: right;
-     }
-     
-     .icon_u
-     {
-       width:2em;
-       height:2em;
-       margin-top:.5em;
-     }
-     
-     #sentByLeft{
-       margin-left: 5em;
-     }
-     
-     #sentByRight{
-       margin-right: 5em;
-     }
+    .chip-label{
+        margin-left: .2em;
+    }
 
-     ion-footer{
-        position: relative;
-     }
+    .chip-label-date{
+        margin-left: .2em;
+        margin-right: 1em;
+    }
+
+    .location{
+        padding-top: 1em;
+    }
+
+    .details{
+        font-size: 15px;
+    }
+
+    .tags{
+        margin-left: 1em;
+    }
+
+    .description{
+        margin: .8em;
+    }
+
+    #map {
+        margin-top: 1em;
+        width: 100%;
+        height: 30%;
+        border-radius: 1em;
+    }
 }
 
 

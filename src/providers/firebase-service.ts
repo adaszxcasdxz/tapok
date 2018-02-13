@@ -67,6 +67,15 @@ export class FireBaseService {
   addEvent(name){
     var Key;
     Key = this.tapok.list('/events/').push(name).key;
+    var admin = {
+      'name': this.user,
+      'privelage': 'main_admin'
+    }
+    this.tapok.list('events/'+Key+'/attendees').push(admin);
+    var obj = {
+      "key": Key
+    }
+    this.tapok.list('/users/'+this.user).push(obj);
     return Key;
   }
 
@@ -156,14 +165,38 @@ export class FireBaseService {
     });
   }
 
+  getTags(tagKey){
+    return this.tapok.list('/tags/',{ 
+      preserveSnapshot: true,
+      query: {
+        orderByChild: "key",
+        equalTo: tagKey
+      }
+    });
+  }
+
   deleteKeyword(key){
     this.tapok.object('/keywords/'+key).remove();
+  }
+
+  deleteTag(key){
+    this.tapok.object('/tags/'+key).remove(); 
   }
 
   searchTapok(search){
     return this.tapok.list('/keywords/',{
       query: {
         orderByChild: 'keyword',
+        startAt: search,
+        endAt: search+'\uf8ff'
+      },
+    });
+  }
+
+  searchTag(search){
+    return this.tapok.list('/tags/',{
+      query: {
+        orderByChild: 'tag',
         startAt: search,
         endAt: search+'\uf8ff'
       },
@@ -266,5 +299,53 @@ export class FireBaseService {
 
   loginUser(user){
     this.tapok.list('login/'+this.uID).push(user);
+  }
+  
+  addTempTag(tag){
+    this.tapok.list('temp/temp-tags/'+this.user).push(tag);
+  }
+
+  getTempTag(){
+    return this.tapok.list('temp/temp-tags/'+this.user);
+  }
+
+  deleteTempTag(key){
+    this.tapok.list('temp/temp-tags/'+this.user+'/'+key).remove();
+  }
+
+  deleteAllTempTag(){
+    this.tapok.list('temp/temp-tags/'+this.user).remove();
+  }
+
+  addTag(tag){
+    this.tapok.list('tags/').push(tag);
+  }
+
+  getTag(){
+    return this.tapok.list('tags/');
+  }
+
+  getAttendees(key){
+    return this.tapok.list('events/'+key+'/attendees');
+  }
+
+  addAdmin(eventKey, attendeeKey){
+    this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).update({
+      'privelage': 'admin'
+    });
+  }
+
+  removeAdmin(eventKey, attendeeKey){
+    this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).update({
+      'privelage': 'member'
+    });
+  }
+
+  kickAttendee(eventKey, attendeeKey, userKey, value){
+    this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).remove();
+    this.tapok.object('users/'+this.user+'/'+userKey).remove();
+    this.tapok.object('events/'+eventKey).update({
+      'tapok': value
+    });
   }
 }

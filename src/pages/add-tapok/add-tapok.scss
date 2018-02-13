@@ -12,10 +12,6 @@ add-tapok{
         border-radius: .1em;
     }
 
-    /*input{
-        text-align: center;
-    }*/
-
     .box{
         width: 512px; 
         height: 320px; 
@@ -36,17 +32,18 @@ add-tapok{
         font-size: 1.2em;  
     }
 
+    .detail-label-add{
+        margin: .2em;
+        color: #F8A055;
+        font-size: 1.2em;
+    }
+
     .detail{
         color: #353C3F;
         font-size: 1.2em;
         border: 1px solid gray;
         border-radius: .3em;
-    }
-
-    .detail:focus{
-        outline: none;
-        background-color: red;
-        border: 1px solid #F8A055;
+        padding: 1em;
     }
 
     .detail-datetime{

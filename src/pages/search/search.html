@@ -9,17 +9,31 @@
   <ion-navbar>
     <ion-searchbar [(ngModel)]="search" [showCancelButton]="shouldShowCancel" 
     (ionInput)="onInput()"></ion-searchbar>
-    <ion-buttons end>
+    <ion-buttons right>
       <button (click)="dismiss()" ion-button icon-only clear>
-          cancel
+        <ion-icon name="close"></ion-icon>
       </button>
-  </ion-buttons>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content>
+<ion-content text-center>
+  <ion-row>
+    <ion-col class="tab-bar" text-left>
+      <span class="tabs" (click)="changeTab('events')">
+        <b><span *ngIf="tabs=='events'" class="isActive">Events</span>
+        <span *ngIf="tabs!='events'">Events</span></b>
+      </span>
+
+      <span class="tabs" (click)="changeTab('tags')">
+          <b><span *ngIf="tabs=='tags'" class="isActive">Tags</span>
+          <span *ngIf="tabs!='tags'">Tags</span></b>
+      </span>
+    </ion-col>
+  </ion-row>
+  <div class="space"></div>
   <div *ngFor="let res of result">
     <div *ngFor="let event of Event | async; let i = index;">
       <ion-card *ngIf="event.$key == res"  text-center>
