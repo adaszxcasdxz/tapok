@@ -26,7 +26,9 @@
         </ion-navbar>
     </ion-header>
     
-    <ion-content text-center padding>  
+    <ion-content text-center padding>
+        <div [ngSwitch]="tabs">
+        <div *ngSwitchCase="'info'" text-center>  
         <ion-row *ngIf="event.photo != ''">
             <ion-col (click)="viewPic(event.photo)">
             <!--<ion-col (click)="toggle(event.$key, event.toggle)">
@@ -119,7 +121,12 @@
                 <hr><b>Description:</b><div class="description">{{ event.description }}</div><hr>
             </ion-col>
         </ion-row>
-    
+        </div>
+
+        <div *ngSwitchCase="'chat'">
+            
+        </div>
+        </div>
     
         <!--<ion-footer>
                 <div padding>
