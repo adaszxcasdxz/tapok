@@ -76,6 +76,7 @@ export class GroupAddPage {
 			"userphoto": this.photo,
 			"photo": this.gphoto,
 			"adminid": this.adminid,
+			"searchgname": this.gname.toLowerCase(),
 		}
 
     if(this.label == "Add Group"){
