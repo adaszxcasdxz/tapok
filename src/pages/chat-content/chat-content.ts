@@ -19,6 +19,8 @@ export class ChatContent {
   eKey: any;
   List: any;
   listen: any;
+  uid: any;
+  photo: any;
 
   constructor(public viewCtrl: ViewController, public navCtrl: NavController, 
     public firebaseService: FireBaseService,public params: NavParams, public firebaseApp: FirebaseApp) {
@@ -27,6 +29,8 @@ export class ChatContent {
       this.user = this.firebaseService.getUser();
       this.eKey=this.event.$key;
       this.List=this.firebaseService.getChat(this.eKey, this.content);
+      this.photo=this.firebaseService.getPhotoURL();
+      this.uid=this.firebaseService.uID;
       /*setTimeout(() => {
         this.content.scrollToBottom(300);
       });*/
@@ -59,6 +63,8 @@ export class ChatContent {
   sendMessage(){
     this.chat={
       "message": this.Message,
+      "photo": this.photo,
+      "uid": this.uid,
       "sentBy": this.firebaseService.getUser(),
       "timestamp": Date.now(),
     }
