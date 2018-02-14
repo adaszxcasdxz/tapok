@@ -33,6 +33,13 @@ export class SearchPage {
   tabs: any;
   Login: any;
   loginInfo: any[] = [];
+  Group: any;
+  uGroup: any;
+  groupTest: any[] = [];
+  usergroup: any;
+  groupmember: any;
+  photo: any;
+  userid: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
     public firebaseService: FireBaseService, public modalCtrl: ModalController, public alertCtrl: AlertController
@@ -42,6 +49,8 @@ export class SearchPage {
     this.tabs = "events";
     this.index = 0;
     this.user = firebaseService.user;
+    //this.photo = this.firebaseService.getPhotoURL();
+    //this.userid = this.firebaseService.getUserID();
     this.Event = this.firebaseService.getEvent();
     this.User = this.firebaseService.getUsers();
     this.Login = this.firebaseService.getLogin();
@@ -59,7 +68,7 @@ export class SearchPage {
         this.userTest[i] = snap.key;
         i++;
       })
-      this.test();
+      this.eTest();
     });
 
     this.Event.subscribe(snapshots => {
@@ -69,11 +78,11 @@ export class SearchPage {
         this.eventTest[y] = snapshot.$key;
         y++;
       })
-      this.test();
+      this.eTest();
     });
   }
 
-  test(){
+  eTest(){
     this.status.length = 0;
 
     for(var x=0;x<this.eventTest.length;x++){
@@ -115,6 +124,10 @@ export class SearchPage {
         this.Result = this.firebaseService.searchTapok(this.search.toLowerCase());
       else if(this.tabs == "tags")
         this.Result = this.firebaseService.searchTag(this.search.toLowerCase());
+      else if(this.tabs == "groups"){
+        this.Group = this.firebaseService.searchGroup(this.search);
+        this.uGroup = this.firebaseService.getUserGroup();  
+      }
       else if(this.tabs == "people"){
         this.Login.subscribe(snapshot => {
           this.loginInfo.length = 0;
@@ -142,7 +155,7 @@ export class SearchPage {
           this.result[i] = snap.key;
           i++;
         })
-        this.test();
+        this.eTest();
       });
     }
     else{
@@ -209,6 +222,42 @@ export class SearchPage {
 
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey, userKey);
   }
+
+  joinGroup(key, gname){
+    this.usergroup={
+        "key": key,
+        "gname": gname,
+        "timejoin": 0-Date.now()
+    }  
+
+    let confirm = this.alertCtrl.create({
+  title: 'Group Joined!',
+  buttons: [ 'OK' ]
+    });
+    let alert = this.alertCtrl.create({
+    title: 'Join Group?',
+    buttons: [  
+        {
+        text: 'YES',
+        handler: () => {
+            this.groupmember={
+                "name": this.user,
+                "photo": this.photo,
+                "userid": this.userid
+            }
+            this.firebaseService.addUserGroup(this.usergroup);  
+            this.firebaseService.groupAttend(key, this.groupmember);
+            this.navCtrl.setRoot('GroupPage');
+            confirm.present();
+        }
+        },
+        {
+        text: 'NO',
+        }
+    ]
+    });
+    alert.present();
+}
 
   openUser(user){
     let modal = this.modalCtrl.create('UserPage', { otherUser: user });

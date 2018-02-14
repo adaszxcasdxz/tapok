@@ -229,6 +229,16 @@ export class FireBaseService {
     });
   }
 
+  searchGroup(search){
+    return this.tapok.list('/groups/',{
+      query: {
+        orderByChild: 'gname',
+        startAt: search,
+        endAt: search+'\uf8ff'
+      },
+    });
+  }
+
   searchPeople(search, id){
     return this.tapok.list('login/'+id+'/',{
       query: {

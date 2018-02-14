@@ -1,15 +1,13 @@
 <ion-header>
   <ion-navbar hide-on-scroll="true" no-border-bottom>  
-    <ion-toolbar no-border-top>
-      <ion-segment [(ngModel)]="pages">
-        <ion-segment-button value="upcoming">
-          UPCOMING
-        </ion-segment-button>
-        <ion-segment-button value="ongoing">
-          ONGOING
-        </ion-segment-button>
-      </ion-segment>
-    </ion-toolbar>
+    <ion-segment [(ngModel)]="pages">
+      <ion-segment-button value="upcoming">
+        UPCOMING
+      </ion-segment-button>
+      <ion-segment-button value="ongoing">
+        ONGOING
+      </ion-segment-button>
+    </ion-segment>
 
     <ion-buttons right>
         <button (click)="openSearch()" ion-button icon-only round clear>

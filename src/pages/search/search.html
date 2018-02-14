@@ -32,6 +32,11 @@
           <span *ngIf="tabs!='tags'">Tags</span></b>
       </span>
 
+      <span class="tabs" (click)="changeTab('groups')">
+          <b><span *ngIf="tabs=='groups'" class="isActive">Groups</span>
+          <span *ngIf="tabs!='groups'">Groups</span></b>
+      </span>
+
       <span class="tabs" (click)="changeTab('people')">
         <b><span *ngIf="tabs=='people'" class="isActive">People</span>
         <span *ngIf="tabs!='people'">People</span></b>
@@ -39,7 +44,7 @@
     </ion-col>
   </ion-row>
   <div class="space"></div>
-  <div *ngIf="tabs!='people'">
+  <div *ngIf="tabs!='people' && tabs!='groups'">
     <div *ngFor="let res of result">
       <div *ngFor="let event of Event | async; let i = index;">
         <ion-card *ngIf="event.$key == res"  text-center>
@@ -107,6 +112,35 @@
         </ion-item>
       </div>
     </div>
+  </ion-list>
+
+  <ion-list *ngIf="tabs=='groups'">
+    <ion-card *ngFor="let group of Group | async; let i = index;" text-center>
+        <div class="inc">{{ i+1 }}</div>
+          <div class="groupbg">
+
+          <div class="boxpic" [style.background-image]="'url(' + group.photo + ')'"></div>
+              
+          <ion-row text-center>
+            <ion-col class="title-col" width-50>  
+                <div class="title"><b>{{ group.gname }}</b></div>
+            </ion-col> 
+          </ion-row>
+          <hr>
+          <ion-row text-center>
+            <ion-col>
+                <div class="descr-col"><i>{{ group.gdescr }}</i></div>  
+            </ion-col> 
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <button class="join-but" ion-button outline medium (click)="joinGroup(group.$key, group.gname)">
+                JOIN GROUP
+              </button>
+            </ion-col>
+          </ion-row>
+        </div>
+    </ion-card>
   </ion-list>
 
 </ion-content>

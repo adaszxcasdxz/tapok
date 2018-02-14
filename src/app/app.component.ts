@@ -33,7 +33,7 @@ export class MyApp {
               /*public deeplinks: Deeplinks*/) {
     //firebase.initializeApp(kuyogFirebase);
 
-    const unsubscribe = afAuth.auth.onAuthStateChanged(user => {
+    /*const unsubscribe = afAuth.auth.onAuthStateChanged(user => {
       console.log(user);
       if(!user){
         this.rootPage = 'LoginPage';
@@ -43,7 +43,7 @@ export class MyApp {
         this.rootPage = 'TabsPage';
         unsubscribe();
       }
-    });
+    });*/
 
     /*const unsubscribe = afAuth.auth.onAuthStateChanged( user => {
         console.log(user);
