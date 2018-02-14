@@ -187,6 +187,11 @@ export class TapokPage {
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey, userKey);
   }
 
+  openGroupShare(event){
+        console.log(event);
+        this.navCtrl.push('ChooseGroupPage', {param1: event});
+    }
+
   /*facebookShare(){
     this.sharingVar.shareViaFacebook("Test?",null,null).then((success)=>{
         alert("Success");

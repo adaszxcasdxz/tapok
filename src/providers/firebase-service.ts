@@ -305,6 +305,14 @@ export class FireBaseService {
     return this.tapok.list('/groupmember/' + gKey + '/gmember/');
   }
 
+  shareEvent(gKey, event){
+    this.tapok.list('/sharedgroup/' + gKey + '/sharedEvent/').push(event);
+  }
+
+  getSharedEvent(gKey){
+    return this.tapok.list('/sharedgroup/' + gKey + '/sharedEvent/');
+  }
+
   addImageName(){
     var key;
 

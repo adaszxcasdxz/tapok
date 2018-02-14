@@ -120,36 +120,63 @@
                 <div class="box">
                     <img (click)="viewPic(group.photo)" class="photo" src="{{ group.photo }}">
                 </div>
-
-                <ion-card>
-                    <ion-card-content>
-                        <ion-card-title>
-                            <ion-icon name="school"></ion-icon>
-                                Study Out
-                        </ion-card-title>
+                <div *ngFor="let sevent of sharedevent | async; let i = index;">
+                    <ion-card text-center>
                         <ion-item>
-                            <p><ion-icon name="pin"></ion-icon>  Silliman University Library</p>
+                            <ion-avatar item-start>
+                                <img class="user-avatar" src="assets/img/user.png">
+                            </ion-avatar>
+                            <ion-label>
+                                <h2><strong>{{ sevent.host }}</strong></h2>
+                            </ion-label>
                         </ion-item>
-                        <ion-item>
-                            <p><ion-icon name="time"></ion-icon>  2:00PM - 5:00PM</p>
-                        </ion-item>
-                    </ion-card-content>
-                </ion-card>
-
-                <ion-card>
-                    <ion-card-content>
-                        <ion-card-title>
-                            <ion-icon name="school"></ion-icon>
-                                Documentation 
-                            </ion-card-title>
-                            <ion-item>
-                                <p><ion-icon name="pin"></ion-icon>  Doltz Hall, Silliman University</p>
-                            </ion-item>
-                            <ion-item>
-                                <p><ion-icon name="time"></ion-icon>  9:00AM - 11:00AM</p>
-                            </ion-item>
-                    </ion-card-content>
-                </ion-card>
+                        <ion-row *ngIf="sevent.photo != ''">
+                            <div (click)="viewPic(sevent.photo)">
+                                <div class="box" text-center>
+                                    <img class="photo" src="{{ sevent.photo }}">
+                                </div>
+                            </div>
+                        </ion-row>
+                        <div>
+                            <ion-row>
+                                <ion-col class="title-col" width-50>  
+                                    <div class="title"><b><hr>{{ sevent.name }}<hr></b></div>            
+                                </ion-col> 
+                            </ion-row>
+                            <ion-row class="details">
+                                <ion-col>
+                                    <span *ngIf="sevent.enddate==''">
+                                        <ion-icon name="calendar" color="secondary"></ion-icon>
+                                        <span class="chip-label-date">{{ sevent.date }}</span>
+                                    </span>
+                                    <span *ngIf="sevent.enddate!=''">   
+                                        <ion-icon name = "calendar" color="secondary"></ion-icon>                     
+                                        <span class="chip-label-date">{{ sevent.date }}  <b>-</b> {{ sevent.enddate }}</span>
+                                    </span>   
+                                    <span *ngIf="sevent.endtime==''">
+                                        <ion-icon name = "time" color="danger"></ion-icon>                    
+                                        <span class="chip-label">{{ sevent.time }}</span>
+                                    </span>
+                                    <span *ngIf="sevent.endtime!=''">
+                                        <ion-icon name = "time" color="danger"></ion-icon>                      
+                                        <span class="chip-label">{{ sevent.time }}  <b>-</b> {{ sevent.endtime }}</span>
+                                    </span>
+                                    <br>
+                                    <div class="location">
+                                        <ion-icon name = "pin" color="primary"></ion-icon>                    
+                                        <span class="chip-label">{{ sevent.venue }}</span>
+                                    </div>
+                                    <br>
+                                    <button ion-button icon-left outline small>
+                                        <div *ngIf="sevent.tapok > 1">{{ sevent.tapok }} Attendees</div>
+                                        <div *ngIf="sevent.tapok == 1">{{ sevent.tapok }} Attendee</div>
+                                        <div *ngIf="sevent.tapok == 0">No Attendees</div>
+                                    </button>
+                                </ion-col> 
+                            </ion-row>
+                        </div>
+                    </ion-card>
+                </div>
             </ion-list>
         </div>
 
