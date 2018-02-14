@@ -415,4 +415,32 @@ export class FireBaseService {
   getLogin(){
     return this.tapok.list('login');
   }
+
+  addFollowers(user){
+    this.tapok.list('users/'+this.user+'/following/').push(user);
+  }
+
+  getFollowers(){
+    return this.tapok.list('users/'+this.user+'/following/');
+  }
+
+  removeFollowers(key){
+    this.tapok.list('users/'+this.user+'/following/'+key).remove();
+  }
+
+  addNotif(notif){
+    this.tapok.list('notifications/'+this.user).push(notif);
+  }
+
+  addLatestNotif(notif){
+    this.tapok.list('latest_notifications/'+this.user).push(notif);
+  }
+
+  getLatestNotif(){
+    return this.tapok.list('latest_notifications/'+this.user);
+  }
+
+  deletelatestNotif(){
+    this.tapok.list('latest_notifications/'+this.user).remove();
+  }
 }

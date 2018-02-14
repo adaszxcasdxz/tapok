@@ -214,8 +214,15 @@ export class AddTapok {
 			"longitude": this.lng
 		};
 
-		if(this.label == "Add Tapok")
+		if(this.label == "Add Tapok"){
 			eventKey = this.firebaseService.addEvent(this.event);
+			var eventNotif = {
+				'name': this.name,
+				'key': eventKey
+			}
+			this.firebaseService.addNotif('test notif');
+			this.firebaseService.addLatestNotif(eventNotif);
+		}
 		this.word = this.name.split(" ");
 		for(i=0;i<this.word.length;i++){
 			this.keyword={

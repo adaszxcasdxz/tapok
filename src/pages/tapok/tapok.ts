@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, PopoverController, ModalController, AlertController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, PopoverController, ModalController, AlertController, Platform, ToastController } from 'ionic-angular';
 import { Filter } from '../filter/filter';
 import { FireBaseService } from '../../providers/firebase-service';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 //import { SocialSharing } from '@ionic-native/social-sharing';
 import { NavParams } from 'ionic-angular/navigation/nav-params';
+import { FirebaseApp } from 'angularfire2';
 
 import * as moment from 'moment';
 import {Observable} from 'rxjs/Rx';
@@ -30,6 +31,7 @@ export class TapokPage {
   status: any[] = []; //
   index = 0; //
   tapokID: string;
+  notif: any;
   //status: any[] = [];
   //index = 0;
   Tags: any;
@@ -39,7 +41,7 @@ export class TapokPage {
 
    constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
-      public modalCtrl: ModalController, public firebaseService: FireBaseService, public photoViewer: PhotoViewer, public platform: Platform, /*private sharingVar: SocialSharing*/) {
+      public modalCtrl: ModalController, public toastCtrl: ToastController, public firebaseService: FireBaseService, public photoViewer: PhotoViewer, public platform: Platform, public firebaseApp: FirebaseApp /*private sharingVar: SocialSharing*/) {
     var i = 0, y = 0;
 
     this.toggled = false;
@@ -48,6 +50,30 @@ export class TapokPage {
     this.Tags = this.firebaseService.getTag();
     this.User = this.firebaseService.getUsers();
     this.user = firebaseService.getUser();
+
+    this.firebaseApp.database().ref("latest_notifications/"+this.user).on('value', snapshot => {
+      let notif = this.firebaseService.getLatestNotif();
+      let notifMessage;
+      let toast;
+      notif.subscribe(snapshot => {
+        let i = 0;
+        snapshot.forEach(snap =>{
+          notifMessage = snap.name;
+        });
+        console.log(snapshot);
+        if(snapshot.length!=0){
+          toast = this.toastCtrl.create({
+            message: this.user+' has created '+notifMessage,
+            duration: 5000
+          });
+          toast.present();
+          Observable.interval(5000)
+          .subscribe((val) => {
+            this.firebaseService.deletelatestNotif();
+          });
+        }
+      });
+    });
 
     Observable.interval(5000)
     .subscribe((val) => {
