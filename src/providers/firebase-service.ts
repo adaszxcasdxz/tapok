@@ -15,7 +15,7 @@ export class FireBaseService {
 
   constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp, private afAuth: AngularFireAuth) {
     //this.user = afAuth.auth.currentUser.displayName;
-    //this.user="Carmelle Ann Felicio"
+    this.user="John Henry Eguia"
   }
 
   setUser(name){
@@ -229,6 +229,16 @@ export class FireBaseService {
     });
   }
 
+  searchPeople(search, id){
+    return this.tapok.list('login/'+id+'/',{
+      query: {
+        orderByChild: 'name',
+        startAt: search,
+        endAt: search+'\uf8ff'
+      },
+    });
+  }
+
   getGroup(){
     return this.tapok.list('/groups/',{
       query:{
@@ -390,5 +400,9 @@ export class FireBaseService {
     this.tapok.object('events/'+eventKey).update({
       'tapok': value
     });
+  }
+
+  getLogin(){
+    return this.tapok.list('login');
   }
 }

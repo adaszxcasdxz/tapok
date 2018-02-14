@@ -11,6 +11,11 @@
         HISTORY
       </ion-segment-button>
     </ion-segment>
+    <ion-buttons *ngIf="otherUser!=null" end>
+      <button (click)="dismiss()" ion-button icon-only clear>
+          <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

@@ -156,14 +156,14 @@
         <ion-row class="buttons" text-center>
             <div *ngIf="name!=''&&venue!=''">
                 <ion-col *ngIf="label == 'Add Tapok'">
-                    <button class="tapok-button" (click)="addTapok()" ion-button>{{ label }}</button>
+                    <button (click)="addTapok()" ion-button>{{ label }}</button>
                 </ion-col>
             </div>
             <ion-col *ngIf="label == 'Edit Tapok'">
-                <button class="tapok-button" (click)="editTapok()" ion-button>{{ label }}</button>
+                <button (click)="editTapok()" ion-button>{{ label }}</button>
             </ion-col>
             <ion-col>
-                <button class="tapok-button" (click)="cancel()" ion-button outline>Cancel</button>
+                <button (click)="cancel()" ion-button outline>Cancel</button>
             </ion-col>
         </ion-row>
     </div>
