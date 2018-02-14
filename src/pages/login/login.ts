@@ -74,7 +74,8 @@ export class LoginPage {
         name: this.afAuth.auth.currentUser.displayName,
         photo: this.afAuth.auth.currentUser.photoURL,
         email: this.afAuth.auth.currentUser.email,
-        age: ""
+        age: "",
+        name_search: (this.afAuth.auth.currentUser.displayName).toLowerCase()
       }
       
       if(!this.inDB){
@@ -119,7 +120,8 @@ export class LoginPage {
               name:this.afAuth.auth.currentUser.displayName,
               photo:this.afAuth.auth.currentUser.photoURL,
               email:this.afAuth.auth.currentUser.email,
-              age: ""
+              age: "",
+              name_search: (this.afAuth.auth.currentUser.displayName).toLowerCase()
               //bday:this.afAuth.auth.currentUser.user_birthday
             }
             //this.firebaseService.loginUser(this.userData);
