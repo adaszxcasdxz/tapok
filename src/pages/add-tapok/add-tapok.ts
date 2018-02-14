@@ -60,6 +60,7 @@ export class AddTapok {
 
 	toggle = false;
 	toggleMembers = true;
+	uid:any;
 
 	onSuccess = (snapshot) => {
 		this.photo = snapshot.downloadURL;
@@ -81,6 +82,7 @@ export class AddTapok {
 		this.label = params.get('label');
 		this.event = params.get('tapok');
 		this.Tags = this.firebaseService.getTempTag();
+		this.uid=firebaseService.uID;
 		if(this.event != undefined)
 			this.editTapokInfo();
 
@@ -195,6 +197,7 @@ export class AddTapok {
 		}
 
 		this.event={
+			"hID": this.uid,
 			"host": this.host,
 			"name": this.name,
 			"photo": this.photo,

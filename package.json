@@ -53,7 +53,9 @@
     "moment": "^2.20.1",
     "rxjs": "^5.4.3",
     "sw-toolbox": "3.6.0",
-    "zone.js": "^0.8.17"
+    "zone.js": "^0.8.17",
+    "cordova-ios": "4.5.4",
+    "cordova-plugin-x-socialsharing": "^5.2.1"
   },
   "devDependencies": {
     "@ionic/app-scripts": "^3.0.0",
