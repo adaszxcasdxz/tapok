@@ -181,7 +181,7 @@ export class TapokPage {
     }
   } //
 
-  sharePopover(){
+  sharePopover(event){
     let popover = this.popoverCtrl.create('SharePopoverPage');
     popover.present();
 
