@@ -87,6 +87,7 @@
                                 </button>
                                 </ion-col>
                             </ion-row>
+                            <div *ngIf="posts.comments != null">
                             <hr class="line">
                                 <ion-row>
                                     <ion-col>
@@ -94,6 +95,7 @@
                                         <p class="latest" text-wrap> {{ latestComment[i] }} <span class="unnum"> {{ i+1 }}</span></p>
                                     </ion-col>
                                 </ion-row>
+                            </div>
                         </div>
                     </ion-card>
 

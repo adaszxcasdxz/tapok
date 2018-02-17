@@ -1,10 +1,10 @@
 page-group{
-    .title{
-        color: #2F2E33;
+    ion-card{
+        border: 0px;
     }
 
-    ion-card{
-        border-top: 1.5px solid #F8A055;
+    .title{
+        color: #2F2E33;
     }
 
     .title{
@@ -18,6 +18,10 @@ page-group{
         opacity: .7;
     }
 
+    .test{
+        color:whitesmoke;
+    }
+
     .descr-col{
         color: black;
         font-size: 1.1em;
@@ -29,7 +33,7 @@ page-group{
     }
 
     .title-col{
-        color: #F8A055;
+        color: whitesmoke;
     }
 
     .nav-title{
