@@ -5,6 +5,7 @@ import { FireBaseService } from '../../providers/firebase-service';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { NavParams } from 'ionic-angular/navigation/nav-params';
+import { Badge } from '@ionic-native/badge';
 
 import * as moment from 'moment';
 import {Observable} from 'rxjs/Rx';

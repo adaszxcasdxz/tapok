@@ -27,7 +27,7 @@ import { Deeplinks } from '@ionic-native/deeplinks';
 })
 export class MyApp {
   //rootPage:any = 'LoginPage';
-  rootPage: any = 'LoginPage';
+  rootPage: any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth,
               public deeplinks: Deeplinks) {
