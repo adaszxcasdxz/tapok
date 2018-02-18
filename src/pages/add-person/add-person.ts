@@ -20,6 +20,8 @@ export class AddPersonPage {
   loginInfo: any[] = [];
   ResultPeople: any[] = [];
   result: any[] = [];
+  search = '';
+  index = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FireBaseService) {
     
