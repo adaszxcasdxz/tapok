@@ -228,8 +228,9 @@ export class GroupContent {
   }
 
   openAddToGroup(){
+    console.log(this.group);
     console.log(this.group.$key);
-    this.navCtrl.push('AddPersonPage', {param1: this.group.$key})
+    this.navCtrl.push('AddPersonPage', {param1: this.group})
   }
 
   /*joinGroup(key){

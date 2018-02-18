@@ -285,6 +285,10 @@ export class FireBaseService {
     this.tapok.list('/users/' + this.user + '/groupKey/').push(key);
   }
 
+  addMemberGroup(name, key){
+    this.tapok.list('/users/' + name + '/groupKey/').push(key);
+  }
+
   getUserGroup(){
     return this.tapok.list('/users/'+this.user+'/groupKey/',{
       query:{

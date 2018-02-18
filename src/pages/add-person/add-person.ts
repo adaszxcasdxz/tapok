@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 
 /**
@@ -22,11 +22,14 @@ export class AddPersonPage {
   result: any[] = [];
   search = '';
   index = 0;
+  usergroup: any;
+  groupmember: any;
+  group: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FireBaseService) {
-    
-
+  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FireBaseService,
+  public alertCtrl: AlertController) {
     this.Login = this.firebaseService.getLogin();
+    this.group = navParams.get('param1');
 
     
   }
@@ -50,6 +53,42 @@ export class AddPersonPage {
         i++;
       })
     });
+  }
+  
+  addUser(user){
+    this.usergroup={
+            "key": this.group.$key,
+            "gname": this.group.gname,
+            "timejoin": 0-Date.now()
+        }  
+
+        let confirm = this.alertCtrl.create({
+			title: 'Person succesfully added!',
+			buttons: [ 'OK' ]
+        });
+        let alert = this.alertCtrl.create({
+        title: 'Add this user to the group?',
+        buttons: [  
+            {
+            text: 'YES',
+            handler: () => {
+                this.groupmember={
+                    "name": user.name,
+                    "photo": user.photo,
+                    "userid": user.$key
+                }
+                this.firebaseService.addMemberGroup(user.name, this.usergroup);  
+                this.firebaseService.groupAttend(this.group.$key, this.groupmember);
+                this.navCtrl.setRoot('GroupPage');
+                confirm.present();
+            }
+            },
+            {
+            text: 'NO',
+            }
+        ]
+        });
+        alert.present();
   }
 
   ionViewDidLoad() {
