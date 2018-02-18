@@ -323,4 +323,14 @@ export class FireBaseService {
     key = this.tapok.list('imageName').push(Date.now());
     return key;
   }
+
+  searchPeople(search, id){
+    return this.tapok.list('login/'+id+'/',{
+      query: {
+        orderByChild: 'name',
+        startAt: search,
+        endAt: search+'\uf8ff'
+      },
+    });
+  }
 }

@@ -6,13 +6,30 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Add Person</ion-title>
+  <ion-navbar>  
+    <ion-searchbar [(ngModel)]="search" [showCancelButton]="shouldShowCancel"
+    (ionInput)="onInput()"></ion-searchbar>
+    <ion-buttons right>
+      <button (click)="dismiss()" ion-button icon-only clear>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+  <ion-list>
+    <div *ngFor="let login of Login | async; let i = index">
+      <div *ngFor="let res of ResultPeople[i] | async">
+        <ion-item (click)="openUser(res)">
+          <ion-avatar item-start><img src="{{ res.photo }}"></ion-avatar>
+          <h2>{{ res.name }}</h2>
+          <p>{{ res.email }}</p>
+        </ion-item>
+      </div>
+    </div>
 
 </ion-content>

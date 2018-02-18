@@ -19,11 +19,18 @@ export class AddPersonPage {
   Login: any;
   loginInfo: any[] = [];
   ResultPeople: any[] = [];
+  result: any[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FireBaseService) {
-    var i;
+    
 
     this.Login = this.firebaseService.getLogin();
+
+    
+  }
+
+  onInput(){
+    var i;
 
     this.Login.subscribe(snapshot => {
       this.loginInfo.length = 0;
@@ -31,8 +38,16 @@ export class AddPersonPage {
       snapshot.forEach(snap => {
         this.loginInfo[i] = snap.$key;
         this.ResultPeople[i] = this.firebaseService.searchPeople(this.search, snap.$key);
+        if(this.ResultPeople[i] != undefined){
+          this.ResultPeople[i].subscribe(snapshot2 => {
+            snapshot2.forEach(snap2 => {
+              this.result[i] = snap2;
+            })
+          });
+        }
+        i++;
       })
-    })
+    });
   }
 
   ionViewDidLoad() {
