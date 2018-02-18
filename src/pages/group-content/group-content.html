@@ -10,9 +10,9 @@
             <ion-icon name="trash"></ion-icon>
         </button>
     </ion-buttons>
-    <ion-buttons right large>
+    <ion-buttons *ngIf="group.adminid === current" right large>
         <button class="button-header" (click)="leaveGroup()" ion-button icon-only round>
-            <ion-icon name="exit"></ion-icon>
+            <ion-icon name="person-add"></ion-icon>
         </button>
     </ion-buttons>
   </ion-navbar>
