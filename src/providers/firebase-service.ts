@@ -66,6 +66,10 @@ export class FireBaseService {
     this.tapok.object('/login/'+this.uID+'/'+key+'/age').set(age);
   }
 
+  getLogin(){
+    return this.tapok.list('login');
+  }
+
   /*loginUser(user){
     this.tapok.list('login/'+this.uID).push(user);
   }*/
