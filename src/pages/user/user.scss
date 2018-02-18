@@ -1,4 +1,30 @@
 .item-avatar{
-    width:5em !important;
-    height:5em !important;
+    width:13em;
+    height: 13em; 
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 1em;
+    border-radius: 55%;
+}
+
+.username{
+    font-size: 2em;
+    text-align: center;
+    color: black;
+    padding-top: .5em;
+}
+
+.mail{
+    padding-top: -3em;
+    font-size: 1.1em;
+    text-align:center;
+    color: gray;
+}
+
+.tapok-button{
+    width: 80%;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
 }

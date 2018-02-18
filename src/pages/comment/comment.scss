@@ -1,0 +1,44 @@
+page-comment {
+    .combox{
+        width: 100%;
+    }
+
+    .names{
+        color: midnightblue;
+        font-size: medium;
+        margin-top:0.5em;
+        position: absolute;
+        top: 10%;
+        padding-left: 1.7em;
+    }
+
+    .timestamp{
+        position: absolute;
+        top: 2.9em;
+        padding-left: 5.5em;
+    }
+
+    .profilepic{
+        margin-left: 1.5em;
+    }
+
+    .item-avatar{
+        border-radius: 5em;
+    }
+
+    .post{
+        margin-top: 1em;
+        padding-right: 1em;
+        padding-left: 2em;
+        size: 15px;
+    }
+
+    .del-com1{
+        position: fixed;
+        right: -0.6em;
+        top: -4em;
+        height: 3em;
+        width: 3em;
+        z-index: -100;
+    }
+}

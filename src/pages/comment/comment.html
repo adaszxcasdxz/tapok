@@ -1,0 +1,38 @@
+<!--
+  Generated template for the CommentPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>All Comments</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+    <ion-list> 
+      <div *ngFor="let comments of comment | async" class="commentbg">
+        <ion-item no-padding>
+          <div class="combox">
+                    <ion-avatar item-start>
+                            <img class="profilepic" src="{{ comments.photo }}" medium>
+                    </ion-avatar>
+                  <h2 class="names">{{ comments.commenter }}</h2>
+                  <p class="timestamp">{{ comments.datetime | date: 'MM/dd/yyyy h:mma' }}</p>
+               </div>
+
+            <ion-buttons *ngIf="comments.commenterid === current" float-right>
+                <button class="del-com1" (click)="presentActionSheetCom(comments)" ion-button large clear>
+                    <ion-icon name="more"></ion-icon>
+                </button>
+            </ion-buttons>
+
+            <p class="post" text-wrap>{{ comments.comment }}</p>
+
+          </ion-item>
+      </div>
+    </ion-list>
+</ion-content>

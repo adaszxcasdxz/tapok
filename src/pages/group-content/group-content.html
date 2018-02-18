@@ -1,8 +1,18 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons right large>
+    <ion-buttons *ngIf="group.adminid === current" right large>
         <button class="button-header" (click)="editGroup()" ion-button icon-only round>
             <ion-icon name="create"></ion-icon>
+        </button>
+    </ion-buttons>
+    <ion-buttons *ngIf="group.adminid === current" right large>
+        <button class="button-header" (click)="deleteGroup()" ion-button icon-only round>
+            <ion-icon name="trash"></ion-icon>
+        </button>
+    </ion-buttons>
+    <ion-buttons right large>
+        <button class="button-header" (click)="leaveGroup()" ion-button icon-only round>
+            <ion-icon name="exit"></ion-icon>
         </button>
     </ion-buttons>
   </ion-navbar>
@@ -24,129 +34,120 @@
 </ion-header>
 
 <ion-content>
-        <div [ngSwitch]="groupcont">
-            <ion-list *ngSwitchCase="'posts'">
-                    <img src="assets/img/capstone.jpg">
-                     <ion-row>
-                        <ion-col>
-                            <h1>{{ group.gname }}</h1>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row text-justify padding>
-                        <ion-col>
-                            <div class="descr-col">Description:<br>{{ group.gdescr }}</div>
-                        </ion-col>
-                    </ion-row>
+    <div [ngSwitch]="groupcont">
+        <ion-list *ngSwitchCase="'posts'">
+            <div class="contentbg">  
+                <div class="box">
+                    <img (click)="viewPic(group.photo)" class="photo" src="{{ group.photo }}">
+                </div>
+                    <div class="gheader">
+                        <ion-row text-center>
+                            <ion-col>
+                                <div class="name-col"><b>{{ group.gname }}</b></div>
+                                <hr> 
+                                <div class="descr-col"><i>{{ group.gdescr }}</i></div>
+                            </ion-col>
+                        </ion-row>
+                    </div>
 
-                    <ion-item>
-                        <ion-input type="text" placeholder="Post something..."></ion-input>
-                    </ion-item>
-              
-                <ion-card>
-                     <ion-item>
-                    <ion-avatar item-start large>
-                        <img class="item-avatar" src="assets/img/kurt.jpg">
-                    </ion-avatar>
-                    <h2 class="names">Kurt Torregosa</h2>
-                    <p>3 mins ago</p>
+                    <ion-card *ngFor="let posts of post | async; let i = index">
+                        <div class="postcontent">
+                            <ion-item>
+                                <ion-avatar item-start medium>
+                                    <img class="profilepic" src="{{ posts.photo }}">
+                                </ion-avatar>
+                                <h2 class="names">{{ posts.poster }}</h2>
+                                <p>{{ posts.datetime | date: 'MM/dd/yyyy h:mma' }}</p>
+                            </ion-item>
 
-                    </ion-item>
-                    <ion-card-content>
-                        Hey guys! Just checking if any of y'all have found a place for
-                        the next meet-up? A place with fast wifi is preferable. Also, 
-                        somewhere where there isn't a lot of people :)
-                    </ion-card-content>
+                            <ion-buttons *ngIf="posts.posterid === current" float-right>
+                                    <button class="del-post2" (click)="presentActionSheetPost(posts)" ion-button large clear>
+                                        <ion-icon name="more"></ion-icon>
+                                    </button>
+                            </ion-buttons>
 
-                    <ion-row>
-                        <ion-col>
-                        <button ion-button icon-left clear small>
-                            <ion-icon name="thumbs-up"></ion-icon>
-                            <div>Like</div>
-                        </button>
-                        </ion-col>
+                            <ion-row>
+                                <ion-card-content>
+                                    {{ posts.post }}
+                                </ion-card-content>
+                            </ion-row>
 
-                        <ion-col>
-                        <button ion-button icon-left clear small>
-                            <ion-icon name="text"></ion-icon>
-                            <div>Comment</div>
-                        </button>
-                        </ion-col>
-                    </ion-row>
-                </ion-card>
+                            <ion-row>
+                                <ion-col class="del-post1"> 
+                                    <button ion-button icon-left clear small (click)="openAddComment(group, posts)">
+                                        <ion-icon name="text"></ion-icon>
+                                        <div class="del-post1"> Comment</div>
+                                    </button>
+                                </ion-col>
+
+                                <ion-col class="del-post1">
+                                <button ion-button icon-left clear small (click)="openComment(group, posts)">
+                                    <ion-icon name="open"></ion-icon>
+                                    <div class="del-post1">View Comments</div>
+                                </button>
+                                </ion-col>
+                            </ion-row>
+                            <hr class="line">
+                                <ion-row>
+                                    <ion-col>
+                                        <p class="commenter">{{ latestCommenter[i] }}</p> 
+                                        <p class="latest" text-wrap> {{ latestComment[i] }} <span class="unnum"> {{ i+1 }}</span></p>
+                                    </ion-col>
+                                </ion-row>
+                        </div>
+                    </ion-card>
 
 
-                <ion-card>
-                     <ion-item>
-                    <ion-avatar item-start large>
-                        <img class="item-avatar" src="assets/img/carm.jpg">
-                    </ion-avatar>
-                    <h2 class="names">Carmelle Felicio</h2>
-                    <p>55 mins ago</p>
+                    <ion-card>
+                        <ion-item>
+                        <ion-avatar item-start large>
+                            <img class="profilepic" src="{{ group.userphoto }}">
+                        </ion-avatar>
+                        <h2 class="names">{{ group.admin }}</h2>
+                        <p>{{ group.datetime | date: 'MM/dd/yyyy h:mma' }}</p>
 
-                    </ion-item>
-                    <ion-card-content>
-                        Who's up for a study out tonight? I'll create an
-                        activity later on. I'll share it to the group :D
-                    </ion-card-content>
-
-                    <ion-row>
-                        <ion-col>
-                        <button ion-button icon-left clear small>
-                            <ion-icon name="thumbs-up"></ion-icon>
-                            <div>Like</div>
-                        </button>
-                        </ion-col>
-
-                        <ion-col>
-                        <button ion-button icon-left clear small>
-                            <ion-icon name="text"></ion-icon>
-                            <div>Comment</div>
-                        </button>
-                        </ion-col>
-                    </ion-row>
-                </ion-card>
+                        </ion-item>
+                        <ion-card-content>
+                            {{ group.admin }} created the group.
+                        </ion-card-content>
+                    </ion-card>
+                </div>
             </ion-list>
         </div>
 
         <div [ngSwitch]="groupcont">
             <ion-list *ngSwitchCase="'events'">
-                <img src="assets/img/capstone.jpg">
-                    <div class="group-title">
-                        Capstone
-                    </div>
-                    <div class="overlay1"></div>
+                <div class="box">
+                    <img (click)="viewPic(group.photo)" class="photo" src="{{ group.photo }}">
+                </div>
 
                 <ion-card>
                     <ion-card-content>
-                    <ion-card-title>
-                        <ion-icon name="school"></ion-icon>
-                            Study Out
+                        <ion-card-title>
+                            <ion-icon name="school"></ion-icon>
+                                Study Out
                         </ion-card-title>
-
-                    <ion-item>
-                        <p><ion-icon name="pin"></ion-icon>  Silliman University Library</p>
-                    </ion-item>
-
-                    <ion-item>
-                        <p><ion-icon name="time"></ion-icon>  2:00PM - 5:00PM</p>
-                    </ion-item>
+                        <ion-item>
+                            <p><ion-icon name="pin"></ion-icon>  Silliman University Library</p>
+                        </ion-item>
+                        <ion-item>
+                            <p><ion-icon name="time"></ion-icon>  2:00PM - 5:00PM</p>
+                        </ion-item>
                     </ion-card-content>
                 </ion-card>
 
                 <ion-card>
                     <ion-card-content>
-                    <ion-card-title>
-                        <ion-icon name="school"></ion-icon>
-                            Documentation 
-                        </ion-card-title>
-
-                    <ion-item>
-                        <p><ion-icon name="pin"></ion-icon>  Doltz Hall, Silliman University</p>
-                    </ion-item>
-
-                    <ion-item>
-                        <p><ion-icon name="time"></ion-icon>  9:00AM - 11:00AM</p>
-                    </ion-item>
+                        <ion-card-title>
+                            <ion-icon name="school"></ion-icon>
+                                Documentation 
+                            </ion-card-title>
+                            <ion-item>
+                                <p><ion-icon name="pin"></ion-icon>  Doltz Hall, Silliman University</p>
+                            </ion-item>
+                            <ion-item>
+                                <p><ion-icon name="time"></ion-icon>  9:00AM - 11:00AM</p>
+                            </ion-item>
                     </ion-card-content>
                 </ion-card>
             </ion-list>
@@ -154,23 +155,21 @@
 
         <div [ngSwitch]="groupcont">
             <ion-list *ngSwitchCase="'members'">
-                 <img src="assets/img/capstone.jpg">
-                    <div class="group-title">
-                        Capstone
-                    </div>
-                    <div class="overlay1"></div>
+                 <div class="box">
+                    <img (click)="viewPic(group.photo)" class="photo" src="{{ group.photo }}">
+                </div>
 
-                <ion-card>
-                    <ion-item>
-                        <ion-avatar item-start large>
-                            <img class="item-avatar" src="assets/img/carm.jpg">
-                        </ion-avatar>
-                        <h2>Carmelle Felicio</h2>
-                        <button ion-button item-end clear large><ion-icon name="mail"></ion-icon></button>
-                    </ion-item>
-                </ion-card>
+                
+                <ion-list *ngFor="let gmembers of gmember | async">
+                        <span>
+                            <img class="ppic" src="{{ gmembers.photo }}">
+                            <p class="mname">{{ gmembers.name }}</p>
+                            <div *ngIf="group.adminid === gmembers.userid"><ion-icon class="adminsign" name="star" medium></ion-icon><hr></div>
+                        </span>
+                        <!--<button ion-button item-end clear large><ion-icon name="mail"></ion-icon></button>-->
+                </ion-list>
 
-                <ion-card>
+                <!---<ion-card>
                     <ion-item>
                         <ion-avatar item-start large>
                             <img class="item-avatar" src="assets/img/henry.jpg">
@@ -188,9 +187,15 @@
                             <h2>Kurt Torregosa</h2>
                             <button ion-button item-end clear large><ion-icon name="mail"></ion-icon></button>
                     </ion-item>
-                </ion-card>
-
-                
+                </ion-card>-->
             </ion-list>
         </div>
 </ion-content>
+
+<ion-footer>
+    <ion-fab bottom right>
+        <button ion-fab (click)="openGroupPost(group)">
+            <ion-icon name="send"></ion-icon>
+        </button>
+    </ion-fab>
+<ion-footer>

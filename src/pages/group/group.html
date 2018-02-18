@@ -6,7 +6,7 @@
       MY GROUPS
     </ion-segment-button> 
     <ion-segment-button value="recommended">
-      RECOMMENDED 
+      ALL GROUPS
     </ion-segment-button> 
   </ion-segment>
 </div>
@@ -16,74 +16,77 @@
 <ion-content class="background">
 <div [ngSwitch]="group">
   <ion-list *ngSwitchCase="'mygroup'">
-    <ion-card *ngFor="let group of Group | async" text-center>
-      <div (click)="openGroupContent(group)">
-        <ion-item>
-          <ion-row>
-            <ion-col>
-              <div class="box"></div>
-            </ion-col>
-          </ion-row>
-          <ion-row text-center>
-            <ion-col class="title-col" width-50>  
-                <div class="title">{{ group.gname }}</div>
-            </ion-col> 
-          </ion-row>
-          <ion-row text-center>
-            <ion-col>
-                <div class="descr-col">{{ group.gdescr }}</div>  
-            </ion-col> 
-          </ion-row>
-        </ion-item>
+    <div *ngFor="let group of Group | async">
+      <div *ngFor="let ugroup of uGroup | async">
+        <ion-card *ngIf="ugroup.key == group.$key" text-center>
+          <div (click)="openGroupContent(group)">
+
+              <div class="boxpic" [style.background-image]="'url(' + group.photo + ')'"></div>
+                
+                <div class="gname">
+                  <ion-row text-center>
+                    <ion-col class="title-col" width-50>  
+                        <div class="title"><b>{{ group.gname }}</b></div>
+                    </ion-col> 
+                  </ion-row>
+                  <hr>    
+
+                  <ion-row class="gdescrip"text-center>
+                    <ion-col>
+                        <div class="descr-col"><i>{{ group.gdescr }}</i></div>  
+                    </ion-col> 
+                  </ion-row>
+                  
+                  </div>
+          </div>
+                    <ion-row>
+                      <ion-col>
+                        <button class="join-but" ion-button outline medium (click)="leaveGroup(ugroup.$key, group.$key)">
+                            LEAVE GROUP
+                        </button>
+                      </ion-col>
+                    </ion-row>
+        </ion-card>
       </div>
-    </ion-card>
+    </div>
   </ion-list>
 
   <!--End of My Groups-->
 
   <ion-list *ngSwitchCase="'recommended'">
-    <ion-card>
-  <ion-card-header>
-     <ion-icon name="school"></ion-icon> PROGRAMMING BUDDIES
-  </ion-card-header>
+    <ion-card *ngFor="let group of Group | async; let i = index;" text-center>
+      <div *ngIf="status[i] == 'UNJOINED'">
+          <div class="inc">{{ i+1 }}</div>
+        <div class="groupbg">
 
-  <ion-card-content>
-     We're tech savvy people who are passionate in hard-coding!
-     C, C++, Java, C#, Python - you name it! If you eat codes for
-     breakfast, then come join us for a code buffet!
-      <br><br>
-     <ion-row>
-    <ion-col>
-      <button ion-button block>
-        JOIN GROUP
-      </button>
-    </ion-col>
-  </ion-row>
+              <div class="boxpic" [style.background-image]="'url(' + group.photo + ')'">
+              </div>
+              
+                
 
-  </ion-card-content>
-</ion-card>
-
-<ion-card>
-  <ion-card-header>
-      <ion-icon name="aperture"></ion-icon> PRIMA ARTISTAS 
-  </ion-card-header>
-
-  <ion-card-content>
-      Calling all people who enthuse and wants to be enthused about
-      theater productions - come join us! This is where open-minded 
-      and creative minds meet!
-  </ion-card-content>
-
-   <br>
-     <ion-row>
-    <ion-col>
-      <button ion-button block>
-        JOIN GROUP
-      </button>
-    </ion-col>
-  </ion-row>
-
-</ion-card>
+              <ion-row text-center>
+                <ion-col class="title-col" width-50>  
+                    <div class="title"><b>{{ group.gname }}</b></div>
+                </ion-col> 
+              </ion-row>
+              <hr>
+              <ion-row text-center>
+                <ion-col>
+                    <div class="descr-col"><i>{{ group.gdescr }}</i></div>  
+                </ion-col> 
+              </ion-row>
+              
+            
+            <ion-row>
+              <ion-col>
+                <button class="join-but" ion-button outline medium (click)="joinGroup(group.$key, group.gname)">
+                    JOIN GROUP
+                </button>
+              </ion-col>
+            </ion-row>
+        </div>
+      </div>
+    </ion-card>
   </ion-list>
 </div>
 

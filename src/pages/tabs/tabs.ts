@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FireBaseService } from '../../providers/firebase-service';
 
 /**
  * Generated class for the TabsPage page.
@@ -20,7 +21,11 @@ export class TabsPage {
   tab3Root = 'GroupPage';
   tab4Root = 'UserPage';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  username: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FireBaseService) {
+    this.username = navParams.get('username');
+    this.firebaseService.getUser();
   }
 
   ionViewDidLoad() {

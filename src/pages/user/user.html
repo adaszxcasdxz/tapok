@@ -1,66 +1,70 @@
 <ion-header>
   <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="pages">
+    <ion-segment *ngIf="otherUser==null" [(ngModel)]="pages">
       <ion-segment-button value="me">
         YOU
       </ion-segment-button>
-      <ion-segment-button value="friends">
-        FRIENDS
+      <ion-segment-button value="following">
+        FOLLOWING
       </ion-segment-button>
       <ion-segment-button value="history">
         HISTORY
       </ion-segment-button>
     </ion-segment>
+    <ion-buttons *ngIf="otherUser!=null" start>
+      <button (click)="follow()" ion-button icon-only outline>
+        <ion-icon name=""></ion-icon>
+        Follow
+      </button>
+      </ion-buttons>
+    <ion-buttons *ngIf="otherUser!=null" end>
+      <button (click)="dismiss()" ion-button icon-only clear>
+          <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div [ngSwitch]="pages">
-    <ion-card *ngSwitchCase="'me'">
-      <ion-item>
-        <ion-avatar large>
-          <img class="item-avatar" src="assets/img/carmelle.jpg">
-        </ion-avatar>
-        <h2>Carmelle Felicio</h2>
-        <p>carm143</p>
-      </ion-item>
-    
-    <ion-card-content>
-      <ion-item>
-        <p><ion-icon name="mail"></ion-icon> carmlleflc@gmail.com</p>
-      </ion-item>
+    <div *ngSwitchCase="'me'">
+      <ion-row text-center>
+        <ion-col>
+          <img class="item-avatar" src="{{ photo }}">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="username"><b>{{ username }}</b></div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <p class="mail"><ion-icon name="mail"></ion-icon> {{ email }}</p>
+        </ion-col>
+      </ion-row>
+      <button class="tapok-button" (click)="logout()" ion-button large>Logout</button>
+    </div>
 
-      <ion-item>
-        <p><ion-icon name="call"></ion-icon> 0936 456 1529</p>
-      </ion-item>
-    </ion-card-content>
-    </ion-card>
-
-    <ion-item-group *ngSwitchCase="'friends'">
+    <ion-item-group *ngSwitchCase="'following'">
       <ion-list>
-        <ion-item-sliding>
-          <ion-item>
-            <ion-avatar item-start>
-              <img src="assets/img/henry.jpg">
-            </ion-avatar>
-            <h2>Henry Eguia</h2>
-            <p>sexyeggy</p>
-          </ion-item>
-          <ion-item-options side="right">
-            <button ion-button color="danger">
-              <ion-icon name="trash"></ion-icon>
-              delete
-            </button>
-          </ion-item-options>
-        </ion-item-sliding>
-
-        <ion-item>
-          <ion-avatar item-start>
-            <img src="assets/img/kurt.jpg">
-          </ion-avatar>
-          <h2>Kurt Toregossa</h2>
-          <p>bardot</p>
-        </ion-item>
+        <div *ngFor="let followers of Followers | async">
+          <ion-item-sliding>
+            <ion-item>
+              <ion-avatar item-start>
+                <img src="{{ followers.photo }}">
+              </ion-avatar>
+              <h2>{{ followers.name }}</h2>
+              <p>{{ followers.email }}</p>
+            </ion-item>
+            <ion-item-options side="right">
+              <button (click)="unfollow(followers.$key)" ion-button color="danger">
+                <ion-icon name="trash"></ion-icon>
+                delete
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </div>
       </ion-list>
     </ion-item-group>
 

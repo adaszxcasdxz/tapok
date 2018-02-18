@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { ViewController, NavController, IonicPage, AlertController, NavParams } from 'ionic-angular';
+import { ViewController, NavController, IonicPage, AlertController, NavParams, LoadingController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 /**
  * Generated class for the GroupAddPage page.
@@ -18,14 +19,45 @@ export class GroupAddPage {
 
   key: any;
   group: any;
-  
-  host = '';
+  label: any;
+	usergroup: any;
+	test: any;
+
+  loading: any;
+  selectedPhoto: any;
+  dlURL: any;
+  gphoto = '';
+	
+	userid: any;
+	photo: any;
+	user: any;
+	groupmember: any;
+
+  admin = '';
   gname = '';
   gdescr = '';
+	timestamp = '';
+	adminid: any;
+
+  onSuccess = (snapshot) => {
+		this.gphoto = snapshot.downloadURL;
+		this.loading.dismiss();
+	}
+	
+	onError = (error) => {
+		console.log('error', error);
+		this.loading.dismiss();
+	}
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
-     public firebaseService:FireBaseService, public viewCtrl: ViewController) {
-        this.host = firebaseService.user;
+     public firebaseService:FireBaseService, public viewCtrl: ViewController, public camera: Camera, public params: NavParams, public loadingCtrl: LoadingController) {
+				this.admin = firebaseService.user;
+				this.adminid = this.firebaseService.getUserID();
+				this.userid = this.firebaseService.getUserID();
+				this.photo = this.firebaseService.getPhotoURL();
+				this.user = firebaseService.user;
+        this.label = params.get('label');
+			  this.group = params.get('tapok');
         if(this.group != undefined)
 				  this.editGroupInfo();
   }
@@ -37,30 +69,72 @@ export class GroupAddPage {
   addGroup(){
     this.group={
       "gname": this.gname,
-      "gdescr": this.gdescr
-    }
-    this.firebaseService.addGroup(this.group);
-    this.viewCtrl.dismiss();
-    let alert = this.alertCtrl.create({
-      title: 'Group Added',
-      buttons: ['OK']
-    });
+      "gdescr": this.gdescr,
+      "admin": this.admin,
+			"timestamp": 0-Date.now(),
+			"datetime": Date.now(),
+			"userphoto": this.photo,
+			"photo": this.gphoto,
+			"adminid": this.adminid,
+		}
+
+    if(this.label == "Add Group"){
+			var key = this.firebaseService.addGroup(this.group);
+			this.usergroup={
+            "key": key,
+            "gname": this.gname,
+            "timejoin": 0-Date.now()
+			}  
+
+			this.groupmember={
+                    "name": this.admin,
+                    "photo": this.photo,
+                    "userid": this.userid
+                }
+					
+			this.firebaseService.addUserGroup(this.usergroup);
+			this.firebaseService.groupAttend(key, this.groupmember);
+		}
+
+		this.test = this.group.$key;
+		console.log(this.test);
+
+		//this.test = this.firebaseService.getSpecificGroup(this.group.$key);
+		//console.log(this.test);
+		//this.addUserGroup(this.test);
+		this.cancel();
+		let alert = this.alertCtrl.create({
+			title: 'Group Created',
+			buttons: [ 'OK' ]
+		});
     alert.present();
-  }
+	}
+	
+	addUserGroup(key){
+		console.log(key);
+		this.usergroup={
+						"key": key,
+            "gname": this.gname,
+            "timejoin": 0-Date.now()
+    }  
+		
+		this.firebaseService.addUserGroup(this.usergroup);
+	}
 
   editGroup(){
 		this.group={
-			"name": this.gname,
-			"description": this.gdescr
+			"gname": this.gname,
+			"gdescr": this.gdescr,
+			"photo": this.gphoto
 		};
 
-		this.firebaseService.editEvent(this.key, this.group);
+		this.firebaseService.editGroups(this.key, this.group);
 		this.cancel();
 		let alert = this.alertCtrl.create({
 			title: 'Changes Saved.',
 			buttons: [ 'OK' ]
 		});
-		alert.present();
+    alert.present();
   }
   
   cancel(){
@@ -71,10 +145,66 @@ export class GroupAddPage {
 		this.key = this.group.$key;
 		this.gname = this.group.gname;
 		this.gdescr = this.group.gdescr;
+		this.gphoto = this.group.photo;
 	}
 
   ionViewDidLoad() {
     console.log('Test');
   }
+
+  openGallery(){
+		const options: CameraOptions = {
+			quality: 100,
+			destinationType: this.camera.DestinationType.DATA_URL,
+			encodingType: this.camera.EncodingType.JPEG,
+			mediaType: this.camera.MediaType.PICTURE,
+			sourceType: 0
+		  }
+		  
+		  this.uploadPhoto(options);
+	}
+
+	openCamera(){
+		const options: CameraOptions = {
+			quality: 100,
+			destinationType: this.camera.DestinationType.DATA_URL,
+			encodingType: this.camera.EncodingType.JPEG,
+			mediaType: this.camera.MediaType.PICTURE
+		  }
+
+		  this.uploadPhoto(options);
+	}
+
+	uploadPhoto(options){
+		this.camera.getPicture(options).then((imageData) => {
+			this.loading = this.loadingCtrl.create({
+				content: 'Please wait...'
+			});
+			this.loading.present();
+
+			this.selectedPhoto = this.dateURItoBlob('data:image/jpeg;base64,' + imageData);
+
+			this.upload();
+		}, (err) => {
+		});
+	}
+
+	dateURItoBlob(dataURI){
+		let binary = atob(dataURI.split(',')[1]);
+		let array = [];
+		for (let i = 0; i < binary.length; i++) {
+		  array.push(binary.charCodeAt(i));
+		}
+		return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+	}
+
+	upload() {
+		var key = this.firebaseService.addImageName();
+
+		if (this.selectedPhoto) {
+		  this.dlURL = this.firebaseService.uploadPhoto(this.selectedPhoto, key);
+		  this.dlURL.then(this.onSuccess, this.onError);  
+		}
+	  }
 
 }

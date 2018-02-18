@@ -1,9 +1,6 @@
 <ion-header>
   <ion-toolbar>
       <ion-navbar>
-      <ion-title>
-        Chat
-      </ion-title>
       <ion-buttons end>
           <button (click)="dismiss()" ion-button icon-only clear>
               <ion-icon name="close"></ion-icon>
@@ -19,8 +16,8 @@
       <ion-item *ngFor="let List of List | async" text-center>
         <ion-grid style="margin:0;">
         <ion-row *ngIf="List.sentBy === user" text-wrap>
-          <ion-col style="width:50%;"></ion-col>
-          <ion-col text-wrap style="width:50%;">
+          <ion-col></ion-col>
+          <ion-col text-wrap col-auto>
               <ion-avatar float-right>
                   <img class="icon_u" src="assets/img/user.png">
                 </ion-avatar>
@@ -35,7 +32,7 @@
         </ion-row>
 
         <ion-row *ngIf="List.sentBy !== user">
-          <ion-col text-wrap style="width:50%;">
+          <ion-col text-wrap col-auto>
             <ion-avatar float-left>
               <img class="icon_u" src="assets/img/user.png">
             </ion-avatar>
@@ -47,7 +44,7 @@
                 {{ List.timestamp | date:'MM/dd/yyyy h:mma' }}
               </p>
           </ion-col>
-          <ion-col style="width:50%;"></ion-col>
+          <ion-col></ion-col>
         </ion-row>
       </ion-grid>
       </ion-item>
@@ -59,14 +56,20 @@
     <ion-toolbar>
       <ion-item>
         <div item-content style="width:100%;">
-          <ion-textarea placeholder="Type message here..." [(ngModel)]="Message"></ion-textarea>
+          <ion-textarea placeholder="Type message here..." [(ngModel)]="Message" autofocus></ion-textarea>
         </div>
       </ion-item>
   
-      <ion-buttons right clear>
-        <button (click)="sendMessage()" clear ion-button large>
-          <ion-icon name="send" class="icon-customize" clear></ion-icon>
+      <ion-buttons right clear x-large style="width:13%;" *ngIf="Message == ''">
+        <button clear ion-button>
+          <ion-icon name="send" clear style="font-size:xx-large; color:lightgrey;"></ion-icon>
         </button>
       </ion-buttons>
+
+      <ion-buttons right clear x-large style="width:13%;" *ngIf="Message !== ''">
+          <button (click)="sendMessage()" clear ion-button>
+            <ion-icon name="send" clear style="font-size:xx-large;"></ion-icon>
+          </button>
+        </ion-buttons>
     </ion-toolbar>
   </ion-footer>

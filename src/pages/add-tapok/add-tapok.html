@@ -15,67 +15,155 @@
 <ion-content>
     <ion-row>
         <ion-col>
-            <div class="box"></div>
-        </ion-col>
+            <div class="box" *ngIf="photo!=''">
+                <img class="photo" src="{{ photo }}">
+            </div>
+          </ion-col>
     </ion-row>
     <div padding>
         <ion-row>
             <ion-col>
-                <div class="name-label"><b>Tapok Name</b></div>
+                <div class="detail-label"><b>Tapok Name</b></div>
                 <ion-input class="name" [(ngModel)]="name" type="text"></ion-input>
             </ion-col>  
         </ion-row>
         <ion-row>
             <ion-col>
-                <div class="detail-label">Start Date</div>
+                <div class="detail-label"><b>Cover Image</b></div>
+                <button (click)="openGallery()" ion-button outline>
+                    <ion-icon name="image"></ion-icon>
+                </button> 
+                <button (click)="openCamera()" ion-button outline>
+                    <ion-icon name="camera"></ion-icon>
+                </button> 
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <div class="detail-label"><b>Start Date</b></div>
                 <ion-datetime [(ngModel)]="date" class="detail" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
             </ion-col> 
             <ion-col (click)="endDate()">
                 <div class="extra-label" *ngIf="addEndDate == false">Add End Date</div>
                 <div *ngIf="addEndDate == true">
-                    <div class="detail-label">End Date | Cancel</div>
+                    <div class="detail-label"><b>End Date | Cancel</b></div>
                     <ion-col>
-                        <ion-datetime [(ngModel)]="date" class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
+                        <ion-datetime [(ngModel)]="enddate" min="{{ date }}" class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
                     </ion-col>
                 </div>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
-                <div class="detail-label">Start Time</div>
+                <div class="detail-label"><b>Start Time</b></div>
                 <ion-datetime class="detail" [(ngModel)]="time" displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="eventTime" placeholder="00:00 MM"></ion-datetime>
             </ion-col>
             <ion-col (click)="endTime()">
                 <div class="extra-label" *ngIf="addEndTime == false">Add End Time</div>
                 <div *ngIf="addEndTime == true">
-                    <div class="detail-label">End Time | Cancel</div>
+                    <div class="detail-label"><b>End Time | Cancel</b></div>
                     <ion-col>
-                        <ion-datetime class="detail-datetime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
+                        <ion-datetime [(ngModel)]="endtime" min="{{ time }}" class="detail-datetime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
                     </ion-col>
                 </div>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
-                <div class="detail-label">Venue</div>
-                <ion-input class="detail" [(ngModel)]="venue" type="text"></ion-input>
+                <div class="detail-label"><b>Venue</b></div>
+                <input #autocomplete id="autocomplete" class="detail" [(ngModel)]="venue" type="text" />
             </ion-col>
+            <!--<ion-col>
+                <br>
+                <button class="tapok-button" (click)="listen()" ion-button clear large outline>
+                    <ion-icon name="add-circle"></ion-icon>
+                </button>
+            </ion-col>-->
         </ion-row>
         <ion-row text-justify>
             <ion-col>
-                <div class="detail-label">Description</div>
+                <div class="detail-label"><b>Description</b></div>
                 <ion-textarea class="description" [(ngModel)]="description"></ion-textarea>
             </ion-col>
         </ion-row>
-        <ion-row class="buttons" text-center>
-            <ion-col *ngIf="label == 'Add Tapok'">
-                <button class="tapok-button" (click)="addTapok()" ion-button large>{{ label }}</button>
+        <ion-row *ngIf="toggle == false" text-center>
+            <ion-col class="detail-label" (click)="toggleOptions()">
+                <u>Advanced Options</u>
             </ion-col>
+        </ion-row>
+        <div *ngIf="toggle == true">
+            <ion-row text-center>
+                <ion-col class="detail-label">
+                    <b>Advanced Options</b>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-8>
+                    <div class="detail-label"><b>Tags</b></div>
+                    <ion-input class="name" [(ngModel)]="temp" type="text"></ion-input>
+                </ion-col>
+                <ion-col>
+                    <br>
+                    <button class="tapok-button" (click)="addTag()" ion-button clear large outline>
+                        <ion-icon name="add-circle"></ion-icon>
+                    </button>
+                </ion-col>
+            </ion-row>
+            <ion-col *ngIf="tag!=''">
+                <span *ngFor="let tags of Tags | async">
+                    <ion-chip color="primary">
+                        <ion-label>{{ tags.tags }}</ion-label>
+                        <button ion-button clear color="light" (click)="deleteTag(tags.$key)">
+                            <ion-icon name="close-circle"></ion-icon>
+                        </button>
+                    </ion-chip>
+                </span>
+            </ion-col>
+            <ion-row>
+                <ion-col>
+                    <ion-list>
+                        <ion-item>
+                            <ion-label>Unlimited Members</ion-label>
+                            <ion-toggle [(ngModel)]="toggleMembers"></ion-toggle>
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col *ngIf="toggleMembers == false">
+                    <ion-item>
+                        <ion-label><b>Max Members</b></ion-label>
+                        <ion-input [(ngModel)]="maxMembers" type="number"></ion-input>
+                    </ion-item> 
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label><b>Classification</b></ion-label>
+                        <ion-select [(ngModel)]="classification">
+                            <ion-option value="General">General</ion-option>
+                            <ion-option value="PG">PG</ion-option>
+                            <ion-option value="SPG">SPG</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row text-center>
+                <ion-col class="detail-label" (click)="toggleOptions()">
+                    <u>Cancel Advanced Options</u>
+                </ion-col>
+            </ion-row>
+        </div>  
+        <ion-row class="buttons" text-center>
+            <div *ngIf="name!=''&&venue!=''">
+                <ion-col *ngIf="label == 'Add Tapok'">
+                    <button (click)="addTapok()" ion-button>{{ label }}</button>
+                </ion-col>
+            </div>
             <ion-col *ngIf="label == 'Edit Tapok'">
-                <button class="tapok-button" (click)="editTapok()" ion-button large>{{ label }}</button>
+                <button (click)="editTapok()" ion-button>{{ label }}</button>
             </ion-col>
             <ion-col>
-                <button class="tapok-button" (click)="cancel()" ion-button outline large>Cancel</button>
+                <button (click)="cancel()" ion-button outline>Cancel</button>
             </ion-col>
         </ion-row>
     </div>
