@@ -227,6 +227,11 @@ export class GroupContent {
     this.navCtrl.push('TapokContent', {param1: event}); 
   }
 
+  openAddToGroup(){
+    console.log(this.group.$key);
+    this.navCtrl.push('AddPersonPage', {param1: this.group.$key})
+  }
+
   /*joinGroup(key){
         this.usergroup={
             "key": key
