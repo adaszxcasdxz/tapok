@@ -70,29 +70,24 @@
 
     <ion-item-group *ngSwitchCase="'history'">
       <ion-list>
-        <ion-item-sliding>
-          <ion-item>
-            <ion-avatar item-start>
-              <img src="assets/img/party.png">
-            </ion-avatar>
-            <h2>Aquaintance Party</h2>
-            <p>Time to party</p>
-          </ion-item>
-          <ion-item-options side="right">
-            <button ion-button color="danger">
-              <ion-icon name="trash"></ion-icon>
-              delete
-            </button>
-          </ion-item-options>
-      </ion-item-sliding>
-          <ion-item>
-            <ion-avatar item-start>
-              <img src="assets/img/googleio.png">
-            </ion-avatar>
-            <h2>Google IO</h2>
-            <p>Google that sheet</p>
-          </ion-item>
-        </ion-list>
+        <div *ngFor="let history of History | async">
+          <ion-item-sliding>
+            <ion-item>
+              <ion-avatar item-start>
+                <img src="{{ history.photo }}">
+              </ion-avatar>
+              <h2>{{ history.name }}</h2>
+              <p>{{ history.venue }}</p>
+            </ion-item>
+            <ion-item-options side="right">
+              <button (click)="unfollow(followers.$key)" ion-button color="danger">
+                <ion-icon name="trash"></ion-icon>
+                delete
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </div>
+      </ion-list>
     </ion-item-group>
   </div>
 </ion-content>

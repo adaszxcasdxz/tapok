@@ -56,14 +56,14 @@
         <ion-row>
             <ion-col>
                 <div class="detail-label"><b>Start Time</b></div>
-                <ion-datetime class="detail" [(ngModel)]="time" displayFormat="hh:mm A" pickerFormat="hh:mm A" [(ngModel)]="eventTime" placeholder="00:00 MM"></ion-datetime>
+                <ion-datetime class="detail" [(ngModel)]="time" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
             </ion-col>
             <ion-col (click)="endTime()">
                 <div class="extra-label" *ngIf="addEndTime == false">Add End Time</div>
                 <div *ngIf="addEndTime == true">
                     <div class="detail-label"><b>End Time | Cancel</b></div>
                     <ion-col>
-                        <ion-datetime [(ngModel)]="endtime" class="detail-datetime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
+                        <ion-datetime class="detail-datetime" [(ngModel)]="endtime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
                     </ion-col>
                 </div>
             </ion-col>
@@ -109,11 +109,21 @@
                     </button>
                 </ion-col>
             </ion-row>
-            <ion-col *ngIf="tag!=''">
+            <ion-col>
                 <span *ngFor="let tags of Tags | async">
                     <ion-chip color="primary">
                         <ion-label>{{ tags.tags }}</ion-label>
                         <button ion-button clear color="light" (click)="deleteTag(tags.$key)">
+                            <ion-icon name="close-circle"></ion-icon>
+                        </button>
+                    </ion-chip>
+                </span>
+            </ion-col>
+            <ion-col *ngIf="this.label != 'Add Tapok'">
+                <span *ngFor="let tags of curTags | async">
+                    <ion-chip *ngIf="tags.key == event_key" color="primary">
+                        <ion-label>{{ tags.tag }}</ion-label>
+                        <button ion-button clear color="light" (click)="deleteCurrentTag(tags.$key)">
                             <ion-icon name="close-circle"></ion-icon>
                         </button>
                     </ion-chip>
@@ -149,7 +159,7 @@
             </ion-row>
             <ion-row text-center>
                 <ion-col class="detail-label" (click)="toggleOptions()">
-                    <u>Cancel Advanced Options</u>
+                    <u>Hide Advanced Options</u>
                 </ion-col>
             </ion-row>
         </div>  
@@ -160,7 +170,7 @@
                 </ion-col>
             </div>
             <ion-col *ngIf="label == 'Edit Tapok'">
-                <button (click)="editTapok()" ion-button>{{ label }}</button>
+                <button (click)="addTapok()" ion-button>{{ label }}</button>
             </ion-col>
             <ion-col>
                 <button (click)="cancel()" ion-button outline>Cancel</button>

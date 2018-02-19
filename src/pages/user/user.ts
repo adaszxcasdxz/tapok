@@ -18,10 +18,12 @@ export class UserPage {
   photo: any;
   otherUser: any;
   Followers: any;
+  History: any;
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController) {
     this.otherUser = this.params.get('otherUser');
     this.Followers = this.firebaseService.getFollowers();
+    this.History = this.firebaseService.getHistory();
 
     if(this.otherUser == null){
       this.username = this.firebaseService.getUser();

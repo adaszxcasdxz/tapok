@@ -191,6 +191,18 @@ export class FireBaseService {
     });
   }
 
+  getAllKeywords(){
+    return this.tapok.list('/keywords/');
+  }
+
+  deleteKeywords(key){
+    return this.tapok.list('keywords/'+key).remove();
+  }
+
+  deleteKeyword(key){
+    this.tapok.object('/keywords/'+key).remove();
+  }
+  
   getTags(tagKey){
     return this.tapok.list('/tags/',{ 
       preserveSnapshot: true,
@@ -199,10 +211,6 @@ export class FireBaseService {
         equalTo: tagKey
       }
     });
-  }
-
-  deleteKeyword(key){
-    this.tapok.object('/keywords/'+key).remove();
   }
 
   deleteTag(key){

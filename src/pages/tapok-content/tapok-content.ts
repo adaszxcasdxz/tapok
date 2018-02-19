@@ -57,7 +57,6 @@ export class TapokContent {
     this.key = navParams.get('param1');
     this.event = this.firebaseService.getSpecificEvent(this.key);
     //this.event = params.get('event');
-    console.log(this.event);
     this.user = this.firebaseService.getUser();
     this.List=this.firebaseService.getChat(this.key, this.content);
     this.Attendees = this.firebaseService.getAttendees(this.key);
@@ -66,6 +65,7 @@ export class TapokContent {
       snapshot.forEach(snap => {
         if(this.user == snap.name && (snap.privelage == 'main_admin' || snap.privelage == 'admin' ||snap.privelage == 'member')){
           this.access = 'ok'; 
+          console.log('ok');
         }
       })
     });
@@ -110,6 +110,21 @@ export class TapokContent {
     //this.tapokID = this.tapokID = _params.get('tapokID');
     if(this.event.latitude != null)
       this.loadMap();
+  }
+
+  ionViewDidLoad(){
+    console.log('ko');
+
+    this.Attendees = this.firebaseService.getAttendees(this.key);
+    
+    this.Attendees.subscribe(snapshot => {
+      snapshot.forEach(snap => {
+        if(this.user == snap.name && (snap.privelage == 'main_admin' || snap.privelage == 'admin' ||snap.privelage == 'member')){
+          this.access = 'ok'; 
+          console.log('ok');
+        }
+      })
+    });
   }
 
   test(){
@@ -160,8 +175,12 @@ export class TapokContent {
   }
 
   editTapok(){
-    let modal = this.modalCtrl.create('AddTapok', { tapok: this.event, label: "Edit Tapok" });
+    let modal = this.modalCtrl.create('AddTapok', { key: this.key, tapok: this.event, label: "Edit Tapok" });
     modal.present();
+
+    modal.onDidDismiss(data => {
+      this.loadMap();
+    });
   }
 
   deleteTapok(){
