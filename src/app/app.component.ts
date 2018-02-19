@@ -34,18 +34,18 @@ export class MyApp {
               /*public push: Push,*/ public alertCtrl: AlertController) {
     //firebase.initializeApp(kuyogFirebase);
 
-    /*const unsubscribe = afAuth.auth.onAuthStateChanged(user => {
+    const unsubscribe = afAuth.auth.onAuthStateChanged(user => {
       console.log(user);
       if(!user){
         this.rootPage = 'LoginPage';
         unsubscribe();
       }
       else{
-        //this.rootPage = 'TabsPage';
-        this.rootPage = 'TapokPage'
+        this.rootPage = 'TabsPage';
+        //this.rootPage = 'TapokPage'
         unsubscribe();
       }
-    });*/
+    });
 
     /*const unsubscribe = afAuth.auth.onAuthStateChanged( user => {
         console.log(user);

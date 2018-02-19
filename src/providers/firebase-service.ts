@@ -436,20 +436,6 @@ export class FireBaseService {
     })
   }
 
-  searchPeople(search, id){
-    return this.tapok.list('login/'+id+'/',{
-      query: {
-        orderByChild: 'name',
-        startAt: search,
-        endAt: search+'\uf8ff'
-      },
-    });
-  }
-
-  getLogin(){
-    return this.tapok.list('login');
-  }
-
   addFollowers(user){
     this.tapok.list('users/'+this.user+'/following/').push(user);
   }
