@@ -41,7 +41,8 @@ export class MyApp {
         unsubscribe();
       }
       else{
-        this.rootPage = 'TabsPage';
+        //this.rootPage = 'TabsPage';
+        this.rootPage = 'TapokPage'
         unsubscribe();
       }
     });

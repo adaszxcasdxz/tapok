@@ -103,7 +103,7 @@
                 <div class="increment">{{ i+1 }}</div>
               </ion-col>
               <ion-col>
-                <button ion-button icon-left round clear>
+                <button (click)="sharePopover(event)" ion-button icon-left round clear>
                   <ion-icon name="share"></ion-icon>
                   <div class="share">Share</div>
                 </button> 
