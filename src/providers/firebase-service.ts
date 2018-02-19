@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
 import 'rxjs/add/operator/map';
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+//import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { AngularFireAuth } from 'angularfire2/auth';
 //import * as firebase from 'firebase/app';
 import 'firebase/storage';
@@ -15,7 +15,7 @@ export class FireBaseService {
 
   constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp, private afAuth: AngularFireAuth) {
     //this.user = afAuth.auth.currentUser.displayName;
-    //this.user="Carmelle Ann Felicio"
+    this.user="John Henry Eguia"
   }
 
   setUser(name){
@@ -195,6 +195,18 @@ export class FireBaseService {
     });
   }
 
+  getAllKeywords(){
+    return this.tapok.list('/keywords/');
+  }
+
+  deleteKeywords(key){
+    return this.tapok.list('keywords/'+key).remove();
+  }
+
+  deleteKeyword(key){
+    this.tapok.object('/keywords/'+key).remove();
+  }
+  
   getTags(tagKey){
     return this.tapok.list('/tags/',{ 
       preserveSnapshot: true,
@@ -203,10 +215,6 @@ export class FireBaseService {
         equalTo: tagKey
       }
     });
-  }
-
-  deleteKeyword(key){
-    this.tapok.object('/keywords/'+key).remove();
   }
 
   deleteTag(key){
@@ -227,6 +235,26 @@ export class FireBaseService {
     return this.tapok.list('/tags/',{
       query: {
         orderByChild: 'tag',
+        startAt: search,
+        endAt: search+'\uf8ff'
+      },
+    });
+  }
+
+  searchGroup(search){
+    return this.tapok.list('/groups/',{
+      query: {
+        orderByChild: 'gname',
+        startAt: search,
+        endAt: search+'\uf8ff'
+      },
+    });
+  }
+
+  searchPeople(search, id){
+    return this.tapok.list('login/'+id+'/',{
+      query: {
+        orderByChild: 'name',
         startAt: search,
         endAt: search+'\uf8ff'
       },
@@ -416,5 +444,45 @@ export class FireBaseService {
         endAt: search+'\uf8ff'
       },
     });
+  }
+
+  getLogin(){
+    return this.tapok.list('login');
+  }
+
+  addFollowers(user){
+    this.tapok.list('users/'+this.user+'/following/').push(user);
+  }
+
+  getFollowers(){
+    return this.tapok.list('users/'+this.user+'/following/');
+  }
+
+  removeFollowers(key){
+    this.tapok.list('users/'+this.user+'/following/'+key).remove();
+  }
+
+  addNotif(notif){
+    this.tapok.list('notifications/'+this.user).push(notif);
+  }
+
+  addLatestNotif(notif){
+    this.tapok.list('latest_notifications/'+this.user).push(notif);
+  }
+
+  getLatestNotif(){
+    return this.tapok.list('latest_notifications/'+this.user);
+  }
+
+  deletelatestNotif(){
+    this.tapok.list('latest_notifications/'+this.user).remove();
+  }
+
+  addHistory(event){
+    this.tapok.list('users/'+this.user+'/history').push(event);
+  }
+
+  getHistory(){
+  return  this.tapok.list('users/'+this.user+'/history');
   }
 }

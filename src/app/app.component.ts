@@ -3,7 +3,7 @@ import { Platform, Nav, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireModule } from 'angularfire2';
-import kuyogFirebase from './app.module';
+//import kuyogFirebase from './app.module';
 //import googlePlusApi from './app.module';
 import firebase from 'firebase';
 //import { GooglePlus } from '@ionic-native/google-plus';
@@ -34,7 +34,7 @@ export class MyApp {
               /*public push: Push,*/ public alertCtrl: AlertController) {
     //firebase.initializeApp(kuyogFirebase);
 
-    const unsubscribe = afAuth.auth.onAuthStateChanged(user => {
+    /*const unsubscribe = afAuth.auth.onAuthStateChanged(user => {
       console.log(user);
       if(!user){
         this.rootPage = 'LoginPage';
@@ -45,7 +45,7 @@ export class MyApp {
         this.rootPage = 'TapokPage'
         unsubscribe();
       }
-    });
+    });*/
 
     /*const unsubscribe = afAuth.auth.onAuthStateChanged( user => {
         console.log(user);

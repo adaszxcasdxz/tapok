@@ -63,6 +63,23 @@ page-search {
     .space{
         margin-bottom: 2.5em;
     }
+
+    .groupbg{
+        background-color: snow;
+    }   
+
+    .inc{
+        display: none;
+    }
+
+    .boxpic{
+        width: 100%; 
+        height: 8em; 
+        overflow: hidden;
+        background-position: center;
+        background-size: cover;
+        background-color: black;
+    }
 }
 
 

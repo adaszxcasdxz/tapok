@@ -42,6 +42,10 @@ export class TapokContent {
   Message: any;
   chat: any;
   fontSize: any;
+  tab: any;
+  mainAdmin: any;
+  value: any;
+  userKey: any; 
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -50,12 +54,12 @@ export class TapokContent {
   ){
     var i = 0,y = 0;
     this.tabs = 'info';
+    this.tab = 'details';
     this.user = this.firebaseService.getUser();
-    this.uid = this.firebaseService.getUserID();
+    //this.uid = this.firebaseService.getUserID();
     this.key = navParams.get('param1');
     this.event = this.firebaseService.getSpecificEvent(this.key);
     //this.event = params.get('event');
-    console.log(this.event);
     this.user = this.firebaseService.getUser();
     this.List=this.firebaseService.getChat(this.key, this.content);
     this.Attendees = this.firebaseService.getAttendees(this.key);
@@ -65,6 +69,7 @@ export class TapokContent {
       snapshot.forEach(snap => {
         if(this.user == snap.name && (snap.privelage == 'main_admin' || snap.privelage == 'admin' ||snap.privelage == 'member')){
           this.access = 'ok'; 
+          console.log('ok');
         }
       })
     });
@@ -111,6 +116,21 @@ export class TapokContent {
       this.loadMap();
   }
 
+  ionViewDidLoad(){
+    console.log('ko');
+
+    this.Attendees = this.firebaseService.getAttendees(this.key);
+    
+    this.Attendees.subscribe(snapshot => {
+      snapshot.forEach(snap => {
+        if(this.user == snap.name && (snap.privelage == 'main_admin' || snap.privelage == 'admin' ||snap.privelage == 'member')){
+          this.access = 'ok'; 
+          console.log('ok');
+        }
+      })
+    });
+  }
+
   test(){
     this.status;
     
@@ -122,6 +142,18 @@ export class TapokContent {
         break;
       }   
     }
+  }
+
+  addAdmin(attendeeKey){
+    this.firebaseService.addAdmin(this.key, attendeeKey);
+  }
+
+  removeAdmin(attendeeKey){
+    this.firebaseService.removeAdmin(this.key, attendeeKey);
+  }
+
+  kickAttendee(attendeeKey){
+    this.firebaseService.kickAttendee(this.key, attendeeKey, this.userKey,this.value-1);
   }
 
   toggleMap(){
@@ -147,8 +179,12 @@ export class TapokContent {
   }
 
   editTapok(){
-    let modal = this.modalCtrl.create('AddTapok', { tapok: this.event, label: "Edit Tapok" });
+    let modal = this.modalCtrl.create('AddTapok', { key: this.key, tapok: this.event, label: "Edit Tapok" });
     modal.present();
+
+    modal.onDidDismiss(data => {
+      this.loadMap();
+    });
   }
 
   deleteTapok(){
@@ -217,6 +253,7 @@ export class TapokContent {
   }
   
   confirm(event, status){
+    console.log(status);
     if(status == "TAPOK"){
       let alert = this.alertCtrl.create({
         title: 'Join Event?',
@@ -288,6 +325,12 @@ export class TapokContent {
       }); 
   }
   
+  changeTab(selection){
+    this.tab = selection;
+    if(this.tab == 'details')
+      this.loadMap();
+  }
+
   sendMessage(){
     this.chat={
       "message": this.Message,
@@ -359,4 +402,5 @@ export class TapokContent {
         console.log(event);
         this.navCtrl.push('ChooseGroupPage', {param1: event});
       }
+  
 }

@@ -5,7 +5,7 @@ import firebase from 'firebase';
 import { FireBaseService } from '../../providers/firebase-service';
 import { AngularFireModule } from 'angularfire2';
 ///import { AppModule } from '../../app/app.module';
-import googlePlusApi from '../../app/app.module';
+//import googlePlusApi from '../../app/app.module';
 import { AuthProvider } from './../../providers/auth/auth';
 import { AngularFireAuth } from 'angularfire2/auth';
 

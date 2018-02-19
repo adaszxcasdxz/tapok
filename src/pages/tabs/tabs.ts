@@ -21,15 +21,25 @@ export class TabsPage {
   tab3Root = 'GroupPage';
   tab4Root = 'UserPage';
 
+  selectedTab: any;
+  key: any;
+
   username: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FireBaseService) {
     this.username = navParams.get('username');
+    this.key = navParams.get('key');
     this.firebaseService.getUser();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TabsPage');
+    this.selectedTab = this.navParams.get('tabIndex');
+    console.log(this.selectedTab);
+    /*if(this.selectedTab == 2){
+      console.log('test');
+      this.navCtrl.setRoot('TapokContent', { param1: this.key });
+    }*/
   }
 
 }

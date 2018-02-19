@@ -34,8 +34,8 @@ export class GroupPage{
         this.toggled = false;
         this.Group = this.firebaseService.getGroup();
         this.uGroup = this.firebaseService.getUserGroup();  
-        this.photo = this.firebaseService.getPhotoURL();
-        this.userid = this.firebaseService.getUserID();
+        //this.photo = this.firebaseService.getPhotoURL();
+        //this.userid = this.firebaseService.getUserID();
         this.key = navParams.get('param1');
         this.gmember = this.firebaseService.getgroupAttend(this.key);
         //this.usergroup = this.firebaseService.getGroup();

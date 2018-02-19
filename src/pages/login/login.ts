@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, ToastController, Platform } from 'ionic-angular';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+//import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { App } from 'ionic-angular/components/app/app';
 import { TabsPage } from '../tabs/tabs';
 import { FireBaseService } from '../../providers/firebase-service';
@@ -32,7 +32,7 @@ export class LoginPage {
   //userProfileRef: any;
 
   constructor(public navCtrl: NavController, private afAuth: AngularFireAuth, private toastCtrl: ToastController,
-    private facebook: Facebook, private platform: Platform, public app: App, public firebaseService: FireBaseService) { 
+    /*private facebook: Facebook,*/ private platform: Platform, public app: App, public firebaseService: FireBaseService) { 
       this.usersdb = this.firebaseService.getUsersList();
       
       this.usersdb.subscribe(snapshot => { //
@@ -93,7 +93,7 @@ export class LoginPage {
     })
   }
 
-  loginWithFacebook(): Promise<any> {
+  /*loginWithFacebook(): Promise<any> {
     return this.facebook.login(['email', 'public_profile'])
       .then( response => {
         const facebookCredential = firebase.auth.FacebookAuthProvider
@@ -136,5 +136,5 @@ export class LoginPage {
             }
           });
       }).catch((error) => { console.log(error) });
-  }
+  }*/
 }

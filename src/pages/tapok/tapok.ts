@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, PopoverController, ModalController, AlertController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, PopoverController, ModalController, AlertController, Platform, ToastController } from 'ionic-angular';
 import { Filter } from '../filter/filter';
 import { FireBaseService } from '../../providers/firebase-service';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { NavParams } from 'ionic-angular/navigation/nav-params';
 import { Badge } from '@ionic-native/badge';
+import { FirebaseApp } from 'angularfire2';
 
 import * as moment from 'moment';
 import {Observable} from 'rxjs/Rx';
@@ -31,6 +32,7 @@ export class TapokPage {
   status: any[] = []; //
   index = 0; //
   tapokID: string;
+  notif: any;
   //status: any[] = [];
   //index = 0;
   Tags: any;
@@ -40,7 +42,7 @@ export class TapokPage {
 
    constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
-      public modalCtrl: ModalController, public firebaseService: FireBaseService, public photoViewer: PhotoViewer, public platform: Platform, private sharingVar: SocialSharing) {
+      public modalCtrl: ModalController, public toastCtrl: ToastController, public firebaseService: FireBaseService, public photoViewer: PhotoViewer, public platform: Platform, public firebaseApp: FirebaseApp, private sharingVar: SocialSharing) {
     var i = 0, y = 0;
 
     this.toggled = false;
@@ -49,6 +51,30 @@ export class TapokPage {
     this.Tags = this.firebaseService.getTag();
     this.User = this.firebaseService.getUsers();
     this.user = firebaseService.getUser();
+
+    this.firebaseApp.database().ref("latest_notifications/"+this.user).on('value', snapshot => {
+      let notif = this.firebaseService.getLatestNotif();
+      let notifMessage;
+      let toast;
+      notif.subscribe(snapshot => {
+        let i = 0;
+        snapshot.forEach(snap =>{
+          notifMessage = snap.name;
+        });
+        console.log(snapshot);
+        if(snapshot.length!=0){
+          toast = this.toastCtrl.create({
+            message: this.user+' has created '+notifMessage,
+            duration: 5000
+          });
+          toast.present();
+          Observable.interval(5000)
+          .subscribe((val) => {
+            this.firebaseService.deletelatestNotif();
+          });
+        }
+      });
+    });
 
     Observable.interval(5000)
     .subscribe((val) => {
@@ -75,8 +101,15 @@ export class TapokPage {
           //with end time but no end date
           if(snapshot.endtime != '' && snapshot.enddate == ''){
             var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
-            if(checkEnd)
-              this.timeStatus[y] = 'archived';
+            if(checkEnd){
+              this.timeStatus[y] = 'archive';
+              var archive = {
+                status: 'archive'
+              }
+              this.firebaseService.editEvent(snapshot.$key, archive);
+              if(snapshot.status == null)
+                this.firebaseService.addHistory(snapshot);
+            } 
           }
           //with end date but no end time
           if(snapshot.enddate != '' && snapshot.endtime == ''){
@@ -92,8 +125,15 @@ export class TapokPage {
               this.timeStatus[y] = 'ongoing';
             else if( !checkEndTime && !checkEndTime)
               this.timeStatus[y] = 'upcoming';
-            else if (checkEndDate && checkEndTime)
+            else if (checkEndDate && checkEndTime){
               this.timeStatus[y] = 'archived';
+              var archive = {
+                status: 'archive'
+              }
+              this.firebaseService.editEvent(snapshot.$key, archive);
+              if(snapshot.status == null)
+                this.firebaseService.addHistory(snapshot);
+            }
           }
           y++;
         })
@@ -313,15 +353,14 @@ export class TapokPage {
   facebookShare(event){
     this.sharingVar.shareViaFacebookWithPasteMessageHint("Event Name: " +event.name+"\nVenue: "+event.venue+
     "\nDate: "+event.date+"\nTime: "+event.time+"\n\nShared from Tapok",null,(event.photo).toString())
-    .then((success)=>{  
-        
-    }).catch((error)=>{
-      alert(JSON.stringify(error));
-   })
+    .then((success)=>{
+      
+      }).catch((error)=>{
+         alert(JSON.stringify(error));
+      })
   }
-
   openGroupShare(event){
-      console.log(event);
-      this.navCtrl.push('ChooseGroupPage', {param1: event});
-    }
+    console.log(event);
+    this.navCtrl.push('ChooseGroupPage', {param1: event});
+  }
 }
