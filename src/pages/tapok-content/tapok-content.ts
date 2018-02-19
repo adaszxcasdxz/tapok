@@ -40,6 +40,7 @@ export class TapokContent {
   List: any;
   Message: any;
   chat: any;
+  fontSize: any;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -56,6 +57,7 @@ export class TapokContent {
     this.user = this.firebaseService.getUser();
     this.List=this.firebaseService.getChat(this.key, this.content);
     this.Attendees = this.firebaseService.getAttendees(this.key);
+    this.fontSize="default";
     
     this.Attendees.subscribe(snapshot => {
       snapshot.forEach(snap => {
@@ -310,16 +312,22 @@ export class TapokContent {
       console.log(data);
       if(data=='smaller')
         this.textSmaller();
+      if (data=='default')
+        this.textDefault();
       if(data=='larger')
         this.textLarger();
     });
   }
 
   textSmaller(){
-
+    this.fontSize="small";
   }
 
   textLarger(){
+    this.fontSize="large";
+  }
 
+  textDefault(){
+    this.fontSize="default";
   }
 }

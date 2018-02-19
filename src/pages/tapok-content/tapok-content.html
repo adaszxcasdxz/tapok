@@ -110,13 +110,13 @@
 
         <div *ngSwitchCase="'chat'"> 
             <div class="message">
-                <button class="button-header" (click)="popoverChat($event)" ion-button icon-only round>
+                <button class="button-header" (click)="popoverChat($event)" ion-button icon-only>
                     <ion-icon name="more"></ion-icon>
                 </button>
                 
                 <ion-list no-lines>
                     <ion-item *ngFor="let List of List | async" text-center>
-                        <ion-grid style="margin:0;">
+                        <ion-grid style="margin:0;" *ngIf="fontSize === 'default'">
                             <ion-row *ngIf="List.uid === uid" text-wrap>
                                 <ion-col>
                                     
@@ -152,6 +152,81 @@
                                 </ion-col>
                             </ion-row>
                         </ion-grid>
+                        <!--END OF DEFAULT-->
+                        <ion-grid style="margin:0;" *ngIf="fontSize === 'small'">
+                            <ion-row *ngIf="List.uid === uid" text-wrap>
+                                <ion-col>
+                                    
+                                </ion-col>
+                                <ion-col text-wrap col-auto style="max-width:80%;">
+                                    <ion-avatar float-right>
+                                        <img class="icon_u" src="{{List.photo}}">
+                                    </ion-avatar>
+                                    <p style="text-align: right; font-size: .4em;"  id="sentByRightSmall">{{List.sentBy}}</p>
+                                    <div class="bubble-right-small" style="text-align:left;">
+                                        {{List.message}}
+                                    </div>
+                                    <p style="text-align:left; color:black; font-size:.4em;">
+                                        {{ List.timestamp | date:'MM/dd/yyyy h:mma' }}
+                                    </p>
+                                </ion-col>
+                            </ion-row>
+                    
+                            <ion-row *ngIf="List.uid !== uid">
+                                <ion-col text-wrap col-auto style="max-width:80%;">
+                                    <ion-avatar float-left>
+                                        <img class="icon_u" src="{{List.photo}}">
+                                    </ion-avatar>
+                                    <p style="text-align: left; font-size: .4em;" id="sentByLeftSmall">{{List.sentBy}}</p>
+                                    <div class="bubble-left-small" style="color: white; text-align:left;">
+                                        {{List.message}}
+                                    </div>
+                                    <p style="text-align:right; color:black; font-size:.4em;">
+                                        {{ List.timestamp | date:'MM/dd/yyyy h:mma' }}
+                                    </p>
+                                </ion-col>
+                                <ion-col>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                        <!--END OF SMALL-->
+                        <ion-grid style="margin:0;" *ngIf="fontSize === 'large'">
+                            <ion-row *ngIf="List.uid === uid" text-wrap>
+                                <ion-col>
+                                    
+                                </ion-col>
+                                <ion-col text-wrap col-auto style="max-width:80%;">
+                                    <ion-avatar float-right>
+                                        <img class="icon_u-large" src="{{List.photo}}">
+                                    </ion-avatar>
+                                    <p style="text-align: right; font-size: 1em;"  id="sentByRightLarge">{{List.sentBy}}</p>
+                                    <div class="bubble-right-large" style="text-align:left;">
+                                        {{List.message}}
+                                    </div>
+                                    <p style="text-align:left; color:black; font-size:1em;">
+                                        {{ List.timestamp | date:'MM/dd/yyyy h:mma' }}
+                                    </p>
+                                </ion-col>
+                            </ion-row>
+                    
+                            <ion-row *ngIf="List.uid !== uid">
+                                <ion-col text-wrap col-auto style="max-width:80%;">
+                                    <ion-avatar float-left>
+                                        <img class="icon_u-large" src="{{List.photo}}">
+                                    </ion-avatar>
+                                    <p style="text-align: left; font-size: 1em;" id="sentByLeftLarge">{{List.sentBy}}</p>
+                                    <div class="bubble-left-large" style="color: white; text-align:left;">
+                                        {{List.message}}
+                                    </div>
+                                    <p style="text-align:right; color:black; font-size:1em;">
+                                        {{ List.timestamp | date:'MM/dd/yyyy h:mma' }}
+                                    </p>
+                                </ion-col>
+                                <ion-col>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                        <!--END OF LARGE-->
                     </ion-item>
                 </ion-list>
             </div>

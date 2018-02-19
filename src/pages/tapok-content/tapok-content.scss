@@ -2,6 +2,7 @@ tapok-content{
     .button-header{
         margin-right: 1em;
     }
+
     .tapok-button{
         margin-bottom: .5em;
     }
@@ -64,6 +65,135 @@ tapok-content{
         width: 100%;
         height: 30%;
         border-radius: 1em;
+    }
+
+    .bubble-left
+    {
+      background-color: orange;
+      padding:.5em;
+      border-radius: 1em;
+      font-size: 1em;
+      margin-left: 3em;
+      //float: left;
+    }
+    
+    
+    .bubble-left p
+    {
+      color:white;
+    }
+    
+    .bubble-right
+    {
+      background-color:#F0F0EF  ;
+      padding:.5em;
+      color: black;
+      border-radius: 1em;
+      font-size: 1em;
+      margin-right: 3em;
+      //float: right;
+    }
+
+    .bubble-left-small
+    {
+      background-color: orange;
+      padding:.5em;
+      border-radius: 1em;
+      font-size: .7em;
+      margin-left: 4em;
+      //float: left;
+    }
+    
+    
+    .bubble-left-small p
+    {
+      color:white;
+    }
+    
+    .bubble-right-small
+    {
+      background-color:#F0F0EF  ;
+      padding:.5em;
+      color: black;
+      border-radius: 1em;
+      font-size: .7em;
+      margin-right: 4em;
+      //float: right;
+    }
+
+    .bubble-left-large
+    {
+      background-color: orange;
+      padding:.5em;
+      border-radius: 1em;
+      font-size: 1.3em;
+      margin-left: 2.5em;
+      //float: left;
+    }
+    
+    
+    .bubble-left-large p
+    {
+      color:white;
+    }
+    
+    .bubble-right-large
+    {
+      background-color:#F0F0EF  ;
+      padding:.5em;
+      color: black;
+      border-radius: 1em;
+      font-size: 1.3em;
+      margin-right: 2.5em;
+      //float: right;
+    }
+    
+    .icon_u
+    {
+      width:.1em;
+      height:.1em;
+      margin-top:.5em;
+    }
+
+    .icon_u-large
+    {
+      width:1em;
+      height:1em;
+      margin-top:2.5em;
+    }
+    
+    #sentByLeft{
+      margin-left: 5em;
+    }
+    
+    #sentByRight{
+      margin-right: 5em;
+    }
+
+    #sentByLeftSmall{
+        margin-left: 3em;
+      }
+      
+      #sentByRightSmall{
+        margin-right: 3em;
+      }
+
+      #sentByLeftLarge{
+        margin-left: 5em;
+      }
+      
+      #sentByRightLarge{
+        margin-right: 5em;
+      }
+    
+    .chatPageFooter{
+      position: fixed;
+      margin-bottom:16%;
+    }
+
+    .message{
+        overflow:scroll;
+        margin-bottom: 18%;
     }
 }
 

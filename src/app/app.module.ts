@@ -25,6 +25,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { AuthProvider } from '../providers/auth/auth';
 import { Badge } from '@ionic-native/badge';
+import { Push } from '@ionic-native/push';
 
 //pang-google nga import goes here
 
@@ -72,7 +73,8 @@ var googlePlusApi = "AIzaSyCooNeyvH1NkSn4Lz0J5N2Wy5ZwQzFS_Ns";
     Badge,
     Deeplinks,
     Geolocation,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Push
   ]
 })
 export class AppModule {
