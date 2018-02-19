@@ -5,6 +5,7 @@ import { FirebaseApp } from 'angularfire2';
 import { Content } from 'ionic-angular';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 declare var google;
 
@@ -44,7 +45,8 @@ export class TapokContent {
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
-    public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService, public popoverCtrl: PopoverController, public geolocation: Geolocation, public firebaseApp: FirebaseApp
+    public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService, public popoverCtrl: PopoverController, public geolocation: Geolocation, public firebaseApp: FirebaseApp,
+    private sharingVar: SocialSharing
   ){
     var i = 0,y = 0;
     this.tabs = 'info';
@@ -330,4 +332,30 @@ export class TapokContent {
   textDefault(){
     this.fontSize="default";
   }
+
+  sharePopover(event){
+    let popover = this.popoverCtrl.create('SharePopoverPage');
+    popover.present();
+
+    popover.onDidDismiss(data => {
+      if(data=='facebook')
+        this.facebookShare(event);
+      if(data=='group')
+        this.shareGroup();
+    });
+  }
+
+  facebookShare(event){
+    this.sharingVar.shareViaFacebookWithPasteMessageHint("Event Name: " +event.name+"\nVenue: "+event.venue+
+    "\nDate: "+event.date+"\nTime: "+event.time+"\n\nShared from Tapok",null,(event.photo).toString())
+    .then((success)=>{
+      
+      }).catch((error)=>{
+         alert(JSON.stringify(error));
+      })
+    }
+
+    shareGroup(){
+      console.log('group');
+    }
 }

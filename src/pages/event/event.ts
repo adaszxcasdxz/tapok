@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ModalController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, ModalController, AlertController, PopoverController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import * as moment from 'moment';
 import {Observable} from 'rxjs/Rx';
+import { Popover } from 'ionic-angular/components/popover/popover';
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 
 @IonicPage()
 @Component({
@@ -29,7 +32,8 @@ export class EventPage {
 
   upcomingStatus: any;
 
-  constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public modalCtrl: ModalController, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public modalCtrl: ModalController, public alertCtrl: AlertController,
+              public popoverCtrl: PopoverController, private sharingVar: SocialSharing) {
     this.Event = this.firebaseService.getEvent();
     this.Attending = this.firebaseService.getUserEvents();
     this.User = this.firebaseService.getUsers();
@@ -221,4 +225,30 @@ export class EventPage {
   openEventContent(event){
     this.navCtrl.push('TapokContent', {param1: event.$key});
   }
+
+  sharePopover(event){
+    let popover = this.popoverCtrl.create('SharePopoverPage');
+    popover.present();
+
+    popover.onDidDismiss(data => {
+      if(data=='facebook')
+        this.facebookShare(event);
+      if(data=='group')
+        this.shareGroup();
+    });
+  }
+
+  facebookShare(event){
+    this.sharingVar.shareViaFacebookWithPasteMessageHint("Event Name: " +event.name+"\nVenue: "+event.venue+
+    "\nDate: "+event.date+"\nTime: "+event.time+"\n\nShared from Tapok",null,(event.photo).toString())
+    .then((success)=>{
+      
+      }).catch((error)=>{
+         alert(JSON.stringify(error));
+      })
+    }
+
+    shareGroup(){
+      console.log('group');
+    }
 }
