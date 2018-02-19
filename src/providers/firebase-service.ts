@@ -65,6 +65,10 @@ export class FireBaseService {
     this.tapok.object('/login/'+this.uID+'/'+key+'/age').set(age);
   }
 
+  getLogin(){
+    return this.tapok.list('login');
+  }
+
   /*loginUser(user){
     this.tapok.list('login/'+this.uID).push(user);
   }*/
@@ -313,6 +317,10 @@ export class FireBaseService {
     this.tapok.list('/users/' + this.user + '/groupKey/').push(key);
   }
 
+  addMemberGroup(name, key){
+    this.tapok.list('/users/' + name + '/groupKey/').push(key);
+  }
+
   getUserGroup(){
     return this.tapok.list('/users/'+this.user+'/groupKey/',{
       query:{
@@ -335,6 +343,14 @@ export class FireBaseService {
 
   getgroupAttend(gKey){
     return this.tapok.list('/groupmember/' + gKey + '/gmember/');
+  }
+
+  shareEvent(gKey, event){
+    this.tapok.list('/sharedgroup/' + gKey + '/sharedEvent/').push(event);
+  }
+
+  getSharedEvent(gKey){
+    return this.tapok.list('/sharedgroup/' + gKey + '/sharedEvent/');
   }
 
   addImageName(){
@@ -389,6 +405,16 @@ export class FireBaseService {
     this.tapok.object('users/'+this.user+'/'+userKey).remove();
     this.tapok.object('events/'+eventKey).update({
       'tapok': value
+    })
+  }
+
+  searchPeople(search, id){
+    return this.tapok.list('login/'+id+'/',{
+      query: {
+        orderByChild: 'name',
+        startAt: search,
+        endAt: search+'\uf8ff'
+      },
     });
   }
 }

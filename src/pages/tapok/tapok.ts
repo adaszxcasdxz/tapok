@@ -189,16 +189,8 @@ export class TapokPage {
       if(data=='facebook')
         this.facebookShare(event);
       if(data=='group')
-        this.shareGroup();
+        this.openGroupShare(event);
     });
-  }
-
-  /*shareFacebook(event){
-    console.log('facebook');
-  }*/
-
-  shareGroup(){
-    console.log('group');
   }
 
   toggleSearch(){
@@ -321,11 +313,15 @@ export class TapokPage {
   facebookShare(event){
     this.sharingVar.shareViaFacebookWithPasteMessageHint("Event Name: " +event.name+"\nVenue: "+event.venue+
     "\nDate: "+event.date+"\nTime: "+event.time+"\n\nShared from Tapok",null,(event.photo).toString())
-    .then((success)=>{
-      
-      }).catch((error)=>{
-         alert(JSON.stringify(error));
-      })
+    .then((success)=>{  
+        
+    }).catch((error)=>{
+      alert(JSON.stringify(error));
+   })
+  }
+
+  openGroupShare(event){
+      console.log(event);
+      this.navCtrl.push('ChooseGroupPage', {param1: event});
     }
 }
-

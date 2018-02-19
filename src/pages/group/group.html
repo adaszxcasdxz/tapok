@@ -13,7 +13,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="background">
+<ion-content>
 <div [ngSwitch]="group">
   <ion-list *ngSwitchCase="'mygroup'">
     <div *ngFor="let group of Group | async">
@@ -55,17 +55,17 @@
 
   <ion-list *ngSwitchCase="'recommended'">
     <ion-card *ngFor="let group of Group | async; let i = index;" text-center>
-      <div *ngIf="status[i] == 'UNJOINED'">
-          <div class="inc">{{ i+1 }}</div>
+      <div class="test" *ngIf="status[i] == 'UNJOINED'">
+          
         <div class="groupbg">
 
               <div class="boxpic" [style.background-image]="'url(' + group.photo + ')'">
               </div>
               
                 
-
+              <div class="inc">{{ i+1 }}</div>
               <ion-row text-center>
-                <ion-col class="title-col" width-50>  
+                <ion-col>  
                     <div class="title"><b>{{ group.gname }}</b></div>
                 </ion-col> 
               </ion-row>

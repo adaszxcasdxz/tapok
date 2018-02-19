@@ -27,6 +27,7 @@ export class GroupContent {
   current: any;
   posterid: any;
   gmember: any;
+  sharedevent: any;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -43,6 +44,7 @@ export class GroupContent {
       this.post = this.firebaseService.getPost(this.key);
       this.ugroupkey = this.firebaseService.getUserGroup();
       this.group = this.firebaseService.getSpecificGroup(this.key);
+      this.sharedevent = this.firebaseService.getSharedEvent(this.key);
       this.group.forEach(groups=> {
         this.group = groups;
       });
@@ -219,6 +221,16 @@ export class GroupContent {
         break;
       }
     }
+  }
+
+  openTapokContent(event){
+    this.navCtrl.push('TapokContent', {param1: event}); 
+  }
+
+  openAddToGroup(){
+    console.log(this.group);
+    console.log(this.group.$key);
+    this.navCtrl.push('AddPersonPage', {param1: this.group})
   }
 
   /*joinGroup(key){

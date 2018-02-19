@@ -341,7 +341,7 @@ export class TapokContent {
       if(data=='facebook')
         this.facebookShare(event);
       if(data=='group')
-        this.shareGroup();
+        this.openGroupShare(event);
     });
   }
 
@@ -354,8 +354,9 @@ export class TapokContent {
          alert(JSON.stringify(error));
       })
     }
-
-    shareGroup(){
-      console.log('group');
-    }
+  
+    openGroupShare(event){
+        console.log(event);
+        this.navCtrl.push('ChooseGroupPage', {param1: event});
+      }
 }
