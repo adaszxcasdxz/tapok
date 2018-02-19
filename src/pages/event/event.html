@@ -43,11 +43,11 @@
               </div>
               <span (click)="openTapokContent(event)">
                 <ion-row>
-                  <ion-col class="title-col" width-50>  
-                    <div class="title"><b><hr>{{ event.name }}<hr></b></div>            
+                  <ion-col class="title-col">  
+                    <div class="title"><b>{{ event.name }}</b></div>            
                   </ion-col> 
                 </ion-row>
-                <ion-col class="details" padding>
+                <ion-col class="details">
                   <span *ngIf="event.enddate==''">
                     <ion-icon name="calendar" color="secondary"></ion-icon>
                     <span class="chip-label-date">{{ event.date }}</span>
@@ -71,28 +71,29 @@
                   <br>
                 </ion-col> 
               </span>
-              <button (click)="showAttendees(event.$key)" ion-button icon-left outline small>
-                <div *ngIf="event.max_members == null">
-                  <div *ngIf="event.tapok > 1">{{ event.tapok }} Attendees</div>
-                  <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
-                  <div *ngIf="event.tapok == 0">No Attendees</div>
-                </div>
-                <div *ngIf="event.max_members != null">
-                  <div *ngIf="event.tapok > 1">{{ event.tapok }} of {{ event.max_members }} Attendees</div>
-                  <div *ngIf="event.tapok == 1">{{ event.tapok }} of {{ event.max_members }} Attendee</div>
-                  <div *ngIf="event.tapok == 0">0 of {{ event.max_members }} Attendees</div>
-                </div>
-              </button>
-              <br *ngIf="event.tags != 'true'">
-              <span *ngIf="event.tags == 'true'" text-left padding>
-                <p class="tags"><ion-icon name = "pricetag" color="dark"></ion-icon>  Tags:<br>
-                <span *ngFor="let tag of Tags | async">
-                  <span *ngIf="tag.key == event.$key">
-                    <ion-badge>{{ tag.tag }} </ion-badge>
+                <button class="attendees" (click)="showAttendees(event.$key)" ion-button icon-left outline small>
+                  <div *ngIf="event.max_members == null">
+                    <div *ngIf="event.tapok > 1">{{ event.tapok }} Attendees</div>
+                    <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
+                    <div *ngIf="event.tapok == 0">No Attendees</div>
+                  </div>
+                  <div *ngIf="event.max_members != null">
+                    <div *ngIf="event.tapok > 1">{{ event.tapok }} of {{ event.max_members }} Attendees</div>
+                    <div *ngIf="event.tapok == 1">{{ event.tapok }} of {{ event.max_members }} Attendee</div>
+                    <div *ngIf="event.tapok == 0">0 of {{ event.max_members }} Attendees</div>
+                  </div>
+                </button>
+                <br *ngIf="event.tags != 'true'">
+                <span *ngIf="event.tags == 'true'" text-left padding>
+                  <p class="tags"><ion-icon name = "pricetag" color="dark"></ion-icon>  Tags:<br>
+                  <span *ngFor="let tag of Tags | async">
+                    <span *ngIf="tag.key == event.$key">
+                      <ion-badge>{{ tag.tag }} </ion-badge>
+                    </span>
                   </span>
+                  </p>
                 </span>
-                </p>
-              </span>
+                <hr>
               <ion-col>
                 <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left round clear>
                   <ion-icon name="happy"></ion-icon>

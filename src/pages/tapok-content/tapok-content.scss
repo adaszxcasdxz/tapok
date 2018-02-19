@@ -26,7 +26,12 @@ tapok-content{
     }
 
     .title{
+        margin-bottom: -.7em;
+        background-color: white;
         color: #2F2E33;
+        font-size: 2.5em;
+        position: fixed;
+        z-index: 1;
     }
 
     ion-item .item-inner{
@@ -43,27 +48,63 @@ tapok-content{
         margin-right: 1em;
     }
 
-    .location{
-        padding-top: 1em;
-    }
-
     .details{
+        margin-left: .5em;
         font-size: 15px;
     }
 
-    .tags{
-        margin-left: 1em;
-    }
-
     .description{
-        margin: .8em;
+        margin-left: 1em;
+        margin-top: -4em;
     }
 
     #map {
-        margin-top: 1em;
+        margin-top: -4em;
         width: 100%;
         height: 30%;
-        border-radius: 1em;
+    }
+
+    .detail_label{
+        margin-top: 1em;
+        color: gray;
+        font-size: 1em;
+    }
+
+    .detail{
+        margin-bottom: 1em;
+    }
+
+    .top-line{
+        margin-bottom: -1.5em;
+        position: fixed;
+        z-index: 2;
+    }
+
+    .bottom-line{
+        margin-top: -.001em;
+    }
+
+    .isActive{
+        color: #F8A055;
+        border-bottom: 2px solid #F8A055;
+    }
+
+    .tab-bar{
+        background-color: white;
+        position: fixed;
+        z-index: 1;
+        border-top: 1px solid gray;
+        border-bottom: 1px solid gray;
+    }
+
+    .tabs{
+        color: dark;
+        margin-left: 1em;
+        margin-top: .5em;
+    }
+
+    .attendees{
+        margin-top: -4em;
     }
 }
 

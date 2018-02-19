@@ -1,15 +1,12 @@
 page-tapok{
-    .title{
-        color: #2F2E33;
-    }
-
     ion-card{
         border-top: 1.5px solid #F8A055;
     }
 
     .title{
+        margin-top: -.1em;
         color: #353C3F;
-        font-size: 2em; 
+        font-size: 2.8em; 
     }
     
     .box{
@@ -57,11 +54,20 @@ page-tapok{
     }
 
     .details{
-        font-size: 15px;
+        font-size: 1.1em;
+        color: gray;
     }
 
     .tags{
         margin-left: 1em;
+    }
+
+    .location{
+        margin-top: -.5em;
+    }
+
+    .attendees{
+        margin-top: -1em;
     }
 }
 

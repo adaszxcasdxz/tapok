@@ -443,4 +443,12 @@ export class FireBaseService {
   deletelatestNotif(){
     this.tapok.list('latest_notifications/'+this.user).remove();
   }
+
+  addHistory(event){
+    this.tapok.list('users/'+this.user+'/history').push(event);
+  }
+
+  getHistory(){
+  return  this.tapok.list('users/'+this.user+'/history');
+  }
 }

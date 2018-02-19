@@ -40,6 +40,10 @@ export class TapokContent {
   List: any;
   Message: any;
   chat: any;
+  tab: any;
+  mainAdmin: any;
+  value: any;
+  userKey: any; 
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -47,8 +51,9 @@ export class TapokContent {
   ){
     var i = 0,y = 0;
     this.tabs = 'info';
+    this.tab = 'details';
     this.user = this.firebaseService.getUser();
-    this.uid = this.firebaseService.getUserID();
+    //this.uid = this.firebaseService.getUserID();
     this.key = navParams.get('param1');
     this.event = this.firebaseService.getSpecificEvent(this.key);
     //this.event = params.get('event');
@@ -118,6 +123,18 @@ export class TapokContent {
         break;
       }   
     }
+  }
+
+  addAdmin(attendeeKey){
+    this.firebaseService.addAdmin(this.key, attendeeKey);
+  }
+
+  removeAdmin(attendeeKey){
+    this.firebaseService.removeAdmin(this.key, attendeeKey);
+  }
+
+  kickAttendee(attendeeKey){
+    this.firebaseService.kickAttendee(this.key, attendeeKey, this.userKey,this.value-1);
   }
 
   toggleMap(){
@@ -213,6 +230,7 @@ export class TapokContent {
   }
   
   confirm(event, status){
+    console.log(status);
     if(status == "TAPOK"){
       let alert = this.alertCtrl.create({
         title: 'Join Event?',
@@ -284,6 +302,12 @@ export class TapokContent {
       }); 
   }
   
+  changeTab(selection){
+    this.tab = selection;
+    if(this.tab == 'details')
+      this.loadMap();
+  }
+
   sendMessage(){
     this.chat={
       "message": this.Message,
@@ -322,4 +346,5 @@ export class TapokContent {
   textLarger(){
 
   }
+  
 }
