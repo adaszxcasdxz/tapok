@@ -29,7 +29,7 @@ export class AttendeesPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FireBaseService) {
     this.key = this.navParams.get('key');
     this.user = this.firebaseService.getUser();
-    this.Attendees = this.firebaseService.getAttendees(this.key);
+    //this.Attendees = this.firebaseService.getAttendees(this.key);
     this.Event = this.firebaseService.getSpecificEvent(this.key);
     this.User = this.firebaseService.getUsers();
 

@@ -5,8 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
+  <ion-navbar color="tapok">
     <ion-searchbar [(ngModel)]="search" [showCancelButton]="shouldShowCancel" 
     (ionInput)="onInput()"></ion-searchbar>
     <ion-buttons right>
@@ -15,14 +14,29 @@
       </button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content text-center>
-  <ion-row>
+  <ion-toolbar>
+      <ion-segment [(ngModel)]="tabs">
+        <ion-segment-button (click)="changeTab('events')" value="events">
+          Events
+        </ion-segment-button>
+        <ion-segment-button (click)="changeTab('tags')" value="tags">
+          Tags
+        </ion-segment-button>
+        <ion-segment-button (click)="changeTab('groups')" value="groups">
+          Groups
+        </ion-segment-button>
+        <ion-segment-button (click)="changeTab('people')" value="people">
+          People
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  <!--<ion-row>
     <ion-col class="tab-bar" text-left>
-      <span class="tabs" (click)="changeTab('events')">
+      <span class="tabs" >
         <b><span *ngIf="tabs=='events'" class="isActive">Events</span>
         <span *ngIf="tabs!='events'">Events</span></b>
       </span>
@@ -42,8 +56,7 @@
         <span *ngIf="tabs!='people'">People</span></b>
       </span>
     </ion-col>
-  </ion-row>
-  <div class="space"></div>
+  </ion-row>-->
   <div *ngIf="tabs!='people' && tabs!='groups'">
     <div *ngFor="let res of result">
       <div *ngFor="let event of Event | async; let i = index;">
@@ -142,5 +155,4 @@
         </div>
     </ion-card>
   </ion-list>
-
 </ion-content>
