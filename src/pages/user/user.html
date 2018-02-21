@@ -1,4 +1,20 @@
 <ion-header>
+  <ion-navbar color="tapok" hide-on-scroll="true" no-border-bottom>  
+    <ion-buttons right>
+        <button (click)="openSearch()" ion-button icon-only round clear>
+          <ion-icon class="search-icon" name="search"></ion-icon>
+        </button>
+    </ion-buttons> 
+    <ion-title text-center>User</ion-title>
+    <ion-buttons left>
+        <button (click)="openMap()" ion-button icon-only round clear>
+          <ion-icon class="search-icon" name="map"></ion-icon>
+        </button>
+    </ion-buttons> 
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
   <ion-toolbar no-border-top>
     <ion-segment *ngIf="otherUser==null" [(ngModel)]="pages">
       <ion-segment-button value="me">
@@ -23,9 +39,7 @@
       </button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
 
-<ion-content>
   <div [ngSwitch]="pages">
     <div *ngSwitchCase="'me'">
       <ion-row text-center>
@@ -43,7 +57,6 @@
           <p class="mail"><ion-icon name="mail"></ion-icon> {{ email }}</p>
         </ion-col>
       </ion-row>
-      <button class="tapok-button" (click)="logout()" ion-button large>Logout</button>
     </div>
 
     <ion-item-group *ngSwitchCase="'following'">
@@ -91,3 +104,11 @@
     </ion-item-group>
   </div>
 </ion-content>
+
+<ion-footer>
+  <div [ngSwitch]="pages">
+    <div *ngSwitchCase="'me'">
+      <button class="tapok-button" (click)="logout()" ion-button>Logout</button>
+    </div>
+  </div>
+</ion-footer>

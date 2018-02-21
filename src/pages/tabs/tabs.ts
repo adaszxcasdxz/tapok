@@ -19,7 +19,8 @@ export class TabsPage {
   tab1Root = 'TapokPage';
   tab2Root = 'EventPage';
   tab3Root = 'GroupPage';
-  tab4Root = 'UserPage';
+  tab4Root = 'NotificationPage';
+  tab5Root = 'UserPage';
 
   selectedTab: any;
   key: any;

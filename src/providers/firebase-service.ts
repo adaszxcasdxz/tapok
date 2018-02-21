@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import { AngularFireAuth } from 'angularfire2/auth';
 //import * as firebase from 'firebase/app';
 import 'firebase/storage';
+import { concat } from 'rxjs/operator/concat';
 
 @Injectable()
 export class FireBaseService {
@@ -15,7 +16,10 @@ export class FireBaseService {
 
   constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp, private afAuth: AngularFireAuth) {
     //this.user = afAuth.auth.currentUser.displayName;
-    this.user="John Henry Eguia";
+    //this.user="John Henry Eguia";
+    this.user="Don Tiburcio";
+    //this.user="Fracheska Tapales";
+    //this.user="Siapko Pantulan";
   }
 
   setUser(name){
@@ -135,8 +139,10 @@ export class FireBaseService {
       attending: status,
       tapok: value
     });
+    
     if(status == "false"){
       this.tapok.list('events/'+eventKey+'/attendees/').push(attendee);
+      this.tapok.list('events/'+eventKey+'/members/').push(attendee);
       this.tapok.list('/users/'+this.user).push(event);
     }
     else{
@@ -382,6 +388,14 @@ export class FireBaseService {
     return this.tapok.list('tags/');
   }
 
+  getAttendees(key){
+    return this.tapok.list('events/'+key+'/attendees');
+  }
+
+  editAttendees(key, attendKey, info){
+    this.tapok.object('events/'+key+'/attendees/'+attendKey).update(info);
+  }
+
   getMembers(key){
     return this.tapok.list('events/'+key+'/members');
   }
@@ -418,20 +432,32 @@ export class FireBaseService {
     return this.tapok.list('login');
   }
 
-  addFollowers(user){
+  addFollowing(user){
     this.tapok.list('users/'+this.user+'/following/').push(user);
+    var follower = {
+      "name": this.user
+    };
+    this.tapok.list('users/'+user.name+'/followers/').push(follower);
   }
 
-  getFollowers(){
+  getFollowing(){
     return this.tapok.list('users/'+this.user+'/following/');
   }
 
-  removeFollowers(key){
+  removeFollowing(key){
     this.tapok.list('users/'+this.user+'/following/'+key).remove();
   }
 
-  addNotif(notif){
-    this.tapok.list('notifications/'+this.user).push(notif);
+  getFollowers(){
+    return this.tapok.list('users/'+this.user+'/followers');
+  }
+
+  addNotif(name, notif){
+    this.tapok.list('notifications/'+name).push(notif);
+  }
+
+  getNotif(){
+    return this.tapok.list('notifications/'+this.user);
   }
 
   addLatestNotif(notif){

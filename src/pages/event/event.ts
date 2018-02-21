@@ -28,6 +28,7 @@ export class EventPage {
   eventTime: any[] = [];
 
   upcomingStatus: any;
+  memberStatus: any[] = [];
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public modalCtrl: ModalController, public alertCtrl: AlertController) {
     this.Event = this.firebaseService.getEvent();
@@ -44,6 +45,13 @@ export class EventPage {
         this.eventTime.length = 0;
         var y = 0;
         snapshots.forEach(snapshot => {
+          if(snapshot.max_members != null){
+            if(snapshot.max_members<=snapshot.tapok){
+              this.memberStatus[y] = 'full';
+            }else{
+              this.memberStatus[y] = 'not_full';
+            }
+          }
           this.eventTime[y] = snapshot;          
           var checkTime = moment().isSameOrAfter(moment(snapshot.time, 'hh:mm a'));
           var checkDate = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
@@ -144,6 +152,16 @@ export class EventPage {
       this.status = "false";
   }
 
+  openSearch(){
+    let modal = this.modalCtrl.create('SearchPage');
+    modal.present();
+  }
+  
+  openMap(){
+    let modal = this.modalCtrl.create('MapPage');
+    modal.present();
+  }
+
   openTapokContent(event){
     this.navCtrl.push('TapokContent', {param1: event.$key});
   }
@@ -211,7 +229,33 @@ export class EventPage {
       "privelage": 'member'
     }
 
+    var memKey='', adminKey='';
+    var member = this.firebaseService.getMembers(event.$key);
+    member.subscribe(snapshot => {
+      snapshot.forEach(snap => {
+        if(snap.name == this.user){
+          memKey = snap.$key;
+        }
+      })
+    });
+
+    var admin = this.firebaseService.getAdmins(event.$key);
+    admin.subscribe(snapshot => {
+      snapshot.forEach(snap => {
+        if(snap.name == this.user){
+          adminKey = snap.$key;
+        }
+      })
+    });
+      
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, attendee, attendeeKey, userKey);
+    if(status != 'false'){
+      console.log('asdad');
+      if(memKey!='')
+        this.firebaseService.removeMember(event.$key, memKey);
+      else
+        this.firebaseService.removeAdmin(event.$key, adminKey);
+    }
   }
 
   viewPic(photo){

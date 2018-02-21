@@ -42,14 +42,7 @@
               </ion-item>
               <div *ngIf="event.photo != ''" class="box" text-center>
                 <div (click)="viewPic(event.photo)">
-                <!--<div (click)="toggle(event.$key, event.toggle)">
-                  <div *ngIf="event.toggle == 'false'">
-                      see photo
-                  </div>
-                  <div *ngIf="event.toggle == 'true'">-->
-                    <img class="photo" src="{{ event.photo }}">
-                    <!--<br>hide photo
-                  </div>-->
+                  <img class="photo" src="{{ event.photo }}">
                 </div>
               </div>
               <span (click)="openTapokContent(event)">

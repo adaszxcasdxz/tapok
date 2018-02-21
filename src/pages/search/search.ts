@@ -41,6 +41,8 @@ export class SearchPage {
   photo: any;
   userid: any;
 
+  memberStatus: any[] = [];
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
     public firebaseService: FireBaseService, public modalCtrl: ModalController, public alertCtrl: AlertController
   ) {
@@ -55,6 +57,18 @@ export class SearchPage {
     this.User = this.firebaseService.getUsers();
     this.Login = this.firebaseService.getLogin();
 
+    this.Event.subscribe(snapshots => {
+      var y = 0;
+      snapshots.forEach(snapshot => {
+          if(snapshot.max_members != null){
+            if(snapshot.max_members<=snapshot.tapok){
+              this.memberStatus[y] = 'full';
+            }else{
+              this.memberStatus[y] = 'not_full';
+            }
+          }
+        })
+      })
     this.User.map(users => {
     this.userEventKeys = users;
     }).subscribe(data => {
