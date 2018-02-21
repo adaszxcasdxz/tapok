@@ -113,9 +113,8 @@
         <variable name="DEEPLINK_5_SCHEME" value=" " />
         <variable name="DEEPLINK_5_HOST" value=" " />
     </plugin>
-    <plugin name="phonegap-plugin-push" spec="~2.1.3">
-        <variable name="SENDER_ID" value="765761820847" />
-        <variable name="FCM_VERSION" value="11.6.2" />
-    </plugin>
     <plugin name="cordova-plugin-badge" spec="^0.8.7" />
+    <plugin name="cordova-plugin-googleplus" spec="^5.2.1">
+        <variable name="REVERSED_CLIENT_ID" value="765761820847-e6ja4bvkmu7k04r2r47iekoimhagnv0c.apps.googleusercontent.com" />
+    </plugin>
 </widget>

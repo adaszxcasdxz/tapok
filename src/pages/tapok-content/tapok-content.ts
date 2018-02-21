@@ -56,7 +56,7 @@ export class TapokContent {
     this.tabs = 'info';
     this.tab = 'details';
     this.user = this.firebaseService.getUser();
-    //this.uid = this.firebaseService.getUserID();
+    this.uid = this.firebaseService.getUserID();
     this.key = navParams.get('param1');
     this.event = this.firebaseService.getSpecificEvent(this.key);
     //this.event = params.get('event');
@@ -111,7 +111,6 @@ export class TapokContent {
       this.test();
     });
 
-    //this.tapokID = this.tapokID = _params.get('tapokID');
     if(this.event.latitude != null)
       this.loadMap();
   }

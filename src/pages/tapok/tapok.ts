@@ -52,7 +52,7 @@ export class TapokPage {
     this.User = this.firebaseService.getUsers();
     this.user = firebaseService.getUser();
 
-    this.firebaseApp.database().ref("latest_notifications/"+this.user).on('value', snapshot => {
+    /*this.firebaseApp.database().ref("latest_notifications/"+this.user).on('value', snapshot => {
       let notif = this.firebaseService.getLatestNotif();
       let notifMessage;
       let toast;
@@ -74,7 +74,7 @@ export class TapokPage {
           });
         }
       });
-    });
+    });*/
 
     Observable.interval(5000)
     .subscribe((val) => {
@@ -229,7 +229,8 @@ export class TapokPage {
       if(data=='facebook')
         this.facebookShare(event);
       if(data=='group')
-        this.openGroupShare(event);
+        //this.openGroupShare(event);
+        this.navCtrl.push('ChooseGroupPage', {param1: event});
     });
   }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
 import 'rxjs/add/operator/map';
-//import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { AngularFireAuth } from 'angularfire2/auth';
 //import * as firebase from 'firebase/app';
 import 'firebase/storage';
@@ -15,7 +15,7 @@ export class FireBaseService {
 
   constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp, private afAuth: AngularFireAuth) {
     //this.user = afAuth.auth.currentUser.displayName;
-    this.user="John Henry Eguia"
+    //this.user="John Henry Eguia"
   }
 
   setUser(name){

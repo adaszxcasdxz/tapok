@@ -7,7 +7,7 @@ import { Filter } from '../pages/filter/filter';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-//import { GooglePlus } from '@ionic-native/google-plus';
+import { GooglePlus } from '@ionic-native/google-plus';
 //import { LoginGooglePage } from '../pages/login-google/login-google';
 
 import { Camera } from '@ionic-native/camera';
@@ -18,7 +18,7 @@ import { HttpModule } from '@angular/http';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { FireBaseService } from './../providers/firebase-service';
-//import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -67,13 +67,14 @@ var googlePlusApi = "AIzaSyCooNeyvH1NkSn4Lz0J5N2Wy5ZwQzFS_Ns";
     FireBaseService,
     Camera,
     PhotoViewer,
-    //Facebook,
+    Facebook,
     AngularFireAuth,
     SocialSharing,
     Badge,
     Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Push
+    Push,
+    GooglePlus
   ]
 })
 export class AppModule {

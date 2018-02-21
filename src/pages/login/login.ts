@@ -6,6 +6,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { App } from 'ionic-angular/components/app/app';
 import { TabsPage } from '../tabs/tabs';
 import { FireBaseService } from '../../providers/firebase-service';
+import { GooglePlus } from '@ionic-native/google-plus';
 
 /**
  * Generated class for the LoginPage page.
@@ -32,10 +33,10 @@ export class LoginPage {
   //userProfileRef: any;
 
   constructor(public navCtrl: NavController, private afAuth: AngularFireAuth, private toastCtrl: ToastController,
-    private facebook: Facebook, private platform: Platform, public app: App, public firebaseService: FireBaseService) { 
+    private facebook: Facebook, private platform: Platform, public app: App, public firebaseService: FireBaseService, private gPlus: GooglePlus) { 
       this.usersdb = this.firebaseService.getUsersList();
       
-      this.usersdb.subscribe(snapshot => { //
+      this.usersdb.subscribe(snapshot => { 
             var i = 0;
             snapshot.forEach(snap => {
                 this.users[i] = snap;
@@ -45,18 +46,26 @@ export class LoginPage {
   }
 
   loginWithGoogle(){
-    console.log(this.afAuth.auth.currentUser);
+    /*console.log(this.afAuth.auth.currentUser);
     var provider = new firebase.auth.GoogleAuthProvider();
-    
-    this.afAuth.auth.signInWithPopup(provider)
+    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');*/
+
+    /*firebase.auth().signInWithRedirect(provider);
+    firebase.auth().getRedirectResult().then(function(result){
+      if(result.credential){
+        var token = result.credential.accessToken;
+      }
+      var user = result.user*/
+    //})
+    /*this.afAuth.auth.signInWithPopup(provider)
     .then((result) => {
       var token = result.credential.accessToken;
       var user = result.user;
  
       console.log(result.user);
-      console.log(result.user.displayName); 
-      console.log("Success");
-      alert("Logged In Successfully!");
+      console.log(result.user.displayName);
+      //console.log("Success");
+      //alert("Logged In Successfully!");
 
       this.firebaseService.setUser(this.afAuth.auth.currentUser.displayName);
       this.firebaseService.setUID(this.afAuth.auth.currentUser.uid);
@@ -90,8 +99,66 @@ export class LoginPage {
     }).catch(function(error){
       var errorCode = error.code;
       console.log(errorCode); 
+    })*/
+  this.gPlus.login({
+      'webClientId': '765761820847-odrnbes28kqoqsiml6s1rc77g0ci38v5.apps.googleusercontent.com'
+      /*'offline': true*/
+      /*['email', 'public_profile']*/
     })
+    .then(res => {
+      //const googleCredential = firebase.auth.GoogleAuthProvider
+        //.credential(res.accessToken);
+      
+        firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
+          .then(success => {
+            alert(this.afAuth.auth.currentUser.displayName);
+            this.firebaseService.setUser(this.afAuth.auth.currentUser.displayName);
+            this.firebaseService.setUID(this.afAuth.auth.currentUser.uid);
+            //alert("firebase authentication");
+
+            for(var i = 0; i<this.users.length; i++){
+            if(this.users[i].$key == this.afAuth.auth.currentUser.uid){
+              this.inDB = true;
+              break;
+            }
+          }
+
+            //this.navCtrl.setRoot('TabsPage');
+            //this.navCtrl.setRoot('AddBirthdayPage');
+            this.userData={
+              status:"logged in",
+              name:this.afAuth.auth.currentUser.displayName,
+              photo:this.afAuth.auth.currentUser.photoURL,
+              email:this.afAuth.auth.currentUser.email,
+              age: "",
+              name_search: (this.afAuth.auth.currentUser.displayName).toLowerCase()
+              //bday:this.afAuth.auth.currentUser.user_birthday
+            }
+            alert("logged in");
+            //this.firebaseService.loginUser(this.userData);
+
+            if(!this.inDB){
+              this.firebaseService.loginUser(this.userData); 
+              this.navCtrl.setRoot('AddBirthdayPage');
+              this.navCtrl.popToRoot();
+              alert("not in DB");
+            }
+            else{
+              this.navCtrl.setRoot('TabsPage');
+              alert("in DB");
+            }
+          }).catch(err => {
+            alert("not authenticated "+JSON.stringify(err, Object.getOwnPropertyNames(err)));
+          });
+    //console.log(res);
+    alert("success "+JSON.stringify(res));
+    })
+    .catch(err => {
+    console.error(err);
+    alert("error "+JSON.stringify(err, Object.getOwnPropertyNames(err)));
+    });
   }
+    
 
   loginWithFacebook(): Promise<any> {
     return this.facebook.login(['email', 'public_profile'])
@@ -113,8 +180,8 @@ export class LoginPage {
             }
           }
 
-            this.navCtrl.setRoot('TabsPage');
-            this.navCtrl.setRoot('AddBirthdayPage');
+            //this.navCtrl.setRoot('TabsPage');
+            //this.navCtrl.setRoot('AddBirthdayPage');
             this.userData={
               status:"logged in",
               name:this.afAuth.auth.currentUser.displayName,
