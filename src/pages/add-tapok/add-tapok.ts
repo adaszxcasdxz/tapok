@@ -367,9 +367,9 @@ export class AddTapok {
 	endDate(){
 		if(this.addEndDate == false){
 			this.addEndDate = true;
-			this.enddate = this.event.enddate;
+			this.enddate = this.date;
 		}
-		else if(this.event.enddate != ''){
+		else{
 			this.addEndDate = false;
 			this.enddate = '';
 		}
@@ -380,7 +380,7 @@ export class AddTapok {
 			this.addEndTime = true;
 			this.endtime = this.time;
 		}
-		else if(this.event.endtime != ''){
+		else{
 			this.addEndTime = false;	
 			this.endtime = '';
 		}

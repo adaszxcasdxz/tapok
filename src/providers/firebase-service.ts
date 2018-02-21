@@ -96,6 +96,12 @@ export class FireBaseService {
     var obj = {
       "key": Key
     }
+
+    var attendee = {
+      "name": this.user,
+    }
+    this.tapok.list('events/'+Key+'/attendees/').push(attendee);
+
     this.tapok.list('/users/'+this.user).push(obj);
     return Key;
   }
@@ -124,32 +130,17 @@ export class FireBaseService {
     this.tapok.object('/groups/'+groupKey+'/posts/'+postKey+'/comments/'+comKey).update(info);
   }
 
-  addTapok(event, eventKey, status, value, attendee, attendeeKey){
-    this.tapok.object('events/'+eventKey).update({
-      attending: status,
-      tapok: value
-    });
-    if(status == "false"){
-      this.tapok.list('events/'+eventKey+'/members/').push(attendee);
-      this.tapok.list('/users/'+this.user).push(event);
-    }
-    else{
-      this.tapok.object('events/'+eventKey+'/members/'+attendeeKey).remove();
-      this.tapok.object('/users/'+this.user).remove();
-    }
-  }
-
   userTapok(event, eventKey, status, value, attendee, attendeeKey, attendKey){
     this.tapok.object('events/'+eventKey).update({
       attending: status,
       tapok: value
     });
     if(status == "false"){
-      this.tapok.list('events/'+eventKey+'/members/').push(attendee);
+      this.tapok.list('events/'+eventKey+'/attendees/').push(attendee);
       this.tapok.list('/users/'+this.user).push(event);
     }
     else{
-      this.tapok.object('events/'+eventKey+'/members/'+attendeeKey).remove();
+      this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).remove();
       this.tapok.object('/users/'+this.user+'/'+attendKey).remove();
     }
   }

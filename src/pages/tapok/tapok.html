@@ -58,29 +58,26 @@
                     <div class="title"><b>{{ event.name }}</b></div>            
                   </ion-col> 
                 </ion-row>
-                <ion-col class="details">
-                  <span *ngIf="event.enddate==''">
-                    <ion-icon name="calendar" color="secondary"></ion-icon>
-                    <span class="chip-label-date">{{ event.date }}</span>
-                  </span>
-                  <span *ngIf="event.enddate!=''">   
-                    <ion-icon name = "calendar" color="secondary"></ion-icon>                     
-                    <span class="chip-label-date">{{ event.date }}  <b>-</b> {{ event.enddate }}</span>
-                  </span>   
-                  <span *ngIf="event.endtime==''">
-                    <ion-icon name = "time" color="danger"></ion-icon>                    
-                    <span class="chip-label">{{ event.time }}</span>
-                  </span>
-                  <span *ngIf="event.endtime!=''">
-                    <ion-icon name = "time" color="danger"></ion-icon>                      
-                    <span class="chip-label">{{ event.time }}  <b>-</b> {{ event.endtime }}</span>
-                  </span>              
+                <div class="details">
+                  <br>
+                  <div *ngIf="event.enddate==''&&event.endtime==''">
+                      <ion-icon name="calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} &nbsp;&nbsp;<ion-icon name = "time" color="danger"></ion-icon> <b>Time:</b> {{ event.time }}
+                  </div>
+                  <div *ngIf="event.enddate!=''&&event.endtime==''">   
+                      <ion-icon name = "calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} <b>-</b> {{ event.enddate }} &nbsp;<ion-icon name = "time" color="danger"></ion-icon><b>Time:</b> {{ event.time }}
+                  </div>   
+                  <div *ngIf="event.enddate==''&&event.endtime!=''">
+                      <ion-icon name="calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} &nbsp;&nbsp;<ion-icon name = "time" color="danger"></ion-icon><b>Time:</b> {{ event.time }} <b>-</b> {{ event.endtime }}
+                  </div>
+                  <div *ngIf="event.enddate!=''&&event.endtime!=''">
+                      <ion-icon name = "calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} <b>-</b> {{ event.enddate }} &nbsp;&nbsp;<ion-icon name = "time" color="danger"></ion-icon><b>Time:</b> {{ event.time }} <b>-</b> {{ event.endtime }}
+                  </div>               
                   <div class="location">
                     <ion-icon name = "pin" color="primary"></ion-icon>                    
                     <span class="chip-label">{{ event.venue }}</span>
                   </div>
-                  <br>
-                </ion-col> 
+                  <br><br>
+                </div> 
               </span>
                 <button class="attendees" (click)="showAttendees(event.$key)" ion-button icon-left outline small>
                   <div *ngIf="event.max_members == null">
@@ -106,13 +103,13 @@
                 </span>
                 <hr>
                 <ion-col *ngIf="event.max_members == null">
-                  <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left round clear>
+                  <button class="notjoined" (click)="confirm(event)" ion-button icon-left round clear>
                     <ion-icon name="happy"></ion-icon>
                       JOIN
                   </button>
                 </ion-col>
                 <ion-col *ngIf="event.max_members!=null&&memberStatus[i] == 'not_full'">
-                  <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left round clear>
+                  <button class="notjoined" (click)="confirm(event)" ion-button icon-left round clear>
                     <ion-icon name="happy"></ion-icon>
                       JOIN
                   </button>
@@ -160,35 +157,32 @@
               </div>
               <span (click)="openTapokContent(event)">
                 <ion-row>
-                  <ion-col class="title-col" width-50>  
-                    <div class="title"><b><hr>{{ event.name }}<hr></b></div>            
+                  <ion-col class="title-col">  
+                    <div class="title"><b>{{ event.name }}</b></div>            
                   </ion-col> 
                 </ion-row>
-                <ion-col class="details" padding>
-                  <span *ngIf="event.enddate==''">
-                    <ion-icon name="calendar" color="secondary"></ion-icon>
-                    <span class="chip-label-date">{{ event.date }}</span>
-                  </span>
-                  <span *ngIf="event.enddate!=''">   
-                    <ion-icon name = "calendar" color="secondary"></ion-icon>                     
-                    <span class="chip-label-date">{{ event.date }}  <b>-</b> {{ event.enddate }}</span>
-                  </span>   
-                  <span *ngIf="event.endtime==''">
-                    <ion-icon name = "time" color="danger"></ion-icon>                    
-                    <span class="chip-label">{{ event.time }}</span>
-                  </span>
-                  <span *ngIf="event.endtime!=''">
-                    <ion-icon name = "time" color="danger"></ion-icon>                      
-                    <span class="chip-label">{{ event.time }}  <b>-</b> {{ event.endtime }}</span>
-                  </span>              
+                <div class="details">
+                  <br>
+                  <div *ngIf="event.enddate==''&&event.endtime==''">
+                      <ion-icon name="calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} &nbsp;&nbsp;<ion-icon name = "time" color="danger"></ion-icon> <b>Time:</b> {{ event.time }}
+                  </div>
+                  <div *ngIf="event.enddate!=''&&event.endtime==''">   
+                      <ion-icon name = "calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} <b>-</b> {{ event.enddate }} &nbsp;<ion-icon name = "time" color="danger"></ion-icon><b>Time:</b> {{ event.time }}
+                  </div>   
+                  <div *ngIf="event.enddate==''&&event.endtime!=''">
+                      <ion-icon name="calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} &nbsp;&nbsp;<ion-icon name = "time" color="danger"></ion-icon><b>Time:</b> {{ event.time }} <b>-</b> {{ event.endtime }}
+                  </div>
+                  <div *ngIf="event.enddate!=''&&event.endtime!=''">
+                      <ion-icon name = "calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} <b>-</b> {{ event.enddate }} &nbsp;&nbsp;<ion-icon name = "time" color="danger"></ion-icon><b>Time:</b> {{ event.time }} <b>-</b> {{ event.endtime }}
+                  </div>               
                   <div class="location">
                     <ion-icon name = "pin" color="primary"></ion-icon>                    
                     <span class="chip-label">{{ event.venue }}</span>
                   </div>
-                  <br>
-                  </ion-col> 
+                  <br><br>
+                </div> 
               </span>
-                <button (click)="showAttendees(event.$key)" ion-button icon-left outline small>
+                <button class="attendees" (click)="showAttendees(event.$key)" ion-button icon-left outline small>
                   <div *ngIf="event.max_members == null">
                     <div *ngIf="event.tapok > 1">{{ event.tapok }} Attendees</div>
                     <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
@@ -210,31 +204,32 @@
                   </span>
                   </p>
                 </span>
+                <hr>
                 <ion-col *ngIf="event.max_members == null">
-                  <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left round clear>
+                  <button class="notjoined" (click)="confirm(event)" ion-button icon-left round clear>
                     <ion-icon name="happy"></ion-icon>
                       JOIN
                   </button>
                 </ion-col>
                 <ion-col *ngIf="event.max_members!=null&&memberStatus[i] == 'not_full'">
-                    <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left round clear>
-                      <ion-icon name="happy"></ion-icon>
-                        JOIN
-                    </button>
-                  </ion-col>
+                  <button class="notjoined" (click)="confirm(event)" ion-button icon-left round clear>
+                    <ion-icon name="happy"></ion-icon>
+                      JOIN
+                  </button>
+                </ion-col>
                 <ion-col *ngIf="memberStatus[i] == 'full'">
-                    <button class="notjoined" ion-button icon-left round clear>
-                      <ion-icon name="happy"></ion-icon>
-                        FULL
-                    </button>
+                  <button class="notjoined" ion-button icon-left round clear>
+                    <ion-icon name="happy"></ion-icon>
+                      FULL
+                  </button>
                 </ion-col>
                 <div class="increment">{{ i+1 }}</div>
-                <ion-col>
-                  <button ion-button icon-left round clear (click)="facebookShare(event)">
-                      <ion-icon name="share"></ion-icon>
-                      <div class="share">Share</div>
-                  </button> 
-                </ion-col>
+              <ion-col>
+                <button (click)="sharePopover()" ion-button icon-left round clear>
+                    <ion-icon name="share"></ion-icon>
+                    <div class="share">Share</div>
+                </button> 
+              </ion-col>
             </ion-card>
           </div>
         </ion-list>

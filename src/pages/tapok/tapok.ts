@@ -296,8 +296,7 @@ export class TapokPage {
     this.navCtrl.push('AttendeesPage', { key: key  });
   }
 
-  confirm(event, status){
-    if(status == "TAPOK"){
+  confirm(event){
       let alert = this.alertCtrl.create({
         title: 'Join Event?',
         buttons: [ 
@@ -313,8 +312,6 @@ export class TapokPage {
         ]
       });
       alert.present();
-    }else
-      this.tapok(event);
   }
 
   tapok(event){
@@ -337,7 +334,7 @@ export class TapokPage {
     for(var userEventKey in this.userEventKeys){
       if(this.userEventKeys[userEventKey].key == event.$key){
         userKey = this.userEventKeys[userEventKey].$key;
-      }
+      } 
     }
 
     if(status == "false")
@@ -351,7 +348,6 @@ export class TapokPage {
 
     attendee = {
       "name": this.user,
-      "privelage": "member"
     }
 
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, attendee, attendeeKey, userKey);

@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar>
+    <ion-navbar color="tapok">
         <ion-title>
             {{label}}
         </ion-title>
@@ -9,7 +9,7 @@
                 <ion-icon name="close"></ion-icon>
             </button>
         </ion-buttons>
-    </ion-toolbar>
+    </ion-navbar>
 </ion-header>
     
 <ion-content>
@@ -20,96 +20,78 @@
             </div>
           </ion-col>
     </ion-row>
-    <div padding>
-        <ion-row>
-            <ion-col>
-                <div class="detail-label"><b>Tapok Name</b></div>
-                <ion-input class="name" [(ngModel)]="name" type="text"></ion-input>
-            </ion-col>  
-        </ion-row>
-        <ion-row>
-            <ion-col>
+    <ion-list>
+        <ion-item-group>
+            <ion-item-divider class="divider" color="light">General Options</ion-item-divider>
+            <ion-item>
+                <ion-label stacked><b>Tapok Name</b></ion-label>
+                <ion-input [(ngModel)]="name" type="text"></ion-input>  
+            </ion-item>
+            <!--<ion-item>
                 <div class="detail-label"><b>Cover Image</b></div>
                 <button (click)="openGallery()" ion-button outline>
                     <ion-icon name="image"></ion-icon>
                 </button> 
                 <button (click)="openCamera()" ion-button outline>
                     <ion-icon name="camera"></ion-icon>
-                </button> 
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col>
-                <div class="detail-label"><b>Start Date</b></div>
-                <ion-datetime [(ngModel)]="date" class="detail" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
-            </ion-col> 
-            <ion-col (click)="endDate()">
-                <div class="extra-label" *ngIf="addEndDate == false">Add End Date</div>
-                <div *ngIf="addEndDate == true">
-                    <div class="detail-label"><b>End Date | Cancel</b></div>
-                    <ion-col>
-                        <ion-datetime [(ngModel)]="enddate" min="{{ date }}" class="detail-datetime" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
-                    </ion-col>
-                </div>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col>
-                <div class="detail-label"><b>Start Time</b></div>
-                <ion-datetime class="detail" [(ngModel)]="time" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
-            </ion-col>
-            <ion-col (click)="endTime()">
-                <div class="extra-label" *ngIf="addEndTime == false">Add End Time</div>
-                <div *ngIf="addEndTime == true">
-                    <div class="detail-label"><b>End Time | Cancel</b></div>
-                    <ion-col>
-                        <ion-datetime class="detail-datetime" [(ngModel)]="endtime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
-                    </ion-col>
-                </div>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col>
-                <div class="detail-label"><b>Venue</b></div>
-                <input #autocomplete id="autocomplete" class="detail" [(ngModel)]="venue" type="text" />
-            </ion-col>
-            <!--<ion-col>
-                <br>
-                <button class="tapok-button" (click)="listen()" ion-button clear large outline>
-                    <ion-icon name="add-circle"></ion-icon>
                 </button>
-            </ion-col>-->
-        </ion-row>
-        <ion-row text-justify>
-            <ion-col>
-                <div class="detail-label"><b>Description</b></div>
-                <ion-textarea class="description" [(ngModel)]="description"></ion-textarea>
-            </ion-col>
-        </ion-row>
+            </ion-item>-->
+            <ion-item>
+                <ion-label stacked><b>Start Date</b></ion-label>
+                <ion-datetime [(ngModel)]="date" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
+                <button *ngIf="addEndDate == false" (click)="endDate()" ion-button item-end outline>Add End Date</button> 
+            </ion-item>
+
+            <ion-item *ngIf="addEndDate == true"> 
+                <ion-label stacked><b>End Date</b></ion-label>
+                <ion-datetime [(ngModel)]="enddate" min="{{ date }}" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime> 
+                <button *ngIf="addEndDate == true" (click)="endDate()" ion-button outline large item-end clear>
+                    <ion-icon name="close-circle"></ion-icon>
+                </button>
+            </ion-item>
+
+            <ion-item>
+                <ion-label stacked><b>Start Time</b></ion-label>
+                <ion-datetime [(ngModel)]="time" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
+                <button *ngIf="addEndTime == false" (click)="endTime()" ion-button item-end outline>Add End Date</button>
+            </ion-item>
+
+            <ion-item *ngIf="addEndTime == true">
+                <ion-label stacked><b>End Time</b></ion-label>
+                <ion-datetime [(ngModel)]="endtime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
+                <button *ngIf="addEndTime == true" (click)="endTime()" ion-button outline large item-end clear>
+                    <ion-icon name="close-circle"></ion-icon>
+                </button>
+            </ion-item>
+            
+            <ion-item>
+                <div class="vLabel"><b>Venue</b></div>
+                <input #autocomplete id="autocomplete" class="detail" [(ngModel)]="venue" type="text" />
+            </ion-item>
+
+            <ion-item text-justify>
+                <ion-label stacked><b>Description</b></ion-label>
+                <ion-textarea [(ngModel)]="description" ></ion-textarea>
+            </ion-item>
+        </ion-item-group>
+        <br>
         <ion-row *ngIf="toggle == false" text-center>
             <ion-col class="detail-label" (click)="toggleOptions()">
-                <u>Advanced Options</u>
+                <u>Show Advanced Options</u>
             </ion-col>
         </ion-row>
-        <div *ngIf="toggle == true">
-            <ion-row text-center>
-                <ion-col class="detail-label">
-                    <b>Advanced Options</b>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col col-8>
-                    <div class="detail-label"><b>Tags</b></div>
-                    <ion-input class="name" [(ngModel)]="temp" type="text"></ion-input>
-                </ion-col>
-                <ion-col>
-                    <br>
-                    <button class="tapok-button" (click)="addTag()" ion-button clear large outline>
-                        <ion-icon name="add-circle"></ion-icon>
-                    </button>
-                </ion-col>
-            </ion-row>
-            <ion-col>
+        <ion-item-group *ngIf="toggle == true">
+            <ion-item-divider color="light">
+                Add Advanced Options
+            </ion-item-divider>
+            <ion-item>
+                <ion-label stacked><b>Tags</b></ion-label>
+                <ion-input [(ngModel)]="temp" type="text"></ion-input>
+                <button (click)="addTag()" ion-button item-end clear large outline>
+                    <ion-icon name="add-circle"></ion-icon>
+                </button>
+            </ion-item>
+            <ion-item>
                 <span *ngFor="let tags of Tags | async">
                     <ion-chip color="primary">
                         <ion-label>{{ tags.tags }}</ion-label>
@@ -118,8 +100,8 @@
                         </button>
                     </ion-chip>
                 </span>
-            </ion-col>
-            <ion-col *ngIf="this.label != 'Add Tapok'">
+            </ion-item>
+            <ion-item *ngIf="this.label != 'Add Tapok'">
                 <span *ngFor="let tags of curTags | async">
                     <ion-chip *ngIf="tags.key == event_key" color="primary">
                         <ion-label>{{ tags.tag }}</ion-label>
@@ -128,42 +110,32 @@
                         </button>
                     </ion-chip>
                 </span>
+            </ion-item>
+            <ion-item>
+                <ion-label>Unlimited Members</ion-label>
+                <ion-toggle [(ngModel)]="toggleMembers"></ion-toggle>
+            </ion-item>
+            <ion-item *ngIf="toggleMembers == false">
+                <ion-label stacked><b>Max Members</b></ion-label>
+                <ion-input [(ngModel)]="maxMembers" type="number"></ion-input>
+            </ion-item> 
+            <ion-col>
+                <ion-item>
+                    <ion-label><b>Classification</b></ion-label>
+                    <ion-select [(ngModel)]="classification">
+                        <ion-option value="General">General</ion-option>
+                        <ion-option value="PG">PG</ion-option>
+                        <ion-option value="SPG">SPG</ion-option>
+                    </ion-select>
+                </ion-item>
             </ion-col>
-            <ion-row>
-                <ion-col>
-                    <ion-list>
-                        <ion-item>
-                            <ion-label>Unlimited Members</ion-label>
-                            <ion-toggle [(ngModel)]="toggleMembers"></ion-toggle>
-                        </ion-item>
-                    </ion-list>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col *ngIf="toggleMembers == false">
-                    <ion-item>
-                        <ion-label><b>Max Members</b></ion-label>
-                        <ion-input [(ngModel)]="maxMembers" type="number"></ion-input>
-                    </ion-item> 
-                </ion-col>
-                <ion-col>
-                    <ion-item>
-                        <ion-label><b>Classification</b></ion-label>
-                        <ion-select [(ngModel)]="classification">
-                            <ion-option value="General">General</ion-option>
-                            <ion-option value="PG">PG</ion-option>
-                            <ion-option value="SPG">SPG</ion-option>
-                        </ion-select>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
             <ion-row text-center>
                 <ion-col class="detail-label" (click)="toggleOptions()">
                     <u>Hide Advanced Options</u>
                 </ion-col>
             </ion-row>
-        </div>  
-        <ion-row class="buttons" text-center>
+        </ion-item-group>  
+        <!--<ion-row class="buttons" text-center>
             <div *ngIf="name!=''&&venue!=''">
                 <ion-col *ngIf="label == 'Add Tapok'">
                     <button (click)="addTapok()" ion-button>{{ label }}</button>
@@ -175,6 +147,29 @@
             <ion-col>
                 <button (click)="cancel()" ion-button outline>Cancel</button>
             </ion-col>
-        </ion-row>
-    </div>
+        </ion-row>-->
+    </ion-list>
 </ion-content>
+
+<ion-footer>
+    <ion-row>
+        <ion-col *ngIf="label == 'Add Tapok'">
+            <button class="notjoined" (click)="addTapok()" ion-button icon-left full>
+                <ion-icon name="happy"></ion-icon>
+                {{ label }}
+            </button>
+        </ion-col>
+        <ion-col *ngIf="label == 'Edit Tapok'">
+            <button class="notjoined" (click)="addTapok()" ion-button icon-left full>
+                <ion-icon name="happy"></ion-icon>
+                {{ label }}
+            </button>
+        </ion-col>
+        <ion-col col-4>
+            <button class="share" ion-button icon-left outline>
+                <ion-icon name="share"></ion-icon>
+                <div>Share</div>
+            </button> 
+        </ion-col>
+    </ion-row>
+</ion-footer>

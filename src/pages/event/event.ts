@@ -193,6 +193,7 @@ export class EventPage {
     for(var userEventKey in this.userEventKeys){
       if(this.userEventKeys[userEventKey].key == event.$key){
         userKey = this.userEventKeys[userEventKey].$key;
+        console.log(userKey);
       }
     }
 
