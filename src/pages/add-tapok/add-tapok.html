@@ -22,137 +22,140 @@
     </ion-row>
     <ion-list>
         <ion-item-group>
-            <ion-item-divider class="divider" color="light">General Options</ion-item-divider>
-            <ion-item>
-                <ion-label stacked><b>Tapok Name</b></ion-label>
-                <ion-input [(ngModel)]="name" type="text"></ion-input>  
-            </ion-item>
-            <!--<ion-item>
-                <div class="detail-label"><b>Cover Image</b></div>
-                <button (click)="openGallery()" ion-button outline>
-                    <ion-icon name="image"></ion-icon>
-                </button> 
-                <button (click)="openCamera()" ion-button outline>
-                    <ion-icon name="camera"></ion-icon>
-                </button>
-            </ion-item>-->
-            <ion-item>
-                <ion-label stacked><b>Start Date</b></ion-label>
-                <ion-datetime [(ngModel)]="date" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
-                <button *ngIf="addEndDate == false" (click)="endDate()" ion-button item-end outline>Add End Date</button> 
-            </ion-item>
+            <div (click)="inputLocationToggle($event, 'false')">
+                <ion-item-divider class="divider">General Options</ion-item-divider>
+                <ion-item>
+                    <ion-label stacked><b>Tapok Name</b></ion-label>
+                    <ion-input (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="name" type="text"></ion-input>  
+                </ion-item>
+                <!--<ion-item>
+                    <div class="detail-label"><b>Cover Image</b></div>
+                    <button (click)="openGallery()" ion-button outline>
+                        <ion-icon name="image"></ion-icon>
+                    </button> 
+                    <button (click)="openCamera()" ion-button outline>
+                        <ion-icon name="camera"></ion-icon>
+                    </button>
+                </ion-item>-->
+                <ion-item>
+                    <ion-label stacked><b>Start Date</b></ion-label>
+                    <ion-datetime (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="date" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
+                    <button *ngIf="addEndDate == false" (click)="endDate()" ion-button item-end outline>Add End Date</button> 
+                </ion-item>
 
-            <ion-item *ngIf="addEndDate == true"> 
-                <ion-label stacked><b>End Date</b></ion-label>
-                <ion-datetime [(ngModel)]="enddate" min="{{ date }}" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime> 
-                <button *ngIf="addEndDate == true" (click)="endDate()" ion-button outline large item-end clear>
-                    <ion-icon name="close-circle"></ion-icon>
-                </button>
-            </ion-item>
+                <ion-item *ngIf="addEndDate == true"> 
+                    <ion-label stacked><b>End Date</b></ion-label>
+                    <ion-datetime (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="enddate" min="{{ date }}" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime> 
+                    <button *ngIf="addEndDate == true" (click)="endDate()" ion-button outline large item-end clear>
+                        <ion-icon name="close-circle"></ion-icon>
+                    </button>
+                </ion-item>
 
+                <ion-item>
+                    <ion-label stacked><b>Start Time</b></ion-label>
+                    <ion-datetime (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="time" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
+                    <button *ngIf="addEndTime == false" (click)="endTime()" ion-button item-end outline>Add End Date</button>
+                </ion-item>
+
+                <ion-item *ngIf="addEndTime == true">
+                    <ion-label stacked><b>End Time</b></ion-label>
+                    <ion-datetime (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="endtime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
+                    <button *ngIf="addEndTime == true" (click)="endTime()" ion-button outline large item-end clear>
+                        <ion-icon name="close-circle"></ion-icon>
+                    </button>
+                </ion-item>
+            </div>
             <ion-item>
-                <ion-label stacked><b>Start Time</b></ion-label>
-                <ion-datetime [(ngModel)]="time" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
-                <button *ngIf="addEndTime == false" (click)="endTime()" ion-button item-end outline>Add End Date</button>
+                <div *ngIf="inputLocation == 'false'" class="noVLabel"><b>Venue</b></div>
+                <div *ngIf="inputLocation != 'false'" class="vLabel"><b>Venue</b></div>
+                <input #autocomplete (click)="inputLocationToggle($event, 'true')" placeholder=" " id="autocomplete" class="detail" [(ngModel)]="venue" type="text" />
             </ion-item>
-
-            <ion-item *ngIf="addEndTime == true">
-                <ion-label stacked><b>End Time</b></ion-label>
-                <ion-datetime [(ngModel)]="endtime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
-                <button *ngIf="addEndTime == true" (click)="endTime()" ion-button outline large item-end clear>
-                    <ion-icon name="close-circle"></ion-icon>
-                </button>
-            </ion-item>
-            
-            <ion-item>
-                <div class="vLabel"><b>Venue</b></div>
-                <input #autocomplete id="autocomplete" class="detail" [(ngModel)]="venue" type="text" />
-            </ion-item>
-
             <ion-item text-justify>
                 <ion-label stacked><b>Description</b></ion-label>
-                <ion-textarea [(ngModel)]="description" ></ion-textarea>
+                <ion-textarea (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="description" ></ion-textarea>
             </ion-item>
         </ion-item-group>
         <br>
-        <ion-row *ngIf="toggle == false" text-center>
-            <ion-col class="detail-label" (click)="toggleOptions()">
-                <u>Show Advanced Options</u>
-            </ion-col>
-        </ion-row>
-        <ion-item-group *ngIf="toggle == true">
-            <ion-item-divider color="light">
-                Add Advanced Options
-            </ion-item-divider>
-            <ion-item>
-                <ion-label stacked><b>Tags</b></ion-label>
-                <ion-input [(ngModel)]="temp" type="text"></ion-input>
-                <button (click)="addTag()" ion-button item-end clear large outline>
-                    <ion-icon name="add-circle"></ion-icon>
-                </button>
-            </ion-item>
-            <ion-item>
-                <span *ngFor="let tags of Tags | async">
-                    <ion-chip color="primary">
-                        <ion-label>{{ tags.tags }}</ion-label>
-                        <button ion-button clear color="light" (click)="deleteTag(tags.$key)">
-                            <ion-icon name="close-circle"></ion-icon>
-                        </button>
-                    </ion-chip>
-                </span>
-            </ion-item>
-            <ion-item *ngIf="this.label != 'Add Tapok'">
-                <span *ngFor="let tags of curTags | async">
-                    <ion-chip *ngIf="tags.key == event_key" color="primary">
-                        <ion-label>{{ tags.tag }}</ion-label>
-                        <button ion-button clear color="light" (click)="deleteCurrentTag(tags.$key)">
-                            <ion-icon name="close-circle"></ion-icon>
-                        </button>
-                    </ion-chip>
-                </span>
-            </ion-item>
-            <ion-item>
-                <ion-label>Unlimited Members</ion-label>
-                <ion-toggle [(ngModel)]="toggleMembers"></ion-toggle>
-            </ion-item>
-            <ion-item *ngIf="toggleMembers == false">
-                <ion-label stacked><b>Max Members</b></ion-label>
-                <ion-input [(ngModel)]="maxMembers" type="number"></ion-input>
-            </ion-item> 
-            <ion-col>
-                <ion-item>
-                    <ion-label><b>Classification</b></ion-label>
-                    <ion-select [(ngModel)]="classification">
-                        <ion-option value="General">General</ion-option>
-                        <ion-option value="PG">PG</ion-option>
-                        <ion-option value="SPG">SPG</ion-option>
-                    </ion-select>
-                </ion-item>
-            </ion-col>
-            <ion-row text-center>
+        <div (click)="inputLocationToggle($event, 'false')">
+            <ion-row *ngIf="toggle == false" text-center>
                 <ion-col class="detail-label" (click)="toggleOptions()">
-                    <u>Hide Advanced Options</u>
+                    <u>Show Advanced Options</u>
                 </ion-col>
             </ion-row>
-        </ion-item-group>  
-        <!--<ion-row class="buttons" text-center>
-            <div *ngIf="name!=''&&venue!=''">
-                <ion-col *ngIf="label == 'Add Tapok'">
+            <ion-item-group *ngIf="toggle == true">
+                <ion-item-divider>
+                    Add Advanced Options
+                </ion-item-divider>
+                <ion-item>
+                    <ion-label stacked><b>Tags</b></ion-label>
+                    <ion-input (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="temp" type="text"></ion-input>
+                    <button (click)="addTag()" ion-button item-end clear large outline>
+                        <ion-icon name="add-circle"></ion-icon>
+                    </button>
+                </ion-item>
+                <ion-item>
+                    <span *ngFor="let tags of Tags | async">
+                        <ion-chip color="primary">
+                            <ion-label>{{ tags.tags }}</ion-label>
+                            <button ion-button clear color="light" (click)="deleteTag(tags.$key)">
+                                <ion-icon name="close-circle"></ion-icon>
+                            </button>
+                        </ion-chip>
+                    </span>
+                </ion-item>
+                <ion-item *ngIf="this.label != 'Add Tapok'">
+                    <span *ngFor="let tags of curTags | async">
+                        <ion-chip *ngIf="tags.key == event_key" color="primary">
+                            <ion-label>{{ tags.tag }}</ion-label>
+                            <button ion-button clear color="light" (click)="deleteCurrentTag(tags.$key)">
+                                <ion-icon name="close-circle"></ion-icon>
+                            </button>
+                        </ion-chip>
+                    </span>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Unlimited Members</ion-label>
+                    <ion-toggle [(ngModel)]="toggleMembers"></ion-toggle>
+                </ion-item>
+                <ion-item *ngIf="toggleMembers == false">
+                    <ion-label stacked><b>Max Members</b></ion-label>
+                    <ion-input (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="maxMembers" type="number"></ion-input>
+                </ion-item> 
+                <ion-col>
+                    <ion-item>
+                        <ion-label><b>Classification</b></ion-label>
+                        <ion-select (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="classification">
+                            <ion-option value="General">General</ion-option>
+                            <ion-option value="PG">PG</ion-option>
+                            <ion-option value="SPG">SPG</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+                <ion-row text-center>
+                    <ion-col class="detail-label" (click)="toggleOptions()">
+                        <u>Hide Advanced Options</u>
+                    </ion-col>
+                </ion-row>
+            </ion-item-group>  
+            <!--<ion-row class="buttons" text-center>
+                <div *ngIf="name!=''&&venue!=''">
+                    <ion-col *ngIf="label == 'Add Tapok'">
+                        <button (click)="addTapok()" ion-button>{{ label }}</button>
+                    </ion-col>
+                </div>
+                <ion-col *ngIf="label == 'Edit Tapok'">
                     <button (click)="addTapok()" ion-button>{{ label }}</button>
                 </ion-col>
-            </div>
-            <ion-col *ngIf="label == 'Edit Tapok'">
-                <button (click)="addTapok()" ion-button>{{ label }}</button>
-            </ion-col>
-            <ion-col>
-                <button (click)="cancel()" ion-button outline>Cancel</button>
-            </ion-col>
-        </ion-row>-->
+                <ion-col>
+                    <button (click)="cancel()" ion-button outline>Cancel</button>
+                </ion-col>
+            </ion-row>-->
+        </div>
     </ion-list>
 </ion-content>
 
 <ion-footer>
-    <ion-row>
+    <ion-row (click)="inputLocationToggle('false')">
         <ion-col *ngIf="label == 'Add Tapok'">
             <button class="notjoined" (click)="addTapok()" ion-button icon-left full>
                 <ion-icon name="happy"></ion-icon>

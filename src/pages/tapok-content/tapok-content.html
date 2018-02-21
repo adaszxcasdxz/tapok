@@ -31,7 +31,7 @@
         
         <div *ngIf="tab=='details'">
             <ion-item *ngIf="event.photo!=null"><br></ion-item>
-            <ion-item-group>
+            <ion-item-group *ngIf="event.description!=''">
                 <ion-item-divider>Description</ion-item-divider>
                 <ion-item>
                     {{ event.description }}

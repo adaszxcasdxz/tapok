@@ -66,6 +66,8 @@ export class AddTapok {
 	event_key: any;
 	wkey: any [] = [];
 
+	inputLocation: any = 'false';
+
 	onSuccess = (snapshot) => {
 		this.photo = snapshot.downloadURL;
 		this.loading.dismiss();
@@ -384,6 +386,11 @@ export class AddTapok {
 			this.addEndTime = false;	
 			this.endtime = '';
 		}
+	}
+
+	inputLocationToggle(ev, val){
+		this.inputLocation = val;
+		console.log(val);
 	}
 
 	openGallery(){
