@@ -16,8 +16,8 @@ export class FireBaseService {
 
   constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp, private afAuth: AngularFireAuth) {
     //this.user = afAuth.auth.currentUser.displayName;
-    //this.user="John Henry Eguia";
-    this.user="Don Tiburcio";
+    this.user="John Henry Eguia";
+    //this.user="Don Tiburcio";
     //this.user="Fracheska Tapales";
     //this.user="Siapko Pantulan";
   }
@@ -242,7 +242,7 @@ export class FireBaseService {
   searchPeople(search, id){
     return this.tapok.list('login/'+id+'/',{
       query: {
-        orderByChild: 'name',
+        orderByChild: 'name_search',
         startAt: search,
         endAt: search+'\uf8ff'
       },
@@ -478,5 +478,13 @@ export class FireBaseService {
 
   getHistory(){
   return  this.tapok.list('users/'+this.user+'/history');
+  }
+
+  updateUserLocation(coor){
+    this.tapok.object('users/'+this.user+'/location').update(coor);
+  }
+
+  getUserLocation(){
+    return this.tapok.list('users/'+this.user+'/location');
   }
 }

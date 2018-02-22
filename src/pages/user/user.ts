@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams,ViewController, ModalController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import { LoginGooglePage } from '../login-google/login-google';
 import { App } from 'ionic-angular/components/app/app';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Geolocation } from '@ionic-native/geolocation';
+
+declare var google;
 
 @IonicPage()
 @Component({
@@ -11,19 +14,40 @@ import { AngularFireAuth } from 'angularfire2/auth';
   templateUrl: 'user.html'
 })
 export class UserPage {
-
-  pages: string = "me";
+  @ViewChild('map') mapElement: ElementRef;
+  map: any;
+  currentLocation: any;
+  pages: any = "me";
   username: any;
   email: any;
   photo: any;
   otherUser: any;
-  Followers: any;
+  Following: any;
   History: any;
+  check: any = false;
+  followKey: any;
+  lat: any = 0;
+  lng: any = 0;
+  permission: any=false;
 
-  constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController, public geolocation: Geolocation) {
     this.otherUser = this.params.get('otherUser');
-    this.Followers = this.firebaseService.getFollowing();
+    this.Following = this.firebaseService.getFollowing();
     this.History = this.firebaseService.getHistory();
+    this.pages = 'me';
+
+    console.log(this.permission);
+    if(this.otherUser != null){
+      console.log(this.otherUser.name);
+      this.Following.subscribe(snapshot => {
+        snapshot.forEach(snap => {
+          if(snap.name = this.otherUser.name){
+            this.check = true;
+            this.followKey = snap.$key;
+          }
+        });
+      });
+    };
 
     if(this.otherUser == null){
       this.username = this.firebaseService.getUser();
@@ -36,6 +60,46 @@ export class UserPage {
       this.email = this.otherUser.email;
       this.photo = this.otherUser.photo;
     }
+  }
+
+  ionViewWillEnter(){
+    this.firebaseService.getUserLocation().subscribe(snap => {
+      this.lat = snap[0].$value;
+      this.lng = snap[1].$value;
+    }); 
+    this.loadMap();
+  }
+
+  loadMap(){
+    var i, eventLocation: any[] = [];
+    this.geolocation.getCurrentPosition().then((position) => {
+      
+      let latLng = new google.maps.LatLng(this.lat, this.lng);
+
+      let mapOptions = {
+        center: latLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      
+      this.currentLocation = new google.maps.Marker({
+        map: this.map,
+        animation: google.maps.Animation.DROP,
+        position: latLng
+      });
+
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  changePage(val){
+    this.pages = val;
+    console.log(this.pages);
+    if(val == 'me')
+      this.ionViewWillEnter();
   }
 
   openSearch(){
@@ -63,8 +127,10 @@ export class UserPage {
     this.firebaseService.addFollowing(follow);
   }
 
-  unfollow(key){
-    this.firebaseService.removeFollowing(key);
+  unfollow(){
+    this.firebaseService.removeFollowing(this.followKey);
+    this.check = false;
+    this.followKey = null;
   }
 
   dismiss() {

@@ -51,7 +51,6 @@ export class MapPage {
   loadMap(){
     var i, eventLocation: any[] = [];
     this.geolocation.getCurrentPosition().then((position) => {
-      
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
       let mapOptions = {
