@@ -3,15 +3,36 @@ page-login {
         background-color: #FF8D3F !important;
     }
 
+    .bg{
+        width: 50em;
+        height: 100em;
+        position: absolute;
+        z-index: 0;
+        top: 0em;
+    }
+
+    .logo{
+        position:absolute;
+        z-index: 100;
+        margin-top:0.7em;
+        margin-left:auto;
+        margin-right:auto;
+        font-family:'Fox&Cat';
+        text-align: center;
+        color: white;
+        font-size: 70px;
+    }
+
     .facebook{
         width: 90%;
         height: 2.7em;
         background-color: royalblue;
         font-size: 1.3em;
         display: block;
-        margin-top: 18em;
+        margin-top: 20em;
         margin-right: auto;
         margin-left: auto;
+        z-index: 100;
     }
 
     .google{
@@ -19,8 +40,9 @@ page-login {
         height: 2.7em;
         font-size: 1.3em;
         display: block;
-        margin-top: 1em;
+        margin-top: 1.2em;
         margin-right: auto;
         margin-left: auto;
+        z-index: 100;
     }
 }
