@@ -243,7 +243,7 @@ export class FireBaseService {
   searchPeople(search, id){
     return this.tapok.list('login/'+id+'/',{
       query: {
-        orderByChild: 'name',
+        orderByChild: 'name_search',
         startAt: search,
         endAt: search+'\uf8ff'
       },
@@ -487,5 +487,13 @@ export class FireBaseService {
 
   getHistory(){
   return  this.tapok.list('users/'+this.user+'/history');
+  }
+
+  updateUserLocation(coor){
+    this.tapok.object('users/'+this.user+'/location').update(coor);
+  }
+
+  getUserLocation(){
+    return this.tapok.list('users/'+this.user+'/location');
   }
 }

@@ -1,111 +1,113 @@
 <ion-header>
   <ion-navbar color="tapok" hide-on-scroll="true" no-border-bottom>  
-    <ion-buttons right>
-        <button (click)="openSearch()" ion-button icon-only round clear>
-          <ion-icon class="search-icon" name="search"></ion-icon>
-        </button>
+    <ion-buttons *ngIf="otherUser==null" right>
+      <button (click)="openSearch()" ion-button icon-only round clear>
+        <ion-icon class="search-icon" name="search"></ion-icon>
+      </button>
+    </ion-buttons> 
+    <ion-buttons *ngIf="otherUser!=null&&!check" right>
+      <button (click)="follow()" ion-button icon-only round clear>
+        <ion-icon name="add"></ion-icon><ion-icon name="person"></ion-icon>
+      </button>
+    </ion-buttons> 
+    <ion-buttons *ngIf="otherUser!=null&&check" right>
+      <button (click)="unfollow()" ion-button icon-only round clear>
+        <ion-icon name="close"></ion-icon><ion-icon name="person"></ion-icon>
+      </button>
     </ion-buttons> 
     <ion-title text-center>User</ion-title>
-    <ion-buttons left>
-        <button (click)="openMap()" ion-button icon-only round clear>
-          <ion-icon class="search-icon" name="map"></ion-icon>
-        </button>
-    </ion-buttons> 
+    <ion-buttons *ngIf="otherUser==null" left>
+      <button (click)="openMap()" ion-button icon-only round clear>
+        <ion-icon class="search-icon" name="map"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons *ngIf="otherUser!=null" left>
+      <button (click)="dismiss()" ion-button icon-only round clear>
+        <ion-icon class="search-icon" name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>  
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-toolbar no-border-top>
-    <ion-segment *ngIf="otherUser==null" [(ngModel)]="pages">
-      <ion-segment-button value="me">
+  <ion-toolbar *ngIf="otherUser==null" no-border-top>
+    <ion-segment [(ngModel)]="pages">
+      <ion-segment-button (click)="changePage('me')" value="me">
         YOU
       </ion-segment-button>
-      <ion-segment-button value="following">
+      <ion-segment-button (click)="changePage('following')" value="following">
         FOLLOWING
       </ion-segment-button>
-      <ion-segment-button value="history">
+      <ion-segment-button (click)="changePage('history')" value="history">
         HISTORY
       </ion-segment-button>
     </ion-segment>
-    <ion-buttons *ngIf="otherUser!=null" start>
-      <button (click)="follow()" ion-button icon-only outline>
-        <ion-icon name=""></ion-icon>
-        Follow
-      </button>
-      </ion-buttons>
-    <ion-buttons *ngIf="otherUser!=null" end>
-      <button (click)="dismiss()" ion-button icon-only clear>
-          <ion-icon name="close"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
+  </ion-toolbar> 
 
-  <div [ngSwitch]="pages">
-    <div *ngSwitchCase="'me'">
-      <ion-row text-center>
-        <ion-col>
-          <img class="item-avatar" src="{{ photo }}">
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <div class="username"><b>{{ username }}</b></div>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <p class="mail"><ion-icon name="mail"></ion-icon> {{ email }}</p>
-        </ion-col>
-      </ion-row>
-    </div>
-
-    <ion-item-group *ngSwitchCase="'following'">
-      <ion-list>
-        <div *ngFor="let followers of Followers | async">
-          <ion-item-sliding>
-            <ion-item>
-              <ion-avatar item-start>
-                <img src="{{ followers.photo }}">
-              </ion-avatar>
-              <h2>{{ followers.name }}</h2>
-              <p>{{ followers.email }}</p>
-            </ion-item>
-            <ion-item-options side="right">
-              <button (click)="unfollow(followers.$key)" ion-button color="danger">
-                <ion-icon name="trash"></ion-icon>
-                delete
-              </button>
-            </ion-item-options>
-          </ion-item-sliding>
-        </div>
-      </ion-list>
-    </ion-item-group>
-
-    <ion-item-group *ngSwitchCase="'history'">
-      <ion-list>
-        <div *ngFor="let history of History | async">
-          <ion-item-sliding>
-            <ion-item>
-              <ion-avatar item-start>
-                <img src="{{ history.photo }}">
-              </ion-avatar>
-              <h2>{{ history.name }}</h2>
-              <p>{{ history.venue }}</p>
-            </ion-item>
-            <ion-item-options side="right">
-              <button (click)="unfollow(followers.$key)" ion-button color="danger">
-                <ion-icon name="trash"></ion-icon>
-                delete
-              </button>
-            </ion-item-options>
-          </ion-item-sliding>
-        </div>
-      </ion-list>
-    </ion-item-group>
+  <div *ngIf="pages=='me'">
+    <ion-item text-center>
+      <img class="item-avatar" src="{{ photo }}">
+    </ion-item>
+    <ion-item>
+      <div class="username"><b>{{ username }}</b></div>
+    </ion-item>
+    <ion-item>
+      <p class="mail"><ion-icon name="mail"></ion-icon> {{ email }}</p>
+    </ion-item>
+    <ion-item text-wrap>
+      <ion-label>Allow other users to find you: </ion-label><ion-toggle [(ngModel)]="Allowlocation"></ion-toggle>
+    </ion-item>
   </div>
+  <div #map *ngIf="pages=='me'" id="map"></div>
+
+  <ion-item-group *ngIf="pages == 'following'">
+    <ion-list>
+      <div *ngFor="let following of Following | async">
+        <ion-item-sliding>
+          <ion-item>
+            <ion-avatar item-start>
+              <img src="{{ following.photo }}">
+            </ion-avatar>
+            <h2>{{ following.name }}</h2>
+            <p>{{ following.email }}</p>
+          </ion-item>
+          <ion-item-options side="right">
+            <button (click)="unfollow(followers.$key)" ion-button color="danger">
+              <ion-icon name="trash"></ion-icon>
+              delete
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </div>
+    </ion-list>
+  </ion-item-group>
+
+  <ion-item-group *ngIf="pages == 'history'">
+    <ion-list>
+      <div *ngFor="let history of History | async">
+        <ion-item-sliding>
+          <ion-item>
+            <ion-avatar item-start>
+              <img src="{{ history.photo }}">
+            </ion-avatar>
+            <h2>{{ history.name }}</h2>
+            <p>{{ history.venue }}</p>
+          </ion-item>
+          <ion-item-options side="right">
+            <button (click)="unfollow(followers.$key)" ion-button color="danger">
+              <ion-icon name="trash"></ion-icon>
+              delete
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </div>
+    </ion-list>
+  </ion-item-group>
+
+   
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="otherUser==null">
   <div [ngSwitch]="pages">
     <div *ngSwitchCase="'me'">
       <button class="tapok-button" (click)="logout()" ion-button>Logout</button>

@@ -1,4 +1,4 @@
-.item-avatar{
+/*.item-avatar{
     width:13em;
     height: 13em; 
     display: block;
@@ -6,25 +6,42 @@
     margin-left: auto;
     padding-top: 1em;
     border-radius: 50%;
-}
+}*/
+page-user{
 
-.username{
-    font-size: 2em;
-    text-align: center;
-    color: black;
-    padding-top: .5em;
-}
+    .item-avatar{
+        width:8em;
+        height: 8em; 
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+        padding-top: 1em;
+        border-radius: 55%;
+    }
 
-.mail{
-    padding-top: -3em;
-    font-size: 1.1em;
-    text-align:center;
-    color: gray;
-}
+    .username{
+        font-size: 1.5em;
+        text-align: center;
+        color: black;
+    }
 
-.tapok-button{
-    width: 80%;
-    display: block;
-    margin-right: auto;
-    margin-left: auto;
+    .mail{
+        padding-top: -3em;
+        font-size: 1.1em;
+        text-align:center;
+        color: gray;
+    }
+
+    .tapok-button{
+        width: 80%;
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    #map {
+        width: 100%;
+        height: 35%;
+    }
+
 }
