@@ -28,7 +28,7 @@ export class UserPage {
   followKey: any;
   lat: any = 0;
   lng: any = 0;
-  permission: any=false;
+  permission: any;
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController, public geolocation: Geolocation) {
     this.otherUser = this.params.get('otherUser');
@@ -62,12 +62,25 @@ export class UserPage {
     }
   }
 
+  ionViewDidLoad(){
+
+  }
+
   ionViewWillEnter(){
-    this.firebaseService.getUserLocation().subscribe(snap => {
-      this.lat = snap[0].$value;
-      this.lng = snap[1].$value;
-    }); 
-    this.loadMap();
+    if(this.otherUser==null){
+      this.firebaseService.getPermission(this.username).subscribe(snapshot => {
+        if(snapshot.length == 0)
+          this.permission = false;
+        else  
+          this.permission = true;
+      });
+      this.firebaseService.getUserLocation(this.username).subscribe(snap => {
+        this.lat = snap[0].$value;
+        this.lng = snap[1].$value;
+      }); 
+      if(this.permission)
+        this.loadMap();
+    }
   }
 
   loadMap(){
@@ -131,6 +144,17 @@ export class UserPage {
     this.firebaseService.removeFollowing(this.followKey);
     this.check = false;
     this.followKey = null;
+  }
+
+  askPermission(){
+    if(this.permission)
+      this.firebaseService.allowPermission();
+    else
+      this.firebaseService.removePermission();
+
+    this.ionViewWillEnter();
+    console.log(this.permission);
+    console.log('this.permission');
   }
 
   dismiss() {

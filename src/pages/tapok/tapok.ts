@@ -99,7 +99,7 @@ export class TapokPage {
             if(checkHour == 'in an hour'){
               var attend = this.firebaseService.getAttendees(snapshot.$key).subscribe(People => {
                 People.forEach(people => {
-                  if(people.notif == null){
+                  if(people.notif != 'notified'){
                     var notif = {
                       'name': this.user,
                       'type': 3,

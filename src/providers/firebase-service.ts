@@ -484,7 +484,19 @@ export class FireBaseService {
     this.tapok.object('users/'+this.user+'/location').update(coor);
   }
 
-  getUserLocation(){
-    return this.tapok.list('users/'+this.user+'/location');
+  getUserLocation(user){
+    return this.tapok.list('users/'+user+'/location');
+  }
+
+  allowPermission(){
+    return this.tapok.list('users/'+this.user+'/permission').push(true);
+  }
+
+  removePermission(){
+    return this.tapok.list('users/'+this.user+'/permission').remove();
+  }
+
+  getPermission(user){
+    return this.tapok.list('users/'+user+'/permission');
   }
 }

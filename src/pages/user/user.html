@@ -43,7 +43,7 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar> 
-
+  <br><br><br>
   <div *ngIf="pages=='me'">
     <ion-item text-center>
       <img class="item-avatar" src="{{ photo }}">
@@ -55,10 +55,11 @@
       <p class="mail"><ion-icon name="mail"></ion-icon> {{ email }}</p>
     </ion-item>
     <ion-item text-wrap>
-      <ion-label>Allow other users to find you: </ion-label><ion-toggle [(ngModel)]="Allowlocation"></ion-toggle>
+      <ion-label>Allow other users to find you: </ion-label><ion-toggle (ionChange)="askPermission()" [(ngModel)]="permission"></ion-toggle>
     </ion-item>
   </div>
-  <div #map *ngIf="pages=='me'" id="map"></div>
+  <ion-item-divider>Location</ion-item-divider>
+  <div #map *ngIf="pages=='me'&&permission==true" id="map"></div>
 
   <ion-item-group *ngIf="pages == 'following'">
     <ion-list>
