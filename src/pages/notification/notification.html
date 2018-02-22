@@ -1,0 +1,34 @@
+<!--
+  Generated template for the NotificationPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="tapok" hide-on-scroll="true" no-border-bottom>  
+    <ion-buttons right>
+        <button (click)="openSearch()" ion-button icon-only round clear>
+          <ion-icon class="search-icon" name="search"></ion-icon>
+        </button>
+    </ion-buttons> 
+    <ion-title text-center>My Events</ion-title>
+    <ion-buttons left>
+        <button (click)="openMap()" ion-button icon-only round clear>
+          <ion-icon class="search-icon" name="map"></ion-icon>
+        </button>
+    </ion-buttons> 
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let notif of Notifs | async">
+      <div *ngIf="notif.type == 1||notif.type == 2">{{ notif.name }}</div>
+      <div *ngIf="notif.type == 3">{{ notif.event_name }}</div>
+      <p *ngIf="notif.type == 1">has joined your event <b>{{ notif.event_name }}</b></p>
+      <p *ngIf="notif.type == 2">has hosted an event <b>{{ notif.event_name }}</b></p>
+      <p *ngIf="notif.type == 3">will start in 1 hour</p>
+    </ion-item>
+  </ion-list>
+</ion-content>

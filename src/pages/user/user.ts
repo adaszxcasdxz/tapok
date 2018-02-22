@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ViewController, ModalController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import { LoginGooglePage } from '../login-google/login-google';
 import { App } from 'ionic-angular/components/app/app';
@@ -20,9 +20,9 @@ export class UserPage {
   Followers: any;
   History: any;
 
-  constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController) {
     this.otherUser = this.params.get('otherUser');
-    this.Followers = this.firebaseService.getFollowers();
+    this.Followers = this.firebaseService.getFollowing();
     this.History = this.firebaseService.getHistory();
 
     if(this.otherUser == null){
@@ -38,6 +38,16 @@ export class UserPage {
     }
   }
 
+  openSearch(){
+    let modal = this.modalCtrl.create('SearchPage');
+    modal.present();
+  }
+  
+  openMap(){
+    let modal = this.modalCtrl.create('MapPage');
+    modal.present();
+  }
+
   logout(){
     this.angularFireAuth.auth.signOut(); 
     this.app.getRootNav().setRoot('LoginPage');
@@ -50,11 +60,11 @@ export class UserPage {
       'photo': this.photo
     }
 
-    this.firebaseService.addFollowers(follow);
+    this.firebaseService.addFollowing(follow);
   }
 
   unfollow(key){
-    this.firebaseService.removeFollowers(key);
+    this.firebaseService.removeFollowing(key);
   }
 
   dismiss() {

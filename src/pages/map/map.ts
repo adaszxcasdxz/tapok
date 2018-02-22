@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { FireBaseService } from '../../providers/firebase-service';
 import { FirebaseApp } from 'angularfire2/app';
@@ -22,7 +22,7 @@ export class MapPage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform, public geolocation: Geolocation, public firebaseService: FireBaseService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform, public geolocation: Geolocation, public firebaseService: FireBaseService, public viewCtrl: ViewController) {
     var y;
 
     this.Event = this.firebaseService.getEvent();      
@@ -42,6 +42,10 @@ export class MapPage {
 
   ionViewWillEnter() {
     this.loadMap();
+  }
+
+  dismiss(){
+    this.viewCtrl.dismiss();
   }
 
   loadMap(){

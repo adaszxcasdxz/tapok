@@ -1,4 +1,5 @@
 tapok-content{
+
     .button-header{
         margin-right: 1em;
     }
@@ -27,19 +28,19 @@ tapok-content{
         margin: .5em;
     }
 
-    .title{
+    .noaccess{
+        display: block;
+        margin-left: -2.5em;
+    }
+
+    /*.title{
         margin-bottom: -.7em;
         background-color: white;
         color: #2F2E33;
         font-size: 2.5em;
         position: fixed;
         z-index: 1;
-    }
-
-    ion-item .item-inner{
-        padding: 0px !important;
-        border-bottom: 0px!important;
-     }
+    }*/
 
     .chip-label{
         margin-left: .2em;
@@ -61,7 +62,7 @@ tapok-content{
     }
 
     #map {
-        //margin-top: -4em;
+        margin-top: -1.5em;
         width: 100%;
         height: 30%;
     }
@@ -76,14 +77,9 @@ tapok-content{
         margin-bottom: 1em;
     }
 
-    .top-line{
-        margin-bottom: -1.5em;
-        position: fixed;
-        z-index: 2;
-    }
-
-    .bottom-line{
-        margin-top: -.001em;
+    .date-detail{
+        margin-top: -4em;
+        margin-bottom: 1em;
     }
 
     .isActive{
@@ -100,9 +96,8 @@ tapok-content{
     }
 
     .tabs{
-        color: dark;
-        margin-left: 1em;
-        margin-top: .5em;
+        position: fixed;
+        z-index: 1;
     }
 
     .attendees{
@@ -240,6 +235,11 @@ tapok-content{
     .message{
         overflow:scroll;
         margin-bottom: 18%;
+    }
+    
+    .content{
+        position: relative;
+        z-index: 0;
     }
 }
 

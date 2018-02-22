@@ -1,7 +1,7 @@
 page-about{
-    ion-card{
+    /*ion-card{
         border-top: 1.5px solid #F8A055;
-    }
+    }*/
 
     .title{
         margin-top: -.1em;
@@ -72,5 +72,9 @@ page-about{
 
     .attendees{
         margin-top: -1em;
+    }
+
+    .tabs{
+        position: fixed;
     }
 }

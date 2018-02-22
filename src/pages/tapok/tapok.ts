@@ -77,8 +77,7 @@ export class TapokPage {
     });*/
 
     Observable.interval(5000)
-    .subscribe((val) => {
-      //console.log(moment().format('hh:mm:ss').toString()); 
+    .subscribe((val) => { 
       this.Event.subscribe(snapshots => {
         this.eventTime.length = 0;
         y = 0;
@@ -93,6 +92,33 @@ export class TapokPage {
           this.eventTime[y] = snapshot;          
           var checkTime = moment().isSameOrAfter(moment(snapshot.time, 'hh:mm a'));
           var checkDate = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
+          var day = moment(snapshot.date, 'MMM DD').date();
+          var checkNotifDate = moment(day).isSameOrAfter(moment().date());
+          var timeCheck = moment(snapshot.time,'hh:mm a').format('MMM DD, hh:mm a');
+          var checkHour = moment(timeCheck, 'MMM DD, hh:mm a').fromNow();
+          if(checkNotifDate){
+            if(checkHour == 'in an hour'){
+              var attend = this.firebaseService.getAttendees(snapshot.$key).subscribe(People => {
+                People.forEach(people => {
+                  if(people.notif == null){
+                    var notif = {
+                      'name': this.user,
+                      'type': 3,
+                      'timestamp': 0-Date.now(),
+                      'event_name': snapshot.name,
+                      'event_key': snapshot.$key 
+                    }
+
+                    var update = {
+                      'notif': 'notified'
+                    }
+                    this.firebaseService.addNotif(people.name, notif);
+                    this.firebaseService.editAttendees(snapshot.$key, people.$key, update);
+                  }
+                })
+              })
+            }
+          }
           //if no end date and end time
           if(checkTime && checkDate && snapshot.enddate == '')
             this.timeStatus[y] = 'ongoing';
@@ -252,7 +278,8 @@ export class TapokPage {
   }
 
   openMap(){
-    this.navCtrl.push('MapPage');
+    let modal = this.modalCtrl.create('MapPage');
+    modal.present();
   }
 
   viewPic(photo){
@@ -290,8 +317,7 @@ export class TapokPage {
     this.navCtrl.push('AttendeesPage', { key: key  });
   }
 
-  confirm(event, status){
-    if(status == "TAPOK"){
+  confirm(event){
       let alert = this.alertCtrl.create({
         title: 'Join Event?',
         buttons: [ 
@@ -307,8 +333,6 @@ export class TapokPage {
         ]
       });
       alert.present();
-    }else
-      this.tapok(event);
   }
 
   tapok(event){
@@ -331,7 +355,7 @@ export class TapokPage {
     for(var userEventKey in this.userEventKeys){
       if(this.userEventKeys[userEventKey].key == event.$key){
         userKey = this.userEventKeys[userEventKey].$key;
-      }
+      } 
     }
 
     if(status == "false")
@@ -345,10 +369,37 @@ export class TapokPage {
 
     attendee = {
       "name": this.user,
-      "privelage": "member"
     }
 
+    var notif = {
+      "name": this.user,
+      "type": 1,
+      "timestamp": 0-Date.now(),
+      "event_name": event.name,
+      "event_key": event.$key
+    }
+
+    var memKey='', adminKey='';
+    var member = this.firebaseService.getMembers(event.$key);
+    member.subscribe(snapshot => {
+      snapshot.forEach(snap => {
+        if(snap.name == this.user){
+          memKey = snap.$key;
+        }
+      })
+    });
+
+    var admin = this.firebaseService.getAdmins(event.$key);
+    admin.subscribe(snapshot => {
+      snapshot.forEach(snap => {
+        if(snap.name == this.user){
+          adminKey = snap.$key;
+        }
+      })
+    });
+
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, attendee, attendeeKey, userKey);
+    this.firebaseService.addNotif(event.host, notif);
   }
 
   facebookShare(event){

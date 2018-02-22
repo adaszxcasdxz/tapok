@@ -6,6 +6,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { AngularFireAuth } from 'angularfire2/auth';
 //import * as firebase from 'firebase/app';
 import 'firebase/storage';
+import { concat } from 'rxjs/operator/concat';
 
 @Injectable()
 export class FireBaseService {
@@ -78,9 +79,9 @@ export class FireBaseService {
       query:{
         orderByChild: 'timestamp'
       }
-    })/*.map((attendees) =>{
-      return attendees.map(attendee =>{
-        attendee.attendees = this.tapok.list('/events/'+attendee.$key+'/attendees/');
+    })/*.map((members) =>{
+      return members.map(attendee =>{
+        attendee.members = this.tapok.list('/events/'+attendee.$key+'/members/');
         return attendee;
       });
     });*/
@@ -97,14 +98,15 @@ export class FireBaseService {
   addEvent(name){
     var Key;
     Key = this.tapok.list('/events/').push(name).key;
-    var admin = {
-      'name': this.user,
-      'privelage': 'main_admin'
-    }
-    this.tapok.list('events/'+Key+'/attendees').push(admin);
     var obj = {
       "key": Key
     }
+
+    var attendee = {
+      "name": this.user,
+    }
+    this.tapok.list('events/'+Key+'/attendees/').push(attendee);
+
     this.tapok.list('/users/'+this.user).push(obj);
     return Key;
   }
@@ -133,28 +135,15 @@ export class FireBaseService {
     this.tapok.object('/groups/'+groupKey+'/posts/'+postKey+'/comments/'+comKey).update(info);
   }
 
-  addTapok(event, eventKey, status, value, attendee, attendeeKey){
-    this.tapok.object('events/'+eventKey).update({
-      attending: status,
-      tapok: value
-    });
-    if(status == "false"){
-      this.tapok.list('events/'+eventKey+'/attendees/').push(attendee);
-      this.tapok.list('/users/'+this.user).push(event);
-    }
-    else{
-      this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).remove();
-      this.tapok.object('/users/'+this.user).remove();
-    }
-  }
-
   userTapok(event, eventKey, status, value, attendee, attendeeKey, attendKey){
     this.tapok.object('events/'+eventKey).update({
       attending: status,
       tapok: value
     });
+    
     if(status == "false"){
       this.tapok.list('events/'+eventKey+'/attendees/').push(attendee);
+      this.tapok.list('events/'+eventKey+'/members/').push(attendee);
       this.tapok.list('/users/'+this.user).push(event);
     }
     else{
@@ -416,40 +405,68 @@ export class FireBaseService {
     return this.tapok.list('events/'+key+'/attendees');
   }
 
-  addAdmin(eventKey, attendeeKey){
-    this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).update({
-      'privelage': 'admin'
-    });
+  editAttendees(key, attendKey, info){
+    this.tapok.object('events/'+key+'/attendees/'+attendKey).update(info);
   }
 
-  removeAdmin(eventKey, attendeeKey){
-    this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).update({
-      'privelage': 'member'
-    });
+  getMembers(key){
+    return this.tapok.list('events/'+key+'/members');
+  }
+
+  addMember(eventKey, attendee){
+    this.tapok.list('events/'+eventKey+'/members/').push(attendee);
+  }
+
+  removeMember(eventKey, memberKey){
+    this.tapok.list('events/'+eventKey+'/members/'+memberKey).remove();
+  }
+
+  getAdmins(key){
+    return this.tapok.list('events/'+key+'/admins');
+  }
+
+  addAdmin(eventKey, attendee){
+    this.tapok.list('events/'+eventKey+'/admins/').push(attendee);
+  }
+
+  removeAdmin(eventKey, adminKey){
+    this.tapok.object('events/'+eventKey+'/admins/'+adminKey).remove();
   }
 
   kickAttendee(eventKey, attendeeKey, userKey, value){
-    this.tapok.object('events/'+eventKey+'/attendees/'+attendeeKey).remove();
+    this.tapok.object('events/'+eventKey+'/members/'+attendeeKey).remove();
     this.tapok.object('users/'+this.user+'/'+userKey).remove();
     this.tapok.object('events/'+eventKey).update({
       'tapok': value
     })
   }
 
-  addFollowers(user){
+  addFollowing(user){
     this.tapok.list('users/'+this.user+'/following/').push(user);
+    var follower = {
+      "name": this.user
+    };
+    this.tapok.list('users/'+user.name+'/followers/').push(follower);
   }
 
-  getFollowers(){
+  getFollowing(){
     return this.tapok.list('users/'+this.user+'/following/');
   }
 
-  removeFollowers(key){
+  removeFollowing(key){
     this.tapok.list('users/'+this.user+'/following/'+key).remove();
   }
 
-  addNotif(notif){
-    this.tapok.list('notifications/'+this.user).push(notif);
+  getFollowers(){
+    return this.tapok.list('users/'+this.user+'/followers');
+  }
+
+  addNotif(name, notif){
+    this.tapok.list('notifications/'+name).push(notif);
+  }
+
+  getNotif(){
+    return this.tapok.list('notifications/'+this.user);
   }
 
   addLatestNotif(notif){

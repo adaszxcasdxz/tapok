@@ -1,15 +1,8 @@
 page-search {
     .title{
-        color: #2F2E33;
-    }
-
-    ion-card{
-        border-top: 1.5px solid #F8A055;
-    }
-
-    .title{
+        margin-top: -.1em;
         color: #353C3F;
-        font-size: 2em; 
+        font-size: 2.5em; 
     }
 
     .box{
@@ -18,6 +11,7 @@ page-search {
         align-items: center;
         overflow: hidden;
     }
+
     .photo{
         width: 100%;
     }
@@ -41,6 +35,40 @@ page-search {
 
     .increment{
         display: none;
+    }
+
+    .chip-label{
+        margin-left: .2em;
+    }
+
+    .chip-label-date{
+        margin-left: .2em;
+        margin-right: 1em;
+    }
+
+    .location{
+        padding-top: 1em;
+    }
+
+    .details{
+        font-size: 1.1em;
+        color: gray;
+    }
+
+    .tags{
+        margin-left: 1em;
+    }
+
+    .increment{
+        display: none;
+    }
+
+    .location{
+        margin-top: -.5em;
+    }
+
+    .attendees{
+        margin-top: -1em;
     }
 
     .isActive{
@@ -79,6 +107,10 @@ page-search {
         background-position: center;
         background-size: cover;
         background-color: black;
+    }
+
+    .toolbar{
+        position: fixed;
     }
 }
 

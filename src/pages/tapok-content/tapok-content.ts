@@ -46,6 +46,9 @@ export class TapokContent {
   mainAdmin: any;
   value: any;
   userKey: any; 
+  Admins: any;
+  Members: any;
+  adminCheck: any = false;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -65,18 +68,34 @@ export class TapokContent {
     this.Attendees = this.firebaseService.getAttendees(this.key);
     this.fontSize="default";
     
-    this.Attendees.subscribe(snapshot => {
+    this.Members = this.firebaseService.getMembers(this.key);
+    this.Admins = this.firebaseService.getAdmins(this.key);
+
+    this.Admins.subscribe(snapshot => {
       snapshot.forEach(snap => {
-        if(this.user == snap.name && (snap.privelage == 'main_admin' || snap.privelage == 'admin' ||snap.privelage == 'member')){
-          this.access = 'ok'; 
-          console.log('ok');
+        if(this.user == snap.name ){
+          this.access = 'ok';
+          this.adminCheck = true; 
         }
       })
     });
 
+    this.Members.subscribe(snapshot => {
+      snapshot.forEach(snap => {
+        if(this.user == snap.name ){
+          this.access = 'ok'; 
+        }
+      })
+    });
+    
     this.event.forEach(events=> {
       this.event = events;
+      this.mainAdmin = events.host;
+      if(this.user == events.host ){
+        this.access = 'ok'; 
+      }
     });
+
     this.Keyword = this.firebaseService.getKeywords(this.event.$key);
     this.Tags = this.firebaseService.getTag();
     this.Keyword.subscribe(snapshots => {
@@ -116,18 +135,6 @@ export class TapokContent {
   }
 
   ionViewDidLoad(){
-    console.log('ko');
-
-    this.Attendees = this.firebaseService.getAttendees(this.key);
-    
-    this.Attendees.subscribe(snapshot => {
-      snapshot.forEach(snap => {
-        if(this.user == snap.name && (snap.privelage == 'main_admin' || snap.privelage == 'admin' ||snap.privelage == 'member')){
-          this.access = 'ok'; 
-          console.log('ok');
-        }
-      })
-    });
   }
 
   test(){
@@ -143,12 +150,22 @@ export class TapokContent {
     }
   }
 
-  addAdmin(attendeeKey){
-    this.firebaseService.addAdmin(this.key, attendeeKey);
+  addAdmin(attendee){
+    this.firebaseService.addAdmin(this.key, attendee);
+    this.firebaseService.removeMember(this.key, attendee.$key);
   }
 
-  removeAdmin(attendeeKey){
-    this.firebaseService.removeAdmin(this.key, attendeeKey);
+  removeAdmin(attendee){
+    this.firebaseService.addMember(this.key, attendee);
+    this.firebaseService.removeAdmin(this.key, attendee.$key);
+    console.log(attendee.$key);
+  }
+
+  removeAdminMember(attendee){
+    this.firebaseService.removeAdmin(this.key, attendee.$key);
+  }
+  removeMember(attendee){
+    this.firebaseService.removeMember(this.key, attendee.$key);
   }
 
   kickAttendee(attendeeKey){
@@ -307,21 +324,26 @@ export class TapokContent {
   }
 
   ionViewDidEnter(){
+    if(this.tab == 'chat'){
     setTimeout(() => {
       this.content.scrollToBottom(0);
-    });    
+      });
+    }
 
     this.firebaseApp.database().ref("events/"+this.key+"/chat").on('value', snapshot => {
       setTimeout(() => {
-        this.content.scrollToBottom(300);
+        if(this.tab == 'chat')
+          this.content.scrollToBottom(300);
       }); 
     });
+    
   }
 
   ionViewWillEnter(){
+    if(this.tab == 'chat')
       setTimeout(() => {
         this.content.scrollToBottom(300);
-      }); 
+      });
   }
   
   changeTab(selection){

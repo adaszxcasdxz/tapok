@@ -1,17 +1,4 @@
 add-tapok{
-    .name-label{
-        margin-bottom: .3em;
-        color: #F8A055;
-        font-size: 1.5em;
-    }
-
-    .name{
-        color: #353C3F;
-        font-size: 1.5em;
-        border: 1px solid gray;
-        border-radius: .1em;
-    }
-
     .box{
         width: 512px; 
         height: 320px; 
@@ -27,23 +14,35 @@ add-tapok{
     } 
 
     .detail-label{
-        margin: .3em;
         color: #F8A055;
-        font-size: 1.2em;  
+        font-size: 1em;  
     }
 
     .detail-label-add{
-        margin: .2em;
         color: #F8A055;
         font-size: 1.2em;
     }
 
     .detail{
-        color: #353C3F;
-        font-size: 1.2em;
-        border: 1px solid gray;
-        border-radius: .3em;
-        padding: 1em;
+        font-size: 1.1em;
+        border: none;
+    }
+
+    .detail:focus + .vLabel{
+        color: blue;
+    }
+
+
+    .noVLabel{
+        color: #999;
+        margin-bottom: .8em;
+        font-size: .7em;
+    }
+
+    .vLabel{
+        color: #F8A055;
+        margin-bottom: .8em;
+        font-size: .7em;
     }
 
     .detail-datetime{
@@ -71,6 +70,10 @@ add-tapok{
 
     .buttons{
         margin-top: 1em;
+    }
+
+    .divider{
+        margin-top: -.5em;
     }
 }
 

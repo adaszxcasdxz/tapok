@@ -68,6 +68,10 @@ export class AddTapok {
 	event_key: any;
 	wkey: any [] = [];
 
+	inputLocation: any = 'false';
+
+	user: any;
+
 	onSuccess = (snapshot) => {
 		this.photo = snapshot.downloadURL;
 		this.loading.dismiss();
@@ -88,6 +92,7 @@ export class AddTapok {
 		this.label = params.get('label');
 		this.event = params.get('tapok');
 		this.event_key = params.get('key');
+		this.user = this.firebaseService.getUser();
 		console.log(this.event_key);	
 		this.Tags = this.firebaseService.getTempTag();
 		this.uid=firebaseService.uID;
@@ -243,8 +248,22 @@ export class AddTapok {
 				'name': this.name,
 				'key': eventKey
 			}
-			this.firebaseService.addNotif('test notif');
-			this.firebaseService.addLatestNotif(eventNotif);
+
+			var notif = {
+				"name": this.user,
+				"type": 2,
+				"timestamp": 0-Date.now(),
+				"event_name": this.name,
+				"event_key": eventKey
+			}
+
+			var followers = this.firebaseService.getFollowers();
+			followers.subscribe(snapshot =>{
+				snapshot.forEach(snap=>{
+					this.firebaseService.addNotif(snap.name, notif);
+				})
+			});
+
 			this.word = this.name.split(" ");
 			for(i=0;i<this.word.length;i++){
 				this.keyword={
@@ -373,9 +392,9 @@ export class AddTapok {
 	endDate(){
 		if(this.addEndDate == false){
 			this.addEndDate = true;
-			this.enddate = this.event.enddate;
+			this.enddate = this.date;
 		}
-		else if(this.event.enddate != ''){
+		else{
 			this.addEndDate = false;
 			this.enddate = '';
 		}
@@ -386,10 +405,15 @@ export class AddTapok {
 			this.addEndTime = true;
 			this.endtime = this.time;
 		}
-		else if(this.event.endtime != ''){
+		else{
 			this.addEndTime = false;	
 			this.endtime = '';
 		}
+	}
+
+	inputLocationToggle(ev, val){
+		this.inputLocation = val;
+		console.log(val);
 	}
 
 	openGallery(){
