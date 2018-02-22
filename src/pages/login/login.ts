@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ToastController, Platform } from 'ionic-angular';
-import * as firebase from 'firebase/app';
+//import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { App } from 'ionic-angular/components/app/app';
 import { TabsPage } from '../tabs/tabs';
 import { FireBaseService } from '../../providers/firebase-service';
 import { GooglePlus } from '@ionic-native/google-plus';
+import firebase from 'firebase';
 
 /**
  * Generated class for the LoginPage page.
@@ -30,6 +31,7 @@ export class LoginPage {
   inDB: boolean = false;
   usersdb: any;
   users: any[] = []; 
+  userProfile: any = null;
   //userProfileRef: any;
 
   constructor(public navCtrl: NavController, private afAuth: AngularFireAuth, private toastCtrl: ToastController,
@@ -43,6 +45,15 @@ export class LoginPage {
                 i++;
             })
         });
+
+      firebase.auth().onAuthStateChanged(user => {
+        if(user){
+          console.log(user);
+          this.userProfile = user;
+        } else{
+          console.log("No user");
+        }
+      })
   }
 
   loginWithGoogle(){

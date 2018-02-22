@@ -326,8 +326,8 @@ export class FireBaseService {
     }); //groups key posts key comments
   }
 
-  addUserGroup(key){
-    this.tapok.list('/users/' + this.user + '/groupKey/').push(key);
+  addUserGroup(user, key){
+    this.tapok.list('/users/' + user + '/groupKey/').push(key);
   }
 
   addMemberGroup(name, key){
@@ -344,6 +344,18 @@ export class FireBaseService {
 
   leaveUserGroup(gKey){
     this.tapok.list('users/'+this.user+'/groupKey/'+gKey).remove();
+  }
+
+  addRequestee(gKey, requestee){
+    this.tapok.list('/requestee/' + gKey + '/rmember/').push(requestee);
+  }
+
+  getRequestee(gKey){
+    return this.tapok.list('/requestee/' + gKey + '/rmember/');
+  }
+  
+  deleteRequestee(gKey, requestee){
+    this.tapok.list('/requestee/' + gKey + '/rmember/' + requestee).remove();
   }
 
   groupAttend(gKey, user){

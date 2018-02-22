@@ -15,6 +15,7 @@ export class GroupPage{
     user: any;
     usergroup: any;
     groupmember: any;
+    requestee: any;
     uGroup: any;
     status: any[] = [];
     userTest: any[] = [];
@@ -117,6 +118,36 @@ export class GroupPage{
 
     openGroupContent(group){
         this.navCtrl.push('GroupContent', {param1: group.$key});
+    }
+
+    requestJoin(key){
+        this.requestee={
+            "name": this.user,
+            "photo": this.photo,
+            "userid": this.userid
+        }
+
+         let confirm = this.alertCtrl.create({
+			title: 'Your request has been sent!',
+			buttons: [ 'OK' ]
+        });
+        let alert = this.alertCtrl.create({
+        title: 'Join this group?',
+        buttons: [  
+            {
+            text: 'YES',
+            handler: () => {
+        this.firebaseService.addRequestee(key, this.requestee);
+        this.navCtrl.setRoot('GroupPage');
+        confirm.present();
+         }
+            },
+            {
+            text: 'NO',
+            }
+        ]
+        });
+        alert.present();
     }
 
     joinGroup(key, gname){
