@@ -134,27 +134,28 @@ export class LoginPage {
               name_search: (this.afAuth.auth.currentUser.displayName).toLowerCase()
               //bday:this.afAuth.auth.currentUser.user_birthday
             }
-            alert("logged in");
+            //alert("logged in");
             //this.firebaseService.loginUser(this.userData);
 
             if(!this.inDB){
               this.firebaseService.loginUser(this.userData); 
               this.navCtrl.setRoot('AddBirthdayPage');
               this.navCtrl.popToRoot();
-              alert("not in DB");
+              //alert("not in DB");
             }
             else{
+              this.firebaseService.updateLoginStatus("logged in");
               this.navCtrl.setRoot('TabsPage');
-              alert("in DB");
+              //alert("in DB");
             }
           }).catch(err => {
-            alert("not authenticated "+JSON.stringify(err, Object.getOwnPropertyNames(err)));
+            //alert("not authenticated "+JSON.stringify(err, Object.getOwnPropertyNames(err)));
           });
     //console.log(res);
-    alert("success "+JSON.stringify(res));
+    //alert("success "+JSON.stringify(res));
     })
     .catch(err => {
-    console.error(err);
+    //console.error(err);
     alert("error "+JSON.stringify(err, Object.getOwnPropertyNames(err)));
     });
   }
@@ -191,7 +192,7 @@ export class LoginPage {
               name_search: (this.afAuth.auth.currentUser.displayName).toLowerCase()
               //bday:this.afAuth.auth.currentUser.user_birthday
             }
-            this.firebaseService.loginUser(this.userData);
+            //this.firebaseService.loginUser(this.userData);
 
             if(!this.inDB){
               this.firebaseService.loginUser(this.userData); 

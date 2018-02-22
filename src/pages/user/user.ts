@@ -113,6 +113,7 @@ export class UserPage {
   }
 
   logout(){
+    this.firebaseService.updateLoginStatus("logged out");
     this.angularFireAuth.auth.signOut(); 
     this.app.getRootNav().setRoot('LoginPage');
   }

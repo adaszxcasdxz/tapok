@@ -13,6 +13,7 @@ export class FireBaseService {
 
   user; 
   uID;
+  key;
 
   constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp, private afAuth: AngularFireAuth) {
     //this.user = afAuth.auth.currentUser.displayName;
@@ -48,8 +49,7 @@ export class FireBaseService {
   }
 
   loginUser(user){
-    this.tapok.list('/login/'+this.uID).push(user);
-    return this.afAuth.auth.currentUser.uid;
+    this.key=this.tapok.list('/login/'+this.uID).push(user).key;
   }
 
   getUsersList(){
@@ -69,10 +69,6 @@ export class FireBaseService {
   getLogin(){
     return this.tapok.list('login');
   }
-
-  /*loginUser(user){
-    this.tapok.list('login/'+this.uID).push(user);
-  }*/
 
   getEvent(){
     return this.tapok.list('/events/',{
@@ -491,6 +487,10 @@ export class FireBaseService {
 
   updateUserLocation(coor){
     this.tapok.object('users/'+this.user+'/location').update(coor);
+  }
+
+  updateLoginStatus(login_status){
+    this.tapok.object('login/'+this.uID+this.key+'/status').update(login_status);
   }
 
   getUserLocation(){
