@@ -121,11 +121,23 @@ group-content{
     }
 
     .descr-col{
-        font-size: 1em;
+        font-size: 1.3em;
     }
 
     .name-col{
         font-size: 2em;
+        color: white;
+    }
+
+    .join-header{
+        width: 2em;
+        height: 2em;
+        margin-top: -5.5em;
+        margin-left: 1em;
+    }
+
+    .req{
+        margin-top: .3em;
     }
 
     .gheader{

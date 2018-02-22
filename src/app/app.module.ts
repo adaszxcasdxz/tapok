@@ -7,8 +7,8 @@ import { Filter } from '../pages/filter/filter';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-//import { GooglePlus } from '@ionic-native/google-plus';
-//import { LoginGooglePage } from '../pages/login-google/login-google';
+import { GooglePlus } from '@ionic-native/google-plus';
+import { LoginGooglePage } from '../pages/login-google/login-google';
 
 import { Camera } from '@ionic-native/camera';
 //import { PhotoViewer } from '@ionic-native/photo-viewer';
@@ -65,6 +65,7 @@ var googlePlusApi = "AIzaSyCooNeyvH1NkSn4Lz0J5N2Wy5ZwQzFS_Ns";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Camera,
     //PhotoViewer,
+    GooglePlus,
     Facebook,
     AngularFireAuth
     //SocialSharing

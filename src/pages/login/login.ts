@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ToastController, Platform } from 'ionic-angular';
-import * as firebase from 'firebase/app';
+//import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { App } from 'ionic-angular/components/app/app';
 import { TabsPage } from '../tabs/tabs';
 import { FireBaseService } from '../../providers/firebase-service';
+import firebase from 'firebase';
 
 /**
  * Generated class for the LoginPage page.
@@ -29,6 +30,7 @@ export class LoginPage {
   inDB: boolean = false;
   usersdb: any;
   users: any[] = []; 
+  userProfile: any = null;
   //userProfileRef: any;
 
   constructor(public navCtrl: NavController, private afAuth: AngularFireAuth, private toastCtrl: ToastController,
@@ -42,21 +44,37 @@ export class LoginPage {
                 i++;
             })
         });
+
+      firebase.auth().onAuthStateChanged(user => {
+        if(user){
+          console.log(user);
+          this.userProfile = user;
+        } else{
+          console.log("No user");
+        }
+      })
   }
 
-  loginWithGoogle(){
+  loginWithGoogle():void{
     console.log(this.afAuth.auth.currentUser);
-    var provider = new firebase.auth.GoogleAuthProvider();
+    const provider = new firebase.auth.GoogleAuthProvider();
+    //provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
     
     this.afAuth.auth.signInWithPopup(provider)
+    /*firebase.auth().signInWithRedirect(provider).then(() => {
+      firebase.auth().getRedirectResult().then (result=>{
+        var token = result.credential.accessToken;
+        var user = result.user;
+      })  */
+    
+    //})
     .then((result) => {
-      var token = result.credential.accessToken;
-      var user = result.user;
- 
-      console.log(result.user);
-      console.log(result.user.displayName); 
-      console.log("Success");
-      alert("Logged In Successfully!");
+        var token = result.credential.accessToken;
+      
+        var user = result.user;
+      //console.log(result.user);
+      //console.log(result.user.displayName); 
+      //console.log("Success");
 
       this.firebaseService.setUser(this.afAuth.auth.currentUser.displayName);
       this.firebaseService.setUID(this.afAuth.auth.currentUser.uid);

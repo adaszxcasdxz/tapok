@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-//import { GooglePlus } from '@ionic-native/google-plus';
+import { GooglePlus } from '@ionic-native/google-plus';
 import firebase from 'firebase';
 import { FireBaseService } from '../../providers/firebase-service';
 import { AngularFireModule } from 'angularfire2';
@@ -33,7 +33,7 @@ export class LoginGooglePage {
   isLoggedIn: boolean = false;
   userData: any; 
 
-  constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public navParams: NavParams, public angularFireAuth: AngularFireAuth, public authProvider: AuthProvider) {
+  constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public navParams: NavParams, public angularFireAuth: AngularFireAuth, public authProvider: AuthProvider, public googlePlus: GooglePlus) {
     /*AngularFireModule.initializeApp({
     apiKey: "AIzaSyDn-6txbosz7KRe6_rFZ8Lwj3Obh63JEik"
     });*/
@@ -47,7 +47,7 @@ export class LoginGooglePage {
     });*/
   }
 
-  loginWithGoogle(){
+  /*loginWithGoogle(){
     console.log(this.angularFireAuth.auth.currentUser);
     var provider = new firebase.auth.GoogleAuthProvider();
     
@@ -74,26 +74,27 @@ export class LoginGooglePage {
       this.firebaseService.loginUser(this.userData);
     }).catch(function(error){
       var errorCode = error.code;
+      alert(errorCode);
       console.log(errorCode); 
     })
-  }
+  }*/
   
 
-  /*loginWithGoogle(){
+  loginWithGoogle(){
     alert("hey");
     this.googlePlus.login({
-      'webClientId': '765761820847-odrnbes28kqoqsiml6s1rc77g0ci38v5.apps.googleusercontent.com',
-      'offline': true
+      /*'webClientId': '765761820847-odrnbes28kqoqsiml6s1rc77g0ci38v5.apps.googleusercontent.com',
+      'offline': true*/
     }).then(res=>{
       alert("Success");
       firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
       .then(success=>{
         alert("Logged in successfully!");
       }).catch(err=>{
-        alert("Not successful");
+        alert("Not successful " + err);
       })
     })
-  }*/
+  }
 
   /*loginWithGoogle(): Promise<any> {
     //return this.googlePlus.login(['email'])

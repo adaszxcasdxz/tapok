@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ViewController, AlertController, NavParams, ModalController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, AlertController, NavParams, ModalController, PopoverController, ActionSheetController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 
 @IonicPage()
@@ -10,6 +10,7 @@ import { FireBaseService } from '../../providers/firebase-service';
 export class GroupContent {
 
   groupcont: string = "posts";
+  memberscont: string = "groupmem";
   group: any;
   post: any;
   key: any;
@@ -27,12 +28,19 @@ export class GroupContent {
   current: any;
   posterid: any;
   gmember: any;
+  rmember: any;
   sharedevent: any;
+  keyword: any[] = [];
+  usergroup: any;
+  groupmember: any;
+  photo: any;
+  userid: any;
+
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
     public navParams: NavParams, public modalCtrl: ModalController, public firebaseService: FireBaseService,
-    public actionCtrl: ActionSheetController
+    public actionCtrl: ActionSheetController, public popoverCtrl: PopoverController
   ){
       var y = 0, z = 0;
 
@@ -41,10 +49,13 @@ export class GroupContent {
       console.log(this.current)
       this.key = navParams.get('param1');
       this.gmember = this.firebaseService.getgroupAttend(this.key);
+      this.rmember = this.firebaseService.getRequestee(this.key);
       this.post = this.firebaseService.getPost(this.key);
       this.ugroupkey = this.firebaseService.getUserGroup();
       this.group = this.firebaseService.getSpecificGroup(this.key);
       this.sharedevent = this.firebaseService.getSharedEvent(this.key);
+      this.photo = this.firebaseService.getPhotoURL();
+      this.userid = this.firebaseService.getUserID();
       this.group.forEach(groups=> {
         this.group = groups;
       });
@@ -110,6 +121,22 @@ export class GroupContent {
     actionSheet.present();
   }
 
+  popOver(group){
+    let popover = this.popoverCtrl.create('PopoverGroupPage', {group: this.group, keyword: this.keyword});
+    popover.present({
+      ev: group
+    });
+
+    popover.onDidDismiss(data => {
+      if(data=='add')
+        this.openAddToGroup();
+      if(data=='edit')
+        this.editGroup();
+      if(data=='delete')
+        this.deleteGroup();
+    });
+  }
+
   editGroup(){
     let modal = this.modalCtrl.create('GroupAddPage', { tapok: this.group, label: "Edit Group" });
     modal.present();
@@ -161,6 +188,67 @@ export class GroupContent {
     });
     alert.present(); 
   }
+
+  denyRequest(key, rmember){
+    let confirm = this.alertCtrl.create({
+      title: 'Request has been denied.',
+      buttons: [ 'OK' ]
+    });
+    let alert = this.alertCtrl.create({
+      title: 'Deny this request?',
+      buttons: [ 
+        {
+          text: 'YES',
+          handler: () => {
+            this.firebaseService.deleteRequestee(key, rmember);
+            //this.navCtrl.setRoot('GroupContent');
+            confirm.present();
+          }
+        },
+        {
+          text: 'NO',
+        }
+      ]
+    });
+    alert.present(); 
+  }
+
+  joinGroup(key, gname, rmember){
+      this.usergroup={
+          "key": key,
+          "gname": gname,
+          "timejoin": 0-Date.now()
+          }  
+
+      let confirm = this.alertCtrl.create({
+			title: 'Request Accepted!',
+			buttons: [ 'OK' ]
+        });
+        let alert = this.alertCtrl.create({
+        title: 'Accept this request?',
+        buttons: [  
+            {
+            text: 'YES',
+            handler: () => {
+              
+                this.groupmember={
+                    "name": rmember.name,
+                    "photo": rmember.photo,
+                    "userid": rmember.userid
+                }
+                this.firebaseService.addUserGroup(rmember.name, this.usergroup);  
+                this.firebaseService.groupAttend(key, this.groupmember);
+                this.firebaseService.deleteRequestee(key, rmember.$key);
+                confirm.present();
+            }
+            },
+            {
+            text: 'NO',
+            }
+        ]
+        });
+        alert.present();
+    }
 
   deletePost(posts){
     let confirm = this.alertCtrl.create({

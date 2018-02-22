@@ -1,6 +1,9 @@
 page-login {
-    ion-content{
+    /*ion-content{
         background-color: #FF8D3F !important;
+    }*/
+    .background{
+        background: color($colors, primary);
     }
 
     .facebook{
