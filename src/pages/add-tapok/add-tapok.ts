@@ -43,6 +43,7 @@ export class AddTapok {
 	tags = 'false';
 	lat = null;
 	lng = null;
+	filter = 'General';
 
 	temp: any;
 	tag: any;
@@ -233,7 +234,8 @@ export class AddTapok {
 			"search_key": this.name.toLowerCase(),
 			"timestamp": 0-Date.now(),
 			"latitude": this.lat,
-			"longitude": this.lng
+			"longitude": this.lng,
+			"filter": this.filter
 		};
 
 		if(this.label == "Add Tapok"){

@@ -125,7 +125,7 @@ export class TapokContent {
     });
 
     //this.tapokID = this.tapokID = _params.get('tapokID');
-    if(this.event.latitude != null)
+    if(this.event.latitude != null && this.tab == 'details')
       this.loadMap();
   }
 

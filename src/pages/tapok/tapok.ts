@@ -35,15 +35,27 @@ export class TapokPage {
   //status: any[] = [];
   //index = 0;
   Tags: any;
+  age: any;
+
+  ongoingCount: any;
+  upcomingCount: any;
+  ongoingJoinedCount: any;
+  upcomingJoinedCount: any;
 
   timeStatus: any[] = [];
   memberStatus: any[] = [];
+  attend: any[] = [];
+
+  checkIncoming = 0;
+  checkOngoing = 0;
+  check = 0;
 
    constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
       public modalCtrl: ModalController, public toastCtrl: ToastController, public firebaseService: FireBaseService, public photoViewer: PhotoViewer, public platform: Platform, public firebaseApp: FirebaseApp /*private sharingVar: SocialSharing*/) {
     var i = 0, y = 0;
 
+    this.age = this.firebaseService.getAge();
     this.toggled = false;
     this.Event = this.firebaseService.getEvent(); //
     this.Attending = this.firebaseService.getUserEvents();
@@ -51,35 +63,49 @@ export class TapokPage {
     this.User = this.firebaseService.getUsers();
     this.user = firebaseService.getUser();
 
-    /*this.firebaseApp.database().ref("latest_notifications/"+this.user).on('value', snapshot => {
-      let notif = this.firebaseService.getLatestNotif();
-      let notifMessage;
-      let toast;
-      notif.subscribe(snapshot => {
-        let i = 0;
-        snapshot.forEach(snap =>{
-          notifMessage = snap.name;
-        });
-        console.log(snapshot);
-        if(snapshot.length!=0){
-          toast = this.toastCtrl.create({
-            message: this.user+' has created '+notifMessage,
-            duration: 5000
-          });
-          toast.present();
-          Observable.interval(5000)
-          .subscribe((val) => {
-            this.firebaseService.deletelatestNotif();
-          });
-        }
-      });
-    });*/
-
     Observable.interval(5000)
     .subscribe((val) => { 
+      this.timeCheck();
+    });
+
+    this.User.map(users => {
+      this.userEventKeys = users;
+      }).subscribe(data => {
+        data;
+      });
+
+    this.User.subscribe(snapshot => { //
+      this.userTest.length = 0;
+      i = 0;
+      snapshot.forEach(snap => {
+        this.userTest[i] = snap.key;
+        i++;
+      })
+      this.test();
+    }); //
+
+    this.Event.subscribe(snapshots => { //
+      this.eventTest.length = 0;
+      y = 0;
+      snapshots.forEach(snapshot => {
+        this.eventTest[y] = snapshot.$key;
+        y++;
+      })
+      this.test();
+    });
+  }
+
+  ionViewDidLoad(){
+    this.timeCheck();
+  }
+
+  timeCheck(){
+    this.ongoingCount = 0;
+      this.upcomingCount = 0;
+      
       this.Event.subscribe(snapshots => {
         this.eventTime.length = 0;
-        y = 0;
+        var y = 0;
         snapshots.forEach(snapshot => {
           if(snapshot.max_members != null){
             if(snapshot.max_members<=snapshot.tapok){
@@ -88,6 +114,7 @@ export class TapokPage {
               this.memberStatus[y] = 'not_full';
             }
           }
+      
           this.eventTime[y] = snapshot;          
           var checkTime = moment().isSameOrAfter(moment(snapshot.time, 'hh:mm a'));
           var checkDate = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
@@ -119,10 +146,14 @@ export class TapokPage {
             }
           }
           //if no end date and end time
-          if(checkTime && checkDate && snapshot.enddate == '')
+          if(checkTime && checkDate && snapshot.enddate == ''){
             this.timeStatus[y] = 'ongoing';
-          else
+            this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
+          }
+          else{
             this.timeStatus[y] = 'upcoming';
+            this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
+          }
           //with end time but no end date
           if(snapshot.endtime != '' && snapshot.enddate == ''){
             var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
@@ -132,6 +163,7 @@ export class TapokPage {
                 status: 'archive'
               }
               this.firebaseService.editEvent(snapshot.$key, archive);
+              this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
               if(snapshot.status == null)
                 this.firebaseService.addHistory(snapshot);
             } 
@@ -139,98 +171,45 @@ export class TapokPage {
           //with end date but no end time
           if(snapshot.enddate != '' && snapshot.endtime == ''){
             var checkEnd = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
-            if(checkEnd)
+            if(checkEnd){
               this.timeStatus[y] = 'ongoing';
+              this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
+            }
           }
           //with end date and end time
           if(snapshot.enddate != '' && snapshot.endtime != ''){
             var checkEndDate = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
             var checkEndTime = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
-            if(checkEndDate && !checkEndTime)
+            if(checkEndDate && !checkEndTime){
               this.timeStatus[y] = 'ongoing';
-            else if( !checkEndTime && !checkEndTime)
+              this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
+            }
+            else if( !checkEndTime && !checkEndTime){
               this.timeStatus[y] = 'upcoming';
+              this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
+            }
             else if (checkEndDate && checkEndTime){
               this.timeStatus[y] = 'archived';
               var archive = {
                 status: 'archive'
               }
               this.firebaseService.editEvent(snapshot.$key, archive);
+              this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
               if(snapshot.status == null)
                 this.firebaseService.addHistory(snapshot);
+            }
+          }
+          for(var x=0;x<this.timeStatus.length;x++){
+            if(this.check!=0){
+              if(this.timeStatus[x]=='upcoming')
+                this.upcomingCount++;
+              else if(this.timeStatus[x]=='ongoing')
+                this.ongoingCount++;
             }
           }
           y++;
         })
       });
-    });
-
-    this.User.map(users => {
-      this.userEventKeys = users;
-      }).subscribe(data => {
-        data;
-      });
-
-    this.User.subscribe(snapshot => { //
-      this.userTest.length = 0;
-      i = 0;
-      snapshot.forEach(snap => {
-        this.userTest[i] = snap.key;
-        i++;
-      })
-      this.test();
-    }); //
-
-    this.Event.subscribe(snapshots => { //
-      this.eventTest.length = 0;
-      y = 0;
-      snapshots.forEach(snapshot => {
-        this.eventTest[y] = snapshot.$key;
-        y++;
-      })
-      this.test();
-    });
-  }
-
-  ionViewDidLoad(){
-    this.Event.subscribe(snapshots => {
-      this.eventTime.length = 0;
-      var y = 0;
-      snapshots.forEach(snapshot => {
-        this.eventTime[y] = snapshot;          
-        var checkTime = moment().isSameOrAfter(moment(snapshot.time, 'hh:mm a'));
-        var checkDate = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
-        //if no end date and end time
-        if(checkTime && checkDate && snapshot.enddate == '')
-          this.timeStatus[y] = 'ongoing';
-        else
-          this.timeStatus[y] = 'upcoming';
-        //with end time but no end date
-        if(snapshot.endtime != '' && snapshot.enddate == ''){
-          var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
-          if(checkEnd)
-            this.timeStatus[y] = 'archived';
-        }
-        //with end date but no end time
-        if(snapshot.enddate != '' && snapshot.endtime == ''){
-          var checkEnd = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
-          if(checkEnd)
-            this.timeStatus[y] = 'ongoing';
-        }
-        //with end date and end time
-        if(snapshot.enddate != '' && snapshot.endtime != ''){
-          var checkEndDate = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
-          var checkEndTime = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
-          if(checkEndDate && !checkEndTime)
-            this.timeStatus[y] = 'ongoing';
-          else if( !checkEndTime && !checkEndTime)
-            this.timeStatus[y] = 'upcoming';
-          else if (checkEndDate && checkEndTime)
-            this.timeStatus[y] = 'archived';
-        }
-        y++;
-      })
-    });
   }
 
   test(){ //
@@ -244,7 +223,20 @@ export class TapokPage {
         } 
       }
     }
+
+    for(var x=0;x<this.status.length;x++){
+      if(this.status[x] == "TAPOK")
+        this.check++;
+    }
   } //
+
+  checkEvents(){
+    this.check = 0;
+    for(var x=0;x<this.status.length;x++){
+      if(this.status[x] == "TAPOK")
+        this.check++;
+    }
+  }
 
   sharePopover(){
     let popover = this.popoverCtrl.create('SharePopoverPage');
@@ -406,6 +398,8 @@ export class TapokPage {
 
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, attendee, attendeeKey, userKey);
     this.firebaseService.addNotif(event.host, notif);
+
+    this.checkEvents();
   }
 
   /*facebookShare(event){

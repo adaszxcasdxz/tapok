@@ -34,6 +34,10 @@ export class FireBaseService {
     return this.user;
   }
 
+  getAge(){
+    return 20;
+  }
+
   getuID(){
     return this.user.$key;
   }
@@ -86,6 +90,13 @@ export class FireBaseService {
     });*/
   }
 
+  updateEventStatus(key, val){
+    var obj = {
+      timeStatus: val
+    }
+    this.tapok.object('/events/'+key).update(obj);
+  }
+
   getSpecificEvent(key){
     return this.tapok.object('/events/'+key);
   }
@@ -108,6 +119,13 @@ export class FireBaseService {
 
     this.tapok.list('/users/'+this.user).push(obj);
     return Key;
+  }
+
+  initializeEvent(){
+    var initialize = {
+      status: 'initialized'
+    }
+    this.tapok.list('events/').push(initialize);
   }
 
   getUserEvents(){

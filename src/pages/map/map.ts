@@ -64,12 +64,17 @@ export class MapPage {
       this.currentLocation = new google.maps.Marker({
         map: this.map,
         animation: google.maps.Animation.DROP,
-        position: latLng
+        position: latLng,
+        icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
       });
-
+      var iconLink;
       for(i = 0; i < this.lat.length; i++){
         eventLocation[i] = new google.maps.LatLng(this.lat[i], this.long[i]);
-        this.addMarker(eventLocation[i], this.info[i], this.lat[i]);
+        if(this.info[i].timeStatus == 'upcoming')
+          iconLink = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+        if(this.info[i].timeStatus == 'ongoing')
+          iconLink = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+        this.addMarker(eventLocation[i], this.info[i], this.lat[i], iconLink);
       }
 
     }, (err) => {
@@ -78,12 +83,13 @@ export class MapPage {
     
   }
 
-  addMarker(eventLocation, info, lat){
+  addMarker(eventLocation, info, lat, iconLink){
 
      let marker = new google.maps.Marker({
        map: this.map,
        animation: google.maps.Animation.DROP,
-       position: eventLocation
+       position: eventLocation,
+       icon: iconLink
      });
     
      let content = info;         
@@ -101,14 +107,14 @@ export class MapPage {
 
     for(var i=0;i<this.info.length;i++){
       if(this.info[i].latitude == lat){
-        contentString = contentString.concat('<div id="'+this.info[i].$key+'"><h3>'+this.info[i].name+'</h3><hr>'+this.info[i].date+'<br>'+this.info[i].time+'<hr>Attendees: '+this.info[i].tapok+'<br></div>');
+        contentString = contentString.concat('<div id="'+this.info[i].$key+'"><h3 id="'+this.info[i].$key+'">'+this.info[i].name+'</h3><hr>'+this.info[i].date+'<br>'+this.info[i].time+'<hr>Attendees: '+this.info[i].tapok+'<br></div>');
         event[y] = this.info[i].$key;
         y++;
       }
     }
 
     let infoWindow = new google.maps.InfoWindow({
-      content: contentString
+      content: '<div class="scrollFix">'+contentString+'</div>'
     });
 
      google.maps.event.addListener(marker, 'click', () => {

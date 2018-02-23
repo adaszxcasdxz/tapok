@@ -42,8 +42,6 @@ export class TabsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TabsPage');
-    this.selectedTab = this.navParams.get('tabIndex');
-    console.log(this.selectedTab);
     /*if(this.selectedTab == 2){
       console.log('test');
       this.navCtrl.setRoot('TapokContent', { param1: this.key });

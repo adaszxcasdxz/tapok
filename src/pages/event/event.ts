@@ -17,7 +17,7 @@ export class EventPage {
   attendees: any;
   eventTest: any[] = [];
   userTest: any[] = [];
-  status: any;
+  status: any[] = [];
   index = 0;
   index2 = 1;
   Tags: any;
@@ -30,6 +30,10 @@ export class EventPage {
   upcomingStatus: any;
   memberStatus: any[] = [];
 
+  check = 0;
+  upcomingCount = 0;
+  ongoingCount = 0;
+
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public modalCtrl: ModalController, public alertCtrl: AlertController) {
     this.Event = this.firebaseService.getEvent();
     this.Attending = this.firebaseService.getUserEvents();
@@ -39,9 +43,55 @@ export class EventPage {
     
     Observable.interval(5000)
     .subscribe((val) => {
-      //console.log(moment().format('hh:mm:ss').toString()); 
+      this.timeCheck();
+    });
+
+    /*this.Attending.subscribe(snapshot => {
+      this.userTest.length = 0;
+      var i = 0;
+      snapshot.forEach(snap => {
+        this.userTest[i] = snap.key;
+        i++;
+      })
+      this.test();
+    });*/
+
+    this.User.map(users => {
+      this.userEventKeys = users;
+      }).subscribe(data => {
+        data;
+    });
+
+    this.User.subscribe(snapshot => { //
+      this.userTest.length = 0;
+      var i = 0;
+      snapshot.forEach(snap => {
+        this.userTest[i] = snap.key;
+        i++;
+      })
+      this.test();
+    }); //
+
+    this.Event.subscribe(snapshots => { //
+      this.eventTest.length = 0;
+      var y = 0;
+      snapshots.forEach(snapshot => {
+        this.eventTest[y] = snapshot.$key;
+        y++;
+      })
+      this.test();
+    });
+  }
+
+  ionViewDidLoad(){
+    this.timeCheck();
+  }
+
+  timeCheck(){
+    this.ongoingCount = 0;
+      this.upcomingCount = 0;
+      
       this.Event.subscribe(snapshots => {
-        this.upcomingStatus = false;
         this.eventTime.length = 0;
         var y = 0;
         snapshots.forEach(snapshot => {
@@ -52,104 +102,133 @@ export class EventPage {
               this.memberStatus[y] = 'not_full';
             }
           }
+      
           this.eventTime[y] = snapshot;          
           var checkTime = moment().isSameOrAfter(moment(snapshot.time, 'hh:mm a'));
           var checkDate = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
+          var day = moment(snapshot.date, 'MMM DD').date();
+          var checkNotifDate = moment(day).isSameOrAfter(moment().date());
+          var timeCheck = moment(snapshot.time,'hh:mm a').format('MMM DD, hh:mm a');
+          var checkHour = moment(timeCheck, 'MMM DD, hh:mm a').fromNow();
+          if(checkNotifDate){
+            if(checkHour == 'in an hour'){
+              var attend = this.firebaseService.getAttendees(snapshot.$key).subscribe(People => {
+                People.forEach(people => {
+                  if(people.notif != 'notified'){
+                    var notif = {
+                      'name': this.user,
+                      'type': 3,
+                      'timestamp': 0-Date.now(),
+                      'event_name': snapshot.name,
+                      'event_key': snapshot.$key 
+                    }
+
+                    var update = {
+                      'notif': 'notified'
+                    }
+                    this.firebaseService.addNotif(people.name, notif);
+                    this.firebaseService.editAttendees(snapshot.$key, people.$key, update);
+                  }
+                })
+              })
+            }
+          }
           //if no end date and end time
-          if(checkTime && checkDate && snapshot.enddate == '')
+          if(checkTime && checkDate && snapshot.enddate == ''){
             this.timeStatus[y] = 'ongoing';
-          else
+            this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
+          }
+          else{
             this.timeStatus[y] = 'upcoming';
+            this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
+          }
           //with end time but no end date
           if(snapshot.endtime != '' && snapshot.enddate == ''){
             var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
-            if(checkEnd)
-              this.timeStatus[y] = 'archived';
+            if(checkEnd){
+              this.timeStatus[y] = 'archive';
+              var archive = {
+                status: 'archive'
+              }
+              this.firebaseService.editEvent(snapshot.$key, archive);
+              this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
+              if(snapshot.status == null)
+                this.firebaseService.addHistory(snapshot);
+            } 
           }
           //with end date but no end time
           if(snapshot.enddate != '' && snapshot.endtime == ''){
             var checkEnd = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
-            if(checkEnd)
+            if(checkEnd){
               this.timeStatus[y] = 'ongoing';
+              this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
+            }
           }
           //with end date and end time
           if(snapshot.enddate != '' && snapshot.endtime != ''){
             var checkEndDate = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
             var checkEndTime = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
-            if(checkEndDate && !checkEndTime)
+            if(checkEndDate && !checkEndTime){
               this.timeStatus[y] = 'ongoing';
-            else if( !checkEndTime && !checkEndTime)
+              this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
+            }
+            else if( !checkEndTime && !checkEndTime){
               this.timeStatus[y] = 'upcoming';
-            else if (checkEndDate && checkEndTime)
+              this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
+            }
+            else if (checkEndDate && checkEndTime){
               this.timeStatus[y] = 'archived';
+              var archive = {
+                status: 'archive'
+              }
+              this.firebaseService.editEvent(snapshot.$key, archive);
+              this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
+              if(snapshot.status == null)
+                this.firebaseService.addHistory(snapshot);
+            }
           }
+          for(var x=0;x<this.timeStatus.length;x++){
+            if(this.check!=0){
+              if(this.timeStatus[x]=='upcoming')
+                this.upcomingCount++;
+              else if(this.timeStatus[x]=='ongoing')
+                this.ongoingCount++;
+            }
+            console.log(this.check);
+          }
+          
+          console.log(this.upcomingCount);
+          console.log(this.ongoingCount);
           y++;
         })
       });
-    });
-
-    this.Attending.subscribe(snapshot => {
-      this.userTest.length = 0;
-      var i = 0;
-      snapshot.forEach(snap => {
-        this.userTest[i] = snap.key;
-        i++;
-      })
-      this.test();
-    });
-
-    this.User.map(users => {
-      this.userEventKeys = users;
-      }).subscribe(data => {
-        data;
-    });
   }
 
-  ionViewDidLoad(){
-    this.Event.subscribe(snapshots => {
-      this.eventTime.length = 0;
-      var y = 0;
-      snapshots.forEach(snapshot => {
-        this.eventTime[y] = snapshot;          
-        var checkTime = moment().isSameOrAfter(moment(snapshot.time, 'hh:mm a'));
-        var checkDate = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
-        //if no end date and end time
-        if(checkTime && checkDate && snapshot.enddate == '')
-          this.timeStatus[y] = 'ongoing';
-        else
-          this.timeStatus[y] = 'upcoming';
-        //with end time but no end date
-        if(snapshot.endtime != '' && snapshot.enddate == ''){
-          var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
-          if(checkEnd)
-            this.timeStatus[y] = 'archived';
-        }
-        //with end date but no end time
-        if(snapshot.enddate != '' && snapshot.endtime == ''){
-          var checkEnd = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
-          if(checkEnd)
-            this.timeStatus[y] = 'ongoing';
-        }
-        //with end date and end time
-        if(snapshot.enddate != '' && snapshot.endtime != ''){
-          var checkEndDate = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
-          var checkEndTime = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
-          if(checkEndDate && !checkEndTime)
-            this.timeStatus[y] = 'ongoing';
-          else if( !checkEndTime && !checkEndTime)
-            this.timeStatus[y] = 'upcoming';
-          else if (checkEndDate && checkEndTime)
-            this.timeStatus[y] = 'archived';
-        }
-        y++;
-      })
-    });
-  }
+  test(){ //
+    this.status.length = 0;
+    for(var x=0;x<this.eventTest.length;x++){
+      this.status[x] = "TAPOK";
+      for(var z=0;z<this.userTest.length;z++){
+        if(this.eventTest[x]==this.userTest[z]){
+          this.status[x] = "JOINED";
+          break;
+        } 
+      }
+    }
+    console.log(this.status);
+    for(var x=0;x<this.status.length;x++){
+      if(this.status[x] == "JOINED")
+        this.check++;
+    }
+    console.log(this.check);
+  } //
 
-  test(){
-    this.status = "true";
-    if(this.userTest[0] == null)
-      this.status = "false";
+  checkEvents(){
+    this.check = 0;
+    for(var x=0;x<this.status.length;x++){
+      if(this.status[x] == "JOINED")
+        this.check++;
+    }
   }
 
   openSearch(){
@@ -256,6 +335,8 @@ export class EventPage {
       else
         this.firebaseService.removeAdmin(event.$key, adminKey);
     }
+
+    this.checkEvents();
   }
 
   viewPic(photo){
