@@ -77,9 +77,20 @@ export class AddPersonPage {
                     "photo": user.photo,
                     "userid": user.$key
                 }
+
+                var notif = {
+                  "name": user.name,
+                  "admin": this.group.admin,
+                  "type": 6,
+                  "timestamp": 0-Date.now(),
+                  "group_name": this.group.gname,
+                  "group_key": this.group.$key
+                }
+
+                this.firebaseService.addNotif(user.name, notif);
                 this.firebaseService.addMemberGroup(user.name, this.usergroup);  
                 this.firebaseService.groupAttend(this.group.$key, this.groupmember);
-                this.navCtrl.setRoot('GroupPage');
+                //this.navCtrl.setRoot('GroupPage');
                 confirm.present();
             }
             },

@@ -122,7 +122,7 @@ export class LoginPage {
       
         firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
           .then(success => {
-            alert(this.afAuth.auth.currentUser.displayName);
+            //alert(this.afAuth.auth.currentUser.displayName);
             this.firebaseService.setUser(this.afAuth.auth.currentUser.displayName);
             this.firebaseService.setUID(this.afAuth.auth.currentUser.uid);
             //alert("firebase authentication");
@@ -155,8 +155,8 @@ export class LoginPage {
               //alert("not in DB");
             }
             else{
-              this.firebaseService.updateLoginStatus("logged in");
               this.navCtrl.setRoot('TabsPage');
+              this.firebaseService.updateLoginStatus("logged in");
               //alert("in DB");
             }
           }).catch(err => {
@@ -212,6 +212,7 @@ export class LoginPage {
             }
             else{
               this.navCtrl.setRoot('TabsPage');
+              this.firebaseService.updateLoginStatus("logged in");
             }
           });
       }).catch((error) => { console.log(error) });

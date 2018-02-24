@@ -5,6 +5,8 @@ import { LoginGooglePage } from '../login-google/login-google';
 import { App } from 'ionic-angular/components/app/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Facebook } from '@ionic-native/facebook';
+import { GooglePlus } from '@ionic-native/google-plus';
 
 declare var google;
 
@@ -30,7 +32,10 @@ export class UserPage {
   lng: any = 0;
   permission: any=false;
 
-  constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController, public geolocation: Geolocation) {
+  constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, 
+    public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController, 
+    public modalCtrl: ModalController, public geolocation: Geolocation, private facebook: Facebook,
+    private gPlus: GooglePlus) {
     this.otherUser = this.params.get('otherUser');
     this.Following = this.firebaseService.getFollowing();
     this.History = this.firebaseService.getHistory();
@@ -114,7 +119,11 @@ export class UserPage {
 
   logout(){
     this.firebaseService.updateLoginStatus("logged out");
-    this.angularFireAuth.auth.signOut(); 
+    /*this.facebook.getLoginStatus({
+
+    }).then (res)=>*/
+    
+    this.angularFireAuth.auth.signOut();
     this.app.getRootNav().setRoot('LoginPage');
   }
 

@@ -213,7 +213,7 @@ export class GroupContent {
     alert.present(); 
   }
 
-  joinGroup(key, gname, rmember){
+  joinGroup(key, gname, rmember, admin){
       this.usergroup={
           "key": key,
           "gname": gname,
@@ -236,6 +236,17 @@ export class GroupContent {
                     "photo": rmember.photo,
                     "userid": rmember.userid
                 }
+
+                var notif = {
+                  "name": rmember.name,
+                  "admin": admin,
+                  "type": 6,
+                  "timestamp": 0-Date.now(),
+                  "group_name": gname,
+                  "group_key": key
+                }
+
+                this.firebaseService.addNotif(rmember.name, notif);
                 this.firebaseService.addUserGroup(rmember.name, this.usergroup);  
                 this.firebaseService.groupAttend(key, this.groupmember);
                 this.firebaseService.deleteRequestee(key, rmember.$key);

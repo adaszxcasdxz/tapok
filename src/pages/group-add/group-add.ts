@@ -31,6 +31,7 @@ export class GroupAddPage {
 	userid: any;
 	photo: any;
 	user: any;
+	current: any;
 	groupmember: any;
 
   admin = '';
@@ -55,6 +56,7 @@ export class GroupAddPage {
 				this.adminid = this.firebaseService.getUserID();
 				this.userid = this.firebaseService.getUserID();
 				this.photo = this.firebaseService.getPhotoURL();
+				this.current = this.firebaseService.getUser();
 				this.user = firebaseService.user;
         this.label = params.get('label');
 			  this.group = params.get('tapok');
@@ -93,7 +95,7 @@ export class GroupAddPage {
                     "userid": this.userid
                 }
 					
-			this.firebaseService.addUserGroup(this.usergroup);
+			this.firebaseService.addUserGroup(this.current, this.usergroup);
 			this.firebaseService.groupAttend(key, this.groupmember);
 		}
 
@@ -119,7 +121,7 @@ export class GroupAddPage {
             "timejoin": 0-Date.now()
     }  
 		
-		this.firebaseService.addUserGroup(this.usergroup);
+		this.firebaseService.addUserGroup(this.current, this.usergroup);
 	}
 
   editGroup(){

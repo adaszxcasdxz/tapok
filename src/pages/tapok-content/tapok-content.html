@@ -2,8 +2,12 @@
     <ion-navbar color="tapok">
         <ion-title>{{ event.name }}</ion-title>
         <ion-buttons *ngIf="access == 'ok'" right large>
-            <button class="button-header" (click)="popOver($event)" ion-button icon-only round clear>
+            <button *ngIf="tab=='attendees' || tab=='details'" class="button-header" (click)="popOver($event)" ion-button icon-only round clear>
                 <ion-icon name="more"></ion-icon>
+            </button>
+
+            <button *ngIf="tab=='chat'" class="button-header" (click)="popoverChat($event)" ion-button icon-only>
+                <ion-icon name="settings"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -66,9 +70,9 @@
     <ion-list class="content">
         <ion-item *ngIf="tab=='chat'" no-padding>
             <div class="message">
-                <button class="button-header" (click)="popoverChat($event)" ion-button icon-only>
-                    <ion-icon name="more"></ion-icon>
-                </button>
+                <!--<button class="button-header" (click)="popoverChat($event)" ion-button icon-only>
+                    <ion-icon name="settings"></ion-icon>
+                </button>-->
                         
                 <ion-list no-lines>
                     <ion-item *ngFor="let List of List | async" text-center>

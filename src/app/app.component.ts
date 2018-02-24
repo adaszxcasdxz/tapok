@@ -27,7 +27,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
   
 })
 export class MyApp {
-  //rootPage:any = 'LoginPage';
+  //rootPage:any = 'TabsPage';
   rootPage: any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth,

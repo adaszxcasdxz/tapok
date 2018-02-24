@@ -81,19 +81,7 @@ export class LoginGooglePage {
   
 
   loginWithGoogle(){
-    alert("hey");
-    this.googlePlus.login({
-      /*'webClientId': '765761820847-odrnbes28kqoqsiml6s1rc77g0ci38v5.apps.googleusercontent.com',
-      'offline': true*/
-    }).then(res=>{
-      alert("Success");
-      firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
-      .then(success=>{
-        alert("Logged in successfully!");
-      }).catch(err=>{
-        alert("Not successful " + err);
-      })
-    })
+   
   }
 
   /*loginWithGoogle(): Promise<any> {

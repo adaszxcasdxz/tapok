@@ -202,7 +202,7 @@
                                 <img class="ppic" src="{{ rmembers.photo }}">
                                 <p class="mname">{{ rmembers.name }}</p>
                                 <ion-buttons right large>
-                                    <button class="join-header" (click)="joinGroup(group.$key, group.gname, rmembers)" ion-button icon-only round>
+                                    <button class="join-header" (click)="joinGroup(group.$key, group.gname, rmembers, group.admin)" ion-button icon-only round>
                                         <ion-icon name="checkmark"></ion-icon>
                                     </button>
                                     <button class="join-header" (click)="denyRequest(group.$key, rmembers.$key)" ion-button icon-only round>

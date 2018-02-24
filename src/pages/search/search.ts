@@ -40,6 +40,7 @@ export class SearchPage {
   groupmember: any;
   photo: any;
   userid: any;
+  requestee: any;
 
   memberStatus: any[] = [];
 
@@ -237,7 +238,37 @@ export class SearchPage {
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey, userKey);
   }
 
-  joinGroup(key, gname){
+  requestJoin(key){
+    this.requestee={
+        "name": this.user,
+        "photo": this.photo,
+        "userid": this.userid
+    }
+
+     let confirm = this.alertCtrl.create({
+      title: 'Your request has been sent!',
+      buttons: [ 'OK' ]
+        });
+        let alert = this.alertCtrl.create({
+        title: 'Join this group?',
+        buttons: [  
+            {
+            text: 'YES',
+            handler: () => {
+        this.firebaseService.addRequestee(key, this.requestee);
+        this.navCtrl.setRoot('GroupPage');
+        confirm.present();
+        }
+            },
+            {
+            text: 'NO',
+            }
+        ]
+        });
+        alert.present();
+    }
+
+  /*joinGroup(key, gname){
     this.usergroup={
         "key": key,
         "gname": gname,
@@ -271,7 +302,7 @@ export class SearchPage {
     ]
     });
     alert.present();
-}
+}*/
 
   openUser(user){
     let modal = this.modalCtrl.create('UserPage', { otherUser: user });

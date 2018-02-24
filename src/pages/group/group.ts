@@ -120,7 +120,7 @@ export class GroupPage{
         this.navCtrl.push('GroupContent', {param1: group.$key});
     }
 
-    requestJoin(key){
+    requestJoin(key, admin, gname){
         this.requestee={
             "name": this.user,
             "photo": this.photo,
@@ -137,10 +137,19 @@ export class GroupPage{
             {
             text: 'YES',
             handler: () => {
-        this.firebaseService.addRequestee(key, this.requestee);
-        this.navCtrl.setRoot('GroupPage');
-        confirm.present();
-         }
+                var notif = {
+                    "name": this.user,
+                    "admin": admin,
+                    "type": 5,
+                    "timestamp": 0-Date.now(),
+                    "group_name": gname,
+                    "group_key": key
+                  }
+                this.firebaseService.addNotif(admin, notif);  
+                this.firebaseService.addRequestee(key, this.requestee);
+                this.navCtrl.setRoot('GroupPage');
+                confirm.present();
+                }
             },
             {
             text: 'NO',
@@ -150,7 +159,7 @@ export class GroupPage{
         alert.present();
     }
 
-    joinGroup(key, gname){
+    /*joinGroup(key, gname){
         this.usergroup={
             "key": key,
             "gname": gname,
@@ -184,7 +193,7 @@ export class GroupPage{
         ]
         });
         alert.present();
-    }
+    }*/
 
     leaveGroup(ugroup, group){
         var i;

@@ -18,6 +18,8 @@ export class FireBaseService {
   constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp, private afAuth: AngularFireAuth) {
     //this.user = afAuth.auth.currentUser.displayName;
     //this.user="John Henry Eguia"
+    //this.user="Shakira"
+    //this.user="Rihanna"
   }
 
   setUser(name){
@@ -502,7 +504,10 @@ export class FireBaseService {
   }
 
   updateLoginStatus(login_status){
-    this.tapok.object('login/'+this.uID+this.key+'/status').update(login_status);
+    var obj = {
+      status: login_status
+    }
+     this.tapok.object('login/'+this.uID+'/'+this.key).update(obj);
   }
 
   getUserLocation(){
