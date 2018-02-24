@@ -19,33 +19,33 @@
     You have not joined any events.
   </div>-->
   <ion-toolbar class="tabs">  
-    <ion-segment [(ngModel)]="pages">
-      <ion-segment-button value="upcoming">
+    <ion-segment [(ngModel)]="epages">
+      <ion-segment-button value="eupcoming">
         UPCOMING
       </ion-segment-button>
-      <ion-segment-button value="ongoing">
+      <ion-segment-button value="eongoing">
         ONGOING
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
   <br><br><br>
-  <div [ngSwitch]="pages">
-    <div [ngSwitch]="pages">
-      <div *ngSwitchCase="'upcoming'">
-        <div *ngIf="upcomingCount==0">
+  <div [ngSwitch]="epages">
+    <div [ngSwitch]="epages">
+      <div *ngSwitchCase="'eupcoming'">
+        <div *ngIf="eupcomingCount==0">
           No upcoming events  
         </div>
       </div>
-        <div *ngSwitchCase="'ongoing'">
-        <div *ngIf="ongoingCount==0">
+        <div *ngSwitchCase="'eongoing'">
+        <div *ngIf="eongoingCount==0">
           No ongoing events  
         </div>
       </div>
     </div>
     <div *ngFor="let event of Event | async; let i = index" text-center>
       <div *ngFor="let attend of Attending | async">
-        <div *ngIf="timeStatus[i]=='upcoming'">
-          <ion-list *ngSwitchCase="'upcoming'">
+        <div *ngIf="etimeStatus[i]=='upcoming'">
+          <ion-list *ngSwitchCase="'eupcoming'">
             <ion-card *ngIf="attend.key == event.$key" text-center>
                 <ion-item>
                   <ion-avatar item-start>
@@ -138,8 +138,8 @@
               </ion-card>
             </ion-list>
           </div>
-          <div *ngIf="timeStatus[i]=='ongoing'">
-            <ion-list *ngSwitchCase="'ongoing'">
+          <div *ngIf="etimeStatus[i]=='ongoing'">
+            <ion-list *ngSwitchCase="'eongoing'">
               <ion-card *ngIf="attend.key == event.$key" text-center>
                 <ion-item>
                   <ion-avatar item-start>

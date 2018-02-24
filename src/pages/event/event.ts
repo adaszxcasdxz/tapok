@@ -23,16 +23,15 @@ export class EventPage {
   Tags: any;
   User: any;
   userEventKeys: any;
-  pages: string = 'upcoming';
-  timeStatus: any[] = [];
+  epages: string = 'eupcoming';
+  etimeStatus: any[] = [];
   eventTime: any[] = [];
 
   upcomingStatus: any;
   memberStatus: any[] = [];
 
-  check = 0;
-  upcomingCount = 0;
-  ongoingCount = 0;
+  eupcomingCount = 0;
+  eongoingCount = 0;
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public modalCtrl: ModalController, public alertCtrl: AlertController) {
     this.Event = this.firebaseService.getEvent();
@@ -88,8 +87,8 @@ export class EventPage {
   }
 
   timeCheck(){
-    this.ongoingCount = 0;
-      this.upcomingCount = 0;
+    this.eongoingCount = 0;
+      this.eupcomingCount = 0;
       
       this.Event.subscribe(snapshots => {
         this.eventTime.length = 0;
@@ -135,18 +134,18 @@ export class EventPage {
           }
           //if no end date and end time
           if(checkTime && checkDate && snapshot.enddate == ''){
-            this.timeStatus[y] = 'ongoing';
+            this.etimeStatus[y] = 'ongoing';
             this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
           }
           else{
-            this.timeStatus[y] = 'upcoming';
+            this.etimeStatus[y] = 'upcoming';
             this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
           }
           //with end time but no end date
           if(snapshot.endtime != '' && snapshot.enddate == ''){
             var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
             if(checkEnd){
-              this.timeStatus[y] = 'archive';
+              this.etimeStatus[y] = 'archive';
               var archive = {
                 status: 'archive'
               }
@@ -160,7 +159,7 @@ export class EventPage {
           if(snapshot.enddate != '' && snapshot.endtime == ''){
             var checkEnd = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
             if(checkEnd){
-              this.timeStatus[y] = 'ongoing';
+              this.etimeStatus[y] = 'ongoing';
               this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
             }
           }
@@ -169,15 +168,15 @@ export class EventPage {
             var checkEndDate = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
             var checkEndTime = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
             if(checkEndDate && !checkEndTime){
-              this.timeStatus[y] = 'ongoing';
+              this.etimeStatus[y] = 'ongoing';
               this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
             }
             else if( !checkEndTime && !checkEndTime){
-              this.timeStatus[y] = 'upcoming';
+              this.etimeStatus[y] = 'upcoming';
               this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
             }
             else if (checkEndDate && checkEndTime){
-              this.timeStatus[y] = 'archived';
+              this.etimeStatus[y] = 'archived';
               var archive = {
                 status: 'archive'
               }
@@ -187,18 +186,17 @@ export class EventPage {
                 this.firebaseService.addHistory(snapshot);
             }
           }
-          for(var x=0;x<this.timeStatus.length;x++){
-            if(this.check!=0){
-              if(this.timeStatus[x]=='upcoming')
-                this.upcomingCount++;
-              else if(this.timeStatus[x]=='ongoing')
-                this.ongoingCount++;
+          for(var x=0;x<this.etimeStatus.length;x++){
+            if(this.status[x]=='JOINED'){
+              if(this.etimeStatus[x]=='upcoming')
+                this.eupcomingCount++;
+              else if(this.etimeStatus[x]=='ongoing')
+                this.eongoingCount++;
             }
-            console.log(this.check);
           }
-          
-          console.log(this.upcomingCount);
-          console.log(this.ongoingCount);
+          console.log(this.status);
+          console.log(this.eupcomingCount);
+          console.log(this.eongoingCount);
           y++;
         })
       });
@@ -215,21 +213,7 @@ export class EventPage {
         } 
       }
     }
-    console.log(this.status);
-    for(var x=0;x<this.status.length;x++){
-      if(this.status[x] == "JOINED")
-        this.check++;
-    }
-    console.log(this.check);
   } //
-
-  checkEvents(){
-    this.check = 0;
-    for(var x=0;x<this.status.length;x++){
-      if(this.status[x] == "JOINED")
-        this.check++;
-    }
-  }
 
   openSearch(){
     let modal = this.modalCtrl.create('SearchPage');
@@ -335,8 +319,6 @@ export class EventPage {
       else
         this.firebaseService.removeAdmin(event.$key, adminKey);
     }
-
-    this.checkEvents();
   }
 
   viewPic(photo){

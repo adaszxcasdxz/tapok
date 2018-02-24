@@ -48,7 +48,6 @@ export class TapokPage {
 
   checkIncoming = 0;
   checkOngoing = 0;
-  check = 0;
 
    constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
@@ -200,7 +199,7 @@ export class TapokPage {
             }
           }
           for(var x=0;x<this.timeStatus.length;x++){
-            if(this.check!=0){
+            if(this.status[x]=='TAPOK'){
               if(this.timeStatus[x]=='upcoming')
                 this.upcomingCount++;
               else if(this.timeStatus[x]=='ongoing')
@@ -223,20 +222,8 @@ export class TapokPage {
         } 
       }
     }
-
-    for(var x=0;x<this.status.length;x++){
-      if(this.status[x] == "TAPOK")
-        this.check++;
-    }
   } //
 
-  checkEvents(){
-    this.check = 0;
-    for(var x=0;x<this.status.length;x++){
-      if(this.status[x] == "TAPOK")
-        this.check++;
-    }
-  }
 
   sharePopover(){
     let popover = this.popoverCtrl.create('SharePopoverPage');
@@ -398,8 +385,6 @@ export class TapokPage {
 
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, attendee, attendeeKey, userKey);
     this.firebaseService.addNotif(event.host, notif);
-
-    this.checkEvents();
   }
 
   /*facebookShare(event){
