@@ -28,15 +28,15 @@
                     <ion-label stacked><b>Tapok Name</b></ion-label>
                     <ion-input (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="name" type="text"></ion-input>  
                 </ion-item>
-                <!--<ion-item>
-                    <div class="detail-label"><b>Cover Image</b></div>
+                <ion-item>
+                    <div class="noVLabel"><b>Cover Image</b></div>
                     <button (click)="openGallery()" ion-button outline>
                         <ion-icon name="image"></ion-icon>
                     </button> 
                     <button (click)="openCamera()" ion-button outline>
                         <ion-icon name="camera"></ion-icon>
                     </button>
-                </ion-item>-->
+                </ion-item>
                 <ion-item>
                     <ion-label stacked><b>Start Date</b></ion-label>
                     <ion-datetime (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="date" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
@@ -124,7 +124,7 @@
                 <ion-col>
                     <ion-item>
                         <ion-label><b>Classification</b></ion-label>
-                        <ion-select (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="classification">
+                        <ion-select (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="filter">
                             <ion-option value="General">General</ion-option>
                             <ion-option value="PG">PG</ion-option>
                             <ion-option value="SPG">SPG</ion-option>
@@ -156,7 +156,7 @@
 
 <ion-footer>
     <ion-row (click)="inputLocationToggle('false')">
-        <ion-col *ngIf="label == 'Add Tapok'">
+        <ion-col *ngIf="label == 'Add Tapok'&&name!=''&&date!=''&&time!=''&&venue!=''">
             <button class="notjoined" (click)="addTapok()" ion-button icon-left full>
                 <ion-icon name="happy"></ion-icon>
                 {{ label }}

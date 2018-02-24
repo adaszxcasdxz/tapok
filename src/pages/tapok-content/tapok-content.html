@@ -19,7 +19,7 @@
             <ion-segment-button (click)="changeTab('details')" value="details">
                 Details
             </ion-segment-button>
-            <ion-segment-button (click)="changeTab('chat')" value="chat">
+            <ion-segment-button *ngIf="access == 'ok'" (click)="changeTab('chat')" value="chat">
                 Chat
             </ion-segment-button>
             <ion-segment-button (click)="changeTab('attendees')" value="attendees">
@@ -246,6 +246,8 @@
         </ion-item-group>
     </ion-list>
     <div *ngIf="event.latitude!=null && tab=='details'" #map id="map"></div>
+    <div *ngIf="event.latitude!=null && tab=='attendees'" #map id="map_hide"></div>
+    <div *ngIf="event.latitude!=null && tab=='chat'" #map id="map_hide"></div>
 </ion-content>
 
 <ion-footer *ngIf="tab=='attendees' || tab=='details'">

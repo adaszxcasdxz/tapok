@@ -34,6 +34,10 @@ export class FireBaseService {
     return this.user;
   }
 
+  getAge(){
+    return 20;
+  }
+
   getuID(){
     return this.user.$key;
   }
@@ -85,6 +89,13 @@ export class FireBaseService {
     });*/
   }
 
+  updateEventStatus(key, val){
+    var obj = {
+      timeStatus: val
+    }
+    this.tapok.object('/events/'+key).update(obj);
+  }
+
   getSpecificEvent(key){
     return this.tapok.object('/events/'+key);
   }
@@ -107,6 +118,13 @@ export class FireBaseService {
 
     this.tapok.list('/users/'+this.user).push(obj);
     return Key;
+  }
+
+  initializeEvent(){
+    var initialize = {
+      status: 'initialized'
+    }
+    this.tapok.list('events/').push(initialize);
   }
 
   getUserEvents(){
@@ -510,7 +528,19 @@ export class FireBaseService {
      this.tapok.object('login/'+this.uID+'/'+this.key).update(obj);
   }
 
-  getUserLocation(){
-    return this.tapok.list('users/'+this.user+'/location');
+  getUserLocation(user){
+    return this.tapok.list('users/'+user+'/location');
+  }
+
+  allowPermission(){
+    return this.tapok.list('users/'+this.user+'/permission').push(true);
+  }
+
+  removePermission(){
+    return this.tapok.list('users/'+this.user+'/permission').remove();
+  }
+
+  getPermission(user){
+    return this.tapok.list('users/'+user+'/permission');
   }
 }
