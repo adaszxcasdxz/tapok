@@ -29,6 +29,7 @@ export class UserPage {
   lat: any = 0;
   lng: any = 0;
   permission: any;
+  other: any = false;
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController, public geolocation: Geolocation) {
     this.otherUser = this.params.get('otherUser');
@@ -59,28 +60,24 @@ export class UserPage {
       this.username = this.otherUser.name;
       this.email = this.otherUser.email;
       this.photo = this.otherUser.photo;
+      this.other = true;
     }
-  }
-
-  ionViewDidLoad(){
-
   }
 
   ionViewWillEnter(){
-    if(this.otherUser==null){
-      this.firebaseService.getPermission(this.username).subscribe(snapshot => {
-        if(snapshot.length == 0)
-          this.permission = false;
-        else  
-          this.permission = true;
-      });
-      this.firebaseService.getUserLocation(this.username).subscribe(snap => {
-        this.lat = snap[0].$value;
-        this.lng = snap[1].$value;
-      }); 
-      if(this.permission)
-        this.loadMap();
-    }
+    this.firebaseService.getPermission(this.username).subscribe(snapshot => {
+      if(snapshot.length == 0)
+        this.permission = false;
+      else  
+        this.permission = true;
+    });
+    this.firebaseService.getUserLocation(this.username).subscribe(snap => {
+      this.lat = snap[0].$value;
+      this.lng = snap[1].$value;
+    }); 
+    if(this.permission)
+      this.loadMap();
+
   }
 
   loadMap(){

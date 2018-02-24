@@ -119,6 +119,8 @@
         </ion-item-group>
     </ion-list>
     <div *ngIf="event.latitude!=null && tab=='details'" #map id="map"></div>
+    <div *ngIf="event.latitude!=null && tab=='attendees'" #map id="map_hide"></div>
+    <div *ngIf="event.latitude!=null && tab=='chat'" #map id="map_hide"></div>
 </ion-content>
 
 <ion-footer>

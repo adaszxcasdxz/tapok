@@ -156,7 +156,7 @@
 
 <ion-footer>
     <ion-row (click)="inputLocationToggle('false')">
-        <ion-col *ngIf="label == 'Add Tapok'">
+        <ion-col *ngIf="label == 'Add Tapok'&&name!=''&&date!=''&&time!=''&&venue!=''">
             <button class="notjoined" (click)="addTapok()" ion-button icon-left full>
                 <ion-icon name="happy"></ion-icon>
                 {{ label }}

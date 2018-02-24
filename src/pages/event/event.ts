@@ -194,9 +194,6 @@ export class EventPage {
                 this.eongoingCount++;
             }
           }
-          console.log(this.status);
-          console.log(this.eupcomingCount);
-          console.log(this.eongoingCount);
           y++;
         })
       });

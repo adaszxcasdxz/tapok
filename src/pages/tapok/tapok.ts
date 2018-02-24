@@ -46,8 +46,8 @@ export class TapokPage {
   memberStatus: any[] = [];
   attend: any[] = [];
 
-  checkIncoming = 0;
-  checkOngoing = 0;
+  checkIncoming = 1;
+  checkOngoing = 1;
 
    constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
@@ -64,7 +64,7 @@ export class TapokPage {
 
     Observable.interval(5000)
     .subscribe((val) => { 
-      this.timeCheck();
+      this.timeCheck('const');
     });
 
     this.User.map(users => {
@@ -95,120 +95,128 @@ export class TapokPage {
   }
 
   ionViewDidLoad(){
-    this.timeCheck();
+    this.upcomingCount = 1;
+    this.ongoingCount = 1;
+    this.timeCheck('load');
   }
 
-  timeCheck(){
-    this.ongoingCount = 0;
-      this.upcomingCount = 0;
-      
-      this.Event.subscribe(snapshots => {
-        this.eventTime.length = 0;
-        var y = 0;
-        snapshots.forEach(snapshot => {
-          if(snapshot.max_members != null){
-            if(snapshot.max_members<=snapshot.tapok){
-              this.memberStatus[y] = 'full';
-            }else{
-              this.memberStatus[y] = 'not_full';
-            }
+  timeCheck(type){
+    var Type = type;
+    this.Event.subscribe(snapshots => {
+      this.eventTime.length = 0;
+      var y = 0;
+      snapshots.forEach(snapshot => {
+        if(snapshot.max_members != null){
+          if(snapshot.max_members<=snapshot.tapok){
+            this.memberStatus[y] = 'full';
+          }else{
+            this.memberStatus[y] = 'not_full';
           }
-      
-          this.eventTime[y] = snapshot;          
-          var checkTime = moment().isSameOrAfter(moment(snapshot.time, 'hh:mm a'));
-          var checkDate = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
-          var day = moment(snapshot.date, 'MMM DD').date();
-          var checkNotifDate = moment(day).isSameOrAfter(moment().date());
-          var timeCheck = moment(snapshot.time,'hh:mm a').format('MMM DD, hh:mm a');
-          var checkHour = moment(timeCheck, 'MMM DD, hh:mm a').fromNow();
-          if(checkNotifDate){
-            if(checkHour == 'in an hour'){
-              var attend = this.firebaseService.getAttendees(snapshot.$key).subscribe(People => {
-                People.forEach(people => {
-                  if(people.notif != 'notified'){
-                    var notif = {
-                      'name': this.user,
-                      'type': 3,
-                      'timestamp': 0-Date.now(),
-                      'event_name': snapshot.name,
-                      'event_key': snapshot.$key 
-                    }
-
-                    var update = {
-                      'notif': 'notified'
-                    }
-                    this.firebaseService.addNotif(people.name, notif);
-                    this.firebaseService.editAttendees(snapshot.$key, people.$key, update);
+        }
+    
+        this.eventTime[y] = snapshot;          
+        var checkTime = moment().isSameOrAfter(moment(snapshot.time, 'hh:mm a'));
+        var checkDate = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
+        var day = moment(snapshot.date, 'MMM DD').date();
+        var checkNotifDate = moment(day).isSameOrAfter(moment().date());
+        var timeCheck = moment(snapshot.time,'hh:mm a').format('MMM DD, hh:mm a');
+        var checkHour = moment(timeCheck, 'MMM DD, hh:mm a').fromNow();
+        if(checkNotifDate){
+          if(checkHour == 'in an hour'){
+            var attend = this.firebaseService.getAttendees(snapshot.$key).subscribe(People => {
+              People.forEach(people => {
+                if(people.notif != 'notified'){
+                  var notif = {
+                    'name': this.user,
+                    'type': 3,
+                    'timestamp': 0-Date.now(),
+                    'event_name': snapshot.name,
+                    'event_key': snapshot.$key 
                   }
-                })
+
+                  var update = {
+                    'notif': 'notified'
+                  }
+                  this.firebaseService.addNotif(people.name, notif);
+                  this.firebaseService.editAttendees(snapshot.$key, people.$key, update);
+                }
               })
-            }
+            })
           }
-          //if no end date and end time
-          if(checkTime && checkDate && snapshot.enddate == ''){
+        }
+        //if no end date and end time
+        if(checkTime && checkDate && snapshot.enddate == ''){
+          this.timeStatus[y] = 'ongoing';
+          this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
+        }
+        else{
+          this.timeStatus[y] = 'upcoming';
+          this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
+        }
+        //with end time but no end date
+        if(snapshot.endtime != '' && snapshot.enddate == ''){
+          var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
+          if(checkEnd){
+            this.timeStatus[y] = 'archive';
+            var archive = {
+              status: 'archive'
+            }
+            this.firebaseService.editEvent(snapshot.$key, archive);
+            this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
+            if(snapshot.status == null)
+              this.firebaseService.addHistory(snapshot);
+          } 
+        }
+        //with end date but no end time
+        if(snapshot.enddate != '' && snapshot.endtime == ''){
+          var checkEnd = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
+          if(checkEnd){
             this.timeStatus[y] = 'ongoing';
             this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
           }
-          else{
+        }
+        //with end date and end time
+        if(snapshot.enddate != '' && snapshot.endtime != ''){
+          var checkEndDate = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
+          var checkEndTime = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
+          if(checkEndDate && !checkEndTime){
+            this.timeStatus[y] = 'ongoing';
+            this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
+          }
+          else if( !checkEndTime && !checkEndTime){
             this.timeStatus[y] = 'upcoming';
             this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
           }
-          //with end time but no end date
-          if(snapshot.endtime != '' && snapshot.enddate == ''){
-            var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
-            if(checkEnd){
-              this.timeStatus[y] = 'archive';
-              var archive = {
-                status: 'archive'
-              }
-              this.firebaseService.editEvent(snapshot.$key, archive);
-              this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
-              if(snapshot.status == null)
-                this.firebaseService.addHistory(snapshot);
-            } 
+          else if (checkEndDate && checkEndTime){
+            this.timeStatus[y] = 'archived';
+            var archive = {
+              status: 'archive'
+            }
+            this.firebaseService.editEvent(snapshot.$key, archive);
+            this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
+            if(snapshot.status == null)
+              this.firebaseService.addHistory(snapshot);
           }
-          //with end date but no end time
-          if(snapshot.enddate != '' && snapshot.endtime == ''){
-            var checkEnd = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
-            if(checkEnd){
-              this.timeStatus[y] = 'ongoing';
-              this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
-            }
+        }
+        for(var x=0;x<this.timeStatus.length;x++){
+          if(this.status[x]=='TAPOK'){
+            if(this.timeStatus[x]=='upcoming')
+              this.upcomingCount++;
+            else if(this.timeStatus[x]=='ongoing')
+              this.ongoingCount++;
           }
-          //with end date and end time
-          if(snapshot.enddate != '' && snapshot.endtime != ''){
-            var checkEndDate = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
-            var checkEndTime = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
-            if(checkEndDate && !checkEndTime){
-              this.timeStatus[y] = 'ongoing';
-              this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
-            }
-            else if( !checkEndTime && !checkEndTime){
-              this.timeStatus[y] = 'upcoming';
-              this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
-            }
-            else if (checkEndDate && checkEndTime){
-              this.timeStatus[y] = 'archived';
-              var archive = {
-                status: 'archive'
-              }
-              this.firebaseService.editEvent(snapshot.$key, archive);
-              this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
-              if(snapshot.status == null)
-                this.firebaseService.addHistory(snapshot);
-            }
-          }
-          for(var x=0;x<this.timeStatus.length;x++){
-            if(this.status[x]=='TAPOK'){
-              if(this.timeStatus[x]=='upcoming')
-                this.upcomingCount++;
-              else if(this.timeStatus[x]=='ongoing')
-                this.ongoingCount++;
-            }
-          }
-          y++;
-        })
-      });
+        }
+        y++;
+      })
+    });
+    if(Type == 'const'){
+      this.upcomingCount = 0;
+      this.ongoingCount = 0;
+    }
+    else{
+      this.upcomingCount = 1;
+      this.ongoingCount = 1;
+    }
   }
 
   test(){ //

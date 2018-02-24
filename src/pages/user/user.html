@@ -54,7 +54,7 @@
     <ion-item>
       <p class="mail"><ion-icon name="mail"></ion-icon> {{ email }}</p>
     </ion-item>
-    <ion-item text-wrap>
+    <ion-item *ngIf="!other" text-wrap>
       <ion-label>Allow other users to find you: </ion-label><ion-toggle (ionChange)="askPermission()" [(ngModel)]="permission"></ion-toggle>
     </ion-item>
   </div>
