@@ -101,7 +101,7 @@ export class TapokPage {
     this.Tags = this.firebaseService.getTag();
     this.upcomingCount = 1;
     this.ongoingCount = 1;
-    this.timeCheck('load');
+    //this.timeCheck('load');
   }
 
   timeCheck(type){

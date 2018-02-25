@@ -28,14 +28,12 @@
             </ion-segment-button>
         </ion-segment>
     </ion-toolbar>
-    <br>
+    <div *ngIf="tab=='details' && event.photo!=''" class="box_content">
+        <img *ngIf="event.photo!='null'" class="photo" src="{{ event.photo }}">
+    </div>
     <ion-list class="content" no-lines text-wrap>
-        <ion-item *ngIf="tab=='details' && event.photo=='null'" class="box">
-            <img class="photo" src="{{ event.photo }}">
-        </ion-item>
-        
         <div *ngIf="tab=='details'">
-            <ion-item *ngIf="event.photo!=null"><br></ion-item>
+            <ion-item *ngIf="event.photo==''"><br><br></ion-item>
             <ion-item-group *ngIf="event.description!=''">
                 <ion-item-divider>Description</ion-item-divider>
                 <ion-item>
