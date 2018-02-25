@@ -53,9 +53,9 @@ export class GroupAddPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
      public firebaseService:FireBaseService, public viewCtrl: ViewController, public camera: Camera, public params: NavParams, public loadingCtrl: LoadingController) {
 				this.admin = firebaseService.user;
-				this.adminid = this.firebaseService.getUserID();
-				this.userid = this.firebaseService.getUserID();
-				this.photo = this.firebaseService.getPhotoURL();
+				//this.adminid = this.firebaseService.getUserID();
+				//this.userid = this.firebaseService.getUserID();
+				//this.photo = this.firebaseService.getPhotoURL();
 				this.current = this.firebaseService.getUser();
 				this.user = firebaseService.user;
         this.label = params.get('label');
@@ -75,9 +75,9 @@ export class GroupAddPage {
       "admin": this.admin,
 			"timestamp": 0-Date.now(),
 			"datetime": Date.now(),
-			"userphoto": this.photo,
-			"photo": this.gphoto,
-			"adminid": this.adminid,
+			//"userphoto": this.photo,
+			//"photo": this.gphoto,
+			//"adminid": this.adminid,
 			"searchgname": this.gname.toLowerCase(),
 		}
 
@@ -91,8 +91,8 @@ export class GroupAddPage {
 
 			this.groupmember={
                     "name": this.admin,
-                    "photo": this.photo,
-                    "userid": this.userid
+                    //"photo": this.photo,
+                    //"userid": this.userid
                 }
 					
 			this.firebaseService.addUserGroup(this.current, this.usergroup);
