@@ -89,14 +89,14 @@ export class AddTapok {
 		public firebaseService: FireBaseService, public params: NavParams, public camera: Camera, public loadingCtrl: LoadingController, public geolocation: Geolocation, public app: App, public modalCtrl: ModalController) {
 		var y = 0;
 
-		this.host = firebaseService.user;
+		this.host = this.firebaseService.getUser();
 		this.label = params.get('label');
 		this.event = params.get('tapok');
 		this.event_key = params.get('key');
 		this.user = this.firebaseService.getUser();
 		console.log(this.event_key);	
 		this.Tags = this.firebaseService.getTempTag();
-		this.uid=firebaseService.uID;
+		this.uid=this.firebaseService.getuID();
 		this.photoURL=firebaseService.getPhotoURL();
 	
 		if(this.event != undefined)

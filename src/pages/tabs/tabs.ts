@@ -73,6 +73,10 @@ export class TabsPage {
     console.log('ionViewDidLoad TabsPage');
   }
 
+  ionViewDidEnter(){
+    this.clearBadges();
+  }
+
   async increaseBadges(){
     try{
       let badge = await this.badge.increase(Number(1));
@@ -88,6 +92,15 @@ export class TabsPage {
       let badgeAmount = await this.badge.get();
       alert("got the badges");
     }catch (e){
+      alert(e);
+    }
+  }
+
+  async clearBadges(){
+    try{
+      let badge = await this.badge.clear();
+      alert("cleared badges" + badge);
+    }catch(e){
       alert(e);
     }
   }

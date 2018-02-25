@@ -32,12 +32,12 @@
   <div [ngSwitch]="epages">
     <div [ngSwitch]="epages">
       <div *ngSwitchCase="'eupcoming'">
-        <div class="empty" *ngIf="eupcomingCount==0">
+        <div class="empty" *ngIf="eupcomingCount===0">
           No upcoming events  
         </div>
       </div>
         <div *ngSwitchCase="'eongoing'">
-        <div class="empty" *ngIf="eongoingCount==0">
+        <div class="empty" *ngIf="eongoingCount===0">
           No ongoing events  
         </div>
       </div>
