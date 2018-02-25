@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import { Geolocation } from '@ionic-native/geolocation';
 import {Observable} from 'rxjs/Rx';
+import { Badge } from '@ionic-native/badge';
+import { FirebaseApp } from 'angularfire2';
 
 @IonicPage()
 @Component({
@@ -19,10 +21,14 @@ export class TabsPage {
 
   selectedTab: any;
   key: any;
+  first=true;
+  bdge:any;
 
   username: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FireBaseService,  public geolocation: Geolocation) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    public firebaseService: FireBaseService,  public geolocation: Geolocation,
+    public firebaseApp: FirebaseApp, public badge: Badge) {
     this.username = navParams.get('username');
     this.key = navParams.get('key');
     this.firebaseService.getUser();
@@ -38,6 +44,16 @@ export class TabsPage {
         this.firebaseService.updateUserLocation(coord);
       })
     });
+
+    this.firebaseApp.database().ref("notifications/").on('value', snapshot => {
+      if (!this.first){
+        this.increaseBadges();
+      }
+      else{
+        this.getBadges();
+        this.first=false;
+      }
+    })
   }
 
   ionViewDidLoad() {
@@ -48,4 +64,20 @@ export class TabsPage {
     }*/
   }
 
+  async increaseBadges(){
+    try{
+      let badge = await this.badge.increase(Number(1));
+      this.bdge = badge;
+    }catch(e){
+      alert(e);
+    }
+  }
+
+  async getBadges(){
+    try{
+      let badgeAmount = await this.badge.get();
+    }catch (e){
+      alert(e);
+    }
+  }
 }

@@ -33,7 +33,7 @@ export class MyApp {
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth,
               /*public push: Push,*/ public alertCtrl: AlertController) {
     //firebase.initializeApp(kuyogFirebase);
-    firebase.auth().getRedirectResult().then(function(result){
+    /*firebase.auth().getRedirectResult().then(function(result){
       if(result.credential){
         var token = result.credential.accessToken;
         var user = result.user;
@@ -41,7 +41,7 @@ export class MyApp {
     }).catch(function(error){
       var errorMessage = error.message;
       console.log(errorMessage);
-    })
+    })*/
 
     const unsubscribe = afAuth.auth.onAuthStateChanged(user => {
       console.log(user);
@@ -75,38 +75,5 @@ export class MyApp {
       //this.pushSetUp();
       //firebase.initializeApp(kuyogFirebase);
     });
-    //}); 
   }
-
-  /*pushSetUp()
-  {
-    const options: PushOptions = {
-      android: {
-        senderID: '765761820847'
-      },
-      ios: {
-        alert: 'true',
-        badge: true,
-        sound: 'false'
-      }
-    };
-
-    const pushObject: PushObject = this.push.init(options);
-
-    pushObject.on('notification').subscribe((notification:any) => {
-      if (notification.additionalData.foreground) {
-        let youralert = this.alertCtrl.create({
-          title: 'New notification',
-          message: notification.message
-        });
-        youralert.present();
-      }
-    });
-
-    pushObject.on('registration').subscribe((registration:any) => {
-      alert(registration.registrationId);
-    });
-
-    pushObject.on('error').subscribe(error => alert('Error with Push Plugin' + error));
-  }*/
 }

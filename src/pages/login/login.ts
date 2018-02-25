@@ -8,6 +8,7 @@ import { TabsPage } from '../tabs/tabs';
 import { FireBaseService } from '../../providers/firebase-service';
 import { GooglePlus } from '@ionic-native/google-plus';
 import firebase from 'firebase';
+import { Badge } from '@ionic-native/badge';
 
 /**
  * Generated class for the LoginPage page.
@@ -35,7 +36,8 @@ export class LoginPage {
   //userProfileRef: any;
 
   constructor(public navCtrl: NavController, private afAuth: AngularFireAuth, private toastCtrl: ToastController,
-    private facebook: Facebook, private platform: Platform, public app: App, public firebaseService: FireBaseService, private gPlus: GooglePlus) { 
+    private facebook: Facebook, private platform: Platform, public app: App, 
+    public firebaseService: FireBaseService, private gPlus: GooglePlus, public badge: Badge) { 
       this.usersdb = this.firebaseService.getUsersList();
       
       this.usersdb.subscribe(snapshot => { 
@@ -113,8 +115,6 @@ export class LoginPage {
     })*/
   this.gPlus.login({
       'webClientId': '765761820847-odrnbes28kqoqsiml6s1rc77g0ci38v5.apps.googleusercontent.com'
-      /*'offline': true*/
-      /*['email', 'public_profile']*/
     })
     .then(res => {
       //const googleCredential = firebase.auth.GoogleAuthProvider
@@ -208,13 +208,44 @@ export class LoginPage {
             if(!this.inDB){
               this.firebaseService.loginUser(this.userData); 
               this.navCtrl.setRoot('AddBirthdayPage');
+              this.requestPermission();
+              this.getBadges();
               this.navCtrl.popToRoot();
             }
             else{
+              this.requestPermission();
+              this.getBadges();
               this.navCtrl.setRoot('TabsPage');
               this.firebaseService.updateLoginStatus("logged in");
             }
           });
       }).catch((error) => { console.log(error) });
+  }
+
+  async getBadges(){
+    try{
+      let badgeAmount = await this.badge.get();
+    }catch (e){
+      alert(e);
+    }
+  }
+
+  async setBadges(){
+    try{
+      let badge = await this.badge.set(Number(0));
+    }catch(e){
+      alert(e);
+    }
+  }
+
+  async requestPermission(){
+    try{
+      let hasPermission = await this.badge.hasPermission();
+      if(!hasPermission){
+        let permission=await this.badge.registerPermission();
+      }
+    }catch(e){
+      alert(e);
+    }
   }
 }

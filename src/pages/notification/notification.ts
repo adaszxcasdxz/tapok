@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
+import { Badge } from '@ionic-native/badge';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the NotificationPage page.
@@ -18,12 +20,19 @@ export class NotificationPage {
 
   Notifs: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,  public firebaseService: FireBaseService, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,  
+    public firebaseService: FireBaseService, public modalCtrl: ModalController, public badge: Badge,
+    public tabs: TabsPage) {
     this.Notifs = this.firebaseService.getNotif();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NotificationPage');
+  }
+
+  ionViewDidEnter(){
+    this.clearBadges();
+    this.tabs.getBadges();
   }
 
   openSearch(){
@@ -34,6 +43,14 @@ export class NotificationPage {
   openMap(){
     let modal = this.modalCtrl.create('MapPage');
     modal.present();
+  }
+
+  async clearBadges(){
+    try{
+      let badge = await this.badge.clear();
+    }catch(e){
+      alert(e);
+    }
   }
 
 }
