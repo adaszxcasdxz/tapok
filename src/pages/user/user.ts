@@ -128,7 +128,6 @@ export class UserPage {
   }
 
   logout(){
-    this.firebaseService.updateLoginStatus("logged out");
     /*this.facebook.getLoginStatus({
 
     }).then (res)=>*/

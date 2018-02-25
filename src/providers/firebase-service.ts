@@ -13,12 +13,11 @@ export class FireBaseService {
 
   user; 
   uID;
-  key;
 
   constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp, private afAuth: AngularFireAuth) {
     //this.user = afAuth.auth.currentUser.displayName;
     //this.user="John Henry Eguia"
-    //this.user="Shakira"
+    this.user="Shakira"
     //this.user="Rihanna"
   }
 
@@ -55,7 +54,7 @@ export class FireBaseService {
   }
 
   loginUser(user){
-    this.key=this.tapok.list('/login/'+this.uID).push(user).key;
+    this.tapok.list('/login/'+this.uID).push(user).key;
   }
 
   getUsersList(){
@@ -222,8 +221,22 @@ export class FireBaseService {
     });
   }
 
+  getGroupTags(grpTagKey){
+    return this.tapok.list('/grouptags/',{ 
+      preserveSnapshot: true,
+      query: {
+        orderByChild: "key",
+        equalTo: grpTagKey
+      }
+    });
+  }
+
   deleteTag(key){
     this.tapok.object('/tags/'+key).remove(); 
+  }
+
+  deleteGroupTag(key){
+    this.tapok.object('/grouptags/'+key).remove();
   }
 
   searchTapok(search){
@@ -238,6 +251,16 @@ export class FireBaseService {
 
   searchTag(search){
     return this.tapok.list('/tags/',{
+      query: {
+        orderByChild: 'tag',
+        startAt: search,
+        endAt: search+'\uf8ff'
+      },
+    });
+  }
+
+  searchGroupTag(search){
+    return this.tapok.list('/grouptags/',{
       query: {
         orderByChild: 'tag',
         startAt: search,
@@ -409,24 +432,48 @@ export class FireBaseService {
     this.tapok.list('temp/temp-tags/'+this.user).push(tag);
   }
 
+  addTempGTag(tag){
+    this.tapok.list('gtemp/gtemp-tags/'+this.user).push(tag);
+  }
+
   getTempTag(){
     return this.tapok.list('temp/temp-tags/'+this.user);
+  }
+
+  getTempGTag(){
+    return this.tapok.list('gtemp/gtemp-tags/'+this.user);
   }
 
   deleteTempTag(key){
     this.tapok.list('temp/temp-tags/'+this.user+'/'+key).remove();
   }
 
+  deleteTempGTag(key){
+    this.tapok.list('gtemp/gtemp-tags/'+this.user+'/'+key).remove();
+  }
+
   deleteAllTempTag(){
     this.tapok.list('temp/temp-tags/'+this.user).remove();
+  }
+
+  deleteAllTempGTag(){
+    this.tapok.list('gtemp/gtemp-tags/'+this.user).remove();
   }
 
   addTag(tag){
     this.tapok.list('tags/').push(tag);
   }
 
+  addGroupTag(tag){
+    this.tapok.list('grouptags/').push(tag);
+  }
+
   getTag(){
     return this.tapok.list('tags/');
+  }
+
+  getGroupTag(){
+    return this.tapok.list('grouptags/');
   }
 
   getAttendees(key){
@@ -523,13 +570,6 @@ export class FireBaseService {
 
   updateUserLocation(coor){
     this.tapok.object('users/'+this.user+'/location').update(coor);
-  }
-
-  updateLoginStatus(login_status){
-    var obj = {
-      status: login_status
-    }
-     this.tapok.object('login/'+this.uID+'/'+this.key).update(obj);
   }
 
   getUserLocation(user){

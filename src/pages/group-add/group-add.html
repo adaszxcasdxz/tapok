@@ -54,6 +54,34 @@
         </ion-col>
       </ion-row>
 
+      <ion-item>
+        <ion-label stacked><b>Tags</b></ion-label>
+        <ion-input (ionFocus)="inputLocationToggle($group, 'false')" [(ngModel)]="temp" type="text"></ion-input>
+        <button (click)="addTag()" ion-button item-end outline>
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-item>
+    <div>
+        <span *ngFor="let tags of Tags | async">
+            <ion-chip color="primary">
+                <ion-label>{{ tags.tags }}</ion-label>
+                <button ion-button clear color="light" (click)="deleteTag(tags.$key)">
+                    <ion-icon name="close-circle"></ion-icon>
+                </button>
+            </ion-chip>
+        </span>
+    </div>
+    <div *ngIf="this.label != 'Add Tapok'">
+        <span *ngFor="let tags of curTags | async">
+            <ion-chip *ngIf="tags.key == event_key" color="primary">
+                <ion-label>{{ tags.tag }}</ion-label>
+                <button ion-button clear color="light" (click)="deleteCurrentTag(tags.$key)">
+                    <ion-icon name="close-circle"></ion-icon>
+                </button>
+            </ion-chip>
+        </span>
+    </div>
+
       <ion-row class="buttons" text-center>
             <ion-col *ngIf="label == 'Add Group'">
                 <button class="tapok-button" (click)="addGroup()" ion-button large>{{ label }}</button>

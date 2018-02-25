@@ -21,6 +21,8 @@
         <ion-card *ngIf="ugroup.key == group.$key" text-center>
           <div (click)="openGroupContent(group)">
 
+            <h2 *ngIf="uGroup.key == null">You have no groups at the moment. Join one now!</h2>
+
               <div class="boxpic" [style.background-image]="'url(' + group.photo + ')'"></div>
                 
                 <div class="gname">
@@ -29,7 +31,6 @@
                         <div class="title"><b>{{ group.gname }}</b></div>
                     </ion-col> 
                   </ion-row>
-                  <hr>    
 
                   <ion-row class="gdescrip"text-center>
                     <ion-col>
@@ -39,6 +40,23 @@
                   
                   </div>
           </div>
+
+          <div class="tagbox">
+          <br *ngIf="group.tags == 'true'">
+          <span *ngIf="group.tags == 'true'" text-left padding>
+            <p class="tags"><ion-icon name = "pricetag" color="dark"></ion-icon>  Tags:<br>
+            <span *ngFor="let tag of Tags | async">
+              <span *ngIf="tag.key == group.$key">
+                <ion-badge>{{ tag.tag }} </ion-badge>
+              </span>
+            </span>
+            </p>
+          </span>
+          
+          </div>
+
+          <br>
+
                     <ion-row>
                       <ion-col>
                         <button class="join-but" ion-button outline medium (click)="leaveGroup(ugroup.$key, group.$key)">
@@ -69,12 +87,27 @@
                     <div class="title"><b>{{ group.gname }}</b></div>
                 </ion-col> 
               </ion-row>
-              <hr>
+              
               <ion-row text-center>
                 <ion-col>
                     <div class="descr-col"><i>{{ group.gdescr }}</i></div>  
                 </ion-col> 
               </ion-row>
+
+              <div class="tagbox">
+                  <hr *ngIf="group.tags == 'true'">
+                  <span *ngIf="group.tags == 'true'" text-left padding>
+                    <p class="tags"><ion-icon name = "pricetag" color="dark"></ion-icon>  Tags:<br>
+                    <span *ngFor="let tag of Tags | async">
+                      <span *ngIf="tag.key == group.$key">
+                        <ion-badge>{{ tag.tag }} </ion-badge>
+                      </span>
+                    </span>
+                    </p>
+                  </span>
+                  </div>
+
+                  <br>
               
             
             <ion-row>

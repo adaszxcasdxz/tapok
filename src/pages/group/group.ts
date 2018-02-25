@@ -26,6 +26,7 @@ export class GroupPage{
     userid: any;
     gmember: any;
     key: any;
+    Tags: any;
 
     constructor(
         public navCtrl: NavController, public popoverCtrl: PopoverController, public navParams: NavParams,
@@ -41,6 +42,7 @@ export class GroupPage{
         this.gmember = this.firebaseService.getgroupAttend(this.key);
         //this.usergroup = this.firebaseService.getGroup();
         this.user = firebaseService.user;
+        this.Tags = this.firebaseService.getGroupTag();
 
         
 
@@ -224,6 +226,9 @@ export class GroupPage{
         
     }
 
+    ionViewDidLoad(){
+        this.Tags = this.firebaseService.getGroupTag();
+    }
   
 
     openAddGroup(){

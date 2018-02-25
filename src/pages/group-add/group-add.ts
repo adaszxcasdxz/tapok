@@ -34,6 +34,15 @@ export class GroupAddPage {
 	current: any;
 	groupmember: any;
 
+	tags = 'false';
+	tag: any;
+	temp: any;
+	Tags: any;
+	curTags: any;
+	tagsTest: any[] = [];
+
+	inputLocation: any = 'false';
+
   admin = '';
   gname = '';
   gdescr = '';
@@ -53,11 +62,12 @@ export class GroupAddPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
      public firebaseService:FireBaseService, public viewCtrl: ViewController, public camera: Camera, public params: NavParams, public loadingCtrl: LoadingController) {
 				this.admin = firebaseService.user;
-				//this.adminid = this.firebaseService.getUserID();
-				//this.userid = this.firebaseService.getUserID();
-				//this.photo = this.firebaseService.getPhotoURL();
+				this.adminid = this.firebaseService.getUserID();
+				this.userid = this.firebaseService.getUserID();
+				this.photo = this.firebaseService.getPhotoURL();
 				this.current = this.firebaseService.getUser();
 				this.user = firebaseService.user;
+				this.Tags = this.firebaseService.getTempGTag();
         this.label = params.get('label');
 			  this.group = params.get('tapok');
         if(this.group != undefined)
@@ -69,16 +79,28 @@ export class GroupAddPage {
   }
   
   addGroup(){
+		var i, y;
+
+		this.Tags.subscribe(snapshots => {
+			this.tagsTest.length = 0;
+			y = 0;
+			snapshots.forEach(snapshot => {
+				this.tagsTest[y] = snapshot.tags;
+				y++;
+			})
+		});
+
     this.group={
       "gname": this.gname,
       "gdescr": this.gdescr,
       "admin": this.admin,
 			"timestamp": 0-Date.now(),
 			"datetime": Date.now(),
-			//"userphoto": this.photo,
-			//"photo": this.gphoto,
-			//"adminid": this.adminid,
+			"userphoto": this.photo,
+			"photo": this.gphoto,
+			"adminid": this.adminid,
 			"searchgname": this.gname.toLowerCase(),
+			"tags": this.tags,
 		}
 
     if(this.label == "Add Group"){
@@ -91,14 +113,25 @@ export class GroupAddPage {
 
 			this.groupmember={
                     "name": this.admin,
-                    //"photo": this.photo,
-                    //"userid": this.userid
+                    "photo": this.photo,
+                    "userid": this.userid
                 }
 					
 			this.firebaseService.addUserGroup(this.current, this.usergroup);
 			this.firebaseService.groupAttend(key, this.groupmember);
-		}
 
+			for(i=0;i<this.tagsTest.length;i++){
+				this.tag={
+					"tag": this.tagsTest[i].toLowerCase(),
+					"key": key
+				}
+				this.firebaseService.addGroupTag(this.tag);
+				if(i+1 == this.tagsTest.length)
+					this.firebaseService.deleteAllTempGTag();
+			}	
+		}
+		
+		
 		this.test = this.group.$key;
 		console.log(this.test);
 
@@ -125,6 +158,7 @@ export class GroupAddPage {
 	}
 
   editGroup(){
+		var i;
 		this.group={
 			"gname": this.gname,
 			"gdescr": this.gdescr,
@@ -132,6 +166,15 @@ export class GroupAddPage {
 		};
 
 		this.firebaseService.editGroups(this.key, this.group);
+		for(i=0;i<this.tagsTest.length;i++){
+			this.tag={
+				"tag": this.tagsTest[i].toLowerCase(),
+				"key": this.key
+			}
+			this.firebaseService.addGroupTag(this.tag);
+			if(i+1 == this.tagsTest.length)
+				this.firebaseService.deleteAllTempGTag();
+		}		
 		this.cancel();
 		let alert = this.alertCtrl.create({
 			title: 'Changes Saved.',
@@ -149,6 +192,7 @@ export class GroupAddPage {
 		this.gname = this.group.gname;
 		this.gdescr = this.group.gdescr;
 		this.gphoto = this.group.photo;
+		this.tags = this.group.tags;
 	}
 
   ionViewDidLoad() {
@@ -208,6 +252,29 @@ export class GroupAddPage {
 		  this.dlURL = this.firebaseService.uploadPhoto(this.selectedPhoto, key);
 		  this.dlURL.then(this.onSuccess, this.onError);  
 		}
-	  }
+	}
+
+	addTag(){
+		if(this.temp!=null && this.temp!=''){
+			this.tag = {
+				"tags": this.temp
+			}
+			this.temp = '';
+			this.tags = 'true';
+			this.firebaseService.addTempGTag(this.tag);
+		}
+	}
+
+	deleteTag(key){
+		this.firebaseService.deleteTempGTag(key);
+	}
+
+	deleteCurrentTag(key){
+		this.firebaseService.deleteGroupTag(key);
+	}
+
+	inputLocationToggle(ev, val){
+		this.inputLocation = val;
+	}
 
 }

@@ -162,7 +162,6 @@ export class LoginPage {
               this.setBadges();
               this.getBadges();
               this.navCtrl.setRoot('TabsPage');
-              this.firebaseService.updateLoginStatus("logged in");
               //alert("in DB");
             }
           }).catch(err => {
@@ -224,7 +223,6 @@ export class LoginPage {
               this.setBadges();
               this.getBadges();
               this.navCtrl.setRoot('TabsPage');
-              this.firebaseService.updateLoginStatus("logged in");
             }
           });
       }).catch((error) => { console.log(error) });
