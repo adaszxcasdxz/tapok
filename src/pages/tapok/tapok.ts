@@ -291,7 +291,7 @@ export class TapokPage {
   }
 
   openTapokContent(event){
-    let contentModal = this.modalCtrl.create('TapokContent', {param1: event.$key});
+    let contentModal = this.modalCtrl.create('TapokContent', {param1: event.$key, type: 'JOIN'});
     contentModal.present(); 
   }
 

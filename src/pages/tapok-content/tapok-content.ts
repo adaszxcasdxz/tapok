@@ -47,6 +47,7 @@ export class TapokContent {
   Admins: any;
   Members: any;
   adminCheck: any = false;
+  type: any;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -64,7 +65,8 @@ export class TapokContent {
     this.List=this.firebaseService.getChat(this.key, this.content);
     this.Members = this.firebaseService.getMembers(this.key);
     this.Admins = this.firebaseService.getAdmins(this.key);
-
+    this.type = this.navParams.get('type');
+    console.log(this.type);
     this.Admins.subscribe(snapshot => {
       snapshot.forEach(snap => {
         if(this.user == snap.name ){
@@ -264,10 +266,25 @@ export class TapokContent {
   }
   
   confirm(event, status){
-    console.log(status);
-    if(status == "TAPOK"){
+    if(this.type == "JOIN"){
       let alert = this.alertCtrl.create({
         title: 'Join Event?',
+        buttons: [ 
+          {
+            text: 'YES',
+            handler: () => {
+            this.tapok(event);
+            }
+          },
+          {
+            text: 'NO',
+          }
+        ]
+      });
+      alert.present();
+    }else if(this.type == "JOINED"){
+      let alert = this.alertCtrl.create({
+        title: 'Leave Event?',
         buttons: [ 
           {
             text: 'YES',
@@ -286,17 +303,22 @@ export class TapokContent {
   }
   
   tapok(event){
-    var status = "false";
+    if(this.type == 'JOIN')
+      var status = "false";
+    else
+     var status = "true";
     var tapok = event.tapok;
     var attendeeKey;
     var eventKey;
     var userKey;
 
-    for(var attendees in event.attendees){
-      if(event.attendees[attendees] == this.user){
-        status = "true";
-        attendeeKey = attendees;
-        break;
+    if(status){
+      for(var attendees in event.attendees){
+        if(event.attendees[attendees] == this.user){
+          status = "true";
+          attendeeKey = attendees;
+          break;
+        }
       }
     }
 

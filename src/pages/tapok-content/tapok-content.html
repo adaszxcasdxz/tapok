@@ -128,10 +128,16 @@
 
 <ion-footer>
     <ion-row>
-        <ion-col>
+        <ion-col *ngIf="type=='JOIN'">
             <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left full>
                 <ion-icon name="happy"></ion-icon>
                 JOIN
+            </button>
+        </ion-col>
+        <ion-col *ngIf="type=='JOINED'">
+            <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left full>
+                <ion-icon name="happy"></ion-icon>
+                JOINED
             </button>
         </ion-col>
         <ion-col col-4>
