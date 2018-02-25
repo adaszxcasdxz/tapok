@@ -316,7 +316,6 @@ export class EventPage {
       
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, attendee, attendeeKey, userKey);
     if(status != 'false'){
-      console.log('asdad');
       if(memKey!='')
         this.firebaseService.removeMember(event.$key, memKey);
       else

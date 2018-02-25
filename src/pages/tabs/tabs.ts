@@ -21,25 +21,11 @@ export class TabsPage {
   key: any;
 
   username: any;
-  notifCount = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FireBaseService,  public geolocation: Geolocation) {
     this.username = navParams.get('username');
     this.key = navParams.get('key');
     this.firebaseService.getUser();
-    this.notifCount = 0;
-    Observable.interval(10000)
-    .subscribe((val) => {
-      this.firebaseService.getNotif().subscribe(snapshots => {
-        snapshots.forEach(snap => {
-          console.log(snap);
-          if(snap.notified == null)
-            this.notifCount++;
-          console.log(this.notifCount);
-        });
-      }); 
-    });
-
 
     Observable.interval(10000)
     .subscribe((val) => { 
@@ -56,10 +42,6 @@ export class TabsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TabsPage');
-    /*if(this.selectedTab == 2){
-      console.log('test');
-      this.navCtrl.setRoot('TapokContent', { param1: this.key });
-    }*/
   }
 
 }

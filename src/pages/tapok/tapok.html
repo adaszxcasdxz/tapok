@@ -50,6 +50,12 @@
                   <ion-label>
                     <h2><strong>{{ event.host }}</strong></h2>
                   </ion-label>
+                  <ion-badge *ngIf="event.max_members == null" color="tapok" item-end outline>
+                      {{ event.tapok }} <ion-icon name="person"></ion-icon>
+                  </ion-badge>
+                  <ion-badge *ngIf="event.max_members != null" color="tapok" item-end outline>
+                      {{ event.tapok }} of {{ event.max_members }} <ion-icon name="person"></ion-icon>
+                  </ion-badge>
                 </ion-item>
                 <div *ngIf="event.photo != ''" class="box" text-center>
                   <div (click)="viewPic(event.photo)">
@@ -80,21 +86,8 @@
                       <ion-icon name = "pin" color="primary"></ion-icon>                    
                       <span class="chip-label">{{ event.venue }}</span>
                     </div>
-                    <br><br>
                   </div> 
-                </span>
-                  <button class="attendees" (click)="showAttendees(event.$key)" ion-button icon-left outline small>
-                    <div *ngIf="event.max_members == null">
-                      <div *ngIf="event.tapok > 1">{{ event.tapok }} Attendees</div>
-                      <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
-                      <div *ngIf="event.tapok == 0">No Attendees</div>
-                    </div>
-                    <div *ngIf="event.max_members != null">
-                      <div *ngIf="event.tapok > 1">{{ event.tapok }} of {{ event.max_members }} Attendees</div>
-                      <div *ngIf="event.tapok == 1">{{ event.tapok }} of {{ event.max_members }} Attendees</div>
-                      <div *ngIf="event.tapok == 0">0 of {{ event.max_members }} Attendees</div>
-                    </div>
-                  </button>
+                </span>            
                   <br *ngIf="event.tags != 'true'">
                   <span *ngIf="event.tags == 'true'" text-left padding>
                     <p class="tags"><ion-icon name = "pricetag" color="dark"></ion-icon>  Tags:<br>
@@ -148,17 +141,16 @@
                   <ion-label>
                     <h2><strong>{{ event.host }}</strong></h2>
                   </ion-label>
+                  <ion-badge *ngIf="event.max_members == null" color="tapok" item-end outline>
+                      {{ event.tapok }} <ion-icon name="person"></ion-icon>
+                  </ion-badge>
+                  <ion-badge *ngIf="event.max_members != null" color="tapok" item-end outline>
+                      {{ event.tapok }} of {{ event.max_members }} <ion-icon name="person"></ion-icon>
+                  </ion-badge>
                 </ion-item>
                 <div *ngIf="event.photo != ''" class="box" text-center>
                   <div (click)="viewPic(event.photo)">
-                  <!--<div (click)="toggle(event.$key, event.toggle)">
-                    <div *ngIf="event.toggle == 'false'">
-                        see photo
-                    </div>
-                    <div *ngIf="event.toggle == 'true'">-->
                       <img class="photo" src="{{ event.photo }}">
-                      <!--<br>hide photo
-                    </div>-->
                   </div>
                 </div>
                 <span (click)="openTapokContent(event)">
@@ -185,21 +177,8 @@
                       <ion-icon name = "pin" color="primary"></ion-icon>                    
                       <span class="chip-label">{{ event.venue }}</span>
                     </div>
-                    <br><br>
                   </div> 
                 </span>
-                  <button class="attendees" (click)="showAttendees(event.$key)" ion-button icon-left outline small>
-                    <div *ngIf="event.max_members == null">
-                      <div *ngIf="event.tapok > 1">{{ event.tapok }} Attendees</div>
-                      <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
-                      <div *ngIf="event.tapok == 0">No Attendees</div>
-                    </div>
-                    <div *ngIf="event.max_members != null">
-                      <div *ngIf="event.tapok > 1">{{ event.tapok }} of {{ event.max_members }} Attendees</div>
-                      <div *ngIf="event.tapok == 1">{{ event.tapok }} of {{ event.max_members }} Attendees</div>
-                      <div *ngIf="event.tapok == 0">0 of {{ event.max_members }} Attendees</div>
-                    </div>
-                  </button>
                   <br *ngIf="event.tags != 'true'">
                   <span *ngIf="event.tags == 'true'" text-left padding>
                     <p class="tags"><ion-icon name = "pricetag" color="dark"></ion-icon>  Tags:<br>
