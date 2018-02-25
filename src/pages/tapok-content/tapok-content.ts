@@ -135,9 +135,6 @@ export class TapokContent {
       this.loadMap();
   }
 
-  ionViewDidLoad(){
-  }
-
   test(){
     this.status;
     
@@ -173,6 +170,10 @@ export class TapokContent {
     this.firebaseService.kickAttendee(this.key, attendeeKey, this.userKey,this.value-1);
   }
 
+  dismiss(){
+    this.viewCtrl.dismiss();
+  }
+  
   toggleMap(){
     if(this.toggle)
       this.toggle = false;
@@ -222,8 +223,7 @@ export class TapokContent {
               this.firebaseService.deleteKeyword(this.keyword[i]);  
             for(y=0;y<this.tag.length;y++)
               this.firebaseService.deleteTag(this.tag[y]);  
-            this.navCtrl.setRoot('EventPage');
-            confirm.present();
+            this.viewCtrl.dismiss();
           }
         },
         {

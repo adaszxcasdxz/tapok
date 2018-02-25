@@ -10,7 +10,7 @@ page-about{
     }
 
     .box{
-        height: 32vh !important;
+        height: 30vh !important;
         width: auto !important;
         align-items: center;
         overflow: hidden;
@@ -76,5 +76,14 @@ page-about{
 
     .tabs{
         position: fixed;
+    }
+
+    .empty{
+        position: fixed;
+        float: left;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);       
+        z-index: -1;
     }
 }

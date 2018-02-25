@@ -25,6 +25,7 @@ export class TabsPage {
   bdge:any;
 
   username: any;
+  notifCount = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public firebaseService: FireBaseService,  public geolocation: Geolocation,
@@ -32,8 +33,18 @@ export class TabsPage {
     this.username = navParams.get('username');
     this.key = navParams.get('key');
     this.firebaseService.getUser();
+    this.notifCount = 0;
+    this.firebaseService.getNotif().subscribe(snapshots => {
+      snapshots.forEach(snap => {
+        console.log(snap);
+        if(snap.checked == null)
+          this.notifCount++;
+        console.log(this.notifCount);
+      });
+    });
 
-    Observable.interval(5000)
+
+    Observable.interval(10000)
     .subscribe((val) => { 
       this.geolocation.getCurrentPosition().then((position) => {
         var coord = {

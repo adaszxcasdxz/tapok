@@ -23,9 +23,9 @@
     <ion-list>
         <ion-item-group>
             <div (click)="inputLocationToggle($event, 'false')">
-                <ion-item-divider class="divider">General Options</ion-item-divider>
+                <ion-item-divider class="divider"><b>General Options</b></ion-item-divider>
                 <ion-item>
-                    <ion-label stacked><b>Tapok Name</b></ion-label>
+                    <ion-label stacked><b>Tapok Name</b> <ion-icon name="alert"></ion-icon></ion-label>
                     <ion-input (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="name" type="text"></ion-input>  
                 </ion-item>
                 <ion-item>
@@ -38,7 +38,7 @@
                     </button>
                 </ion-item>
                 <ion-item>
-                    <ion-label stacked><b>Start Date</b></ion-label>
+                    <ion-label stacked><b>Start Date</b> <ion-icon name="alert"></ion-icon></ion-label>
                     <ion-datetime (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="date" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
                     <button *ngIf="addEndDate == false" (click)="endDate()" ion-button item-end outline>Add End Date</button> 
                 </ion-item>
@@ -52,7 +52,7 @@
                 </ion-item>
 
                 <ion-item>
-                    <ion-label stacked><b>Start Time</b></ion-label>
+                    <ion-label stacked><b>Start Time</b> <ion-icon name="alert"></ion-icon></ion-label>
                     <ion-datetime (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="time" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
                     <button *ngIf="addEndTime == false" (click)="endTime()" ion-button item-end outline>Add End Date</button>
                 </ion-item>
@@ -66,8 +66,8 @@
                 </ion-item>
             </div>
             <ion-item>
-                <div *ngIf="inputLocation == 'false'" class="noVLabel"><b>Venue</b></div>
-                <div *ngIf="inputLocation != 'false'" class="vLabel"><b>Venue</b></div>
+                <div *ngIf="inputLocation == 'false'" class="noVLabel"><b>Venue</b> <ion-icon name="alert"></ion-icon></div>
+                <div *ngIf="inputLocation != 'false'" class="vLabel"><b>Venue</b> <ion-icon name="alert"></ion-icon></div>
                 <input #autocomplete (click)="inputLocationToggle($event, 'true')" placeholder=" " id="autocomplete" class="detail" [(ngModel)]="venue" type="text" />
             </ion-item>
             <ion-item text-justify>
@@ -84,16 +84,16 @@
             </ion-row>
             <ion-item-group *ngIf="toggle == true">
                 <ion-item-divider>
-                    Add Advanced Options
+                    <b>Add Advanced Options</b>
                 </ion-item-divider>
                 <ion-item>
                     <ion-label stacked><b>Tags</b></ion-label>
                     <ion-input (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="temp" type="text"></ion-input>
-                    <button (click)="addTag()" ion-button item-end clear large outline>
-                        <ion-icon name="add-circle"></ion-icon>
+                    <button (click)="addTag()" ion-button item-end outline>
+                        <ion-icon name="add"></ion-icon>
                     </button>
                 </ion-item>
-                <ion-item>
+                <div>
                     <span *ngFor="let tags of Tags | async">
                         <ion-chip color="primary">
                             <ion-label>{{ tags.tags }}</ion-label>
@@ -102,8 +102,8 @@
                             </button>
                         </ion-chip>
                     </span>
-                </ion-item>
-                <ion-item *ngIf="this.label != 'Add Tapok'">
+                </div>
+                <div *ngIf="this.label != 'Add Tapok'">
                     <span *ngFor="let tags of curTags | async">
                         <ion-chip *ngIf="tags.key == event_key" color="primary">
                             <ion-label>{{ tags.tag }}</ion-label>
@@ -112,9 +112,9 @@
                             </button>
                         </ion-chip>
                     </span>
-                </ion-item>
+                </div>
                 <ion-item>
-                    <ion-label>Unlimited Members</ion-label>
+                    <ion-label><p>Unlimited Members</p></ion-label>
                     <ion-toggle [(ngModel)]="toggleMembers"></ion-toggle>
                 </ion-item>
                 <ion-item *ngIf="toggleMembers == false">
@@ -137,41 +137,31 @@
                     </ion-col>
                 </ion-row>
             </ion-item-group>  
-            <!--<ion-row class="buttons" text-center>
-                <div *ngIf="name!=''&&venue!=''">
-                    <ion-col *ngIf="label == 'Add Tapok'">
-                        <button (click)="addTapok()" ion-button>{{ label }}</button>
-                    </ion-col>
-                </div>
-                <ion-col *ngIf="label == 'Edit Tapok'">
-                    <button (click)="addTapok()" ion-button>{{ label }}</button>
-                </ion-col>
-                <ion-col>
-                    <button (click)="cancel()" ion-button outline>Cancel</button>
-                </ion-col>
-            </ion-row>-->
         </div>
     </ion-list>
 </ion-content>
 
 <ion-footer>
-    <ion-row (click)="inputLocationToggle('false')">
-        <ion-col *ngIf="label == 'Add Tapok'&&name!=''&&date!=''&&time!=''&&venue!=''">
-            <button class="notjoined" (click)="addTapok()" ion-button icon-left full>
+    <ion-row text-center (click)="inputLocationToggle('false')">
+        <ion-col *ngIf="label == 'Add Tapok'">
+            <button *ngIf="name==''||date==''||time==''||venue==''" class="notjoined" disabled  ion-button icon-left full>
+                <ion-icon name="happy"></ion-icon>
+                {{ label }}
+            </button>
+            <button *ngIf="name!=''&&date!=''&&time!=''&&venue!=''" class="notjoined" (click)="addTapok()" ion-button icon-left full>
+                    <ion-icon name="happy"></ion-icon>
+                    {{ label }}
+                </button>
+        </ion-col>
+        <ion-col *ngIf="label == 'Edit Tapok'&&name!=''&&date!=''&&time!=''&&venue!=''">
+            <button *ngIf="name!=''&&date!=''&&time!=''&&venue!=''" class="notjoined" (click)="addTapok()" ion-button icon-left full>
                 <ion-icon name="happy"></ion-icon>
                 {{ label }}
             </button>
         </ion-col>
-        <ion-col *ngIf="label == 'Edit Tapok'">
-            <button class="notjoined" (click)="addTapok()" ion-button icon-left full>
-                <ion-icon name="happy"></ion-icon>
-                {{ label }}
-            </button>
-        </ion-col>
-        <ion-col col-4>
-            <button class="share" ion-button icon-left outline>
-                <ion-icon name="share"></ion-icon>
-                <div>Share</div>
+        <ion-col end col-4>
+            <button (click)="dismiss()" ion-button icon-left outline>
+                <div>Cancel</div>
             </button> 
         </ion-col>
     </ion-row>

@@ -1,3 +1,18 @@
+.md{
+    .noVLabel{
+        color: #999;
+        margin-bottom: .8em;
+        font-size: .7em;
+    }
+}
+
+.ios{
+    .noVLabel{
+        margin-bottom: .8em;
+        font-size: .7em;
+    }
+}
+
 add-tapok{
     .box{
         width: 512px; 
@@ -24,19 +39,13 @@ add-tapok{
     }
 
     .detail{
+        width: 100%;
         font-size: 1.1em;
         border: none;
     }
 
     .detail:focus + .vLabel{
         color: blue;
-    }
-
-
-    .noVLabel{
-        color: #999;
-        margin-bottom: .8em;
-        font-size: .7em;
     }
 
     .vLabel{

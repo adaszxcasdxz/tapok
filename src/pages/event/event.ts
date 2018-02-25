@@ -35,10 +35,12 @@ export class EventPage {
 
   eupcomingCount = 0;
   eongoingCount = 0;
+  inc=0;
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, 
     public modalCtrl: ModalController, public alertCtrl: AlertController, public popoverCtrl: PopoverController,
     public sharingVar: SocialSharing) {
+
     this.Event = this.firebaseService.getEvent();
     this.Attending = this.firebaseService.getUserEvents();
     this.User = this.firebaseService.getUsers();
@@ -47,6 +49,7 @@ export class EventPage {
     
     Observable.interval(5000)
     .subscribe((val) => {
+      this.inc = 0;
       this.timeCheck();
     });
 
@@ -88,6 +91,7 @@ export class EventPage {
   }
 
   ionViewDidLoad(){
+    this.Tags = this.firebaseService.getTag();
     this.timeCheck();
   }
 
@@ -118,7 +122,7 @@ export class EventPage {
             if(checkHour == 'in an hour'){
               var attend = this.firebaseService.getAttendees(snapshot.$key).subscribe(People => {
                 People.forEach(people => {
-                  if(people.notif != 'notified'){
+                  if(people.notif != 'notified'&&this.inc==0){
                     var notif = {
                       'name': this.user,
                       'type': 3,
@@ -132,6 +136,7 @@ export class EventPage {
                     }
                     this.firebaseService.addNotif(people.name, notif);
                     this.firebaseService.editAttendees(snapshot.$key, people.$key, update);
+                    this.inc++;
                   }
                 })
               })
@@ -142,12 +147,8 @@ export class EventPage {
             this.etimeStatus[y] = 'ongoing';
             this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
           }
-          else{
-            this.etimeStatus[y] = 'upcoming';
-            this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
-          }
           //with end time but no end date
-          if(snapshot.endtime != '' && snapshot.enddate == ''){
+          else if(snapshot.endtime != '' && snapshot.enddate == ''){
             var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
             if(checkEnd){
               this.etimeStatus[y] = 'archive';
@@ -161,7 +162,7 @@ export class EventPage {
             } 
           }
           //with end date but no end time
-          if(snapshot.enddate != '' && snapshot.endtime == ''){
+          else if(snapshot.enddate != '' && snapshot.endtime == ''){
             var checkEnd = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
             if(checkEnd){
               this.etimeStatus[y] = 'ongoing';
@@ -169,7 +170,7 @@ export class EventPage {
             }
           }
           //with end date and end time
-          if(snapshot.enddate != '' && snapshot.endtime != ''){
+          else if(snapshot.enddate != '' && snapshot.endtime != ''){
             var checkEndDate = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
             var checkEndTime = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
             if(checkEndDate && !checkEndTime){
@@ -190,6 +191,10 @@ export class EventPage {
               if(snapshot.status == null)
                 this.firebaseService.addHistory(snapshot);
             }
+          }
+          else{
+            this.etimeStatus[y] = 'upcoming';
+            this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
           }
           for(var x=0;x<this.etimeStatus.length;x++){
             if(this.status[x]=='JOINED'){
@@ -228,7 +233,8 @@ export class EventPage {
   }
 
   openTapokContent(event){
-    this.navCtrl.push('TapokContent', {param1: event.$key});
+    let contentModal = this.modalCtrl.create('TapokContent', {param1: event.$key});
+    contentModal.present();
   }
 
   showAttendees(key){
