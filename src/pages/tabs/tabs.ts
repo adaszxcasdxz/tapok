@@ -27,6 +27,7 @@ export class TabsPage {
     this.username = navParams.get('username');
     this.key = navParams.get('key');
     this.firebaseService.getUser();
+    this.notifCount = 0;
     this.firebaseService.getNotif().subscribe(snapshots => {
       snapshots.forEach(snap => {
         console.log(snap);
