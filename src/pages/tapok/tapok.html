@@ -28,12 +28,12 @@
   <br><br><br>
   <div [ngSwitch]="pages">
     <div *ngSwitchCase="'upcoming'">
-      <div *ngIf="upcomingCount==0">
+      <div class="empty" *ngIf="upcomingCount==0">
         No upcoming events  
       </div>
     </div>
     <div *ngSwitchCase="'ongoing'">
-      <div *ngIf="ongoingCount==0">
+      <div class="empty" *ngIf="ongoingCount==0">
         No ongoing events  
       </div>
     </div>

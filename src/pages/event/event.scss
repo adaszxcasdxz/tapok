@@ -77,4 +77,13 @@ page-about{
     .tabs{
         position: fixed;
     }
+
+    .empty{
+        position: fixed;
+        float: left;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);       
+        z-index: -1;
+    }
 }

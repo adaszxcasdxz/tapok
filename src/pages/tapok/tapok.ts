@@ -49,6 +49,8 @@ export class TapokPage {
   checkIncoming = 1;
   checkOngoing = 1;
 
+  inc = 0;
+
    constructor(
       public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, 
       public modalCtrl: ModalController, public toastCtrl: ToastController, public firebaseService: FireBaseService, public photoViewer: PhotoViewer, public platform: Platform, public firebaseApp: FirebaseApp /*private sharingVar: SocialSharing*/) {
@@ -64,6 +66,7 @@ export class TapokPage {
 
     Observable.interval(5000)
     .subscribe((val) => { 
+      this.inc = 0;
       this.timeCheck('const');
     });
 
@@ -95,6 +98,7 @@ export class TapokPage {
   }
 
   ionViewDidLoad(){
+    this.Tags = this.firebaseService.getTag();
     this.upcomingCount = 1;
     this.ongoingCount = 1;
     this.timeCheck('load');
@@ -121,24 +125,25 @@ export class TapokPage {
         var checkNotifDate = moment(day).isSameOrAfter(moment().date());
         var timeCheck = moment(snapshot.time,'hh:mm a').format('MMM DD, hh:mm a');
         var checkHour = moment(timeCheck, 'MMM DD, hh:mm a').fromNow();
-        if(checkNotifDate){
+        if(checkNotifDate&&this.inc == 0){
           if(checkHour == 'in an hour'){
             var attend = this.firebaseService.getAttendees(snapshot.$key).subscribe(People => {
               People.forEach(people => {
-                if(people.notif != 'notified'){
+                if(people.notif != 'notified'&&this.inc == 0){
                   var notif = {
                     'name': this.user,
                     'type': 3,
                     'timestamp': 0-Date.now(),
                     'event_name': snapshot.name,
                     'event_key': snapshot.$key 
-                  }
+                  };
 
                   var update = {
                     'notif': 'notified'
-                  }
+                  };
                   this.firebaseService.addNotif(people.name, notif);
                   this.firebaseService.editAttendees(snapshot.$key, people.$key, update);
+                  this.inc++;
                 }
               })
             })
@@ -286,7 +291,8 @@ export class TapokPage {
   }
 
   openTapokContent(event){
-    this.navCtrl.push('TapokContent', {param1: event.$key}); 
+    let contentModal = this.modalCtrl.create('TapokContent', {param1: event.$key});
+    contentModal.present(); 
   }
 
   showFilterPopOver(myTapok){

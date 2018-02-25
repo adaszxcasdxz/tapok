@@ -33,6 +33,8 @@ export class EventPage {
   eupcomingCount = 0;
   eongoingCount = 0;
 
+  inc = 0;
+
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public modalCtrl: ModalController, public alertCtrl: AlertController) {
     this.Event = this.firebaseService.getEvent();
     this.Attending = this.firebaseService.getUserEvents();
@@ -42,6 +44,7 @@ export class EventPage {
     
     Observable.interval(5000)
     .subscribe((val) => {
+      this.inc = 0;
       this.timeCheck();
     });
 
@@ -83,6 +86,7 @@ export class EventPage {
   }
 
   ionViewDidLoad(){
+    this.Tags = this.firebaseService.getTag();
     this.timeCheck();
   }
 
@@ -113,7 +117,7 @@ export class EventPage {
             if(checkHour == 'in an hour'){
               var attend = this.firebaseService.getAttendees(snapshot.$key).subscribe(People => {
                 People.forEach(people => {
-                  if(people.notif != 'notified'){
+                  if(people.notif != 'notified'&&this.inc==0){
                     var notif = {
                       'name': this.user,
                       'type': 3,
@@ -127,6 +131,7 @@ export class EventPage {
                     }
                     this.firebaseService.addNotif(people.name, notif);
                     this.firebaseService.editAttendees(snapshot.$key, people.$key, update);
+                    this.inc++;
                   }
                 })
               })
@@ -223,7 +228,8 @@ export class EventPage {
   }
 
   openTapokContent(event){
-    this.navCtrl.push('TapokContent', {param1: event.$key});
+    let contentModal = this.modalCtrl.create('TapokContent', {param1: event.$key});
+    contentModal.present();
   }
 
   showAttendees(key){

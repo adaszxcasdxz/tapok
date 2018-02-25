@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, ViewController, AlertController, NavParams, LoadingController, NavController, App } from 'ionic-angular';
+import { IonicPage, ViewController, AlertController, NavParams, LoadingController, NavController, App, ModalController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -84,7 +84,7 @@ export class AddTapok {
 	chat: any;
 
 	constructor(public viewCtrl: ViewController, public navCtrl: NavController, public alertCtrl: AlertController, 
-		public firebaseService: FireBaseService, public params: NavParams, public camera: Camera, public loadingCtrl: LoadingController, public geolocation: Geolocation, public app: App) {
+		public firebaseService: FireBaseService, public params: NavParams, public camera: Camera, public loadingCtrl: LoadingController, public geolocation: Geolocation, public app: App, public modalCtrl: ModalController) {
 		var y = 0;
 
 		this.host = firebaseService.user;
@@ -94,6 +94,7 @@ export class AddTapok {
 		this.user = this.firebaseService.getUser();
 		console.log(this.event_key);	
 		this.Tags = this.firebaseService.getTempTag();
+	
 		if(this.event != undefined)
 			this.editTapokInfo();
 	}
@@ -312,13 +313,14 @@ export class AddTapok {
 				title: 'Tapok Added',
 				buttons: [ 
 					{
-						text: 'close'
+						text: 'close',
 					},
 					{
 						text: 'VIEW EVENT',
 						handler: () => {					
 							this.navCtrl.setRoot('TabsPage');
-							this.navCtrl.push('TapokContent', { param1: this.event_key});
+							let contentModal = this.modalCtrl.create('TapokContent', {param1: eventKey});
+    						contentModal.present();
 						}
 					}
 				]
@@ -332,7 +334,6 @@ export class AddTapok {
 					{
 						text: 'close',
 						handler: () => {
-							test.unsubscribe();
 							this.word = this.name.split(" ");
 							for(i=0;i<this.word.length;i++){
 								this.keyword={
@@ -409,7 +410,6 @@ export class AddTapok {
 
 	inputLocationToggle(ev, val){
 		this.inputLocation = val;
-		console.log(val);
 	}
 
 	openGallery(){
