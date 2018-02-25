@@ -239,6 +239,8 @@ export class AddTapok {
 			"filter": this.filter
 		};
 
+		this.cancel(eventKey);
+
 		if(this.label == "Add Tapok"){
 			eventKey = this.firebaseService.addEvent(this.event);
 			var eventNotif = {
@@ -307,7 +309,6 @@ export class AddTapok {
 			}		
 		}
 		
-		this.cancel(eventKey);
 		if(this.label == 'Add Tapok'){
 			let alert = this.alertCtrl.create({
 				title: 'Tapok Added',

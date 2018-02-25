@@ -28,13 +28,16 @@ export class TabsPage {
     this.key = navParams.get('key');
     this.firebaseService.getUser();
     this.notifCount = 0;
-    this.firebaseService.getNotif().subscribe(snapshots => {
-      snapshots.forEach(snap => {
-        console.log(snap);
-        if(snap.checked == null)
-          this.notifCount++;
-        console.log(this.notifCount);
-      });
+    Observable.interval(10000)
+    .subscribe((val) => {
+      this.firebaseService.getNotif().subscribe(snapshots => {
+        snapshots.forEach(snap => {
+          console.log(snap);
+          if(snap.notified == null)
+            this.notifCount++;
+          console.log(this.notifCount);
+        });
+      }); 
     });
 
 
