@@ -151,10 +151,16 @@ export class LoginPage {
             if(!this.inDB){
               this.firebaseService.loginUser(this.userData); 
               this.navCtrl.setRoot('AddBirthdayPage');
+              this.requestPermission();
+              this.setBadges();
+              this.getBadges();
               this.navCtrl.popToRoot();
               //alert("not in DB");
             }
             else{
+              this.requestPermission();
+              this.setBadges();
+              this.getBadges();
               this.navCtrl.setRoot('TabsPage');
               this.firebaseService.updateLoginStatus("logged in");
               //alert("in DB");
@@ -209,11 +215,13 @@ export class LoginPage {
               this.firebaseService.loginUser(this.userData); 
               this.navCtrl.setRoot('AddBirthdayPage');
               this.requestPermission();
+              this.setBadges();
               this.getBadges();
               this.navCtrl.popToRoot();
             }
             else{
               this.requestPermission();
+              this.setBadges();
               this.getBadges();
               this.navCtrl.setRoot('TabsPage');
               this.firebaseService.updateLoginStatus("logged in");
@@ -225,6 +233,7 @@ export class LoginPage {
   async getBadges(){
     try{
       let badgeAmount = await this.badge.get();
+      alert("got the badges @ login");
     }catch (e){
       alert(e);
     }
@@ -233,6 +242,7 @@ export class LoginPage {
   async setBadges(){
     try{
       let badge = await this.badge.set(Number(0));
+      alert("set the badges @ login");
     }catch(e){
       alert(e);
     }
@@ -243,7 +253,9 @@ export class LoginPage {
       let hasPermission = await this.badge.hasPermission();
       if(!hasPermission){
         let permission=await this.badge.registerPermission();
+        alert("permission registered @ login");
       }
+      alert("has permission @ login");
     }catch(e){
       alert(e);
     }

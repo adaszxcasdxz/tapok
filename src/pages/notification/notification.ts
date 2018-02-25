@@ -26,14 +26,14 @@ export class NotificationPage {
     public tabs: TabsPage) {
     this.Notifs = this.firebaseService.getNotif();
     
-    this.firebaseService.getNotif().subscribe(snapshot => {
+    /*this.firebaseService.getNotif().subscribe(snapshot => {
       snapshot.forEach(snap => {
         var notif = {
           'notified': true
         }
         this.firebaseService.editNotif(snap.$key, notif);
       });
-    });
+    });*/
   }
 
   ionViewDidLoad() {
@@ -58,6 +58,7 @@ export class NotificationPage {
   async clearBadges(){
     try{
       let badge = await this.badge.clear();
+      alert("cleared badges" + badge);
     }catch(e){
       alert(e);
     }

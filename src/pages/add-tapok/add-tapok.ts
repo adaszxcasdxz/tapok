@@ -219,7 +219,6 @@ export class AddTapok {
 		}
 		
 		this.event={
-			"hID": this.uid,
 			"host": this.host,
 			"name": this.name,
 			"host_photo": this.photoURL,

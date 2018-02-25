@@ -30,7 +30,7 @@ export class TabsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public firebaseService: FireBaseService,  public geolocation: Geolocation,
     public firebaseApp: FirebaseApp, public badge: Badge) {
-    this.username = navParams.get('username');
+    /*this.username = navParams.get('username');
     this.key = navParams.get('key');
     this.firebaseService.getUser();
     this.notifCount = 0;
@@ -44,7 +44,7 @@ export class TabsPage {
           console.log(this.notifCount);
         });
       }); 
-    });
+    });*/
 
 
     Observable.interval(10000)
@@ -82,6 +82,7 @@ export class TabsPage {
     try{
       let badge = await this.badge.increase(Number(1));
       this.bdge = badge;
+      alert("badges increase");
     }catch(e){
       alert(e);
     }
@@ -90,6 +91,7 @@ export class TabsPage {
   async getBadges(){
     try{
       let badgeAmount = await this.badge.get();
+      alert("got the badges");
     }catch (e){
       alert(e);
     }
