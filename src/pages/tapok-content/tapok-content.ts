@@ -151,23 +151,47 @@ export class TapokContent {
   }
 
   addAdmin(attendee){
-    this.firebaseService.addAdmin(this.key, attendee);
-    this.firebaseService.removeMember(this.key, attendee.$key);
+    let confirm = this.alertCtrl.create({
+      title: 'Admin Added',
+      buttons: ['Ok']
+    });
+    let alert = this.alertCtrl.create({
+      title: 'Add Admin?',
+      buttons: [ 
+        {
+          text: 'Yes',
+          handler: () => {					
+            this.firebaseService.addAdmin(this.key, attendee);
+            this.firebaseService.removeMember(this.key, attendee.$key);
+            confirm.present();
+          }
+        },
+        {
+          text: 'No',
+        }
+      ]
+    });
+    alert.present();
   }
 
   removeAdmin(attendee){
+    let confirm = this.alertCtrl.create({
+      title: 'Admin Removed',
+      buttons: ['Ok']
+    });
     let alert = this.alertCtrl.create({
       title: 'Remove Admin?',
       buttons: [ 
-        {
-          text: 'No',
-        },
         {
           text: 'Yes',
           handler: () => {					
             this.firebaseService.addMember(this.key, attendee);
             this.firebaseService.removeAdmin(this.key, attendee.$key);
+            confirm.present();
           }
+        },
+        {
+          text: 'No',
         }
       ]
     });
@@ -176,11 +200,49 @@ export class TapokContent {
   }
 
   removeAdminMember(attendee){
-    this.firebaseService.removeAdmin(this.key, attendee.$key);
+    let confirm = this.alertCtrl.create({
+      title: 'Admin Removed',
+      buttons: ['Ok']
+    });
+    let alert = this.alertCtrl.create({
+      title: 'Remove Admin?',
+      buttons: [ 
+        {
+          text: 'Yes',
+          handler: () => {					
+            this.firebaseService.removeAdmin(this.key, attendee.$key);
+            confirm.present();
+          }
+        },
+        {
+          text: 'No',
+        }
+      ]
+    });
+    alert.present();
   }
 
   removeMember(attendee){
-    this.firebaseService.removeMember(this.key, attendee.$key);
+    let confirm = this.alertCtrl.create({
+      title: 'Member Kicked',
+      buttons: ['Ok']
+    });
+    let alert = this.alertCtrl.create({
+      title: 'Kicked Member?',
+      buttons: [ 
+        {
+          text: 'Yes',
+          handler: () => {					
+            this.firebaseService.removeMember(this.key, attendee.$key);
+            confirm.present();
+          }
+        },
+        {
+          text: 'No',
+        }
+      ]
+    });
+    alert.present();
   }
 
   kickAttendee(attendeeKey){
