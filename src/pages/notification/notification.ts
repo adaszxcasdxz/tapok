@@ -17,9 +17,19 @@ import { FireBaseService } from '../../providers/firebase-service';
 export class NotificationPage {
 
   Notifs: any;
+  notifs: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,  public firebaseService: FireBaseService, public modalCtrl: ModalController) {
     this.Notifs = this.firebaseService.getNotif();
+    
+    this.firebaseService.getNotif().subscribe(snapshot => {
+      snapshot.forEach(snap => {
+        var notif = {
+          'notified': true
+        }
+        this.firebaseService.editNotif(snap.$key, notif);
+      });
+    });
   }
 
   ionViewDidLoad() {
