@@ -154,6 +154,9 @@ export class TapokPage {
         if(checkTime && checkDate && snapshot.enddate == ''){
           this.timeStatus[y] = 'ongoing';
           this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
+        } else if(checkTime && checkDate && snapshot.enddate == ''){
+          this.timeStatus[y] = 'upcoming';
+          this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
         }
         //with end time but no end date
         else if(snapshot.endtime != '' && snapshot.enddate == ''){
@@ -167,7 +170,7 @@ export class TapokPage {
             this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
             if(snapshot.status == null)
               this.firebaseService.addHistory(snapshot);
-          } 
+          }
         }
         //with end date but no end time
         else if(snapshot.enddate != '' && snapshot.endtime == ''){
@@ -195,13 +198,10 @@ export class TapokPage {
               status: 'archive'
             }
             this.firebaseService.editEvent(snapshot.$key, archive);
-            //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
+            this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
             if(snapshot.status == null)
               this.firebaseService.addHistory(snapshot);
           }
-        } else{
-          this.timeStatus[y] = 'upcoming';
-          this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
         }
         y++;
         for(var x=0;x<this.timeStatus.length;x++){

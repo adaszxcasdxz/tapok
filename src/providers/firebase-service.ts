@@ -497,6 +497,10 @@ export class FireBaseService {
     return this.tapok.list('notifications/'+this.user);
   }
 
+  editNotif(key, val){
+    this.tapok.object('notifications/'+this.user+'/'+key).update(val);
+  }
+
   addLatestNotif(notif){
     this.tapok.list('latest_notifications/'+this.user).push(notif);
   }
