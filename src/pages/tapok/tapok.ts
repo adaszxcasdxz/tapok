@@ -399,6 +399,28 @@ export class TapokPage {
 
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, attendee, attendeeKey, userKey);
     this.firebaseService.addNotif(event.host, notif);
+
+    this.alert(event.$key);
+  }
+
+  alert(eventKey){
+    let alert = this.alertCtrl.create({
+      title: 'Event Joined',
+      buttons: [ 
+        {
+          text: 'close',
+        },
+        {
+          text: 'VIEW EVENT',
+          handler: () => {					
+            this.navCtrl.setRoot('TabsPage');
+            let contentModal = this.modalCtrl.create('TapokContent', {param1: eventKey, type: "JOINED"});
+              contentModal.present();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   /*facebookShare(event){

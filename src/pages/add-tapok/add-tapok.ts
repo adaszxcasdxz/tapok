@@ -320,7 +320,7 @@ export class AddTapok {
 						text: 'VIEW EVENT',
 						handler: () => {					
 							this.navCtrl.setRoot('TabsPage');
-							let contentModal = this.modalCtrl.create('TapokContent', {param1: eventKey});
+							let contentModal = this.modalCtrl.create('TapokContent', {param1: eventKey, type: "JOINED"});
     						contentModal.present();
 						}
 					}

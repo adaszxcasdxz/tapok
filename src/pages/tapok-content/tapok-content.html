@@ -41,7 +41,7 @@
                 </ion-item>
             </ion-item-group>
             <ion-item-group *ngIf="tab=='details'">
-                <ion-item-divider>Schedule</ion-item-divider>
+                <ion-item-divider><b>Schedule</b></ion-item-divider>
                 <ion-item *ngIf="event.enddate==''&&event.endtime==''">
                     <ion-icon name="calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} &nbsp;&nbsp;<ion-icon name = "time" color="danger"></ion-icon> <b>Time:</b> {{ event.time }}
                 </ion-item>
@@ -56,7 +56,7 @@
                 </ion-item>       
             </ion-item-group>
             <ion-item-group>
-                <ion-item-divider>Venue</ion-item-divider>
+                <ion-item-divider><b>Venue</b></ion-item-divider>
                 <ion-item>
                     <ion-icon name = "pin" color="primary"></ion-icon> <b>Location:</b><br> {{ event.venue }}
                 </ion-item>
@@ -66,13 +66,41 @@
             </ion-item-group>
         </div>
     </ion-list>
+            <div *ngIf="event.latitude!=null && tab=='details'" #map id="map"></div>
+            <div *ngIf="event.latitude!=null && tab=='attendees'" #map id="map_hide"></div>
+            <div *ngIf="event.latitude!=null && tab=='chat'" #map id="map_hide"></div>
+    
+    <ion-list class="content" no-lines text-wrap>
+        <div *ngIf="tab=='details'&&(event.tags == 'true'||event.max_members!=null||event.filter!=null)">  
+            <ion-item-group>
+                <ion-item-divider><b>Other Details</b></ion-item-divider>
+                <ion-item *ngIf="event.tags == 'true'">
+                    <ion-icon name = "pricetag" color="dark"></ion-icon>  <b>Tags:</b><br>
+                        <span *ngFor="let tag of Tags | async">
+                            <span *ngIf="tag.key == event.$key">
+                                <ion-badge>{{ tag.tag }} </ion-badge>
+                            </span>
+                        </span>
+                </ion-item>
+                <ion-item *ngIf="event.max_members!=null">
+                    <ion-icon name = "people" color="dark"></ion-icon> <b>Members:</b> {{ event.tapok }} of {{ event.max_members }}
+                </ion-item>
+                <ion-item *ngIf="event.max_members==null">
+                    <ion-icon name = "people" color="dark"></ion-icon> <b>Members:</b> {{ event.tapok }}
+                </ion-item>
+                <ion-item *ngIf="event.filter!=null">
+                    <ion-icon name = "funnel" color="dark"></ion-icon> <b>Classification:</b> {{ event.filter }}
+                </ion-item> 
+            </ion-item-group>
+        </div>
+    </ion-list>
     <ion-list class="content">
             <ion-item *ngIf="tab=='chat'" no-padding text-justify>
                 
             </ion-item>
     </ion-list>
     <ion-list *ngIf="tab=='attendees'">
-        <br>
+        <br><br>
         <ion-item-group>
             <ion-item-divider>Administrators</ion-item-divider>
             <ion-item>
@@ -121,9 +149,6 @@
             </ion-item-sliding>
         </ion-item-group>
     </ion-list>
-    <div *ngIf="event.latitude!=null && tab=='details'" #map id="map"></div>
-    <div *ngIf="event.latitude!=null && tab=='attendees'" #map id="map_hide"></div>
-    <div *ngIf="event.latitude!=null && tab=='chat'" #map id="map_hide"></div>
 </ion-content>
 
 <ion-footer>

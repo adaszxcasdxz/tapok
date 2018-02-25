@@ -150,14 +150,29 @@ export class TapokContent {
   }
 
   removeAdmin(attendee){
-    this.firebaseService.addMember(this.key, attendee);
-    this.firebaseService.removeAdmin(this.key, attendee.$key);
+    let alert = this.alertCtrl.create({
+      title: 'Remove Admin?',
+      buttons: [ 
+        {
+          text: 'No',
+        },
+        {
+          text: 'Yes',
+          handler: () => {					
+            this.firebaseService.addMember(this.key, attendee);
+            this.firebaseService.removeAdmin(this.key, attendee.$key);
+          }
+        }
+      ]
+    });
+    alert.present();
     console.log(attendee.$key);
   }
 
   removeAdminMember(attendee){
     this.firebaseService.removeAdmin(this.key, attendee.$key);
   }
+
   removeMember(attendee){
     this.firebaseService.removeMember(this.key, attendee.$key);
   }
