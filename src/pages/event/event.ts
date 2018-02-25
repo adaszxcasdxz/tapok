@@ -142,12 +142,8 @@ export class EventPage {
             this.etimeStatus[y] = 'ongoing';
             this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
           }
-          else{
-            this.etimeStatus[y] = 'upcoming';
-            this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
-          }
           //with end time but no end date
-          if(snapshot.endtime != '' && snapshot.enddate == ''){
+          else if(snapshot.endtime != '' && snapshot.enddate == ''){
             var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
             if(checkEnd){
               this.etimeStatus[y] = 'archive';
@@ -161,7 +157,7 @@ export class EventPage {
             } 
           }
           //with end date but no end time
-          if(snapshot.enddate != '' && snapshot.endtime == ''){
+          else if(snapshot.enddate != '' && snapshot.endtime == ''){
             var checkEnd = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
             if(checkEnd){
               this.etimeStatus[y] = 'ongoing';
@@ -169,7 +165,7 @@ export class EventPage {
             }
           }
           //with end date and end time
-          if(snapshot.enddate != '' && snapshot.endtime != ''){
+          else if(snapshot.enddate != '' && snapshot.endtime != ''){
             var checkEndDate = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
             var checkEndTime = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
             if(checkEndDate && !checkEndTime){
@@ -190,6 +186,10 @@ export class EventPage {
               if(snapshot.status == null)
                 this.firebaseService.addHistory(snapshot);
             }
+          }
+          else{
+            this.etimeStatus[y] = 'upcoming';
+            this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
           }
           for(var x=0;x<this.etimeStatus.length;x++){
             if(this.status[x]=='JOINED'){
