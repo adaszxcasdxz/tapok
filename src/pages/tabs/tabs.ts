@@ -25,7 +25,6 @@ export class TabsPage {
   bdge:any;
 
   username: any;
-  notifCount = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public firebaseService: FireBaseService,  public geolocation: Geolocation,
@@ -72,10 +71,6 @@ export class TabsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TabsPage');
-    /*if(this.selectedTab == 2){
-      console.log('test');
-      this.navCtrl.setRoot('TapokContent', { param1: this.key });
-    }*/
   }
 
   async increaseBadges(){

@@ -150,13 +150,10 @@ export class TapokPage {
             })
           }
         }
-        //if no end date and end time
-        if(checkTime && checkDate && snapshot.enddate == ''){
+         //if no end date and end time
+         if(checkTime && checkDate && snapshot.enddate == ''){
           this.timeStatus[y] = 'ongoing';
           this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
-        } else if(checkTime && checkDate && snapshot.enddate == ''){
-          this.timeStatus[y] = 'upcoming';
-          this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
         }
         //with end time but no end date
         else if(snapshot.endtime != '' && snapshot.enddate == ''){
@@ -170,7 +167,7 @@ export class TapokPage {
             this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
             if(snapshot.status == null)
               this.firebaseService.addHistory(snapshot);
-          }
+          } 
         }
         //with end date but no end time
         else if(snapshot.enddate != '' && snapshot.endtime == ''){
@@ -203,7 +200,10 @@ export class TapokPage {
               this.firebaseService.addHistory(snapshot);
           }
         }
-        y++;
+        else{
+          this.timeStatus[y] = 'upcoming';
+          this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
+        }
         for(var x=0;x<this.timeStatus.length;x++){
           if(this.status[x]=='TAPOK'){
             if(this.timeStatus[x]=='upcoming')
@@ -211,7 +211,8 @@ export class TapokPage {
             else if(this.timeStatus[x]=='ongoing')
               this.ongoingCount++;
           }
-        };
+        }
+        y++;
       })
     });
     if(Type == 'const'){
