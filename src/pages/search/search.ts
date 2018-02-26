@@ -34,6 +34,7 @@ export class SearchPage {
   Login: any;
   loginInfo: any[] = [];
   Group: any;
+  Groups: any;
   uGroup: any;
   groupTest: any[] = [];
   usergroup: any;
@@ -52,11 +53,12 @@ export class SearchPage {
     this.tabs = "events";
     this.index = 0;
     this.user = firebaseService.user;
-    //this.photo = this.firebaseService.getPhotoURL();
-    //this.userid = this.firebaseService.getUserID();
+    this.photo = this.firebaseService.getPhotoURL();
+    this.userid = this.firebaseService.getUserID();
     this.Event = this.firebaseService.getEvent();
     this.User = this.firebaseService.getUsers();
     this.Login = this.firebaseService.getLogin();
+    this.Groups = this.firebaseService.getGroup();
 
     this.Event.subscribe(snapshots => {
       var y = 0;
@@ -238,7 +240,7 @@ export class SearchPage {
     this.firebaseService.userTapok(eventKey, event.$key, status, tapok, this.user, attendeeKey, userKey);
   }
 
-  requestJoin(key){
+  requestJoin(key, gname, admin){
     this.requestee={
         "name": this.user,
         "photo": this.photo,
@@ -255,8 +257,16 @@ export class SearchPage {
             {
             text: 'YES',
             handler: () => {
+              var notif = {
+                "name": this.user,
+                "admin": admin,
+                "type": 5,
+                "timestamp": 0-Date.now(),
+                "group_name": gname,
+                "group_key": key
+              }
+            this.firebaseService.addNotif(admin, notif);  
         this.firebaseService.addRequestee(key, this.requestee);
-        this.navCtrl.setRoot('GroupPage');
         confirm.present();
         }
             },

@@ -27,11 +27,14 @@ export class GroupPage{
     gmember: any;
     key: any;
     Tags: any;
+    i=0;
+    count = 0;
+    allcount = 0;
 
     constructor(
         public navCtrl: NavController, public popoverCtrl: PopoverController, public navParams: NavParams,
         public modalCtrl: ModalController, public firebaseService: FireBaseService, public alertCtrl: AlertController){
-        var i = 0, j = 0, k = 0;
+        var j = 0, k = 0;
         
         this.toggled = false;
         this.Group = this.firebaseService.getGroup();
@@ -48,10 +51,10 @@ export class GroupPage{
 
         this.uGroup.subscribe(snapshot => { //
             this.userTest.length = 0;
-            i = 0;
+            this.i = 0;
             snapshot.forEach(snap => {
-                this.userTest[i] = snap.key;
-                i++;
+                this.userTest[this.i] = snap.key;
+                this.i++;
             })
             this.test();
         });
@@ -71,9 +74,12 @@ export class GroupPage{
         this.status.length = 0;
         for(var x=0;x<this.groupTest.length;x++){
             this.status[x] = "UNJOINED";
+            this.allcount++;
             for(var z=0;z<this.userTest.length;z++){
                 if(this.groupTest[x]==this.userTest[z]){
                     this.status[x] = "JOINED";
+                    this.count++;
+                    this.allcount--;
                     break;
                 }
             }
@@ -104,6 +110,7 @@ export class GroupPage{
             {
             text: 'YES',
             handler: () => {
+                this.count--;
                 this.firebaseService.leaveUserGroup(ugroup);
                 this.firebaseService.removegroupAttend(group, this.groupmember.$key);
                 //this.check();

@@ -71,9 +71,9 @@
             </ion-chip>
         </span>
     </div>
-    <div *ngIf="this.label != 'Add Tapok'">
+    <div *ngIf="this.label != 'Add Group'">
         <span *ngFor="let tags of curTags | async">
-            <ion-chip *ngIf="tags.key == event_key" color="primary">
+            <ion-chip *ngIf="tags.key == group.$key" color="primary">
                 <ion-label>{{ tags.tag }}</ion-label>
                 <button ion-button clear color="light" (click)="deleteCurrentTag(tags.$key)">
                     <ion-icon name="close-circle"></ion-icon>

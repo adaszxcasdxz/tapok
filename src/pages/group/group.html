@@ -16,12 +16,11 @@
 <ion-content>
 <div [ngSwitch]="group">
   <ion-list *ngSwitchCase="'mygroup'">
+      <p class="nogroups" *ngIf="count == 0" text-center>You have no groups at the moment. Join one now!</p>
     <div *ngFor="let group of Group | async">
       <div *ngFor="let ugroup of uGroup | async">
         <ion-card *ngIf="ugroup.key == group.$key" text-center>
           <div (click)="openGroupContent(group)">
-
-            <h2 *ngIf="uGroup.key == null">You have no groups at the moment. Join one now!</h2>
 
               <div class="boxpic" [style.background-image]="'url(' + group.photo + ')'"></div>
                 
@@ -72,8 +71,9 @@
   <!--End of My Groups-->
 
   <ion-list *ngSwitchCase="'recommended'">
-    <ion-card *ngFor="let group of Group | async; let i = index;" text-center>
-      <div class="test" *ngIf="status[i] == 'UNJOINED'">
+      <p class="nogroups" *ngIf="allcount == 0" text-center>There are no groups at the moment.</p>
+    <ion-card *ngFor="let group of Group | async; let x = index;" text-center>
+      <div class="test" *ngIf="status[x] == 'UNJOINED'">
           
         <div class="groupbg">
 
@@ -81,7 +81,7 @@
               </div>
               
                 
-              <div class="inc">{{ i+1 }}</div>
+              <div class="inc">{{ x+1 }}</div>
               <ion-row text-center>
                 <ion-col>  
                     <div class="title"><b>{{ group.gname }}</b></div>
@@ -95,7 +95,7 @@
               </ion-row>
 
               <div class="tagbox">
-                  <hr *ngIf="group.tags == 'true'">
+                  <br *ngIf="group.tags == 'true'">
                   <span *ngIf="group.tags == 'true'" text-left padding>
                     <p class="tags"><ion-icon name = "pricetag" color="dark"></ion-icon>  Tags:<br>
                     <span *ngFor="let tag of Tags | async">

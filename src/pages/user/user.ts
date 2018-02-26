@@ -58,9 +58,9 @@ export class UserPage {
     if(this.otherUser == null){
       this.username = this.firebaseService.getUser();
       this.email = this.firebaseService.getEmail();
-      //this.email = 'this.firebaseService.getEmail()';
+      this.email = 'this.firebaseService.getEmail()';
       this.photo = this.firebaseService.getPhotoURL();
-      //this.photo = 'this.firebaseService.getPhotoURL()';
+      this.photo = 'this.firebaseService.getPhotoURL()';
     }else{
       this.username = this.otherUser.name;
       this.email = this.otherUser.email;

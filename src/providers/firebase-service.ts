@@ -222,7 +222,7 @@ export class FireBaseService {
   }
 
   getGroupTags(grpTagKey){
-    return this.tapok.list('/grouptags/',{ 
+    return this.tapok.list('/tags/',{ 
       preserveSnapshot: true,
       query: {
         orderByChild: "key",
@@ -236,7 +236,7 @@ export class FireBaseService {
   }
 
   deleteGroupTag(key){
-    this.tapok.object('/grouptags/'+key).remove();
+    this.tapok.object('/tags/'+key).remove();
   }
 
   searchTapok(search){
@@ -260,7 +260,7 @@ export class FireBaseService {
   }
 
   searchGroupTag(search){
-    return this.tapok.list('/grouptags/',{
+    return this.tapok.list('/tags/',{
       query: {
         orderByChild: 'tag',
         startAt: search,
@@ -433,7 +433,7 @@ export class FireBaseService {
   }
 
   addTempGTag(tag){
-    this.tapok.list('gtemp/gtemp-tags/'+this.user).push(tag);
+    this.tapok.list('temp/temp-tags/'+this.user).push(tag);
   }
 
   getTempTag(){
@@ -441,7 +441,7 @@ export class FireBaseService {
   }
 
   getTempGTag(){
-    return this.tapok.list('gtemp/gtemp-tags/'+this.user);
+    return this.tapok.list('temp/temp-tags/'+this.user);
   }
 
   deleteTempTag(key){
@@ -449,7 +449,7 @@ export class FireBaseService {
   }
 
   deleteTempGTag(key){
-    this.tapok.list('gtemp/gtemp-tags/'+this.user+'/'+key).remove();
+    this.tapok.list('temp/temp-tags/'+this.user+'/'+key).remove();
   }
 
   deleteAllTempTag(){
@@ -457,7 +457,7 @@ export class FireBaseService {
   }
 
   deleteAllTempGTag(){
-    this.tapok.list('gtemp/gtemp-tags/'+this.user).remove();
+    this.tapok.list('temp/temp-tags/'+this.user).remove();
   }
 
   addTag(tag){
@@ -465,7 +465,7 @@ export class FireBaseService {
   }
 
   addGroupTag(tag){
-    this.tapok.list('grouptags/').push(tag);
+    this.tapok.list('tags/').push(tag);
   }
 
   getTag(){
@@ -473,7 +473,7 @@ export class FireBaseService {
   }
 
   getGroupTag(){
-    return this.tapok.list('grouptags/');
+    return this.tapok.list('tags/');
   }
 
   getAttendees(key){

@@ -48,6 +48,7 @@ export class GroupAddPage {
   gdescr = '';
 	timestamp = '';
 	adminid: any;
+	group_key: any;
 
   onSuccess = (snapshot) => {
 		this.gphoto = snapshot.downloadURL;
@@ -68,9 +69,11 @@ export class GroupAddPage {
 				this.current = this.firebaseService.getUser();
 				this.user = firebaseService.user;
 				this.Tags = this.firebaseService.getTempGTag();
-        this.label = params.get('label');
-			  this.group = params.get('tapok');
-        if(this.group != undefined)
+				this.label = params.get('label');
+				this.group_key = params.get('key');
+				console.log(this.group_key);
+				this.group = params.get('tapok');
+				if(this.group != undefined)
 				  this.editGroupInfo();
   }
 
@@ -131,6 +134,21 @@ export class GroupAddPage {
 			}	
 		}
 		
+		if(this.label == "Edit Group"){
+			var gkey = this.firebaseService.editGroups(this.group.$key, this.group);
+
+			for(i=0;i<this.tagsTest.length;i++){
+				this.tag={
+					"tag": this.tagsTest[i].toLowerCase(),
+					"key": key
+				}
+				console.log(this.tag.tag);
+				this.firebaseService.addGroupTag(this.tag);
+				if(i+1 == this.tagsTest.length)
+					this.firebaseService.deleteAllTempGTag();
+			}	
+		}
+		
 		
 		this.test = this.group.$key;
 		console.log(this.test);
@@ -156,21 +174,23 @@ export class GroupAddPage {
 		
 		this.firebaseService.addUserGroup(this.current, this.usergroup);
 	}
-
+ 
   editGroup(){
 		var i;
 		this.group={
 			"gname": this.gname,
 			"gdescr": this.gdescr,
-			"photo": this.gphoto
+			"photo": this.gphoto,
+			"tags": this.tags,
 		};
 
-		this.firebaseService.editGroups(this.key, this.group);
+		var gkey = this.firebaseService.editGroups(this.group.$key, this.group);
 		for(i=0;i<this.tagsTest.length;i++){
 			this.tag={
 				"tag": this.tagsTest[i].toLowerCase(),
-				"key": this.key
+				"key": gkey
 			}
+			console.log(this.tag.tag);
 			this.firebaseService.addGroupTag(this.tag);
 			if(i+1 == this.tagsTest.length)
 				this.firebaseService.deleteAllTempGTag();
@@ -193,6 +213,8 @@ export class GroupAddPage {
 		this.gdescr = this.group.gdescr;
 		this.gphoto = this.group.photo;
 		this.tags = this.group.tags;
+
+		this.curTags = this.firebaseService.getGroupTag();
 	}
 
   ionViewDidLoad() {
