@@ -40,6 +40,8 @@ export class SearchPage {
   groupmember: any;
   photo: any;
   userid: any;
+  Followers: any[] = [];
+  Following: any[] = [];
 
   memberStatus: any[] = [];
 
@@ -112,12 +114,9 @@ export class SearchPage {
     }
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SearchPage');
-  }
-
   openTapokContent(event){
-    this.navCtrl.push('TapokContent', {param1: event.$key});
+    let contentModal = this.modalCtrl.create('TapokContent', {param1: event.$key, type: 'JOIN'});
+    contentModal.present();
   }
 
   dismiss(){
@@ -126,7 +125,6 @@ export class SearchPage {
 
   changeTab(tab){
     this.tabs = tab;
-    console.log(tab);
     this.onInput();
   }
 
@@ -154,10 +152,25 @@ export class SearchPage {
                 snapshot2.forEach(snap2 => {
                   this.result[i] = snap2;
                 })
-                console.log(this.peopleResult[i]);
               });
             }
             i++;
+          })
+        });
+
+        this.firebaseService.getFollowing().subscribe(snapshot => {
+          var x=0;
+          snapshot.forEach(snap => {
+            this.Following[x] = snap;
+            x++;
+          })
+        });
+
+        this.firebaseService.getAllFollowers().subscribe(snapshot => {
+          var x=0;
+          snapshot.forEach(snap => {
+            this.Followers[x] = snap;
+            x++;
           })
         });
       }
@@ -276,5 +289,23 @@ export class SearchPage {
   openUser(user){
     let modal = this.modalCtrl.create('UserPage', { otherUser: user });
     modal.present();
+  }
+
+  follow(fol){
+    var follow = {
+      'name': fol.user,
+      'email': fol.email,
+      'photo': fol.photo
+    }
+
+    var follower = {
+      'name': this.firebaseService.getUser(),
+      //this.email = this.firebaseService.getEmail();
+      'email': 'this.firebaseService.getEmail()',
+      //this.photo = this.firebaseService.getPhotoURL();
+      'photo': 'this.firebaseService.getPhotoURL()'
+    }
+
+    this.firebaseService.addFollowing(follow, follower);
   }
 }

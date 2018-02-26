@@ -12,10 +12,7 @@
             </button>
         </ion-buttons>
     </ion-navbar>
-</ion-header>
-    
-<ion-content>  
-    <ion-toolbar class="tabs">
+    <ion-toolbar>
         <ion-segment [(ngModel)]="tab">
             <ion-segment-button (click)="changeTab('details')" value="details">
                 Details
@@ -28,14 +25,17 @@
             </ion-segment-button>
         </ion-segment>
     </ion-toolbar>
+</ion-header>
+    
+<ion-content>  
     <div *ngIf="tab=='details' && event.photo!=''" class="box_content">
         <img *ngIf="event.photo!='null'" class="photo" src="{{ event.photo }}">
     </div>
     <ion-list class="content" no-lines text-wrap>
-        <div *ngIf="tab=='details'">
+        <div class="content-tab" *ngIf="tab=='details'">
             <ion-item *ngIf="event.photo==''"><br><br></ion-item>
             <ion-item-group *ngIf="event.description!=''">
-                <ion-item-divider>Description</ion-item-divider>
+                <ion-item-divider><b>Description</b></ion-item-divider>
                 <ion-item>
                     {{ event.description }}
                 </ion-item>
@@ -45,15 +45,30 @@
                 <ion-item *ngIf="event.enddate==''&&event.endtime==''">
                     <ion-icon name="calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} &nbsp;&nbsp;<ion-icon name = "time" color="danger"></ion-icon> <b>Time:</b> {{ event.time }}
                 </ion-item>
-                <ion-item *ngIf="event.enddate!=''&&event.endtime==''">   
-                    <ion-icon name = "calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} <b>-</b> {{ event.enddate }} &nbsp;<ion-icon name = "time" color="danger"></ion-icon><b>Time:</b> {{ event.time }}
-                </ion-item>   
-                <ion-item *ngIf="event.enddate==''&&event.endtime!=''">
-                    <ion-icon name="calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} &nbsp;&nbsp;<ion-icon name = "time" color="danger"></ion-icon><b>Time:</b> {{ event.time }} <b>-</b> {{ event.endtime }}
-                </ion-item>
-                <ion-item *ngIf="event.enddate!=''&&event.endtime!=''">
-                    <ion-icon name = "calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} <b>-</b> {{ event.enddate }} &nbsp;&nbsp;<ion-icon name = "time" color="danger"></ion-icon><b>Time:</b> {{ event.time }} <b>-</b> {{ event.endtime }}
-                </ion-item>       
+                <div *ngIf="event.enddate!=''&&event.endtime==''">
+                    <ion-item>   
+                        <ion-icon name = "calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} <b>-</b> {{ event.enddate }}
+                    </ion-item>   
+                    <ion-item>
+                        <ion-icon name = "time" color="danger"></ion-icon><b>Time:</b> {{ event.time }}
+                    </ion-item>
+                </div>
+                <div *ngIf="event.enddate==''&&event.endtime!=''">
+                    <ion-item>
+                        <ion-icon name="calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} <br>
+                    </ion-item>
+                    <ion-item>
+                        <ion-icon name = "time" color="danger"></ion-icon><b>Time:</b> {{ event.time }} <b>-</b> {{ event.endtime }}
+                    </ion-item>
+                </div>
+                <div *ngIf="event.enddate!=''&&event.endtime!=''">
+                    <ion-item>
+                        <ion-icon name = "calendar" color="secondary"></ion-icon> <b>Date:</b> {{ event.date }} <b>-</b> {{ event.enddate }}
+                    </ion-item>     
+                    <ion-item>
+                        <ion-icon name = "time" color="danger"></ion-icon><b>Time:</b> {{ event.time }} <b>-</b> {{ event.endtime }}
+                    </ion-item>  
+                </div>
             </ion-item-group>
             <ion-item-group>
                 <ion-item-divider><b>Venue</b></ion-item-divider>
@@ -65,12 +80,12 @@
                 </ion-item>
             </ion-item-group>
         </div>
-    </ion-list>
-            <div *ngIf="event.latitude!=null && tab=='details'" #map id="map"></div>
-            <div *ngIf="event.latitude!=null && tab=='attendees'" #map id="map_hide"></div>
-            <div *ngIf="event.latitude!=null && tab=='chat'" #map id="map_hide"></div>
+</ion-list>
+        <div *ngIf="event.latitude!=null && tab=='details'" #map id="map"></div>
+        <div *ngIf="event.latitude!=null && tab=='attendees'" #map id="map_hide"></div>
+        <div *ngIf="event.latitude!=null && tab=='chat'" #map id="map_hide"></div>
     
-    <ion-list class="content" no-lines text-wrap>
+    <ion-list no-lines text-wrap>
         <div *ngIf="tab=='details'&&(event.tags == 'true'||event.max_members!=null||event.filter!=null)">  
             <ion-item-group>
                 <ion-item-divider><b>Other Details</b></ion-item-divider>
@@ -94,12 +109,12 @@
             </ion-item-group>
         </div>
     </ion-list>
-    <ion-list class="content">
+    <ion-list class="content-tab">
             <ion-item *ngIf="tab=='chat'" no-padding text-justify>
                 
             </ion-item>
     </ion-list>
-    <ion-list *ngIf="tab=='attendees'">
+    <ion-list class="content-tab" *ngIf="tab=='attendees'">
         <br><br>
         <ion-item-group>
             <ion-item-divider>Administrators</ion-item-divider>

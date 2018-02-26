@@ -254,7 +254,7 @@ export class AddTapok {
 				"event_key": eventKey
 			}
 
-			var followers = this.firebaseService.getFollowers();
+			var followers = this.firebaseService.getAllFollowers();
 			followers.subscribe(snapshot =>{
 				snapshot.forEach(snap=>{
 					this.firebaseService.addNotif(snap.name, notif);

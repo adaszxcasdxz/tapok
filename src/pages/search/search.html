@@ -14,56 +14,31 @@
       </button>
     </ion-buttons>
   </ion-navbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="tabs">
+      <ion-segment-button (click)="changeTab('events')" value="events">
+        Events
+      </ion-segment-button>
+      <ion-segment-button (click)="changeTab('tags')" value="tags">
+        Tags
+      </ion-segment-button>
+      <ion-segment-button (click)="changeTab('groups')" value="groups">
+        Groups
+      </ion-segment-button>
+      <ion-segment-button (click)="changeTab('people')" value="people">
+        People
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content text-center>
-  <br><br><br>
-  <ion-toolbar class="toolbar">
-      <ion-segment [(ngModel)]="tabs">
-        <ion-segment-button (click)="changeTab('events')" value="events">
-          Events
-        </ion-segment-button>
-        <ion-segment-button (click)="changeTab('tags')" value="tags">
-          Tags
-        </ion-segment-button>
-        <ion-segment-button (click)="changeTab('groups')" value="groups">
-          Groups
-        </ion-segment-button>
-        <ion-segment-button (click)="changeTab('people')" value="people">
-          People
-        </ion-segment-button>
-      </ion-segment>
-    </ion-toolbar>
-    <br><br><br>
-  <!--<ion-row>
-    <ion-col class="tab-bar" text-left>
-      <span class="tabs" >
-        <b><span *ngIf="tabs=='events'" class="isActive">Events</span>
-        <span *ngIf="tabs!='events'">Events</span></b>
-      </span>
-
-      <span class="tabs" (click)="changeTab('tags')">
-          <b><span *ngIf="tabs=='tags'" class="isActive">Tags</span>
-          <span *ngIf="tabs!='tags'">Tags</span></b>
-      </span>
-
-      <span class="tabs" (click)="changeTab('groups')">
-          <b><span *ngIf="tabs=='groups'" class="isActive">Groups</span>
-          <span *ngIf="tabs!='groups'">Groups</span></b>
-      </span>
-
-      <span class="tabs" (click)="changeTab('people')">
-        <b><span *ngIf="tabs=='people'" class="isActive">People</span>
-        <span *ngIf="tabs!='people'">People</span></b>
-      </span>
-    </ion-col>
-  </ion-row>-->
   <div *ngIf="tabs!='people' && tabs!='groups'">
     <div *ngFor="let res of result">
       <div *ngFor="let event of Event | async; let i = index;">
         <div *ngIf="(event.filter=='General')||(event.filter=='PG'&&age>=13)||(event.filter=='SPG'&&age>=18)">
-          <ion-card *ngIf="event.$key == res"  text-center>
+          <ion-card *ngIf="event.$key == res" text-center>
             <ion-item>
               <ion-avatar item-start>
                 <img class="user-avatar" src="assets/img/user.png">
@@ -71,6 +46,12 @@
               <ion-label>
                 <h2><strong>{{ event.host }}</strong></h2>
               </ion-label>
+              <ion-badge *ngIf="event.max_members == null" color="tapok" item-end outline>
+                  {{ event.tapok }} <ion-icon name="person"></ion-icon>
+              </ion-badge>
+              <ion-badge *ngIf="event.max_members != null" color="tapok" item-end outline>
+                  {{ event.tapok }} of {{ event.max_members }} <ion-icon name="person"></ion-icon>
+              </ion-badge>
             </ion-item>
             <div *ngIf="event.photo != ''" class="box" text-center>
               <div (click)="viewPic(event.photo)">
@@ -101,21 +82,8 @@
                   <ion-icon name = "pin" color="primary"></ion-icon>                    
                   <span class="chip-label">{{ event.venue }}</span>
                 </div>
-                <br><br>
               </div> 
-            </span>
-              <button class="attendees" (click)="showAttendees(event.$key)" ion-button icon-left outline small>
-                <div *ngIf="event.max_members == null">
-                  <div *ngIf="event.tapok > 1">{{ event.tapok }} Attendees</div>
-                  <div *ngIf="event.tapok == 1">{{ event.tapok }} Attendee</div>
-                  <div *ngIf="event.tapok == 0">No Attendees</div>
-                </div>
-                <div *ngIf="event.max_members != null">
-                  <div *ngIf="event.tapok > 1">{{ event.tapok }} of {{ event.max_members }} Attendees</div>
-                  <div *ngIf="event.tapok == 1">{{ event.tapok }} of {{ event.max_members }} Attendees</div>
-                  <div *ngIf="event.tapok == 0">0 of {{ event.max_members }} Attendees</div>
-                </div>
-              </button>
+            </span>            
               <br *ngIf="event.tags != 'true'">
               <span *ngIf="event.tags == 'true'" text-left padding>
                 <p class="tags"><ion-icon name = "pricetag" color="dark"></ion-icon>  Tags:<br>
@@ -126,17 +94,16 @@
                 </span>
                 </p>
               </span>
-              <hr>
               <ion-col *ngIf="event.max_members == null">
                 <button class="notjoined" (click)="confirm(event)" ion-button icon-left round clear>
                   <ion-icon name="happy"></ion-icon>
-                    JOINED
+                    JOIN
                 </button>
               </ion-col>
               <ion-col *ngIf="event.max_members!=null&&memberStatus[i] == 'not_full'">
                 <button class="notjoined" (click)="confirm(event)" ion-button icon-left round clear>
                   <ion-icon name="happy"></ion-icon>
-                    JOINED
+                    JOIN
                 </button>
               </ion-col>
               <ion-col *ngIf="memberStatus[i] == 'full'">
@@ -165,7 +132,13 @@
           <ion-avatar item-start><img src="{{ res.photo }}"></ion-avatar>
           <h2>{{ res.name }}</h2>
           <p>{{ res.email }}</p>
+          <div *ngFor="let follow of Following">
+            <div *ngIf="follow.name == res.name">following</div>
+          </div>
         </ion-item>
+        <div *ngFor="let follow of Followers">
+            <div *ngIf="follow.name == res.name" (click)="follower(follow)">follower</div>
+          </div>
       </div>
     </div>
   </ion-list>
