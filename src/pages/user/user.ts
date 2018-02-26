@@ -1,7 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams,ViewController, ModalController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
-import { LoginGooglePage } from '../login-google/login-google';
 import { App } from 'ionic-angular/components/app/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -58,9 +57,9 @@ export class UserPage {
     if(this.otherUser == null){
       this.username = this.firebaseService.getUser();
       this.email = this.firebaseService.getEmail();
-      this.email = 'this.firebaseService.getEmail()';
+      //this.email = 'this.firebaseService.getEmail()';
       this.photo = this.firebaseService.getPhotoURL();
-      this.photo = 'this.firebaseService.getPhotoURL()';
+      //this.photo = 'this.firebaseService.getPhotoURL()';
     }else{
       this.username = this.otherUser.name;
       this.email = this.otherUser.email;

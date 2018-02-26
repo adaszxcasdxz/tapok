@@ -58,7 +58,6 @@ export class NotificationPage {
   async clearBadges(){
     try{
       let badge = await this.badge.clear();
-      alert("cleared badges" + badge);
     }catch(e){
       alert(e);
     }

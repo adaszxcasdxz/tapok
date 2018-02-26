@@ -23,6 +23,7 @@ export class TabsPage {
   key: any;
   first=true;
   bdge:any;
+  name=this.firebaseService.getUser();
 
   username: any;
 
@@ -58,7 +59,7 @@ export class TabsPage {
       })
     });
 
-    this.firebaseApp.database().ref("notifications/").on('value', snapshot => {
+    this.firebaseApp.database().ref("notifications/"+this.name+"/").on('value', snapshot => {
       if (!this.first){
         this.increaseBadges();
       }
@@ -81,7 +82,6 @@ export class TabsPage {
     try{
       let badge = await this.badge.increase(Number(1));
       this.bdge = badge;
-      alert("badges increase");
     }catch(e){
       alert(e);
     }
@@ -90,7 +90,6 @@ export class TabsPage {
   async getBadges(){
     try{
       let badgeAmount = await this.badge.get();
-      alert("got the badges");
     }catch (e){
       alert(e);
     }
@@ -99,7 +98,6 @@ export class TabsPage {
   async clearBadges(){
     try{
       let badge = await this.badge.clear();
-      alert("cleared badges" + badge);
     }catch(e){
       alert(e);
     }
