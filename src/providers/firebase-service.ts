@@ -15,8 +15,8 @@ export class FireBaseService {
   uID;
 
   constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp, private afAuth: AngularFireAuth) {
-    this.user = afAuth.auth.currentUser.displayName;
-    this.uID = afAuth.auth.currentUser.email;
+    //this.user = afAuth.auth.currentUser.displayName;
+    //this.uID = afAuth.auth.currentUser.email;
   }
 
   setUser(name){
