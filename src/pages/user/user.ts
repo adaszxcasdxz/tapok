@@ -76,12 +76,14 @@ export class UserPage {
       else  
         this.permission = true;
     });
-    this.firebaseService.getUserLocation(this.username).subscribe(snap => {
-      this.lat = snap[0].$value;
-      this.lng = snap[1].$value;
-    }); 
-    if(this.permission)
-      this.loadMap();
+    if(this.otherUser==null){
+      this.firebaseService.getUserLocation(this.username).subscribe(snap => {
+        this.lat = snap[0].$value;
+        this.lng = snap[1].$value;
+      }); 
+      if(this.permission)
+        this.loadMap();
+    }
 
   }
 

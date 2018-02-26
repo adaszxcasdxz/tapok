@@ -35,6 +35,7 @@ export class MapPage {
         this.lat[y] = snapshot.latitude;
         this.long[y] = snapshot.longitude;
         this.info[y] = snapshot;
+        console.log(snapshot.latitude); 
         y++;
       })
     });
@@ -68,13 +69,14 @@ export class MapPage {
         icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
       });
       var iconLink;
+      console.log(this.lat);
       for(i = 0; i < this.lat.length; i++){
         eventLocation[i] = new google.maps.LatLng(this.lat[i], this.long[i]);
         if(this.info[i].timeStatus == 'upcoming')
           iconLink = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
         if(this.info[i].timeStatus == 'ongoing')
           iconLink = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
-        this.addMarker(eventLocation[i], this.info[i], this.lat[i], iconLink);
+        this.addMarker(eventLocation[i], this.info[i], this.lat[i], iconLink);  
       }
 
     }, (err) => {
@@ -89,7 +91,7 @@ export class MapPage {
        map: this.map,
        animation: google.maps.Animation.DROP,
        position: eventLocation,
-       icon: iconLink
+       //icon: iconLink
      });
     
      let content = info;         
