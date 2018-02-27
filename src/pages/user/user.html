@@ -13,7 +13,7 @@
         </button>
       </ion-buttons>
       <ion-buttons *ngIf="otherUser!=null&&check">
-        <button (click)="unfollow()" ion-button icon-only round clear>
+        <button (click)="unfollow(otherUser)" ion-button icon-only round clear>
           <ion-icon name="close"></ion-icon><ion-icon name="person"></ion-icon> Unfollow
         </button>
       </ion-buttons>

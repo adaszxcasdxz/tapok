@@ -30,6 +30,7 @@ export class UserPage {
   lat: any = 0;
   lng: any = 0;
   permission: any;
+  followKey: any;
   other: any = false;
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController, public geolocation: Geolocation) {
@@ -46,6 +47,7 @@ export class UserPage {
         snapshot.forEach(snap => {
           if(snap.name == this.otherUser.name){
             this.check = true;
+            this.followKey = snap.$key;
           }
         });
       });
@@ -168,15 +170,26 @@ export class UserPage {
   }
 
   unfollow(follow){
-    this.firebaseService.removeFollowing(follow.$key);
-    this.firebaseService.getFollowers(follow.name).subscribe(snapshot => {
-      snapshot.forEach(snap => {
-        if(snap.name == this.username){
-          console.log(follow.name + '' +snap.$key);
-          this.firebaseService.removeFollower(follow.name, snap.$key);
-        }
-      })
-    });
+    var name = this.firebaseService.getUser();
+    if(this.otherUser == null){
+      this.firebaseService.removeFollowing(follow.$key);
+    }else{
+      this.firebaseService.getFollowing().subscribe(snapshot => {
+        snapshot.forEach(snap => {
+          if(snap.name == follow.name)
+          this.firebaseService.removeFollowing(snap.$key);
+        });
+      });
+      
+    }
+      this.firebaseService.getFollowers(follow.name).subscribe(snapshot => {
+        snapshot.forEach(snap => {
+          if(snap.name == name){
+            console.log(follow.name + '' +snap.$key);
+            this.firebaseService.removeFollower(follow.name, snap.$key);
+          }
+        })
+      });
     this.check = false;
   }
 

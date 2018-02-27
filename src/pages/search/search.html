@@ -95,13 +95,14 @@
                 </p>
               </span>
               <ion-col *ngIf="event.max_members == null">
-                <button class="notjoined" (click)="confirm(event)" ion-button icon-left round clear>
+                <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left round clear>
                   <ion-icon name="happy"></ion-icon>
-                    JOIN
+                    <span *ngIf="status[i] == 'TAPOK'">JOIN</span>
+                    <span *ngIf="status[i] == 'JOINED'">JOINED</span>
                 </button>
               </ion-col>
               <ion-col *ngIf="event.max_members!=null&&memberStatus[i] == 'not_full'">
-                <button class="notjoined" (click)="confirm(event)" ion-button icon-left round clear>
+                <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left round clear>
                   <ion-icon name="happy"></ion-icon>
                     JOIN
                 </button>
@@ -125,20 +126,36 @@
     </div>
   </div>  
 
-  <ion-list *ngIf="tabs=='people'">
+  <ion-list *ngIf="tabs=='people'&& this.search != ''">
     <div *ngFor="let login of Login | async; let i = index">
-      <div *ngFor="let res of ResultPeople[i] | async">
-        <ion-item (click)="openUser(res)">
-          <ion-avatar item-start><img src="{{ res.photo }}"></ion-avatar>
-          <h2>{{ res.name }}</h2>
-          <p>{{ res.email }}</p>
-          <div *ngFor="let follow of Following">
-            <div *ngIf="follow.name == res.name">following</div>
-          </div>
-        </ion-item>
-        <div *ngFor="let follow of Followers">
-            <div *ngIf="follow.name == res.name" (click)="follower(follow)">follower</div>
-          </div>
+      <div *ngFor="let res of ResultPeople[i] | async; let y = index">
+        <ion-item-sliding>
+          <ion-item (click)="openUser(res, $event)">
+            <ion-avatar item-start><img src="{{ res.photo }}"></ion-avatar>
+            <h2>{{ res.name }}</h2>
+            <p>{{ res.email }}</p>
+            <!--{{ Following[y].name }}-->
+            <span *ngFor="let follow of Following">
+              <ion-badge class="following" *ngIf="follow.name == res.name" color="secondary">Following </ion-badge>
+            </span>
+            <span *ngFor="let follow of Followers">
+              <ion-badge class="follower" *ngIf="follow.name == res.name">Follower</ion-badge>
+            </span>            
+          </ion-item>
+          <ion-item-options side="right">
+            <span *ngFor="let follow of Following">
+              <button (click)="followOther(follower)" *ngIf="follow.name == res.name" ion-button color="secondary">
+                <ion-icon name="person"></ion-icon>               
+                  unfollow
+              </button>
+            </span>
+            <button (click)="followOther(follower)" *ngIf="Following==null" ion-button color="secondary">
+              <ion-icon name="person"></ion-icon>               
+                unfollow
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+        <!--(click)="followPerson(follow)"-->
       </div>
     </div>
   </ion-list>
