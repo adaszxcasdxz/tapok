@@ -503,10 +503,6 @@ export class FireBaseService {
     this.tapok.list('latest_notifications/'+this.user).remove();
   }
 
-  addArchives(event){
-    this.tapok.list('archives/').push(event);
-  }
-
   addHistory(event){
     //console.log(event.attendees);
     for(var attendees in event.attendees){
@@ -521,9 +517,13 @@ export class FireBaseService {
   }
 
   getHistory(){
-  return  this.tapok.list('users/'+this.user+'/history',{ query:{
-      orderByChild: 'name'
-    }});
+    return this.tapok.list('users/'+this.user+'/history',{ query:{
+        orderByChild: 'name'
+      }});
+  }
+
+  clearHistory(){
+    this.tapok.list('users/'+this.user+'/history').remove();
   }
 
   updateUserLocation(coor){
@@ -544,5 +544,9 @@ export class FireBaseService {
 
   getPermission(user){
     return this.tapok.list('users/'+user+'/permission');
+  }
+
+  clearNotifs(){
+    return this.tapok.list('notifications/'+this.user).remove();
   }
 }

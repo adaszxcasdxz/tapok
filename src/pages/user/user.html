@@ -28,7 +28,7 @@
         PEOPLE
       </ion-segment-button>
       <ion-segment-button (click)="changePage('history')" value="history">
-        HISTORY
+        ARCHIVES
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar> 
@@ -113,9 +113,6 @@
       <div *ngFor="let history of Archive">
         <!--<ion-item-sliding>-->
           <ion-item>
-            <ion-avatar item-start>
-              <img src="{{ history.photo }}">
-            </ion-avatar>
             <h2>{{ history.name }}</h2>
             <p>{{ history.venue }}</p>
           </ion-item>
@@ -139,4 +136,9 @@
       <button class="tapok-button" (click)="logout()" ion-button>Logout</button>
     </div>
   </div>
+  <!--<div [ngSwitch]="pages">
+    <div *ngSwitchCase="'history'">
+      <button class="tapok-button" (click)="clearHistory()" ion-button>Clear</button>
+    </div>
+  </div>-->
 </ion-footer>
