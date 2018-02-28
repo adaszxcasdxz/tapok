@@ -91,41 +91,40 @@ export class UserPage {
       else  
         this.permission = true;
     });
-    if(this.otherUser==null){
       this.firebaseService.getUserLocation(this.username).subscribe(snap => {
         if(snap!=undefined){
           this.lat = snap[0].$value;
           this.lng = snap[1].$value;
         }
-      }); 
       if(this.permission)
         this.loadMap();
-    }
+    });
   }
 
   loadMap(){
     var i, eventLocation: any[] = [];
-    this.geolocation.getCurrentPosition().then((position) => {
-      
-      let latLng = new google.maps.LatLng(this.lat, this.lng);
+      this.geolocation.getCurrentPosition().then((position) => {
+        
+        let latLng = new google.maps.LatLng(this.lat, this.lng);
 
-      let mapOptions = {
-        center: latLng,
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
+        let mapOptions = {
+          center: latLng,
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
 
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-      
-      this.currentLocation = new google.maps.Marker({
-        map: this.map,
-        animation: google.maps.Animation.DROP,
-        position: latLng
+        this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+        
+        this.currentLocation = new google.maps.Marker({
+          map: this.map,
+          animation: google.maps.Animation.DROP,
+          position: latLng
+        });
+
+      }, (err) => {
+        console.log(err);
       });
-
-    }, (err) => {
-      console.log(err);
-    });
+    
   }
 
   changePage(val){
