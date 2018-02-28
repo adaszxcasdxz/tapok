@@ -189,9 +189,9 @@ export class EventPage {
               //this.firebaseService.editEvent(snapshot.$key, archive);
               //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
               console.log('archive');
-              this.firebaseService.addHistory(snapshot);
+              /*this.firebaseService.addHistory(snapshot);
               this.firebaseService.addArchives(snapshot);
-              this.firebaseService.deleteEvent(snapshot);
+              this.firebaseService.deleteEvent(snapshot);*/
               i++;
               console.log(i);
             }

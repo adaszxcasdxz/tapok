@@ -194,16 +194,21 @@ export class TapokPage {
             this.timeStatus[y] = 'archived';
             //this.firebaseService.editEvent(snapshot.$key, archive);
             //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
-            //if(snapshot.status == null){
+            if(snapshot.status == null){
+              var archive = {
+                'status': 'archive'
+              }
+              this.firebaseService.editEvent(snapshot.$key, archive);
               //this.firebaseService.addHistory(snapshot);
               /*console.log('archive');
+              console.log(this.inc);
               this.firebaseService.addArchives(snapshot);
               this.firebaseService.deleteEvent(snapshot);
-              x++;
-              console.log(snapshot);*/
-            //}
+              this.Event = this.firebaseService.getEvent();*/
+            }
           }
         }
+
         for(var x=0;x<this.timeStatus.length;x++){
           if(this.status[x]=='TAPOK'){
             if(this.timeStatus[x]=='upcoming')
@@ -213,8 +218,9 @@ export class TapokPage {
           }
         }
         y++;
-      })
+      });
     });    
+
     if(Type == 'const'){
       this.upcomingCount = 0;
       this.ongoingCount = 0;

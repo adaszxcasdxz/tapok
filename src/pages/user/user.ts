@@ -35,6 +35,7 @@ export class UserPage {
   other: any = false;
   removeFollowerSubscribe: any;
   removeFollowingSubscribe: any;
+  Archive: any[] = [];
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, 
     public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController, 
@@ -44,6 +45,20 @@ export class UserPage {
     this.Following = this.firebaseService.getFollowing();
     this.Follower = this.firebaseService.getAllFollowers();
     this.History = this.firebaseService.getHistory();
+    this.firebaseService.getEvent().subscribe(snapshot => {
+      var i = 0;
+      snapshot.forEach(snap => {
+        if(snap.status == 'archive'){
+          for(var attendees in snap.attendees){
+            //console.log();
+            if(snap.attendees[attendees].name == this.firebaseService.getUser()){
+              this.Archive[i] = snap;
+              i++;
+            }
+          } 
+        }
+      });
+    });
     this.pages = 'me';
 
     console.log(this.permission);
