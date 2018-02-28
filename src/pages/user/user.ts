@@ -235,5 +235,9 @@ export class UserPage {
     if(this.removeFollowingSubscribe != undefined)
       this.removeFollowingSubscribe.unsubscribe();
 		this.viewCtrl.dismiss();
-	}
+  }
+  
+  clearHistory(){
+    this.firebaseService.clearHistory();
+  }
 }

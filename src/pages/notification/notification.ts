@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController, ViewController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import { Badge } from '@ionic-native/badge';
 import { TabsPage } from '../tabs/tabs';
@@ -23,7 +23,7 @@ export class NotificationPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,  
     public firebaseService: FireBaseService, public modalCtrl: ModalController, public badge: Badge,
-    public tabs: TabsPage) {
+    public tabs: TabsPage, public alertCtrl: AlertController) {
     this.Notifs = this.firebaseService.getNotif();
     
     /*this.firebaseService.getNotif().subscribe(snapshot => {
@@ -63,4 +63,26 @@ export class NotificationPage {
     }
   }
 
+  clearNotifs(){
+    let confirm = this.alertCtrl.create({
+      title: 'Notifications Cleared',
+      buttons: ['Ok']
+    });
+    let alert = this.alertCtrl.create({
+      title: 'Clear Notifications?',
+      buttons: [ 
+        {
+          text: 'Yes',
+          handler: () => {					
+            this.firebaseService.clearNotifs();
+            confirm.present();
+          }
+        },
+        {
+          text: 'No',
+        }
+      ]
+    });
+    alert.present();
+  }
 }
