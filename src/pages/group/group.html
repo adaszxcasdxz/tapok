@@ -1,19 +1,23 @@
 <ion-header>
-  <ion-toolbar no-border-top>
-    <div padding>
-  <ion-segment [(ngModel)]="group">
-    <ion-segment-button value="mygroup">
-      MY GROUPS
-    </ion-segment-button> 
-    <ion-segment-button value="recommended">
-      ALL GROUPS
-    </ion-segment-button> 
-  </ion-segment>
-</div>
-  </ion-toolbar>
+    <ion-navbar color="tapok" hide-on-scroll="true" no-border-bottom>  
+        <ion-title text-center>Groups</ion-title>
+      </ion-navbar>
 </ion-header>
 
 <ion-content>
+    <ion-toolbar class="tabs">
+        <div padding>
+      <ion-segment [(ngModel)]="group">
+        <ion-segment-button value="mygroup">
+          MY GROUPS
+        </ion-segment-button> 
+        <ion-segment-button value="recommended">
+          ALL GROUPS
+        </ion-segment-button> 
+      </ion-segment>
+    </div>
+      </ion-toolbar>
+      <br><br><br>
 <div [ngSwitch]="group">
   <ion-list *ngSwitchCase="'mygroup'">
       <p class="nogroups" *ngIf="count == 0" text-center>You have no groups at the moment. Join one now!</p>
@@ -56,7 +60,7 @@
 
           <br>
 
-                    <ion-row>
+                    <ion-row *ngIf="group.admin != user">
                       <ion-col>
                         <button class="join-but" ion-button outline medium (click)="leaveGroup(ugroup.$key, group.$key)">
                             LEAVE GROUP

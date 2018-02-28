@@ -36,7 +36,7 @@
     "angularfire2": "^4.0.0-rc0",
     "com-sarriaroman-photoviewer": "^1.1.11",
     "cordova-android": "^6.2.3",
-    "cordova-ios": "4.5.4",
+    "cordova-ios": "^4.5.4",
     "cordova-plugin-badge": "^0.8.7",
     "cordova-plugin-camera": "^3.0.0",
     "cordova-plugin-compat": "^1.0.0",
@@ -60,6 +60,8 @@
     "moment": "^2.20.1",
     "rxjs": "^5.4.3",
     "sw-toolbox": "3.6.0",
+    "universalify": "^0.1.1",
+    "xcodebuild": "^1.0.2",
     "zone.js": "^0.8.17"
   },
   "devDependencies": {
@@ -110,8 +112,8 @@
       }
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

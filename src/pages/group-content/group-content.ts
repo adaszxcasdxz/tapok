@@ -138,6 +138,7 @@ export class GroupContent {
   }
 
   editGroup(){
+    console.log(this.group);
     let modal = this.modalCtrl.create('GroupAddPage', { tapok: this.group, label: "Edit Group" });
     modal.present();
   }

@@ -36,7 +36,7 @@ export class GroupPost {
         this.host = firebaseService.user;
         this.user = firebaseService.user;
         this.posterid = this.firebaseService.getUserID();
-        //this.post = this.firebaseService.getPost(this.key);
+        this.post = this.firebaseService.getPost(this.key);
         this.key = navParams.get('param1');
         this.label = navParams.get('label');
         this.postKey = navParams.get('tapokPost');

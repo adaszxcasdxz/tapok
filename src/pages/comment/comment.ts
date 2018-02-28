@@ -25,6 +25,7 @@ export class CommentPage {
   commentTest: any[] = [];
   latestComment: any;
   current: any;
+  count = 0;
   
   host = '';
 
@@ -40,7 +41,7 @@ export class CommentPage {
     this.commenter = firebaseService.user;
     this.groupkey = navParams.get('param1');
     this.postkey = navParams.get('param2')
-    //this.post = this.firebaseService.getPost(this.key);
+    this.post = this.firebaseService.getPost(this.key);
     this.comment = this.firebaseService.getComment(this.groupkey, this.postkey);
     this.post = this.firebaseService.getPost(this.key);
     this.group = this.firebaseService.getSpecificGroup(this.key);
@@ -53,6 +54,7 @@ export class CommentPage {
       snapshots.forEach(snapshot => {
         this.commentTest[y] = snapshot;
         this.latestComment = this.commentTest[y];
+        this.count++;
         y++;
       })
       this.test();
@@ -107,6 +109,7 @@ export class CommentPage {
           handler: () => {
             this.firebaseService.deleteComment(this.groupkey, this.postkey, comments.$key);
             //this.navCtrl.setRoot('GroupPage');
+            this.count--;
             confirm.present();
           }
         },

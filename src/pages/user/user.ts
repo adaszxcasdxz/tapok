@@ -55,7 +55,7 @@ export class UserPage {
     };
 
     if(this.otherUser == null){
-      this.username = this.firebaseService.getUser();
+      this.username = this.angularFireAuth.auth.currentUser.displayName;
       this.email = this.firebaseService.getEmail();
       //this.email = 'this.firebaseService.getEmail()';
       this.photo = this.firebaseService.getPhotoURL();

@@ -17,6 +17,9 @@ export class FireBaseService {
   constructor(public tapok: AngularFireDatabase, public firebaseApp: FirebaseApp, private afAuth: AngularFireAuth) {
     //this.user = afAuth.auth.currentUser.displayName;
     //this.uID = afAuth.auth.currentUser.email;
+    //this.user="Shakira";
+    //this.user="Rihanna";
+    //this.user="Britney";
   }
 
   setUser(name){
@@ -270,7 +273,7 @@ export class FireBaseService {
   searchGroup(search){
     return this.tapok.list('/groups/',{
       query: {
-        orderByChild: 'gname',
+        orderByChild: 'search_key',
         startAt: search,
         endAt: search+'\uf8ff'
       },

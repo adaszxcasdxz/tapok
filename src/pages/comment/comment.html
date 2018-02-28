@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="tapok" hide-on-scroll="true" no-border-bottom> 
     <ion-title>All Comments</ion-title>
   </ion-navbar>
 
@@ -14,6 +14,7 @@
 
 <ion-content>
     <ion-list> 
+      <p class="nogroups" *ngIf="count == 0" text-center>There are no comments at the moment.</p>
       <div *ngFor="let comments of comment | async" class="commentbg">
         <ion-item no-padding>
           <div class="combox">

@@ -156,7 +156,7 @@ export class GroupPage{
                   }
                 this.firebaseService.addNotif(admin, notif);  
                 this.firebaseService.addRequestee(key, this.requestee);
-                this.navCtrl.setRoot('GroupPage');
+                //this.navCtrl.setRoot('GroupPage');
                 confirm.present();
                 }
             },

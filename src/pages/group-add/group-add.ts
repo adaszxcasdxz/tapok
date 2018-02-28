@@ -19,6 +19,7 @@ export class GroupAddPage {
 
   key: any;
   group: any;
+  groups: any;
   label: any;
 	usergroup: any;
 	test: any;
@@ -62,6 +63,8 @@ export class GroupAddPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
      public firebaseService:FireBaseService, public viewCtrl: ViewController, public camera: Camera, public params: NavParams, public loadingCtrl: LoadingController) {
+				var y;
+		
 				this.admin = firebaseService.user;
 				this.adminid = this.firebaseService.getUserID();
 				this.userid = this.firebaseService.getUserID();
@@ -75,6 +78,7 @@ export class GroupAddPage {
 				this.group = params.get('tapok');
 				if(this.group != undefined)
 				  this.editGroupInfo();
+
   }
 
   dismiss() {
@@ -102,7 +106,7 @@ export class GroupAddPage {
 			"userphoto": this.photo,
 			"photo": this.gphoto,
 			"adminid": this.adminid,
-			"searchgname": this.gname.toLowerCase(),
+			"search_key": this.gname.toLowerCase(),
 			"tags": this.tags,
 		}
 
@@ -134,20 +138,20 @@ export class GroupAddPage {
 			}	
 		}
 		
-		if(this.label == "Edit Group"){
+		/*if(this.label == "Edit Group"){
 			var gkey = this.firebaseService.editGroups(this.group.$key, this.group);
-
+			console.log(gkey);
 			for(i=0;i<this.tagsTest.length;i++){
 				this.tag={
 					"tag": this.tagsTest[i].toLowerCase(),
-					"key": key
+					"key": gkey
 				}
 				console.log(this.tag.tag);
 				this.firebaseService.addGroupTag(this.tag);
 				if(i+1 == this.tagsTest.length)
 					this.firebaseService.deleteAllTempGTag();
 			}	
-		}
+		}*/
 		
 		
 		this.test = this.group.$key;
@@ -167,7 +171,7 @@ export class GroupAddPage {
 	addUserGroup(key){
 		console.log(key);
 		this.usergroup={
-						"key": key,
+			"key": key,
             "gname": this.gname,
             "timejoin": 0-Date.now()
     }  
@@ -175,26 +179,39 @@ export class GroupAddPage {
 		this.firebaseService.addUserGroup(this.current, this.usergroup);
 	}
  
-  editGroup(){
-		var i;
-		this.group={
+ 	editGroup(){
+		var i, y;
+
+		this.Tags.subscribe(snapshots => {
+			this.tagsTest.length = 0;
+			y = 0;
+			snapshots.forEach(snapshot => {
+				this.tagsTest[y] = snapshot.tags;
+				y++;
+			})
+		});
+
+		this.groups={
 			"gname": this.gname,
 			"gdescr": this.gdescr,
 			"photo": this.gphoto,
 			"tags": this.tags,
 		};
+		//this.addGroup();
+		console.log(this.tagsTest.length);
+		var gkey = this.firebaseService.editGroups(this.group.$key, this.groups);
 
-		var gkey = this.firebaseService.editGroups(this.group.$key, this.group);
 		for(i=0;i<this.tagsTest.length;i++){
 			this.tag={
 				"tag": this.tagsTest[i].toLowerCase(),
-				"key": gkey
+				"key": this.group.$key
 			}
 			console.log(this.tag.tag);
-			this.firebaseService.addGroupTag(this.tag);
+			this.firebaseService.addTag(this.tag);
 			if(i+1 == this.tagsTest.length)
-				this.firebaseService.deleteAllTempGTag();
+				this.firebaseService.deleteAllTempTag();
 		}		
+
 		this.cancel();
 		let alert = this.alertCtrl.create({
 			title: 'Changes Saved.',
@@ -214,7 +231,8 @@ export class GroupAddPage {
 		this.gphoto = this.group.photo;
 		this.tags = this.group.tags;
 
-		this.curTags = this.firebaseService.getGroupTag();
+		this.curTags = this.firebaseService.getTag();
+		console.log(this.curTags);
 	}
 
   ionViewDidLoad() {

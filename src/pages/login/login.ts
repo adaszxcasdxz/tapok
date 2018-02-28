@@ -58,9 +58,11 @@ export class LoginPage {
       })
   }
 
+
   loginWithGoogle(){
     this.gPlus.login({
-      'webClientId': '765761820847-odrnbes28kqoqsiml6s1rc77g0ci38v5.apps.googleusercontent.com'
+      'webClientId': '765761820847-odrnbes28kqoqsiml6s1rc77g0ci38v5.apps.googleusercontent.com',
+      'redirect_uri': 'https://tapok-83ffd.firebaseapp.com/__/auth/handler'
     })
     .then(res => {      
         firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
