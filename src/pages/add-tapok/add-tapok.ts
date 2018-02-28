@@ -44,6 +44,8 @@ export class AddTapok {
 	lat = null;
 	lng = null;
 	filter = 'General';
+	datetime = moment().format();
+	enddatetime = '';
 
 	temp: any;
 	tag: any;
@@ -72,6 +74,9 @@ export class AddTapok {
 	inputLocation: any = 'false';
 
 	user: any;
+	Keywords: any;
+
+	inc: any;
 
 	onSuccess = (snapshot) => {
 		this.photo = snapshot.downloadURL;
@@ -88,6 +93,7 @@ export class AddTapok {
 	constructor(public viewCtrl: ViewController, public navCtrl: NavController, public alertCtrl: AlertController, 
 		public firebaseService: FireBaseService, public params: NavParams, public camera: Camera, public loadingCtrl: LoadingController, public geolocation: Geolocation, public app: App, public modalCtrl: ModalController) {
 		var y = 0;
+		this.inc = 0;
 
 		this.host = this.firebaseService.getUser();
 		this.label = params.get('label');
@@ -198,15 +204,15 @@ export class AddTapok {
 				y++;
 			})
 		});
-		this.mDate = moment(this.date).format('MMM DD');
-		this.mTime = moment(this.time).format('hh:mm a');
+		this.mDate = moment(this.datetime).format('MMM DD');
+		this.mTime = moment(this.datetime).format('hh:mm a');
 		
-		if(this.enddate != '')
-			this.mEndDate = moment(this.enddate).format('MMM DD');
+		if(this.enddatetime != '')
+			this.mEndDate = moment(this.enddatetime).format('MMM DD');
 		else
 			this.mEndDate = '';
-		if(this.endtime != '')
-			this.mEndTime = moment(this.endtime).format('hh:mm a');
+		if(this.enddatetime != '')
+			this.mEndTime = moment(this.enddatetime).format('hh:mm a');
 		else
 			this.mEndTime = '';
 
@@ -225,7 +231,7 @@ export class AddTapok {
 			"photo": this.photo,
 			"toggle": "false",
 			"date": this.mDate,
-			"isodate": this.date,
+			"datetime": this.datetime,
 			"time": this.mTime,
 			"isotime": this.time,
 			"endtime": this.mEndTime,
@@ -259,7 +265,7 @@ export class AddTapok {
 				"event_key": eventKey
 			}
 
-			var followers = this.firebaseService.getFollowers();
+			var followers = this.firebaseService.getAllFollowers();
 			followers.subscribe(snapshot =>{
 				snapshot.forEach(snap=>{
 					this.firebaseService.addNotif(snap.name, notif);
@@ -288,18 +294,31 @@ export class AddTapok {
 		else{
 			console.log(this.event_key);
 			eventKey = this.firebaseService.editEvent(this.event_key, this.event);
-			wordkey = this.firebaseService.getAllKeywords();
-			test = wordkey.subscribe(snapshot => { 
-				let i = 0, x = 0;
-				snapshot.forEach(snap => {
-				  	if(snap.key == this.event_key){
-						this.wkey[i] = snap.$key;
-						i++;
-					}
-				});
-				for(x=0;x<this.wkey.length;x++)
-					this.firebaseService.deleteKeywords(this.wkey[x]);
-			});
+			
+			console.log(this.name);
+			this.Keywords.unsubscribe();
+			this.word = this.name.split(" ");
+			var temp: any[] = [];
+			for(i=0;i<this.word.length;i++){
+				for(var g=i+1;g<this.word.length;g++){
+					if(this.word[i] == this.word[g])
+						this.word[g] = null;
+				}
+			}
+			console.log(this.word);
+			for(i=0;i<this.word.length;i++){
+				if(this.word[i] != null){
+					this.keyword={
+						"keyword": this.word[i].toLowerCase(),
+						"key": this.event_key
+					};
+					console.log(this.word[i]);
+					if(this.inc == 0)
+						this.firebaseService.addKeyword(this.keyword);
+				}
+			};
+
+			this.inc++;
 
 			for(i=0;i<this.tagsTest.length;i++){
 				this.tag={
@@ -311,9 +330,7 @@ export class AddTapok {
 					this.firebaseService.deleteAllTempTag();
 			}		
 		}
-
 		this.cancel();
-		
 		if(this.label == 'Add Tapok'){
 			let alert = this.alertCtrl.create({
 				title: 'Tapok Added',
@@ -335,25 +352,16 @@ export class AddTapok {
 		}
 		else{
 			let alert = this.alertCtrl.create({
-				title: 'Tapok Added',
+				title: 'Tapok Edited',
 				buttons: [ 
 					{
-						text: 'close',
-						handler: () => {
-							this.word = this.name.split(" ");
-							for(i=0;i<this.word.length;i++){
-								this.keyword={
-									"keyword": this.word[i].toLowerCase(),
-									"key": this.event_key
-								};
-								this.firebaseService.addKeyword(this.keyword);
-							}										
-						}
+						text: 'close'
 					}
 				]
 			});	
 			alert.present();
 		}
+		
 	}
 
 	cancel(){
@@ -390,28 +398,55 @@ export class AddTapok {
 		if(this.event.endtime != ""){
 			this.addEndTime = true;
 		}
+		var wordkey = this.firebaseService.getAllKeywords();
+
+		this.Keywords = wordkey.subscribe(snapshot => { 
+			let i = 0, x = 0;
+			snapshot.forEach(snap => {
+				  if(snap.key == this.event_key){
+					this.wkey[i] = snap.$key;
+					i++;
+				}
+			});
+			for(x=0;x<this.wkey.length;x++)
+				this.firebaseService.deleteKeywords(this.wkey[x]);
+		});
 	}
 
 	endDate(){
 		if(this.addEndDate == false){
 			this.addEndDate = true;
-			this.enddate = this.date;
+			if(this.enddatetime == '')
+				this.enddatetime = this.datetime;
 		}
 		else{
 			this.addEndDate = false;
-			this.enddate = '';
+			this.enddatetime = '';
 		}
 	}
 
 	endTime(){
 		if(this.addEndTime == false){
 			this.addEndTime = true;
-			this.endtime = this.time;
+			if(this.enddatetime == '')
+				this.enddatetime = this.datetime;
 		}
 		else{
 			this.addEndTime = false;	
-			this.endtime = '';
+			this.enddatetime = '';
 		}
+	}
+
+	changeDate(){
+		console.log('datetime: ' + this.datetime);
+	}
+
+	changeTime(){
+		console.log(this.date);
+		console.log(this.time);
+		if(this.addEndTime)
+			this.endtime = this.time;
+		console.log('datetime: ' + this.datetime);
 	}
 
 	inputLocationToggle(ev, val){

@@ -12,10 +12,7 @@
         </button>
     </ion-buttons> 
   </ion-navbar>
-</ion-header>  
-
-<ion-content fullscreen>
-  <ion-toolbar class="tabs">
+  <ion-toolbar>
     <ion-segment [(ngModel)]="pages">
         <ion-segment-button value="upcoming">
           UPCOMING
@@ -25,7 +22,9 @@
         </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
-  <br><br><br>
+</ion-header>  
+
+<ion-content fullscreen>
   <div [ngSwitch]="pages">
     <div *ngSwitchCase="'upcoming'">
       <div class="empty" *ngIf="upcomingCount==0">
@@ -220,11 +219,5 @@
       </div>  
     </div>
   </div>
-
-  <ion-fab bottom right>
-    <button ion-fab (click)="openAddTapok()">
-      <ion-icon name="add"></ion-icon>
-    </button>
-  </ion-fab>
 </ion-content>
 

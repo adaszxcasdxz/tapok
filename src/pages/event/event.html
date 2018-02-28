@@ -12,13 +12,7 @@
         </button>
     </ion-buttons> 
   </ion-navbar>
-</ion-header>  
-
-<ion-content class="background" fullscreen>
-  <!--<div *ngIf="upcomingStatus == false">
-    You have not joined any events.
-  </div>-->
-  <ion-toolbar class="tabs">  
+  <ion-toolbar>  
     <ion-segment [(ngModel)]="epages">
       <ion-segment-button value="eupcoming">
         UPCOMING
@@ -28,7 +22,9 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
-  <br><br><br>
+</ion-header>  
+
+<ion-content class="background" fullscreen>
   <div [ngSwitch]="epages">
     <div [ngSwitch]="epages">
       <div *ngSwitchCase="'eupcoming'">
@@ -220,5 +216,11 @@
       </div>
     </div>
   </div>
+
+  <ion-fab bottom right>
+    <button ion-fab (click)="openAddTapok()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
 

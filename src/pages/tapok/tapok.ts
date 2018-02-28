@@ -198,7 +198,7 @@ export class TapokPage {
             var archive = {
               status: 'archive'
             }
-            //this.firebaseService.editEvent(snapshot.$key, archive);
+            this.firebaseService.editEvent(snapshot.$key, archive);
             //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
             if(snapshot.status == null)
               this.firebaseService.addHistory(snapshot);
@@ -293,11 +293,6 @@ export class TapokPage {
     popover.present({
       ev: myTapok
     });
-  }
-
-  openAddTapok(){
-    let modal = this.modalCtrl.create('AddTapok', { label: 'Add Tapok' });
-    modal.present();
   }
 
   openSearch(){

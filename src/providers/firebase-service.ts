@@ -79,7 +79,7 @@ export class FireBaseService {
   getEvent(){
     return this.tapok.list('/events/',{
       query:{
-        orderByChild: 'timestamp'
+        orderByChild: 'datetime'
       }
     })/*.map((members) =>{
       return members.map(attendee =>{
@@ -517,12 +517,9 @@ export class FireBaseService {
     })
   }
 
-  addFollowing(user){
-    this.tapok.list('users/'+this.user+'/following/').push(user);
-    var follower = {
-      "name": this.user
-    };
-    this.tapok.list('users/'+user.name+'/followers/').push(follower);
+  addFollowing(follow, follower){
+    this.tapok.list('users/'+this.user+'/following/').push(follow);
+    this.tapok.list('users/'+follow.name+'/followers/').push(follower);
   }
 
   getFollowing(){
@@ -533,8 +530,16 @@ export class FireBaseService {
     this.tapok.list('users/'+this.user+'/following/'+key).remove();
   }
 
-  getFollowers(){
+  getAllFollowers(){
     return this.tapok.list('users/'+this.user+'/followers');
+  }
+
+  getFollowers(name){
+    return this.tapok.list('users/'+name+'/followers');
+  }
+
+  removeFollower(name, key){
+    return this.tapok.list('users/'+name+'/followers/'+key).remove();
   }
 
   addNotif(name, notif){
@@ -542,7 +547,11 @@ export class FireBaseService {
   }
 
   getNotif(){
-    return this.tapok.list('notifications/'+this.user);
+    return this.tapok.list('notifications/'+this.user, {
+      query:{
+        orderByChild: 'timestamp'
+      }
+    });
   }
 
   editNotif(key, val){

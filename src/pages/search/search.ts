@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController, AlertController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import { UserPage } from '../user/user';
+import { isEmpty } from 'rxjs/operator/isEmpty';
 
 /**
  * Generated class for the SearchPage page.
@@ -42,6 +43,10 @@ export class SearchPage {
   photo: any;
   userid: any;
   requestee: any;
+  FollowingObs: any;
+  FollowerObs: any;
+  Followers: any[] = [];
+  Following: any[] = [];
 
   memberStatus: any[] = [];
 
@@ -59,6 +64,24 @@ export class SearchPage {
     this.User = this.firebaseService.getUsers();
     this.Login = this.firebaseService.getLogin();
     this.Groups = this.firebaseService.getGroup();
+    this.FollowingObs = this.firebaseService.getFollowing();
+    this.FollowerObs = this.firebaseService.getAllFollowers();
+
+    this.FollowingObs.subscribe(snapshot => {
+      var x=0;
+      snapshot.forEach(snap => {
+        this.Following[x] = snap;
+        x++;
+      })
+    });
+
+    this.FollowerObs.subscribe(snapshot => {
+      var x=0;
+      snapshot.forEach(snap => {
+        this.Followers[x] = snap;
+        x++;
+      })
+    });
 
     this.Event.subscribe(snapshots => {
       var y = 0;
@@ -99,6 +122,10 @@ export class SearchPage {
     });
   }
 
+  ionViewDidLoad(){
+    console.log('test');
+  }
+
   eTest(){
     this.status.length = 0;
 
@@ -115,12 +142,9 @@ export class SearchPage {
     }
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SearchPage');
-  }
-
   openTapokContent(event){
-    this.navCtrl.push('TapokContent', {param1: event.$key});
+    let contentModal = this.modalCtrl.create('TapokContent', {param1: event.$key, type: 'JOIN'});
+    contentModal.present();
   }
 
   dismiss(){
@@ -129,7 +153,6 @@ export class SearchPage {
 
   changeTab(tab){
     this.tabs = tab;
-    console.log(tab);
     this.onInput();
   }
 
@@ -157,10 +180,25 @@ export class SearchPage {
                 snapshot2.forEach(snap2 => {
                   this.result[i] = snap2;
                 })
-                console.log(this.peopleResult[i]);
               });
             }
             i++;
+          })
+        });
+
+        this.FollowingObs.subscribe(snapshot => {
+          var x=0;
+          snapshot.forEach(snap => {
+            this.Following[x] = snap;
+            x++;
+          })
+        });
+
+        this.FollowerObs.subscribe(snapshot => {
+          var x=0;
+          snapshot.forEach(snap => {
+            this.Followers[x] = snap;
+            x++;
           })
         });
       }
@@ -190,6 +228,22 @@ export class SearchPage {
     if(status == "TAPOK"){
       let alert = this.alertCtrl.create({
         title: 'Join Event?',
+        buttons: [ 
+          {
+            text: 'YES',
+            handler: () => {
+            this.tapok(event);
+            }
+          },
+          {
+            text: 'NO',
+          }
+        ]
+      });
+      alert.present();
+    }else if(status == "JOINED"){
+      let alert = this.alertCtrl.create({
+        title: 'Leave Event?',
         buttons: [ 
           {
             text: 'YES',
@@ -314,8 +368,56 @@ export class SearchPage {
     alert.present();
 }*/
 
-  openUser(user){
+  openUser(user, event){
     let modal = this.modalCtrl.create('UserPage', { otherUser: user });
-    modal.present();
+    modal.present({
+      ev: event
+    });
+
+    modal.onDidDismiss(data => {
+      this.FollowingObs = this.firebaseService.getFollowing();
+      this.FollowingObs.subscribe(snapshot => {
+        var x=0;
+        if(snapshot.length == 0)
+          this.Following[x] = 0;
+        snapshot.forEach(snap => {
+          if(snap != null){
+            this.Following[x] = snap;
+            x++;
+          }
+        })
+      });
+
+      this.FollowerObs = this.firebaseService.getAllFollowers();
+      this.FollowerObs.subscribe(snapshot => {
+        var x=0;
+        if(snapshot.length == 0)
+          this.Followers[x] = 0;
+        snapshot.forEach(snap => {
+          if(snap != null){
+            this.Followers[x] = snap;
+            x++;
+          }
+        })
+      });
+    });
+  }
+
+  followPerson(fol){
+    var follow = {
+      'name': fol.name,
+      'email': fol.email,
+      'photo': fol.photo
+    }
+
+    var follower = {
+      'name': this.firebaseService.getUser(),
+      //this.email = this.firebaseService.getEmail();
+      'email': 'this.firebaseService.getEmail()',
+      //this.photo = this.firebaseService.getPhotoURL();
+      'photo': 'this.firebaseService.getPhotoURL()'
+    }
+
+    this.firebaseService.addFollowing(follow, follower);
   }
 }

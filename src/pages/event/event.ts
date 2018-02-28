@@ -159,10 +159,13 @@ export class EventPage {
               var archive = {
                 status: 'archive'
               }
+
               this.firebaseService.editEvent(snapshot.$key, archive);
               //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
-              if(snapshot.status == null)
+              if(snapshot.status == null){
                 this.firebaseService.addHistory(snapshot);
+                console.log('archive');
+              }
             } 
           }
           //with end date but no end time
@@ -190,7 +193,7 @@ export class EventPage {
               var archive = {
                 status: 'archive'
               }
-              //this.firebaseService.editEvent(snapshot.$key, archive);
+              this.firebaseService.editEvent(snapshot.$key, archive);
               //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
               if(snapshot.status == null)
                 this.firebaseService.addHistory(snapshot);
@@ -359,8 +362,13 @@ export class EventPage {
       })
     }
   
-    openGroupShare(event){
-        console.log(event);
-        this.navCtrl.push('ChooseGroupPage', {param1: event});
-      }
+  openGroupShare(event){
+    console.log(event);
+    this.navCtrl.push('ChooseGroupPage', {param1: event});
+  }
+
+  openAddTapok(){
+    let modal = this.modalCtrl.create('AddTapok', { label: 'Add Tapok' });
+    modal.present();
+  }
 }

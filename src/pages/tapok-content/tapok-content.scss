@@ -13,7 +13,6 @@ tapok-content{
     }
 
     .box_content{
-        margin-top: 1em;
         height: 35vh !important;
         width: auto !important;
         align-items: center;
@@ -21,8 +20,11 @@ tapok-content{
     }
 
     .photo{
-        margin-top: 2em;
         width: 100%;
+    }
+
+    .content-tab{
+        margin-top: -4.5em;
     }
 
     .sched{

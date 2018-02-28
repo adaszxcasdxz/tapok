@@ -24,13 +24,17 @@ export class UserPage {
   photo: any;
   otherUser: any;
   Following: any;
+  Follower: any;
   History: any;
   check: any = false;
-  followKey: any;
+  followInfo: any;
   lat: any = 0;
   lng: any = 0;
   permission: any;
+  followKey: any;
   other: any = false;
+  removeFollowerSubscribe: any;
+  removeFollowingSubscribe: any;
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, 
     public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController, 
@@ -38,21 +42,22 @@ export class UserPage {
     private gPlus: GooglePlus) {
     this.otherUser = this.params.get('otherUser');
     this.Following = this.firebaseService.getFollowing();
+    this.Follower = this.firebaseService.getAllFollowers();
     this.History = this.firebaseService.getHistory();
     this.pages = 'me';
 
     console.log(this.permission);
-    if(this.otherUser != null){
+    if(this.otherUser != null){ 
       console.log(this.otherUser.name);
       this.Following.subscribe(snapshot => {
         snapshot.forEach(snap => {
-          if(snap.name = this.otherUser.name){
+          if(snap.name == this.otherUser.name){
             this.check = true;
             this.followKey = snap.$key;
           }
         });
       });
-    };
+    }
 
     if(this.otherUser == null){
       this.username = this.angularFireAuth.auth.currentUser.displayName;
@@ -77,13 +82,14 @@ export class UserPage {
     });
     if(this.otherUser==null){
       this.firebaseService.getUserLocation(this.username).subscribe(snap => {
-        this.lat = snap[0].$value;
-        this.lng = snap[1].$value;
+        if(snap!=undefined){
+          this.lat = snap[0].$value;
+          this.lng = snap[1].$value;
+        }
       }); 
       if(this.permission)
         this.loadMap();
     }
-
   }
 
   loadMap(){
@@ -144,13 +150,57 @@ export class UserPage {
       'photo': this.photo
     }
 
-    this.firebaseService.addFollowing(follow);
+    var follower = {
+      'name': this.firebaseService.getUser(),
+      //this.email = this.firebaseService.getEmail();
+      'email': 'this.firebaseService.getEmail()',
+      //this.photo = this.firebaseService.getPhotoURL();
+      'photo': 'this.firebaseService.getPhotoURL()'
+    }
+
+    this.firebaseService.addFollowing(follow, follower);
   }
 
-  unfollow(){
-    this.firebaseService.removeFollowing(this.followKey);
+  followOther(fol){
+    var follow = {
+      'name': fol.name,
+      'email': fol.email,
+      'photo': fol.photo
+    }
+
+    var follower = {
+      'name': this.firebaseService.getUser(),
+      //this.email = this.firebaseService.getEmail();
+      'email': 'this.firebaseService.getEmail()',
+      //this.photo = this.firebaseService.getPhotoURL();
+      'photo': 'this.firebaseService.getPhotoURL()'
+    }
+
+    this.firebaseService.addFollowing(follow, follower);
+  }
+
+  unfollow(follow){
+    var name = this.firebaseService.getUser();
+    if(this.otherUser == null){
+      this.firebaseService.removeFollowing(follow.$key);
+    }else{
+      this.removeFollowingSubscribe = this.firebaseService.getFollowing().subscribe(snapshot => {
+        snapshot.forEach(snap => {
+          if(snap.name == follow.name)
+          this.firebaseService.removeFollowing(snap.$key);
+        });
+      });
+      
+    }
+    this.removeFollowerSubscribe = this.firebaseService.getFollowers(follow.name).subscribe(snapshot => {
+        snapshot.forEach(snap => {
+          if(snap.name == name){
+            console.log(follow.name + '' +snap.$key);
+            this.firebaseService.removeFollower(follow.name, snap.$key);
+          }
+        })
+      });
     this.check = false;
-    this.followKey = null;
   }
 
   askPermission(){
@@ -164,7 +214,16 @@ export class UserPage {
     console.log('this.permission');
   }
 
+  openUser(user){
+    let modal = this.modalCtrl.create('UserPage', { otherUser: user });
+    modal.present();
+  }
+
   dismiss() {
+    if(this.removeFollowerSubscribe != undefined)
+      this.removeFollowerSubscribe.unsubscribe();
+    if(this.removeFollowingSubscribe != undefined)
+      this.removeFollowingSubscribe.unsubscribe();
 		this.viewCtrl.dismiss();
 	}
 }
