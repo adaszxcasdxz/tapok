@@ -36,7 +36,9 @@ export class TabsPage {
         }
 
         this.firebaseService.updateUserLocation(coord);
-      })
+      }).catch((error) => {
+        console.log('Error getting location', error);
+      });
     });
   }
 

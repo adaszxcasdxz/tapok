@@ -428,6 +428,11 @@ export class AddTapok {
 		}
 	}
 
+	changeTime(){
+		console.log('changed');
+		this.enddate = this.time;
+	}
+
 	inputLocationToggle(ev, val){
 		this.inputLocation = val;
 	}

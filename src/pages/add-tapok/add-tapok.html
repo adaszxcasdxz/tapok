@@ -54,10 +54,18 @@
                 <ion-item>
                     <ion-label stacked><b>Start Time</b> <ion-icon name="alert"></ion-icon></ion-label>
                     <ion-datetime (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="time" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
-                    <button *ngIf="addEndTime == false" (click)="endTime()" ion-button item-end outline>Add End Date</button>
+                    <button *ngIf="addEndTime == false" (click)="endTime()" ion-button item-end outline>Add End Time</button>
                 </ion-item>
 
-                <ion-item *ngIf="addEndTime == true">
+                <ion-item *ngIf="addEndTime == true && addEndDate == false">
+                    <ion-label stacked><b>End Time</b></ion-label>
+                    <ion-datetime (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="endtime" min="{{ time }}" (ionChange)="changeTime()" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
+                    <button *ngIf="addEndTime == true" (click)="endTime()" ion-button outline large item-end clear>
+                        <ion-icon name="close-circle"></ion-icon>
+                    </button>
+                </ion-item>
+
+                <ion-item *ngIf="addEndTime == true && addEndDate == true">
                     <ion-label stacked><b>End Time</b></ion-label>
                     <ion-datetime (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="endtime" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
                     <button *ngIf="addEndTime == true" (click)="endTime()" ion-button outline large item-end clear>

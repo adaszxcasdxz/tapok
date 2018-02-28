@@ -32,6 +32,8 @@ export class UserPage {
   permission: any;
   followKey: any;
   other: any = false;
+  removeFollowerSubscribe: any;
+  removeFollowingSubscribe: any;
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController, public geolocation: Geolocation) {
     this.otherUser = this.params.get('otherUser');
@@ -174,7 +176,7 @@ export class UserPage {
     if(this.otherUser == null){
       this.firebaseService.removeFollowing(follow.$key);
     }else{
-      this.firebaseService.getFollowing().subscribe(snapshot => {
+      this.removeFollowingSubscribe = this.firebaseService.getFollowing().subscribe(snapshot => {
         snapshot.forEach(snap => {
           if(snap.name == follow.name)
           this.firebaseService.removeFollowing(snap.$key);
@@ -182,7 +184,7 @@ export class UserPage {
       });
       
     }
-      this.firebaseService.getFollowers(follow.name).subscribe(snapshot => {
+    this.removeFollowerSubscribe = this.firebaseService.getFollowers(follow.name).subscribe(snapshot => {
         snapshot.forEach(snap => {
           if(snap.name == name){
             console.log(follow.name + '' +snap.$key);
@@ -210,6 +212,10 @@ export class UserPage {
   }
 
   dismiss() {
+    if(this.removeFollowerSubscribe != undefined)
+      this.removeFollowerSubscribe.unsubscribe();
+    if(this.removeFollowingSubscribe != undefined)
+      this.removeFollowingSubscribe.unsubscribe();
 		this.viewCtrl.dismiss();
 	}
 }

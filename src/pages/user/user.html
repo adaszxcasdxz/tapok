@@ -5,18 +5,8 @@
         <ion-icon class="search-icon" name="search"></ion-icon>
       </button>
     </ion-buttons>  
-    <ion-title text-center>
+    <ion-title>
       <div *ngIf="otherUser == null">User</div>
-      <ion-buttons *ngIf="otherUser!=null&&!check">
-        <button (click)="follow()" ion-button icon-only round clear>
-          <ion-icon name="add"></ion-icon><ion-icon name="person"></ion-icon> Follow
-        </button>
-      </ion-buttons>
-      <ion-buttons *ngIf="otherUser!=null&&check">
-        <button (click)="unfollow(otherUser)" ion-button icon-only round clear>
-          <ion-icon name="close"></ion-icon><ion-icon name="person"></ion-icon> Unfollow
-        </button>
-      </ion-buttons>
     </ion-title>
     <ion-buttons *ngIf="otherUser==null" left>
       <button (click)="openMap()" ion-button icon-only round clear>
@@ -55,6 +45,18 @@
     </ion-item>
     <ion-item>
       <p class="mail"><ion-icon name="mail"></ion-icon> {{ email }}</p>
+    </ion-item>
+    <ion-item>
+      <ion-buttons *ngIf="otherUser!=null&&!check">
+        <button (click)="follow()" ion-button block outline>
+          <ion-icon name="person"></ion-icon>&nbsp;Follow 
+        </button>
+      </ion-buttons>
+      <ion-buttons *ngIf="otherUser!=null&&check">
+        <button (click)="unfollow(otherUser)" ion-button block outline>
+          <ion-icon name="close"></ion-icon>&nbsp;Unfollow 
+        </button>
+      </ion-buttons>
     </ion-item>
     <ion-item *ngIf="!other" text-wrap>
       <ion-label>Allow other users to find you: </ion-label><ion-toggle (ionChange)="askPermission()" [(ngModel)]="permission"></ion-toggle>
