@@ -108,8 +108,9 @@
   </div>
 
   <ion-item-group *ngIf="pages == 'history'">
+    <br><br>
     <ion-list>
-      <div *ngFor="let history of History | async">
+      <div *ngFor="let history of Archive">
         <ion-item-sliding>
           <ion-item>
             <ion-avatar item-start>
