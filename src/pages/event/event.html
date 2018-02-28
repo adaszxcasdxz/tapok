@@ -99,13 +99,13 @@
                     </p>
                   </span>
                   
-                  <ion-col *ngIf="event.max_members == null">
+                  <ion-col *ngIf="event.max_members == null&&user!=event.host">
                     <button class="notjoined" (click)="confirm(event)" ion-button icon-left round clear>
                       <ion-icon name="happy"></ion-icon>
                         JOINED
                     </button>
                   </ion-col>
-                  <ion-col *ngIf="event.max_members!=null&&memberStatus[i] == 'not_full'">
+                  <ion-col *ngIf="event.max_members!=null&&memberStatus[i] == 'not_full'&&user!=event.host">
                     <button class="notjoined" (click)="confirm(event)" ion-button icon-left round clear>
                       <ion-icon name="happy"></ion-icon>
                         JOINED
@@ -185,13 +185,13 @@
                     </span>
                     </p>
                   </span>
-                  <ion-col *ngIf="event.max_members == null">
+                  <ion-col *ngIf="event.max_members == null&&user!=event.host">
                     <button class="notjoined" (click)="confirm(event)" ion-button icon-left round clear>
                       <ion-icon name="happy"></ion-icon>
                         JOINED
                     </button>
                   </ion-col>
-                  <ion-col *ngIf="event.max_members!=null&&memberStatus[i] == 'not_full'">
+                  <ion-col *ngIf="event.max_members!=null&&memberStatus[i] == 'not_full'&&user!=event.host">
                     <button class="notjoined" (click)="confirm(event)" ion-button icon-left round clear>
                       <ion-icon name="happy"></ion-icon>
                         JOINED

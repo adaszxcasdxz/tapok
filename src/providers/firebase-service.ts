@@ -503,6 +503,10 @@ export class FireBaseService {
     this.tapok.list('latest_notifications/'+this.user).remove();
   }
 
+  addArchives(event){
+    this.tapok.list('archives/').push(event);
+  }
+
   addHistory(event){
     //console.log(event.attendees);
     for(var attendees in event.attendees){
@@ -511,17 +515,15 @@ export class FireBaseService {
     }
   }
 
-  addArchives(event){
-    this.tapok.list('archives/').push(event);
-  }
-
   deleteEvent(event){
     //console.log(event);
     this.tapok.list('events/'+event.$key).remove();
   }
 
   getHistory(){
-  return  this.tapok.list('users/'+this.user+'/history');
+  return  this.tapok.list('users/'+this.user+'/history',{ query:{
+      orderByChild: 'name'
+    }});
   }
 
   updateUserLocation(coor){

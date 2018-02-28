@@ -25,6 +25,7 @@ export class SearchPage {
   User: any;
   userEventKeys: any;
   Event: any;
+  Tags: any;
   result: any[] = [];
   peopleResult: any[] = [];
   index = 0;
@@ -61,6 +62,7 @@ export class SearchPage {
     this.Event = this.firebaseService.getEvent();
     this.User = this.firebaseService.getUsers();
     this.Login = this.firebaseService.getLogin();
+    this.Tags = this.firebaseService.getTag();
     this.FollowingObs = this.firebaseService.getFollowing();
     this.FollowerObs = this.firebaseService.getAllFollowers();
 

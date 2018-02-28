@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar color="tapok">
         <ion-title>{{ event.name }}</ion-title>
-        <ion-buttons *ngIf="access == 'ok'" right large>
+        <ion-buttons *ngIf="adminCheck||hostCheck" right large>
             <button class="button-header" (click)="popOver($event)" ion-button icon-only round clear>
                 <ion-icon name="more"></ion-icon>
             </button>
@@ -174,7 +174,7 @@
                 JOIN
             </button>
         </ion-col>
-        <ion-col *ngIf="type=='JOINED'">
+        <ion-col *ngIf="type=='JOINED'&&user!=event.host">
             <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left full>
                 <ion-icon name="happy"></ion-icon>
                 JOINED
