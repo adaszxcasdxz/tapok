@@ -44,6 +44,8 @@ export class AddTapok {
 	lat = null;
 	lng = null;
 	filter = 'General';
+	datetime = moment().format();
+	enddatetime = '';
 
 	temp: any;
 	tag: any;
@@ -198,15 +200,15 @@ export class AddTapok {
 				y++;
 			})
 		});
-		this.mDate = moment(this.date).format('MMM DD');
-		this.mTime = moment(this.time).format('hh:mm a');
+		this.mDate = moment(this.datetime).format('MMM DD');
+		this.mTime = moment(this.datetime).format('hh:mm a');
 		
-		if(this.enddate != '')
-			this.mEndDate = moment(this.enddate).format('MMM DD');
+		if(this.enddatetime != '')
+			this.mEndDate = moment(this.enddatetime).format('MMM DD');
 		else
 			this.mEndDate = '';
-		if(this.endtime != '')
-			this.mEndTime = moment(this.endtime).format('hh:mm a');
+		if(this.enddatetime != '')
+			this.mEndTime = moment(this.enddatetime).format('hh:mm a');
 		else
 			this.mEndTime = '';
 
@@ -224,7 +226,7 @@ export class AddTapok {
 			"photo": this.photo,
 			"toggle": "false",
 			"date": this.mDate,
-			"isodate": this.date,
+			"datetime": this.datetime,
 			"time": this.mTime,
 			"isotime": this.time,
 			"endtime": this.mEndTime,
@@ -409,28 +411,37 @@ export class AddTapok {
 	endDate(){
 		if(this.addEndDate == false){
 			this.addEndDate = true;
-			this.enddate = this.date;
+			if(this.enddatetime == '')
+				this.enddatetime = this.datetime;
 		}
 		else{
 			this.addEndDate = false;
-			this.enddate = '';
+			this.enddatetime = '';
 		}
 	}
 
 	endTime(){
 		if(this.addEndTime == false){
 			this.addEndTime = true;
-			this.endtime = this.time;
+			if(this.enddatetime == '')
+				this.enddatetime = this.datetime;
 		}
 		else{
 			this.addEndTime = false;	
-			this.endtime = '';
+			this.enddatetime = '';
 		}
 	}
 
+	changeDate(){
+		console.log('datetime: ' + this.datetime);
+	}
+
 	changeTime(){
-		console.log('changed');
-		this.enddate = this.time;
+		console.log(this.date);
+		console.log(this.time);
+		if(this.addEndTime)
+			this.endtime = this.time;
+		console.log('datetime: ' + this.datetime);
 	}
 
 	inputLocationToggle(ev, val){

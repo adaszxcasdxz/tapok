@@ -154,10 +154,13 @@ export class EventPage {
               var archive = {
                 status: 'archive'
               }
+
               this.firebaseService.editEvent(snapshot.$key, archive);
               //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
-              if(snapshot.status == null)
+              if(snapshot.status == null){
                 this.firebaseService.addHistory(snapshot);
+                console.log('archive');
+              }
             } 
           }
           //with end date but no end time
@@ -185,7 +188,7 @@ export class EventPage {
               var archive = {
                 status: 'archive'
               }
-              //this.firebaseService.editEvent(snapshot.$key, archive);
+              this.firebaseService.editEvent(snapshot.$key, archive);
               //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
               if(snapshot.status == null)
                 this.firebaseService.addHistory(snapshot);
@@ -330,5 +333,10 @@ export class EventPage {
 
   openEventContent(event){
     this.navCtrl.push('TapokContent', {param1: event.$key});
+  }
+
+  openAddTapok(){
+    let modal = this.modalCtrl.create('AddTapok', { label: 'Add Tapok' });
+    modal.present();
   }
 }

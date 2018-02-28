@@ -80,7 +80,7 @@ export class FireBaseService {
   getEvent(){
     return this.tapok.list('/events/',{
       query:{
-        orderByChild: 'timestamp'
+        orderByChild: 'datetime'
       }
     })/*.map((members) =>{
       return members.map(attendee =>{
@@ -480,7 +480,11 @@ export class FireBaseService {
   }
 
   getNotif(){
-    return this.tapok.list('notifications/'+this.user);
+    return this.tapok.list('notifications/'+this.user, {
+      query:{
+        orderByChild: 'timestamp'
+      }
+    });
   }
 
   editNotif(key, val){
