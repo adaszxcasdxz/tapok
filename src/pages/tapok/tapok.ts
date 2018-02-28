@@ -150,63 +150,74 @@ export class TapokPage {
             })
           }
         }
-        //if no end date and end time
-        if(checkTime && checkDate && snapshot.enddate == ''){
-          this.timeStatus[y] = 'ongoing';
-          //this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
-        }
-        else{
-          this.timeStatus[y] = 'upcoming';
-          //this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
-        }
-        //with end time but no end date
-        if(snapshot.endtime != '' && snapshot.enddate == ''){
-          var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
-          if(checkEnd){
-            this.timeStatus[y] = 'archive';
-            //this.firebaseService.editEvent(snapshot.$key, archive);
-            //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
-            console.log('archive');
-            //this.firebaseService.addHistory(snapshot);
-          } 
-        }
-        //with end date but no end time
-        if(snapshot.enddate != '' && snapshot.endtime == ''){
-          var checkEnd = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
-          if(checkEnd){
+        if(snapshot.status != 'archive'){
+          //if no end date and end time
+          if(checkTime && checkDate && snapshot.enddate == ''){
             this.timeStatus[y] = 'ongoing';
             //this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
           }
-        }
-        //with end date and end time
-        if(snapshot.enddate != '' && snapshot.endtime != ''){
-          var checkEndDate = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
-          var checkEndTime = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
-          if(checkEndDate && !checkEndTime){
-            this.timeStatus[y] = 'ongoing';
-            //this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
-          }
-          else if( !checkEndTime && !checkEndTime){
+          else{
             this.timeStatus[y] = 'upcoming';
             //this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
           }
-          else if (checkEndDate && checkEndTime){
-            this.timeStatus[y] = 'archived';
-            //this.firebaseService.editEvent(snapshot.$key, archive);
-            //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
-            if(snapshot.status == null){
-              var archive = {
-                'status': 'archive'
-              }
-              this.firebaseService.editEvent(snapshot.$key, archive);
+          //with end time but no end date
+          if(snapshot.endtime != '' && snapshot.enddate == ''){
+            var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
+            if(checkEnd){
+              this.timeStatus[y] = 'archive';
+              //this.firebaseService.editEvent(snapshot.$key, archive);
+              //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
+              if(snapshot.status == null){
+                var archive = {
+                  'status': 'archive'
+                }
+                this.firebaseService.editEvent(snapshot.$key, archive);
+              console.log('archive');
               //this.firebaseService.addHistory(snapshot);
-              /*console.log('archive');
-              console.log(this.inc);
-              this.firebaseService.addArchives(snapshot);
-              this.firebaseService.deleteEvent(snapshot);
-              this.Event = this.firebaseService.getEvent();*/
+              } 
             }
           }
+          //with end date but no end time
+          if(snapshot.enddate != '' && snapshot.endtime == ''){
+            var checkEnd = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
+            if(checkEnd){
+              this.timeStatus[y] = 'ongoing';
+              //this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
+            }
+          }
+          //with end date and end time
+          if(snapshot.enddate != '' && snapshot.endtime != ''){
+            var checkEndDate = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
+            var checkDate = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
+            var checkEndTime = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
+            if(checkDate && !checkEndTime){
+              this.timeStatus[y] = 'ongoing';
+              //this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
+            }
+            else if( !checkEndTime && !checkEndTime){
+              this.timeStatus[y] = 'upcoming';
+              //this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
+            }
+            else if (checkEndDate && checkEndTime){
+              this.timeStatus[y] = 'archived';
+              //this.firebaseService.editEvent(snapshot.$key, archive);
+              //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
+              if(snapshot.status == null){
+                var archive = {
+                  'status': 'archive'
+                }
+                this.firebaseService.editEvent(snapshot.$key, archive);
+                //this.firebaseService.addHistory(snapshot);
+                /*console.log('archive');
+                console.log(this.inc);
+                this.firebaseService.addArchives(snapshot);
+                this.firebaseService.deleteEvent(snapshot);
+                this.Event = this.firebaseService.getEvent();*/
+              }
+            }
+          }
+        }else{
+          this.timeStatus[y] = 'archive';
         }
 
         for(var x=0;x<this.timeStatus.length;x++){

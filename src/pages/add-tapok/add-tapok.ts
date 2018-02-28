@@ -45,6 +45,7 @@ export class AddTapok {
 	lng = null;
 	filter = 'General';
 	datetime = moment().format();
+	checkdatetime;
 	enddatetime = '';
 
 	temp: any;
@@ -94,6 +95,7 @@ export class AddTapok {
 		public firebaseService: FireBaseService, public params: NavParams, public camera: Camera, public loadingCtrl: LoadingController, public geolocation: Geolocation, public app: App, public modalCtrl: ModalController) {
 		var y = 0;
 		this.inc = 0;
+		this.checkdatetime = this.datetime;
 
 		this.host = this.firebaseService.getUser();
 		this.label = params.get('label');
@@ -207,13 +209,18 @@ export class AddTapok {
 		this.mDate = moment(this.datetime).format('MMM DD');
 		this.mTime = moment(this.datetime).format('hh:mm a');
 		
-		if(this.enddatetime != '')
+		if(this.addEndDate)
 			this.mEndDate = moment(this.enddatetime).format('MMM DD');
 		else
 			this.mEndDate = '';
-		if(this.enddatetime != '')
+		if(this.addEndTime)
 			this.mEndTime = moment(this.enddatetime).format('hh:mm a');
 		else
+			this.mEndTime = '';
+
+		if(this.mDate == this.mEndDate)
+			this.mEndDate = '';
+		if(this.mTime == this.mEndTime)
 			this.mEndTime = '';
 
 		if(this.maxMembers != null){
@@ -232,6 +239,9 @@ export class AddTapok {
 			"toggle": "false",
 			"date": this.mDate,
 			"datetime": this.datetime,
+			"enddatetime": this.enddatetime,
+			"addEndDate": this.addEndDate,
+			"addEndTime": this.addEndTime,
 			"time": this.mTime,
 			"isotime": this.time,
 			"endtime": this.mEndTime,
@@ -375,6 +385,13 @@ export class AddTapok {
 		this.name = this.event.name;
 		this.photo = this.event.photo;
 		//this.toggle = this.event.toggle;
+		this.datetime = this.event.datetime;
+		if(this.enddatetime != null)
+			this.enddatetime = this.event.enddatetime;
+		else	
+			this.enddatetime = this.event.datetime;
+		this.addEndDate = this.event.addEndDate;
+		this.addEndTime = this.event.addEndTime;
 		this.date = this.event.isodate;
 		this.time = this.event.isotime;
 		this.enddate = this.event.isoenddate;
@@ -416,12 +433,15 @@ export class AddTapok {
 	endDate(){
 		if(this.addEndDate == false){
 			this.addEndDate = true;
-			if(this.enddatetime == '')
+			if(this.enddatetime == '' || this.enddatetime == null)
 				this.enddatetime = this.datetime;
 		}
 		else{
 			this.addEndDate = false;
-			this.enddatetime = '';
+			if(this.addEndTime&&moment(this.enddatetime).isBefore(this.datetime)){
+				this.enddatetime = this.datetime;
+				this.addEndTime = false;
+			}
 		}
 	}
 
@@ -433,20 +453,31 @@ export class AddTapok {
 		}
 		else{
 			this.addEndTime = false;	
-			this.enddatetime = '';
 		}
 	}
 
 	changeDate(){
+		this.checkdatetime = this.datetime;
 		console.log('datetime: ' + this.datetime);
+		console.log('checkdatetime: ' + this.checkdatetime);
 	}
 
 	changeTime(){
-		console.log(this.date);
-		console.log(this.time);
-		if(this.addEndTime)
-			this.endtime = this.time;
+		if(moment(this.datetime).isBefore(moment())){
+			console.log('invalid');
+			console.log(this.checkdatetime);
+			this.datetime = moment().format();
+		}
+		this.enddatetime = this.datetime;
 		console.log('datetime: ' + this.datetime);
+	}
+
+	changeEndTime(){
+		if(moment(this.enddatetime).isBefore(this.datetime)&&!this.addEndDate){
+			console.log(this.datetime);
+			this.enddatetime = this.datetime;
+			this.addEndTime = false;
+		}
 	}
 
 	inputLocationToggle(ev, val){

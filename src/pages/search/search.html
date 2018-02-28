@@ -94,11 +94,17 @@
                 </span>
                 </p>
               </span>
-              <ion-col *ngIf="event.max_members == null">
+              <ion-col *ngIf="event.max_members == null&&user!=event.host&&status[i] == 'JOINED'">
                 <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left round clear>
                   <ion-icon name="happy"></ion-icon>
                     <span *ngIf="status[i] == 'TAPOK'">JOIN</span>
-                    <span *ngIf="status[i] == 'JOINED'">JOINED</span>
+                    <span>JOINED</span>
+                </button>
+              </ion-col>
+              <ion-col *ngIf="event.max_members == null&&status[i] == 'TAPOK'">
+                <button class="notjoined" (click)="confirm(event, status[i])" ion-button icon-left round clear>
+                  <ion-icon name="happy"></ion-icon>
+                    <span>JOIN</span>
                 </button>
               </ion-col>
               <ion-col *ngIf="event.max_members!=null&&memberStatus[i] == 'not_full'">

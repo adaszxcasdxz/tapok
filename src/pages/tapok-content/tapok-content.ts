@@ -49,6 +49,7 @@ export class TapokContent {
   Admins: any;
   Members: any;
   adminCheck: any = false;
+  hostCheck: any = false;
   type: any;
 
   constructor(
@@ -95,6 +96,7 @@ export class TapokContent {
       this.mainAdmin = events.host;
       if(this.user == events.host ){
         this.access = 'ok'; 
+        this.hostCheck = true;
       }
     });
 
@@ -272,7 +274,37 @@ export class TapokContent {
         this.editTapok();
       if(data=='delete')
         this.deleteTapok();
+      if(data=='archive')
+        this.archiveTapok();
     });
+  }
+
+  archiveTapok(){
+    let confirm = this.alertCtrl.create({
+      title: 'Event Archived',
+      buttons: ['Ok']
+    });
+    let alert = this.alertCtrl.create({
+      title: 'Archive Event?',
+      buttons: [ 
+        {
+          text: 'Yes',
+          handler: () => {					
+            var archive = {
+              'status': 'archive'
+            }
+            this.firebaseService.editEvent(this.key, archive);
+            this.firebaseService.deleteEvent(this.key);
+            this.viewCtrl.dismiss();
+            confirm.present();
+          }
+        },
+        {
+          text: 'No',
+        }
+      ]
+    });
+    alert.present();
   }
 
   editTapok(){
