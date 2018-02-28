@@ -571,7 +571,20 @@ export class FireBaseService {
   }
 
   addHistory(event){
-    this.tapok.list('users/'+this.user+'/history').push(event);
+    //console.log(event.attendees);
+    for(var attendees in event.attendees){
+      //console.log(event.attendees[attendees].name);
+      this.tapok.list('users/'+event.attendees[attendees].name+'/history').push(event);
+    }
+  }
+
+  addArchives(event){
+    this.tapok.list('archives/').push(event);
+  }
+
+  deleteEvent(event){
+    //console.log(event);
+    this.tapok.list('events/'+event.$key).remove();
   }
 
   getHistory(){

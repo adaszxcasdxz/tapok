@@ -109,7 +109,7 @@ export class TapokPage {
     var Type = type;
     this.Event.subscribe(snapshots => {
       this.eventTime.length = 0;
-      var y = 0;
+      var y = 0, x = 0;
       snapshots.forEach(snapshot => {
         if(snapshot.max_members != null){
           if(snapshot.max_members<=snapshot.tapok){
@@ -164,13 +164,10 @@ export class TapokPage {
           var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
           if(checkEnd){
             this.timeStatus[y] = 'archive';
-            var archive = {
-              status: 'archive'
-            }
-            this.firebaseService.editEvent(snapshot.$key, archive);
+            //this.firebaseService.editEvent(snapshot.$key, archive);
             //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
-            if(snapshot.status == null)
-              this.firebaseService.addHistory(snapshot);
+            console.log('archive');
+            //this.firebaseService.addHistory(snapshot);
           } 
         }
         //with end date but no end time
@@ -195,13 +192,16 @@ export class TapokPage {
           }
           else if (checkEndDate && checkEndTime){
             this.timeStatus[y] = 'archived';
-            var archive = {
-              status: 'archive'
-            }
-            this.firebaseService.editEvent(snapshot.$key, archive);
+            //this.firebaseService.editEvent(snapshot.$key, archive);
             //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
-            if(snapshot.status == null)
-              this.firebaseService.addHistory(snapshot);
+            //if(snapshot.status == null){
+              //this.firebaseService.addHistory(snapshot);
+              /*console.log('archive');
+              this.firebaseService.addArchives(snapshot);
+              this.firebaseService.deleteEvent(snapshot);
+              x++;
+              console.log(snapshot);*/
+            //}
           }
         }
         for(var x=0;x<this.timeStatus.length;x++){

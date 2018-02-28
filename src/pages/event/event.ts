@@ -47,11 +47,11 @@ export class EventPage {
     this.user = firebaseService.user;
     this.Tags = this.firebaseService.getTag();
     
-    Observable.interval(5000)
+    /*Observable.interval(5000)
     .subscribe((val) => {
       this.inc = 0;
       this.timeCheck();
-    });
+    });*/
 
     /*this.Attending.subscribe(snapshot => {
       this.userTest.length = 0;
@@ -156,16 +156,11 @@ export class EventPage {
             var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
             if(checkEnd){
               this.etimeStatus[y] = 'archive';
-              var archive = {
-                status: 'archive'
-              }
 
-              this.firebaseService.editEvent(snapshot.$key, archive);
+              //this.firebaseService.editEvent(snapshot.$key, archive);
               //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
-              if(snapshot.status == null){
-                this.firebaseService.addHistory(snapshot);
-                console.log('archive');
-              }
+              console.log('archive');
+              this.firebaseService.addHistory(snapshot);
             } 
           }
           //with end date but no end time
@@ -189,14 +184,16 @@ export class EventPage {
               //this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
             }
             else if (checkEndDate && checkEndTime){
+              var i = 0;
               this.etimeStatus[y] = 'archived';
-              var archive = {
-                status: 'archive'
-              }
-              this.firebaseService.editEvent(snapshot.$key, archive);
+              //this.firebaseService.editEvent(snapshot.$key, archive);
               //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
-              if(snapshot.status == null)
-                this.firebaseService.addHistory(snapshot);
+              console.log('archive');
+              this.firebaseService.addHistory(snapshot);
+              this.firebaseService.addArchives(snapshot);
+              this.firebaseService.deleteEvent(snapshot);
+              i++;
+              console.log(i);
             }
           }
           for(var x=0;x<this.etimeStatus.length;x++){
