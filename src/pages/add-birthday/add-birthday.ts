@@ -18,6 +18,7 @@ import * as moment from 'moment';
 export class AddBirthdayPage {
 
   bday = moment().format();
+  maxdate = moment().format();
   birthday: any;
   age: any;
   usersdb: any;

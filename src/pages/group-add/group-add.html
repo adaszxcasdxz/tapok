@@ -75,7 +75,7 @@
         <span *ngFor="let tags of curTags | async">
             <ion-chip *ngIf="tags.key == group.$key" color="primary">
                 <ion-label>{{ tags.tag }}</ion-label>
-                <button *ngIf="gname!='' && gdescr!=''" ion-button clear color="light" (click)="deleteCurrentTag(tags.$key)">
+                <button *ngIf="gname != '' && gdescr != ''" ion-button clear color="light" (click)="deleteCurrentTag(tags.$key)">
                     <ion-icon name="close-circle"></ion-icon>
                 </button>
             </ion-chip>

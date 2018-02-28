@@ -16,7 +16,7 @@
 <ion-content padding>
   <div>
     <div class="detail-label">Please enter your birthdate:</div>
-      <ion-datetime [(ngModel)]="bday" class="detail" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
+      <ion-datetime class="detail" max="{{ maxdate }}" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY" [(ngModel)]="bday"></ion-datetime>
   </div>
     <button class="tapok-button" (click)="addBirthday()" ion-button large>OK</button> 
 </ion-content>
