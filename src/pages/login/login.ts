@@ -62,7 +62,7 @@ export class LoginPage {
   loginWithGoogle(){
     this.gPlus.login({
       'webClientId': '765761820847-odrnbes28kqoqsiml6s1rc77g0ci38v5.apps.googleusercontent.com',//for android&ios
-      //'client_id': '765761820847-e6ja4bvkmu7k04r2r47iekoimhagnv0c.apps.googleusercontent.com'//for &ios
+      //'iosClientId': '765761820847-e6ja4bvkmu7k04r2r47iekoimhagnv0c.apps.googleusercontent.com'//for &ios
     })
     .then(res => {      
         firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))

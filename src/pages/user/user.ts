@@ -181,9 +181,9 @@ export class UserPage {
     var follower = {
       'name': this.firebaseService.getUser(),
       //this.email = this.firebaseService.getEmail();
-      'email': 'this.firebaseService.getEmail()',
+      'email': this.firebaseService.getEmail(),
       //this.photo = this.firebaseService.getPhotoURL();
-      'photo': 'this.firebaseService.getPhotoURL()'
+      'photo': this.firebaseService.getPhotoURL()
     }
 
     this.firebaseService.addFollowing(follow, follower);
