@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar color="tapok" hide-on-scroll="true" no-border-bottom>
-      <h2 class="name-col">{{group.gname}}</h2>
+      <h2 class="name-col" text-center>{{group.gname}}</h2>
     <ion-buttons *ngIf="group.adminid === current" right large>
         <button class="button-header" (click)="popOver($group)" ion-button icon-only round>
             <ion-icon name="more"></ion-icon>
@@ -17,7 +17,7 @@
                     EVENTS
                 </ion-segment-button>
                 <ion-segment-button value="members">
-                    MEMBERS
+                    MEMBERS ( {{ gcount }} )
                 </ion-segment-button>  
             </ion-segment>
         </div>

@@ -165,7 +165,7 @@ export class SearchPage {
       else if(this.tabs == "tags")
         this.Result = this.firebaseService.searchTag(this.search.toLowerCase());
       else if(this.tabs == "groups"){
-        this.Group = this.firebaseService.searchGroup(this.search);
+        this.Group = this.firebaseService.searchGroup(this.search.toLowerCase());
         this.uGroup = this.firebaseService.getUserGroup();  
       }
       else if(this.tabs == "people"){
@@ -174,7 +174,7 @@ export class SearchPage {
           i = 0;
           snapshot.forEach(snap => {
             this.loginInfo[i] = snap.$key;
-            this.ResultPeople[i] = this.firebaseService.searchPeople(this.search, snap.$key);
+            this.ResultPeople[i] = this.firebaseService.searchPeople(this.search.toLowerCase(), snap.$key);
             if(this.ResultPeople[i] != undefined){
               this.ResultPeople[i].subscribe(snapshot2 => {
                 snapshot2.forEach(snap2 => {

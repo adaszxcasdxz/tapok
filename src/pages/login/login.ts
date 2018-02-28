@@ -61,8 +61,9 @@ export class LoginPage {
 
   loginWithGoogle(){
     this.gPlus.login({
-      'webClientId': '765761820847-odrnbes28kqoqsiml6s1rc77g0ci38v5.apps.googleusercontent.com',
-      'redirect_uri': 'https://tapok-83ffd.firebaseapp.com/__/auth/handler'
+      'webClientId': '765761820847-odrnbes28kqoqsiml6s1rc77g0ci38v5.apps.googleusercontent.com',//for android&ios
+      //'iosClientId': '765761820847-e6ja4bvkmu7k04r2r47iekoimhagnv0c.apps.googleusercontent.com',//for &ios
+      //'redirect_uri': 'https://tapok-83ffd.firebaseapp.com/__/auth/handler'
     })
     .then(res => {      
         firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
@@ -78,7 +79,6 @@ export class LoginPage {
           }
 
             this.userData={
-              status:"logged in",
               name:this.afAuth.auth.currentUser.displayName,
               photo:this.afAuth.auth.currentUser.photoURL,
               email:this.afAuth.auth.currentUser.email,
@@ -128,7 +128,6 @@ export class LoginPage {
             }
           }
             this.userData={
-              status:"logged in",
               name:this.afAuth.auth.currentUser.displayName,
               photo:this.afAuth.auth.currentUser.photoURL,
               email:this.afAuth.auth.currentUser.email,

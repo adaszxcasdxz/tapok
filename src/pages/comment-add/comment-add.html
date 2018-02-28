@@ -22,12 +22,12 @@
     <br>
     <ion-row text-center>
         <ion-col *ngIf="label == 'Add Comment'">
-            <button (click)="addComment(posts)" ion-button medium>
+            <button *ngIf="comment!=''" (click)="addComment(posts)" ion-button medium>
                 SEND COMMENT
             </button>
         </ion-col>
         <ion-col *ngIf="label == 'Edit Comment'">
-            <button (click)="editComment(posts)" ion-button medium>
+            <button *ngIf="comment!=''" (click)="editComment(posts)" ion-button medium>
                 SAVE CHANGES
             </button>
         </ion-col>

@@ -35,6 +35,7 @@ export class GroupContent {
   groupmember: any;
   photo: any;
   userid: any;
+  gcount = 0;
 
 
   constructor(
@@ -73,7 +74,13 @@ export class GroupContent {
         })
       });
 
-      
+      this.gmember.subscribe(snapshots => {
+        snapshots.forEach(snapshot => {
+          this.gcount++;
+        })
+      });
+
+      console.log(this.gcount);
       
       //console.log(this.postTest[0]);
     

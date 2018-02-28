@@ -2,10 +2,8 @@
     <ion-navbar color="tapok" hide-on-scroll="true" no-border-bottom>  
         <ion-title text-center>Groups</ion-title>
       </ion-navbar>
-</ion-header>
 
-<ion-content>
-    <ion-toolbar class="tabs">
+      <ion-toolbar>
         <div padding>
       <ion-segment [(ngModel)]="group">
         <ion-segment-button value="mygroup">
@@ -17,6 +15,9 @@
       </ion-segment>
     </div>
       </ion-toolbar>
+</ion-header>
+
+<ion-content>
       <br><br><br>
 <div [ngSwitch]="group">
   <ion-list *ngSwitchCase="'mygroup'">

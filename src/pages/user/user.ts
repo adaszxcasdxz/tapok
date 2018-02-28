@@ -134,11 +134,7 @@ export class UserPage {
     modal.present();
   }
 
-  logout(){
-    /*this.facebook.getLoginStatus({
-
-    }).then (res)=>*/
-    
+  logout(){ 
     this.angularFireAuth.auth.signOut();
     this.app.getRootNav().setRoot('LoginPage');
   }
