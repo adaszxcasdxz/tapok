@@ -76,7 +76,7 @@ export class ChooseGroupPage {
               }
             }
             this.firebaseService.shareEvent(gKey, this.event);
-            this.navCtrl.setRoot('TapokPage');
+            this.navCtrl.setRoot('TabsPage');
             confirm.present();
           }
         },
