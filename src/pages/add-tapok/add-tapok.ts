@@ -74,7 +74,7 @@ export class AddTapok {
 
 	user: any;
 	Keywords: any;
-
+	age: any;
 	inc: any;
 
 	onSuccess = (snapshot) => {
@@ -100,9 +100,11 @@ export class AddTapok {
 		this.event = params.get('tapok');
 		this.event_key = params.get('key');
 		this.user = this.firebaseService.getUser();
+		this.age = this.firebaseService.getAge();
 		console.log(this.event_key);	
 		this.Tags = this.firebaseService.getTempTag();
 	
+
 		if(this.event != undefined)
 			this.editTapokInfo();
 	}
