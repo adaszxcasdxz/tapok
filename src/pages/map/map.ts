@@ -72,11 +72,11 @@ export class MapPage {
       console.log(this.lat);
       for(i = 0; i < this.lat.length; i++){
         eventLocation[i] = new google.maps.LatLng(this.lat[i], this.long[i]);
-        if(this.info[i].timeStatus == 'upcoming')
-          iconLink = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
-        if(this.info[i].timeStatus == 'ongoing')
-          iconLink = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
-        this.addMarker(eventLocation[i], this.info[i], this.lat[i], iconLink);  
+        //if(this.info[i].timeStatus == 'upcoming')
+          //iconLink = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+        if(this.info[i].status != 'archive')
+          //iconLink = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+          this.addMarker(eventLocation[i], this.info[i], this.lat[i], iconLink);  
       }
 
     }, (err) => {
@@ -108,7 +108,7 @@ export class MapPage {
     var y = 0;
 
     for(var i=0;i<this.info.length;i++){
-      if(this.info[i].latitude == lat){
+      if(this.info[i].latitude == lat&&this.info[i].status != 'archive'){
         contentString = contentString.concat('<div id="'+this.info[i].$key+'"><h3 id="'+this.info[i].$key+'">'+this.info[i].name+'</h3><hr>'+this.info[i].date+'<br>'+this.info[i].time+'<hr>Attendees: '+this.info[i].tapok+'<br></div>');
         event[y] = this.info[i].$key;
         y++;
