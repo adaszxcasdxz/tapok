@@ -35,7 +35,7 @@ export class FireBaseService {
   }
 
   getAge(){
-    return 20;
+    return 14;
   }
 
   getuID(){

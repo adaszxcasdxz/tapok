@@ -79,7 +79,7 @@
                 <ion-item>
                     <ion-icon name = "pin" color="primary"></ion-icon> <b>Location:</b><br> {{ event.venue }}
                 </ion-item>
-                <ion-item>
+                <ion-item *ngIf="event.latitude != null">
                     <ion-icon name = "map" color="primary"></ion-icon> <b>Map:</b>
                 </ion-item>
             </ion-item-group>
