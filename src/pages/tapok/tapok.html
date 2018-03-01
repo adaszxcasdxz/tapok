@@ -40,7 +40,7 @@
       <div *ngIf="timeStatus[i]=='upcoming'">
         <ion-list *ngSwitchCase="'upcoming'">
           <div *ngIf="status[i] == 'TAPOK'">
-            <div *ngIf="(event.filter=='General')||(event.filter=='PG'&&age>=13&&age<18)||(event.filter=='SPG'&&age>=18)">
+            <div *ngIf="(event.filter=='General')||(event.filter=='PG'&&age>=13)||(event.filter=='SPG'&&age>=18)">
               <ion-card text-center>
                 <ion-item>
                   <ion-avatar item-start>

@@ -123,8 +123,8 @@
                         <ion-label><b>Classification</b></ion-label>
                         <ion-select (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="filter">
                             <ion-option value="General">General</ion-option>
-                            <ion-option *ngIf="age>=13&&age<18" value="PG">PG</ion-option>
-                            <ion-option *ngIf="age>18" value="SPG">SPG</ion-option>
+                            <ion-option *ngIf="age>=13" value="PG">PG</ion-option>
+                            <ion-option *ngIf="age>=18" value="SPG">SPG</ion-option>
                         </ion-select>
                     </ion-item>
                 </ion-col>
