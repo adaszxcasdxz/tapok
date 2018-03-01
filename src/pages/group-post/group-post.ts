@@ -47,7 +47,7 @@ export class GroupPost {
         console.log(this.posterid);
   }
 
-  addPost(){
+  addPost(post){
       this.group={
       "post": this.post,
       "poster": this.user,
