@@ -343,6 +343,7 @@ export class TapokContent {
               this.firebaseService.deleteTag(this.tag[y]);  
             for(var k=0;y<this.Attendee.length;k++){
               this.firebaseService.addNotif(this.Attendee[k].name, notif);
+              console.log(this.Attendee[k].name);
             }
             this.viewCtrl.dismiss();
           }
