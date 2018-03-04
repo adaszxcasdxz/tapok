@@ -44,5 +44,6 @@
 </ion-content>
 
 <ion-footer padding>
-  <button class="tapok-button" (click)="clearNotifs()" block ion-button>Clear</button>
+  <button *ngIf="notifs" class="tapok-button" (click)="clearNotifs()" block ion-button>Clear</button>
+  <button *ngIf="!notifs" class="tapok-button" (click)="clearNotifs()" block ion-button disabled>Clear</button>
 </ion-footer>

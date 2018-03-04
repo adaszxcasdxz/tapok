@@ -26,14 +26,12 @@ export class NotificationPage {
     public tabs: TabsPage, public alertCtrl: AlertController) {
     this.Notifs = this.firebaseService.getNotif();
     
-    /*this.firebaseService.getNotif().subscribe(snapshot => {
-      snapshot.forEach(snap => {
-        var notif = {
-          'notified': true
-        }
-        this.firebaseService.editNotif(snap.$key, notif);
-      });
-    });*/
+    this.Notifs.subscribe(snapshot => {
+      if(snapshot.length == 0)
+        this.notifs = false;
+      else
+        this.notifs = true;
+    });
   }
 
   ionViewDidLoad() {

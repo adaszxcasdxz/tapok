@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams,ViewController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController,ViewController, ModalController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
 import { App } from 'ionic-angular/components/app/app';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -35,10 +35,9 @@ export class UserPage {
   removeFollowingSubscribe: any;
   Archive: any[] = [];
   emailToggle: any;
+  history: any;
 
-  constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, 
-    public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController, 
-    public modalCtrl: ModalController, public geolocation: Geolocation) {
+  constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController, public geolocation: Geolocation, public alrtCtrl: AlertController) {
     this.otherUser = this.params.get('otherUser');
     this.Following = this.firebaseService.getFollowing();
     this.Follower = this.firebaseService.getAllFollowers();
@@ -52,12 +51,19 @@ export class UserPage {
               this.Archive[i] = snap;
               i++;
             }
-          } 
+            this.firebaseService.addArchive(snap.attendees[attendees].name, snap);
+          }
+          this.firebaseService.deleteEvent(snap); 
         }
       });
     });
-    this.pages = 'me';
 
+    this.History.subscribe(snapshot => {
+      this.history = snapshot;
+    })
+    this.pages = 'me';
+    console.log(this.Archive.length);
+    console.log(this.permission);
     if(this.otherUser != null){ 
       this.Following.subscribe(snapshot => {
         snapshot.forEach(snap => {
@@ -241,6 +247,25 @@ export class UserPage {
   }
   
   clearHistory(){
-    this.firebaseService.clearHistory();
+    let confirm = this.alrtCtrl.create({
+      title: 'Achive Cleared',
+      buttons: ['Ok']
+    });
+    let alert = this.alrtCtrl.create({
+      title: 'Clear Archive?',
+      buttons: [ 
+        {
+          text: 'Yes',
+          handler: () => {					
+            this.firebaseService.clearHistory();
+            confirm.present();
+          }
+        },
+        {
+          text: 'No',
+        }
+      ]
+    });
+    alert.present();
   }
 }
