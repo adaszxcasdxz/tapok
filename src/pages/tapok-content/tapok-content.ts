@@ -51,6 +51,8 @@ export class TapokContent {
   adminCheck: any = false;
   hostCheck: any = false;
   type: any;
+  eMember: any;
+  eventmem: any[] = [];
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -65,7 +67,6 @@ export class TapokContent {
     this.key = navParams.get('param1');
     this.event = this.firebaseService.getSpecificEvent(this.key);
     //this.event = params.get('event');
-    this.user = this.firebaseService.getUser();
     this.List=this.firebaseService.getChat(this.key, this.content);
     this.Attendees = this.firebaseService.getAttendees(this.key);
     this.fontSize="default";
@@ -73,7 +74,6 @@ export class TapokContent {
     this.Members = this.firebaseService.getMembers(this.key);
     this.Admins = this.firebaseService.getAdmins(this.key);
     this.type = this.navParams.get('type');
-    console.log(this.type);
     this.Admins.subscribe(snapshot => {
       snapshot.forEach(snap => {
         if(this.user == snap.name ){
@@ -499,6 +499,31 @@ export class TapokContent {
     });
     this.firebaseService.sendMessage(this.chat, this.key);
     this.Message="";
+
+    var j;
+    this.eMember = this.firebaseService.getgroupAttend(this.key);
+
+    this.eMember.subscribe(snapshot => {
+      j = 0;
+      snapshot.forEach(snap => {
+          this.eventmem[j] = snap.name;
+          j++;
+      })
+    });
+
+    for(var i=0; i<this.eventmem.length; i++){
+      if(this.user != this.eventmem[i]){
+        var notif = {
+          "name": this.eventmem[i],
+          "sender": this.firebaseService.getUser(),
+          "type": 7,
+          "timestamp": 0-Date.now(),
+          "event_name": this.event.name,
+          "event_key": this.key,
+        }
+        this.firebaseService.addNotif(this.eventmem[i], notif);
+      }
+    }
   }
 
   popoverChat(event){

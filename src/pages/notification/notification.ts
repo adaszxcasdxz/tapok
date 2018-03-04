@@ -37,12 +37,16 @@ export class NotificationPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad NotificationPage');
+    this.clearBadges();
   }
 
   ionViewDidEnter(){
     this.clearBadges();
     this.tabs.getBadges();
+  }
+
+  ionViewWillEnter(){
+    this.clearBadges();
   }
 
   openSearch(){

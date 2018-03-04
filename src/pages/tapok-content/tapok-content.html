@@ -10,6 +10,13 @@
                 <ion-icon name="settings"></ion-icon>
             </button>
         </ion-buttons>
+        
+        <ion-buttons *ngIf="!(adminCheck||hostCheck)" right large>
+            <button *ngIf="tab=='chat'" class="button-header" (click)="popoverChat($event)" ion-button icon-only>
+                <ion-icon name="settings"></ion-icon>
+            </button>
+        </ion-buttons>
+
         <ion-buttons left>
             <button (click)="dismiss()" ion-button icon-only clear>
                 <ion-icon name="arrow-back"></ion-icon>
@@ -122,7 +129,7 @@
                         
                 <ion-list no-lines>
                     <ion-item *ngFor="let List of List | async" text-center>
-                        <ion-grid style="margin-top:5em;" *ngIf="fontSize === 'default'" no-padding>
+                        <ion-grid style="margin-top:.3em;" *ngIf="fontSize === 'default'" no-padding>
                             <ion-row *ngIf="List.uid === uid" text-wrap>
                                 <ion-col>
                                             

@@ -263,7 +263,6 @@ export class TapokPage {
       if(data=='facebook')
         this.facebookShare(event);
       if(data=='group')
-        //this.openGroupShare(event);
         this.navCtrl.push('ChooseGroupPage', {param1: event});
     });
   }
@@ -291,13 +290,7 @@ export class TapokPage {
   }
 
   viewPic(photo){
-    /*let modal = this.modalCtrl.create('ViewPicturePage', { pic: photo });
-    modal.present();*/
-    //this.photoVithis.platform.ready().then(() => {ewer.show(photo);
      this.photoViewer.show(photo);
-    //this.photoViewer.show(photo);
-    //this.photoViewer.show('https://mysite.com/path/to/image.jpg');
-    //this.photoViewer.show('https://mysite.com/path/to/image.jpg', 'My image title', {share: false});
   }
 
   openTapokContent(event){

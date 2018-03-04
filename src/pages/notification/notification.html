@@ -6,7 +6,17 @@
 -->
 <ion-header>
   <ion-navbar color="tapok" hide-on-scroll="true" no-border-bottom>
+      <ion-buttons right>
+          <button (click)="openSearch()" ion-button icon-only round clear>
+            <ion-icon class="search-icon" name="search"></ion-icon>
+          </button>
+      </ion-buttons>   
     <ion-title text-center>Notifications</ion-title>
+    <ion-buttons left>
+        <button (click)="openMap()" ion-button icon-only round clear>
+          <ion-icon class="search-icon" name="map"></ion-icon>
+        </button>
+    </ion-buttons> 
   </ion-navbar>
 </ion-header>
 
@@ -19,12 +29,14 @@
       <div *ngIf="notif.type == 4">{{ notif.sharename }}</div>
      <div *ngIf="notif.type == 5">{{ notif.name }}</div>
       <div *ngIf="notif.type == 6">{{ notif.admin }}</div>
+      <div *ngIf="notif.type == 7">{{notif.sender}}</div>
       <p *ngIf="notif.type == 1">has joined your event <b>{{ notif.event_name }}</b></p>
       <p *ngIf="notif.type == 2">has hosted an event <b>{{ notif.event_name }}</b></p>
       <p *ngIf="notif.type == 3">will start in 1 hour</p>
       <p *ngIf="notif.type == 4">has shared an event in <b>{{ notif.group_name }}</b></p>
       <p *ngIf="notif.type == 5">wants to join <b>{{ notif.group_name }}</b></p>
       <p *ngIf="notif.type == 6">has added you in <b>{{ notif.group_name }}</b></p>
+      <p *ngIf="notif.type == 7">has sent a message in <b>{{ notif.event_name }}</b></p>
     </ion-item>
   </ion-list>
 </ion-content>

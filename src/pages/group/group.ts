@@ -43,7 +43,6 @@ export class GroupPage{
         this.userid = this.firebaseService.getUserID();
         this.key = navParams.get('param1');
         this.gmember = this.firebaseService.getgroupAttend(this.key);
-        //this.usergroup = this.firebaseService.getGroup();
         this.user = firebaseService.user;
         this.Tags = this.firebaseService.getGroupTag();
 
@@ -156,7 +155,6 @@ export class GroupPage{
                   }
                 this.firebaseService.addNotif(admin, notif);  
                 this.firebaseService.addRequestee(key, this.requestee);
-                //this.navCtrl.setRoot('GroupPage');
                 confirm.present();
                 }
             },
@@ -207,7 +205,6 @@ export class GroupPage{
     leaveGroup(ugroup, group){
         var i;
         this.gmember = this.firebaseService.getgroupAttend(group);
-        console.log(group);
         /*this.gmember.subscribe(snapshot => {
             //this.groupAttend.length = 0;
             var k = 0;
@@ -225,7 +222,6 @@ export class GroupPage{
             i = 0;
             snapshot.forEach(snap => {
                 this.groupAttend[i] = snap;
-                console.log(this.groupAttend[i].userid);
                 i++;
             })
             this.testattend(ugroup, group);
@@ -242,5 +238,15 @@ export class GroupPage{
     let modal = this.modalCtrl.create('GroupAddPage', { label: 'Add Group' });
     modal.present();
    }
+
+   openMap(){
+    let modal = this.modalCtrl.create('MapPage');
+    modal.present();
+  }
+  
+  openSearch(){
+    let modal = this.modalCtrl.create('SearchPage');
+    modal.present();
+  }
 
 }
