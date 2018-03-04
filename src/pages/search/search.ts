@@ -177,7 +177,7 @@ export class SearchPage {
             if(this.ResultPeople[i] != undefined){
               this.ResultPeople[i].subscribe(snapshot2 => {
                 snapshot2.forEach(snap2 => {
-                  if(this.firebaseService.getUser()!=snap2.name)
+                  if(this.firebaseService.getUser()!=snap2.name_search)
                     this.result[i] = snap2;
                 })
               });

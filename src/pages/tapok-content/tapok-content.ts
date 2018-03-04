@@ -50,6 +50,7 @@ export class TapokContent {
   hostCheck: any = false;
   type: any;
   Attendee: any[] = [];
+  page: any;
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -68,6 +69,8 @@ export class TapokContent {
     this.Members = this.firebaseService.getMembers(this.key);
     this.Admins = this.firebaseService.getAdmins(this.key);
     this.type = this.navParams.get('type');
+    this.page = this.navParams.get('page');
+
     console.log(this.type);
     this.Admins.subscribe(snapshot => {
       snapshot.forEach(snap => {
@@ -307,7 +310,7 @@ export class TapokContent {
   }
 
   editTapok(){
-    let modal = this.modalCtrl.create('AddTapok', { key: this.key, tapok: this.event, label: "Edit Tapok" });
+    let modal = this.modalCtrl.create('AddTapok', { key: this.key, tapok: this.event, label: "Edit Tapok", page: this.page });
     modal.present();
 
     modal.onDidDismiss(data => {
