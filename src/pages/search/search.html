@@ -139,7 +139,6 @@
           <ion-item (click)="openUser(res, $event)">
             <ion-avatar item-start><img src="{{ res.photo }}"></ion-avatar>
             <h2>{{ res.name }}</h2>
-            <p>{{ res.email }}</p>
             <!--{{ Following[y].name }}-->
             <span *ngIf="Following[y] != undefined">
             <span *ngIf="Following[y].name == res.name">

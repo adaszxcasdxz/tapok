@@ -28,7 +28,6 @@ export class TapokContent {
   tabs: any;
   Tags: any;
   tag: any[] = [];
-  Attendees: any;
   access: any;
   uid: any;
   @ViewChild('map') mapElement: ElementRef;
@@ -53,7 +52,6 @@ export class TapokContent {
   type: any;
   eMember: any;
   eventmem: any[] = [];
-  Attendee: any[] = [];
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -69,7 +67,6 @@ export class TapokContent {
     this.event = this.firebaseService.getSpecificEvent(this.key); 
     //this.event = params.get('event');
     this.List=this.firebaseService.getChat(this.key, this.content);
-    this.Attendees = this.firebaseService.getAttendees(this.key);
     this.fontSize="default";
     
     this.Members = this.firebaseService.getMembers(this.key);
@@ -99,10 +96,6 @@ export class TapokContent {
       if(this.user == events.host ){
         this.access = 'ok'; 
         this.hostCheck = true;
-      }
-      for(var attendee in events.attendees){
-        this.Attendee[k] = events.attendees[attendee].name;
-        k++;
       }
     });
 
@@ -140,7 +133,6 @@ export class TapokContent {
       this.test();
     });
 
-    //this.tapokID = this.tapokID = _params.get('tapokID');
     if(this.event.latitude != null && this.tab == 'details')
       this.loadMap();
   }
@@ -274,7 +266,6 @@ export class TapokContent {
     });
 
     popover.onDidDismiss(data => {
-      console.log(data);
       if(data=='edit')
         this.editTapok();
       if(data=='delete')
@@ -333,23 +324,43 @@ export class TapokContent {
     }
 
     let confirm = this.alertCtrl.create({
-      title: 'Tapok Deleted',
+      title: 'Tapok Cancelled',
       buttons: [ 'OK' ]
     });
     let alert = this.alertCtrl.create({
-      title: 'Delete Tapok?',
+      title: 'Cancel Tapok?',
       buttons: [ 
         {
           text: 'YES',
           handler: () => {
+            var j;
+            this.eMember = this.firebaseService.getAttendees(this.key);
+        
+            this.eMember.subscribe(snapshot => {
+              j = 0;
+              snapshot.forEach(snap => {
+                  this.eventmem[j] = snap.name;
+                  j++;
+              })
+            });
+        
+            for(var i=0; i<this.eventmem.length; i++){
+              if(this.user != this.eventmem[i]){
+                var notif = {
+                  "admin": this.firebaseService.getUser(),
+                  "type": 8,
+                  "timestamp": 0-Date.now(),
+                  "event_name": this.event.name,
+                  "event_key": this.key,
+                }
+                this.firebaseService.addNotif(this.eventmem[i], notif);
+              }
+            }
             this.firebaseService.deleteTapok(this.event.$key);
             for(i=0;i<this.keyword.length;i++)
               this.firebaseService.deleteKeyword(this.keyword[i]);  
             for(y=0;y<this.tag.length;y++)
               this.firebaseService.deleteTag(this.tag[y]);  
-            for(var k=0;y<this.Attendee.length;k++){
-              this.firebaseService.addNotif(this.Attendee[k].name, notif);
-            }
             this.viewCtrl.dismiss();
           }
         },
@@ -383,7 +394,6 @@ export class TapokContent {
       }
 
     }, (err) => {
-      console.log(err);
     }); 
     
   }
@@ -530,7 +540,6 @@ export class TapokContent {
     for(var i=0; i<this.eventmem.length; i++){
       if(this.user != this.eventmem[i]){
         var notif = {
-          "name": this.eventmem[i],
           "sender": this.firebaseService.getUser(),
           "type": 7,
           "timestamp": 0-Date.now(),
@@ -549,7 +558,6 @@ export class TapokContent {
     });
 
     popover.onDidDismiss(data => {
-      console.log(data);
       if(data=='smaller')
         this.textSmaller();
       if (data=='default')
@@ -594,7 +602,6 @@ export class TapokContent {
     }
   
     openGroupShare(event){
-        console.log(event);
         this.navCtrl.push('ChooseGroupPage', {param1: event});
       }
   
