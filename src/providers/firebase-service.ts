@@ -542,8 +542,20 @@ export class FireBaseService {
     return this.tapok.list('users/'+this.user+'/permission').remove();
   }
 
+  allowEmailPermission(){
+    return this.tapok.list('users/'+this.user+'/email').push(true);
+  }
+
+  removeEmailPermission(){
+    return this.tapok.list('users/'+this.user+'/email').remove();
+  }
+
   getPermission(user){
     return this.tapok.list('users/'+user+'/permission');
+  }
+
+  getEmailPermission(user){
+    return this.tapok.list('users/'+user+'/email');
   }
 
   clearNotifs(){

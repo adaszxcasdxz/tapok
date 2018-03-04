@@ -35,6 +35,7 @@ export class UserPage {
   removeFollowerSubscribe: any;
   removeFollowingSubscribe: any;
   Archive: any[] = [];
+  emailToggle: any;
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController, public geolocation: Geolocation) {
     this.otherUser = this.params.get('otherUser');
@@ -91,6 +92,14 @@ export class UserPage {
       else  
         this.permission = true;
     });
+
+    this.firebaseService.getEmailPermission(this.username).subscribe(snapshot => {
+      if(snapshot.length == 0)
+        this.emailToggle = false;
+      else  
+        this.emailToggle = true;
+    });
+
       this.firebaseService.getUserLocation(this.username).subscribe(snap => {
         if(snap!=undefined){
           this.lat = snap[0].$value;
@@ -218,6 +227,15 @@ export class UserPage {
     this.ionViewWillEnter();
     console.log(this.permission);
     console.log('this.permission');
+  }
+
+  askEmailPermission(){
+    if(this.emailToggle)
+      this.firebaseService.allowEmailPermission();
+    else
+      this.firebaseService.removeEmailPermission();
+
+  this.ionViewWillEnter();
   }
 
   openUser(user){

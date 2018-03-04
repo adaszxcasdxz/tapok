@@ -85,6 +85,16 @@ export class EventPage {
     });
   }
 
+  doInfinite(infiniteScroll){
+    console.log('scroll');
+
+    setTimeout(() => {
+
+      console.log('Async operation has ended');
+      infiniteScroll.complete();
+    }, 50);
+  }
+
   ionViewDidLoad(){
     this.Tags = this.firebaseService.getTag();
     this.timeCheck();

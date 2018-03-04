@@ -64,11 +64,11 @@ export class TapokPage {
     this.User = this.firebaseService.getUsers();
     this.user = firebaseService.getUser();
 
-    Observable.interval(5000)
+   /*Observable.interval(5000)
     .subscribe((val) => { 
       this.inc = 0;
       this.timeCheck('const');
-    });
+    });*/
 
     this.User.map(users => {
       this.userEventKeys = users;
@@ -95,6 +95,10 @@ export class TapokPage {
       })
       this.test();
     });
+  }
+
+  ionInfinite(){
+    console.log('scroll');
   }
 
   ionViewDidLoad(){
