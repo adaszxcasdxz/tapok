@@ -247,7 +247,7 @@ export class EventPage {
   }
 
   openTapokContent(event){
-    let contentModal = this.modalCtrl.create('TapokContent', {param1: event.$key, type: 'JOINED'});
+    let contentModal = this.modalCtrl.create('TapokContent', {param1: event.$key, type: 'JOINED', page: this.epages});
     contentModal.present();
   }
 

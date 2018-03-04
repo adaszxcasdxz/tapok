@@ -72,6 +72,8 @@ export class AddTapok {
 	event_key: any;
 	wkey: any [] = [];
 
+	page: any;
+
 	inputLocation: any = 'false';
 
 	user: any;
@@ -100,12 +102,15 @@ export class AddTapok {
 		this.host = this.firebaseService.getUser();
 		this.label = params.get('label');
 		this.event = params.get('tapok');
+		this.page = params.get('page');
+		console.log(this.page);
 		this.event_key = params.get('key');
 		this.user = this.firebaseService.getUser();
 		this.age = this.firebaseService.getAge();	
 		this.Tags = this.firebaseService.getTempTag();
 		this.uid=this.firebaseService.getuID();
 		this.photoURL=firebaseService.getPhotoURL();
+
 
 		if(this.event != undefined)
 			this.editTapokInfo();

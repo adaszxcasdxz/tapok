@@ -136,7 +136,7 @@
     <div *ngFor="let login of Login | async; let i = index">
       <div *ngFor="let res of ResultPeople[i] | async; let y = index">
         <!--<ion-item-sliding>-->
-          <ion-item (click)="openUser(res, $event)">
+          <ion-item *ngIf="curUser!=res.name" (click)="openUser(res, $event)">
             <ion-avatar item-start><img src="{{ res.photo }}"></ion-avatar>
             <h2>{{ res.name }}</h2>
             <!--{{ Following[y].name }}-->
