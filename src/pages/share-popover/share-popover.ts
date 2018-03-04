@@ -19,7 +19,6 @@ export class SharePopoverPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SharePopoverPage');
   }
 
   clickOption(option){

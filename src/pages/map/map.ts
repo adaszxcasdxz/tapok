@@ -35,7 +35,6 @@ export class MapPage {
         this.lat[y] = snapshot.latitude;
         this.long[y] = snapshot.longitude;
         this.info[y] = snapshot;
-        console.log(snapshot.latitude); 
         y++;
       })
     });
@@ -69,18 +68,13 @@ export class MapPage {
         icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
       });
       var iconLink;
-      console.log(this.lat);
       for(i = 0; i < this.lat.length; i++){
         eventLocation[i] = new google.maps.LatLng(this.lat[i], this.long[i]);
-        //if(this.info[i].timeStatus == 'upcoming')
-          //iconLink = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
         if(this.info[i].status != 'archive')
-          //iconLink = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
           this.addMarker(eventLocation[i], this.info[i], this.lat[i], iconLink);  
       }
 
     }, (err) => {
-      console.log(err);
     });
     
   }
@@ -125,9 +119,7 @@ export class MapPage {
           for(var i=0;i<event.length;i++){
             document.getElementById(event[i]).addEventListener('click', (ev) => {
               this.openTapokContent(ev.toElement.id);
-              console.log(ev.toElement.id);
             });
-            console.log(event[i].length);
           }
         });
    });

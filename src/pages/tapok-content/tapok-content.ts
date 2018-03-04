@@ -1,6 +1,5 @@
 import { IonicPage, NavController, ViewController, AlertController, NavParams, ModalController, PopoverController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase-service';
-import { Popover } from 'ionic-angular/components/popover/popover';
 import { FirebaseApp } from 'angularfire2';
 import { Content } from 'ionic-angular';
 import { Component, ViewChild, ElementRef } from '@angular/core';
@@ -66,7 +65,6 @@ export class TapokContent {
     this.uid = this.firebaseService.getUserID();
     this.key = navParams.get('param1');
     this.event = this.firebaseService.getSpecificEvent(this.key); 
-    //this.event = params.get('event');
     this.List=this.firebaseService.getChat(this.key, this.content);
     this.fontSize="default";
     
@@ -75,7 +73,6 @@ export class TapokContent {
     this.type = this.navParams.get('type');
     this.page = this.navParams.get('page');
 
-    console.log(this.type);
     this.Admins.subscribe(snapshot => {
       snapshot.forEach(snap => {
         if(this.user == snap.name ){

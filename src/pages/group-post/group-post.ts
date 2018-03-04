@@ -44,7 +44,6 @@ export class GroupPost {
         this.photo = this.firebaseService.getPhotoURL();
         if(this.postKey != undefined)
           this.editPostInfo();
-        console.log(this.posterid);
   }
 
   addPost(post){
@@ -73,7 +72,6 @@ export class GroupPost {
         "post": this.post,
         "datetime": Date.now()
       }
-      console.log(this.postKey.$key);
       this.firebaseService.editPosts(this.groupKey.$key, this.postKey.$key, this.post);
       let alert = this.alertCtrl.create({
         title: 'Changes Saved!',
@@ -97,7 +95,6 @@ export class GroupPost {
   }
 
   ionViewDidLoad() {
-    console.log('Test');
   }
 
 }

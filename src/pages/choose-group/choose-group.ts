@@ -31,21 +31,19 @@ export class ChooseGroupPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChooseGroupPage');
+
   }
 
   shareGroup(gKey, gname){
     var j;
     this.gMember = this.firebaseService.getgroupAttend(gKey);
 
-    this.gMember.subscribe(snapshot => { //
-      //this.groupmem.length = 0;
+    this.gMember.subscribe(snapshot => {
       j = 0;
       snapshot.forEach(snap => {
           this.groupmem[j] = snap.name;
           j++;
       })
-      //this.test();
     });
   
     let confirm = this.alertCtrl.create({
@@ -59,7 +57,6 @@ export class ChooseGroupPage {
           text: 'YES',
           handler: () => {
             for(var i=0; i<this.groupmem.length; i++){
-              console.log(this.groupmem.length);
               if(this.user != this.groupmem[i]){
                 var notif = {
                   "name": this.groupmem[i],
@@ -71,7 +68,6 @@ export class ChooseGroupPage {
                   "group_name": gname,
                   "group_key": gKey
                 }
-                console.log(this.groupmem[i]);
                 this.firebaseService.addNotif(this.groupmem[i], notif);
               }
             }

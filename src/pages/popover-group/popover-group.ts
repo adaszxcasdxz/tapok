@@ -23,7 +23,6 @@ export class PopoverGroupPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PopoverGroupPage');
   }
 
   clickOption(option){

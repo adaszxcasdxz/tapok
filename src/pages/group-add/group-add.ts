@@ -57,7 +57,6 @@ export class GroupAddPage {
 	}
 	
 	onError = (error) => {
-		console.log('error', error);
 		this.loading.dismiss();
 	}
 
@@ -74,7 +73,6 @@ export class GroupAddPage {
 				this.Tags = this.firebaseService.getTempGTag();
 				this.label = params.get('label');
 				this.group_key = params.get('key');
-				console.log(this.group_key);
 				this.group = params.get('tapok');
 				if(this.group != undefined)
 				  this.editGroupInfo();
@@ -138,28 +136,8 @@ export class GroupAddPage {
 			}	
 		}
 		
-		/*if(this.label == "Edit Group"){
-			var gkey = this.firebaseService.editGroups(this.group.$key, this.group);
-			console.log(gkey);
-			for(i=0;i<this.tagsTest.length;i++){
-				this.tag={
-					"tag": this.tagsTest[i].toLowerCase(),
-					"key": gkey
-				}
-				console.log(this.tag.tag);
-				this.firebaseService.addGroupTag(this.tag);
-				if(i+1 == this.tagsTest.length)
-					this.firebaseService.deleteAllTempGTag();
-			}	
-		}*/
-		
-		
 		this.test = this.group.$key;
-		console.log(this.test);
 
-		//this.test = this.firebaseService.getSpecificGroup(this.group.$key);
-		//console.log(this.test);
-		//this.addUserGroup(this.test);
 		this.cancel();
 		let alert = this.alertCtrl.create({
 			title: 'Group Created',
@@ -169,7 +147,6 @@ export class GroupAddPage {
 	}
 	
 	addUserGroup(key){
-		console.log(key);
 		this.usergroup={
 			"key": key,
             "gname": this.gname,
@@ -197,8 +174,6 @@ export class GroupAddPage {
 			"photo": this.gphoto,
 			"tags": this.tags,
 		};
-		//this.addGroup();
-		console.log(this.tagsTest.length);
 		var gkey = this.firebaseService.editGroups(this.group.$key, this.groups);
 
 		for(i=0;i<this.tagsTest.length;i++){
@@ -206,7 +181,6 @@ export class GroupAddPage {
 				"tag": this.tagsTest[i].toLowerCase(),
 				"key": this.group.$key
 			}
-			console.log(this.tag.tag);
 			this.firebaseService.addTag(this.tag);
 			if(i+1 == this.tagsTest.length)
 				this.firebaseService.deleteAllTempTag();
@@ -232,11 +206,9 @@ export class GroupAddPage {
 		this.tags = this.group.tags;
 
 		this.curTags = this.firebaseService.getTag();
-		console.log(this.curTags);
 	}
 
   ionViewDidLoad() {
-    console.log('Test');
   }
 
   openGallery(){

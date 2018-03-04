@@ -22,7 +22,6 @@ export class ViewPicturePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ViewPicturePage');
   }
 
   dismiss() {

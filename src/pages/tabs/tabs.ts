@@ -30,22 +30,6 @@ export class TabsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public firebaseService: FireBaseService,  public geolocation: Geolocation,
     public firebaseApp: FirebaseApp, public badge: Badge) {
-    /*this.username = navParams.get('username');
-    this.key = navParams.get('key');
-    this.firebaseService.getUser();
-    this.notifCount = 0;
-    Observable.interval(10000)
-    .subscribe((val) => {
-      this.firebaseService.getNotif().subscribe(snapshots => {
-        snapshots.forEach(snap => {
-          console.log(snap);
-          if(snap.notified == null)
-            this.notifCount++;
-          console.log(this.notifCount);
-        });
-      }); 
-    });*/
-
 
     Observable.interval(10000)
     .subscribe((val) => { 
@@ -57,7 +41,6 @@ export class TabsPage {
 
         this.firebaseService.updateUserLocation(coord);
       }).catch((error) => {
-        console.log('Error getting location', error);
       });
     });
 
@@ -73,7 +56,7 @@ export class TabsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TabsPage');
+    this.clearBadges();
   }
 
   ionViewDidEnter(){

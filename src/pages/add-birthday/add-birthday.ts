@@ -52,7 +52,6 @@ export class AddBirthdayPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddBirthdayPage');
   }
 
 }

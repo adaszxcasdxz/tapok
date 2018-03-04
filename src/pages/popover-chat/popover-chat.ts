@@ -23,7 +23,6 @@ export class PopoverChatPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PopoverChatPage');
   }
 
   clickOption(option){

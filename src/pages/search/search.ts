@@ -127,7 +127,6 @@ export class SearchPage {
   }
 
   ionViewDidLoad(){
-    console.log('test');
   }
 
   eTest(){
@@ -180,7 +179,6 @@ export class SearchPage {
             this.loginInfo[i] = snap.$key;
             this.ResultPeople[i] = this.firebaseService.searchPeople(this.search.toLowerCase(), snap.$key);
             if(this.ResultPeople[i] != undefined){
-              console.log(this.ResultPeople[i]);
               this.ResultPeople[i].subscribe(snapshot2 => {
                 snapshot2.forEach(snap2 => {
                   this.result[i] = snap2;

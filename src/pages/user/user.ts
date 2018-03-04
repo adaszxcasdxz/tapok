@@ -4,8 +4,6 @@ import { FireBaseService } from '../../providers/firebase-service';
 import { App } from 'ionic-angular/components/app/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Geolocation } from '@ionic-native/geolocation';
-import { Facebook } from '@ionic-native/facebook';
-import { GooglePlus } from '@ionic-native/google-plus';
 
 declare var google;
 
@@ -40,8 +38,7 @@ export class UserPage {
 
   constructor(public navCtrl: NavController, public firebaseService: FireBaseService, public app: App, 
     public angularFireAuth: AngularFireAuth, public params: NavParams, public viewCtrl: ViewController, 
-    public modalCtrl: ModalController, public geolocation: Geolocation, private facebook: Facebook,
-    private gPlus: GooglePlus) {
+    public modalCtrl: ModalController, public geolocation: Geolocation) {
     this.otherUser = this.params.get('otherUser');
     this.Following = this.firebaseService.getFollowing();
     this.Follower = this.firebaseService.getAllFollowers();
@@ -51,7 +48,6 @@ export class UserPage {
       snapshot.forEach(snap => {
         if(snap.status == 'archive'){
           for(var attendees in snap.attendees){
-            //console.log();
             if(snap.attendees[attendees].name == this.firebaseService.getUser()){
               this.Archive[i] = snap;
               i++;
@@ -62,9 +58,7 @@ export class UserPage {
     });
     this.pages = 'me';
 
-    console.log(this.permission);
     if(this.otherUser != null){ 
-      console.log(this.otherUser.name);
       this.Following.subscribe(snapshot => {
         snapshot.forEach(snap => {
           if(snap.name == this.otherUser.name){
@@ -78,9 +72,7 @@ export class UserPage {
     if(this.otherUser == null){
       this.username = this.angularFireAuth.auth.currentUser.displayName;
       this.email = this.firebaseService.getEmail();
-      //this.email = 'this.firebaseService.getEmail()';
       this.photo = this.firebaseService.getPhotoURL();
-      //this.photo = 'this.firebaseService.getPhotoURL()';
     }else{
       this.username = this.otherUser.name;
       this.email = this.otherUser.email;
@@ -135,14 +127,12 @@ export class UserPage {
         });
 
       }, (err) => {
-        console.log(err);
       });
     
   }
 
   changePage(val){
     this.pages = val;
-    console.log(this.pages);
     if(val == 'me')
       this.ionViewWillEnter();
   }
@@ -172,9 +162,9 @@ export class UserPage {
     var follower = {
       'name': this.firebaseService.getUser(),
       //this.email = this.firebaseService.getEmail();
-      'email': 'this.firebaseService.getEmail()',
+      'email': this.firebaseService.getEmail(),
       //this.photo = this.firebaseService.getPhotoURL();
-      'photo': 'this.firebaseService.getPhotoURL()'
+      'photo': this.firebaseService.getPhotoURL()
     }
 
     this.firebaseService.addFollowing(follow, follower);
@@ -189,9 +179,7 @@ export class UserPage {
 
     var follower = {
       'name': this.firebaseService.getUser(),
-      //this.email = this.firebaseService.getEmail();
       'email': this.firebaseService.getEmail(),
-      //this.photo = this.firebaseService.getPhotoURL();
       'photo': this.firebaseService.getPhotoURL()
     }
 
@@ -214,7 +202,6 @@ export class UserPage {
     this.removeFollowerSubscribe = this.firebaseService.getFollowers(follow.name).subscribe(snapshot => {
         snapshot.forEach(snap => {
           if(snap.name == name){
-            console.log(follow.name + '' +snap.$key);
             this.firebaseService.removeFollower(follow.name, snap.$key);
           }
         })
@@ -229,8 +216,6 @@ export class UserPage {
       this.firebaseService.removePermission();
 
     this.ionViewWillEnter();
-    console.log(this.permission);
-    console.log('this.permission');
   }
 
   askEmailPermission(){

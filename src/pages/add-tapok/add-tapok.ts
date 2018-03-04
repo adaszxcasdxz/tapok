@@ -87,7 +87,6 @@ export class AddTapok {
 	}
 	
 	onError = (error) => {
-		console.log('error', error);
 		this.loading.dismiss();
 	}
 
@@ -103,7 +102,6 @@ export class AddTapok {
 		this.label = params.get('label');
 		this.event = params.get('tapok');
 		this.page = params.get('page');
-		console.log(this.page);
 		this.event_key = params.get('key');
 		this.user = this.firebaseService.getUser();
 		this.age = this.firebaseService.getAge();	
@@ -117,24 +115,11 @@ export class AddTapok {
 	}
 
 	ionViewDidLoad() {
-		/*this.geolocation.getCurrentPosition().then((position) => {
-			this.lat = position.coords.latitude;
-			this.lng = position.coords.longitude;
-		});*/
-
-		//var defaultBounds = new google.maps.LatLngBounds(this.lat, this.lng);
 		var options = {
-			//bounds: defaultBounds,
 			componentRestrictions: {country: "phl"}
 		};
 
 		this.autocomplete = new google.maps.places.Autocomplete(this.autocompleteElement.nativeElement, options);
-
-		/*this.autocomplete.addListener('place_changed', function(){
-			console.log('test');
-			//var place = this.autocomplete.getPlace();
-			//console.log(place);
-		});*/
 	}
 
 	toggleOptions(){
@@ -200,7 +185,6 @@ export class AddTapok {
 			this.lng = this.getLng();
 
 			this.venue = document.getElementById('autocomplete')["value"];
-			console.log(this.venue);
 		}
 
 		this.Tags.subscribe(snapshots => {
@@ -307,10 +291,8 @@ export class AddTapok {
 			}	
 		}
 		else{
-			console.log(this.event_key);
 			eventKey = this.firebaseService.editEvent(this.event_key, this.event);
 			
-			console.log(this.name);
 			this.Keywords.unsubscribe();
 			this.word = this.name.split(" ");
 			var temp: any[] = [];
@@ -320,14 +302,12 @@ export class AddTapok {
 						this.word[g] = null;
 				}
 			}
-			console.log(this.word);
 			for(i=0;i<this.word.length;i++){
 				if(this.word[i] != null){
 					this.keyword={
 						"keyword": this.word[i].toLowerCase(),
 						"key": this.event_key
 					};
-					console.log(this.word[i]);
 					if(this.inc == 0)
 						this.firebaseService.addKeyword(this.keyword);
 				}
@@ -388,12 +368,9 @@ export class AddTapok {
 	}
 
 	editTapokInfo(){
-		console.log(this.event);
-
 		this.host = this.event.host;
 		this.name = this.event.name;
 		this.photo = this.event.photo;
-		//this.toggle = this.event.toggle;
 		this.datetime = this.event.datetime;
 		if(this.enddatetime != null)
 			this.enddatetime = this.event.enddatetime;
@@ -467,23 +444,17 @@ export class AddTapok {
 
 	changeDate(){
 		this.checkdatetime = this.datetime;
-		console.log('datetime: ' + this.datetime);
-		console.log('checkdatetime: ' + this.checkdatetime);
 	}
 
 	changeTime(){
 		if(moment(this.datetime).isBefore(moment())){
-			console.log('invalid');
-			console.log(this.checkdatetime);
 			this.datetime = moment().format();
 		}
 		this.enddatetime = this.datetime;
-		console.log('datetime: ' + this.datetime);
 	}
 
 	changeEndTime(){
 		if(moment(this.enddatetime).isBefore(this.datetime)&&!this.addEndDate){
-			console.log(this.datetime);
 			this.enddatetime = this.datetime;
 			this.addEndTime = false;
 		}

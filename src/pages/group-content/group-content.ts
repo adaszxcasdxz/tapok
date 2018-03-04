@@ -47,7 +47,6 @@ export class GroupContent {
 
       this.user = this.firebaseService.getUser();
       this.current = this.firebaseService.getUserID();
-      console.log(this.current)
       this.key = navParams.get('param1');
       this.gmember = this.firebaseService.getgroupAttend(this.key);
       this.rmember = this.firebaseService.getRequestee(this.key);
@@ -60,10 +59,7 @@ export class GroupContent {
       this.group.forEach(groups=> {
         this.group = groups;
       });
-      //this.groupkey = navParams.get('param1');
-      //this.postkey = navParams.get('param2')
-      
-      console.log(this.ugroupkey.key);
+     
       this.post.subscribe(snapshots => {
         this.postTest.length = 0;
         y = 0;
@@ -78,16 +74,10 @@ export class GroupContent {
         snapshots.forEach(snapshot => {
           this.gcount++;
         })
-      });
-
-      console.log(this.gcount);
-      
-      //console.log(this.postTest[0]);
-    
+      });    
   }
 
   test(postkey, y){
-    console.log(postkey);
     var z = 0;
 
     this.comment = this.firebaseService.getComment(this.key, postkey);
@@ -103,7 +93,6 @@ export class GroupContent {
           z++;
         })
       });
-      console.log(this.latestComment);
   }
 
   presentActionSheetPost(posts){
@@ -113,14 +102,11 @@ export class GroupContent {
             text: 'Edit',
             handler: () => {
               this.editPost(posts);
-              console.log('Edit');
-              //this.firebaseService.editPost(post);
             }
           }, {
             text: 'Delete',
             handler: () => {
               this.deletePost(posts);
-              console.log('Delete');
             }
           }
         ]
@@ -145,13 +131,11 @@ export class GroupContent {
   }
 
   editGroup(){
-    console.log(this.group);
     let modal = this.modalCtrl.create('GroupAddPage', { tapok: this.group, label: "Edit Group" });
     modal.present();
   }
 
   editPost(post){
-    console.log(post.$key);
     let modal = this.modalCtrl.create('GroupPost', {tapokGroup: this.group, tapokPost: post, label: "Edit Post"});
     modal.present();
   }
@@ -209,7 +193,6 @@ export class GroupContent {
           text: 'YES',
           handler: () => {
             this.firebaseService.deleteRequestee(key, rmember);
-            //this.navCtrl.setRoot('GroupContent');
             confirm.present();
           }
         },
@@ -281,7 +264,6 @@ export class GroupContent {
           text: 'YES',
           handler: () => {
             this.firebaseService.deletePost(this.group.$key, posts.$key);
-            //this.navCtrl.setRoot('GroupContent');
             confirm.present();
           }
         },
@@ -305,8 +287,6 @@ export class GroupContent {
             text: 'YES',
             handler: () => {
                 this.firebaseService.leaveUserGroup(this.ugroupkey.$key);
-                console.log(group);
-                //this.check();
                 confirm.present();
             }
             },
@@ -324,7 +304,6 @@ export class GroupContent {
     for(var gjoined in this.ugroupkey.key){
       if(this.ugroupkey.key[gjoined] == gkey){
         this.firebaseService.leaveUserGroup(this.ugroupkey.$key);
-        console.log(this.ugroupkey.$key);
         break;
       }
     }
@@ -335,36 +314,6 @@ export class GroupContent {
   }
 
   openAddToGroup(){
-    console.log(this.group);
-    console.log(this.group.$key);
     this.navCtrl.push('AddPersonPage', {param1: this.group})
   }
-
-  /*joinGroup(key){
-        this.usergroup={
-            "key": key
-        }  
-        
-        let confirm = this.alertCtrl.create({
-			title: 'Group Joined!',
-			buttons: [ 'OK' ]
-        });
-        let alert = this.alertCtrl.create({
-        title: 'Join Group?',
-        buttons: [ 
-            {
-            text: 'YES',
-            handler: () => {
-                this.firebaseService.addUserGroup(this.usergroup);  
-                this.navCtrl.setRoot('GroupPage');
-                confirm.present();
-            }
-            },
-            {
-            text: 'NO',
-            }
-        ]
-        });
-        alert.present();
-    }*/
 }

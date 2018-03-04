@@ -45,8 +45,6 @@ export class CommentPage {
     this.comment = this.firebaseService.getComment(this.groupkey, this.postkey);
     this.post = this.firebaseService.getPost(this.key);
     this.group = this.firebaseService.getSpecificGroup(this.key);
-    //console.log(this.post.$key);'
-    console.log(this.comment);
 
     this.comment.subscribe(snapshots => {
       this.commentTest.length = 0;
@@ -57,14 +55,8 @@ export class CommentPage {
         this.count++;
         y++;
       })
-      this.test();
     });
 
-    console.log(this.latestComment);
-  }
-
-  test(){
-    console.log(this.commentTest);
   }
 
   presentActionSheetCom(comments){
@@ -74,14 +66,11 @@ export class CommentPage {
             text: 'Edit',
             handler: () => {
               this.editComment(comments);
-              console.log('Edit');
-              //this.firebaseService.editPost(post);
             }
           }, {
             text: 'Delete',
             handler: () => {
               this.deleteComment(comments);
-              console.log('Delete');
             }
           }
         ]
@@ -90,8 +79,6 @@ export class CommentPage {
   }
 
   editComment(comments){
-    console.log(this.groupkey);
-    console.log(this.postkey);
     let modal = this.modalCtrl.create('CommentAddPage', {tapokGroup: this.groupkey, tapokPost: this.postkey, tapokCom: comments.$key, label: "Edit Comment"});
     modal.present();
   }
@@ -108,7 +95,6 @@ export class CommentPage {
           text: 'YES',
           handler: () => {
             this.firebaseService.deleteComment(this.groupkey, this.postkey, comments.$key);
-            //this.navCtrl.setRoot('GroupPage');
             this.count--;
             confirm.present();
           }
@@ -122,7 +108,7 @@ export class CommentPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CommentPage');
+
   }
 
 }

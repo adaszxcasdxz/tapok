@@ -90,7 +90,6 @@ export class AddPersonPage {
                 this.firebaseService.addNotif(user.name, notif);
                 this.firebaseService.addMemberGroup(user.name, this.usergroup);  
                 this.firebaseService.groupAttend(this.group.$key, this.groupmember);
-                //this.navCtrl.setRoot('GroupPage');
                 confirm.present();
             }
             },
@@ -103,7 +102,6 @@ export class AddPersonPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddPersonPage');
   }
 
 }

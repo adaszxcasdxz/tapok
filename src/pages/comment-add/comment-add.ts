@@ -48,7 +48,6 @@ export class CommentAddPage {
     this.pKey = navParams.get('tapokPost');
     this.cKey = navParams.get('tapokCom');
     this.photo= this.firebaseService.getPhotoURL();
-    //this.comment = this.firebaseService.getComment(this.groupkey, this.postkey);
     if(this.cKey != undefined)
       this.editCommentInfo();
   }
@@ -85,9 +84,6 @@ export class CommentAddPage {
       "comment": this.comment,
       "datetime": Date.now()
     }
-    console.log(this.gKey);
-    console.log(this.pKey);
-    console.log(this.cKey);
     this.firebaseService.editComments(this.gKey, this.pKey, this.cKey, this.comment);
     let alert = this.alertCtrl.create({
         title: 'Changes Saved!',
@@ -106,7 +102,7 @@ export class CommentAddPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CommentAddPage');
+    
   }
 
 }

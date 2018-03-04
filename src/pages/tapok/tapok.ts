@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, PopoverController, ModalController, AlertController, Platform, ToastController } from 'ionic-angular';
-import { Filter } from '../filter/filter';
 import { FireBaseService } from '../../providers/firebase-service';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { NavParams } from 'ionic-angular/navigation/nav-params';
-import { Badge } from '@ionic-native/badge';
 import { FirebaseApp } from 'angularfire2';
 
 import * as moment from 'moment';
@@ -99,7 +96,6 @@ export class TapokPage {
   }
 
   ionInfinite(){
-    console.log('scroll');
   }
 
   ionViewDidLoad(){
@@ -112,7 +108,7 @@ export class TapokPage {
   timeCheck(){
     this.Event.subscribe(snapshots => {
       this.eventTime.length = 0;
-      var y = 0, x = 0;
+      var y = 0
       snapshots.forEach(snapshot => {
         if(snapshot.max_members != null){
           if(snapshot.max_members<=snapshot.tapok){
@@ -168,54 +164,37 @@ export class TapokPage {
             var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
             if(checkEnd){
               this.timeStatus[y] = 'archive';
-              //this.firebaseService.editEvent(snapshot.$key, archive);
-              //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
               if(snapshot.status == null){
                 var archive = {
                   'status': 'archive'
                 }
                 this.firebaseService.editEvent(snapshot.$key, archive);
-              console.log('archive');
-              //this.firebaseService.addHistory(snapshot);
               } 
             }
           }
-          //with end date but no end time
           if(snapshot.enddate != '' && snapshot.endtime == ''){
             var checkEnd = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
             if(checkEnd){
               this.timeStatus[y] = 'ongoing';
-              //this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
             }
           }
-          //with end date and end time
           if(snapshot.enddate != '' && snapshot.endtime != ''){
             var checkEndDate = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
             var checkDate = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
             var checkEndTime = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
             if(checkDate && !checkEndTime){
               this.timeStatus[y] = 'ongoing';
-              //this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
             }
             else if( !checkEndTime && !checkEndTime){
               this.timeStatus[y] = 'upcoming';
-              //this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
             }
             else if (checkEndDate && checkEndTime){
               this.timeStatus[y] = 'archived';
-              //this.firebaseService.editEvent(snapshot.$key, archive);
-              //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
               if(snapshot.status == null){
                 var archive = {
                   'status': 'archive'
                 }
                 this.firebaseService.editEvent(snapshot.$key, archive);
-                //this.firebaseService.addHistory(snapshot);
-                /*console.log('archive');
-                console.log(this.inc);
-                this.firebaseService.addArchives(snapshot);
-                this.firebaseService.deleteEvent(snapshot);
-                this.Event = this.firebaseService.getEvent();*/
               }
             }
           }
@@ -236,7 +215,7 @@ export class TapokPage {
     });    
   }
 
-  test(){ //
+  test(){ 
     this.status.length = 0;
     for(var x=0;x<this.eventTest.length;x++){
       this.status[x] = "TAPOK";
@@ -247,7 +226,7 @@ export class TapokPage {
         } 
       }
     }
-  } //
+  } 
 
   sharePopover(event){
     let popover = this.popoverCtrl.create('SharePopoverPage');
@@ -292,13 +271,6 @@ export class TapokPage {
     contentModal.present(); 
   }
 
-  showFilterPopOver(myTapok){
-    let popover = this.popoverCtrl.create(Filter);
-    popover.present({
-      ev: myTapok
-    });
-  }
-
   openSearch(){
     let modal = this.modalCtrl.create('SearchPage');
     modal.present();
@@ -338,7 +310,6 @@ export class TapokPage {
       if(event.attendees[attendees].name == this.user){
         status = "true";
         attendeeKey = attendees;
-        console.log(event.attendees[attendees]);
         break;
       }
     }
@@ -425,7 +396,6 @@ export class TapokPage {
       })
   }
   openGroupShare(event){
-    console.log(event);
     this.navCtrl.push('ChooseGroupPage', {param1: event});
   }
 }

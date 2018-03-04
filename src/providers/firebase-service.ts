@@ -31,7 +31,7 @@ export class FireBaseService {
   }
 
   getUser(){
-    return this.user;
+    return this.afAuth.auth.currentUser.displayName;
   }
 
   getAge(){
@@ -67,8 +67,6 @@ export class FireBaseService {
   }
 
   loginBirthday(age, key){
-    console.log(age);
-    console.log(key);
     this.tapok.object('/login/'+this.uID+'/'+key+'/age').set(age);
   }
 
@@ -571,15 +569,12 @@ export class FireBaseService {
   }
 
   addHistory(event){
-    //console.log(event.attendees);
     for(var attendees in event.attendees){
-      //console.log(event.attendees[attendees].name);
       this.tapok.list('users/'+event.attendees[attendees].name+'/history').push(event);
     }
   }
 
   deleteEvent(event){
-    //console.log(event);
     this.tapok.list('events/'+event.$key).remove();
   }
 

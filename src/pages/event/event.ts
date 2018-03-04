@@ -46,22 +46,6 @@ export class EventPage {
     this.User = this.firebaseService.getUsers();
     this.user = firebaseService.getUser();
     this.Tags = this.firebaseService.getTag();
-    
-    /*Observable.interval(5000)
-    .subscribe((val) => {
-      this.inc = 0;
-      this.timeCheck();
-    });*/
-
-    /*this.Attending.subscribe(snapshot => {
-      this.userTest.length = 0;
-      var i = 0;
-      snapshot.forEach(snap => {
-        this.userTest[i] = snap.key;
-        i++;
-      })
-      this.test();
-    });*/
 
     this.User.map(users => {
       this.userEventKeys = users;
@@ -69,7 +53,7 @@ export class EventPage {
         data;
     });
 
-    this.User.subscribe(snapshot => { //
+    this.User.subscribe(snapshot => {
       this.userTest.length = 0;
       var i = 0;
       snapshot.forEach(snap => {
@@ -77,9 +61,9 @@ export class EventPage {
         i++;
       })
       this.test();
-    }); //
+    });
 
-    this.Event.subscribe(snapshots => { //
+    this.Event.subscribe(snapshots => {
       this.eventTest.length = 0;
       var y = 0;
       snapshots.forEach(snapshot => {
@@ -91,11 +75,7 @@ export class EventPage {
   }
 
   doInfinite(infiniteScroll){
-    console.log('scroll');
-
     setTimeout(() => {
-
-      console.log('Async operation has ended');
       infiniteScroll.complete();
     }, 50);
   }
@@ -153,58 +133,39 @@ export class EventPage {
             }
           }
           if(snapshot.status != 'archive'){
-            //if no end date and end time
             if(checkTime && checkDate && snapshot.enddate == ''){
               this.etimeStatus[y] = 'ongoing';
-              //this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
             }
             else{
               this.etimeStatus[y] = 'upcoming';
-              //this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
             }
-            //with end time but no end date
             if(snapshot.endtime != '' && snapshot.enddate == ''){
               var checkEnd = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
               if(checkEnd){
                 this.etimeStatus[y] = 'archive';
-
-                //this.firebaseService.editEvent(snapshot.$key, archive);
-                //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
-                console.log('archive');
               } 
             }
-            //with end date but no end time
             if(snapshot.enddate != '' && snapshot.endtime == ''){
               var checkEnd = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
               if(checkEnd){
                 this.etimeStatus[y] = 'ongoing';
-                //this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
               }
             }
-            //with end date and end time
+
             if(snapshot.enddate != '' && snapshot.endtime != ''){
               var checkEndDate = moment().isSameOrAfter(moment(snapshot.enddate, 'MMM DD'));
               var checkDate = moment().isSameOrAfter(moment(snapshot.date, 'MMM DD'));
               var checkEndTime = moment().isSameOrAfter(moment(snapshot.endtime, 'hh:mm a'));
               if(checkDate || !checkEndTime){
                 this.etimeStatus[y] = 'ongoing';
-                //this.firebaseService.updateEventStatus(snapshot.$key, 'ongoing');
               }
               else if( !checkEndTime && !checkEndTime){
                 this.etimeStatus[y] = 'upcoming';
-                //this.firebaseService.updateEventStatus(snapshot.$key, 'upcoming');
               }
               else if (checkEndDate && checkEndTime){
                 var i = 0;
                 this.etimeStatus[y] = 'archived';
-                //this.firebaseService.editEvent(snapshot.$key, archive);
-                //this.firebaseService.updateEventStatus(snapshot.$key, 'archive');
-                console.log('archive');
-                /*this.firebaseService.addHistory(snapshot);
-                this.firebaseService.addArchives(snapshot);
-                this.firebaseService.deleteEvent(snapshot);*/
                 i++;
-                console.log(i);
               }
             }
           }else{
@@ -223,7 +184,7 @@ export class EventPage {
       });
   }
 
-  test(){ //
+  test(){
     this.status.length = 0;
     for(var x=0;x<this.eventTest.length;x++){
       this.status[x] = "TAPOK";
@@ -234,7 +195,7 @@ export class EventPage {
         } 
       }
     }
-  } //
+  }
 
   openSearch(){
     let modal = this.modalCtrl.create('SearchPage');
@@ -288,7 +249,6 @@ export class EventPage {
       if(event.attendees[attendees].name == this.user){
         status = "true";
         attendeeKey = attendees;
-        console.log(event.attendees[attendees]);
         break;
       }
     }
@@ -296,7 +256,6 @@ export class EventPage {
     for(var userEventKey in this.userEventKeys){
       if(this.userEventKeys[userEventKey].key == event.$key){
         userKey = this.userEventKeys[userEventKey].$key;
-        console.log(userKey);
       }
     }
 
@@ -374,7 +333,6 @@ export class EventPage {
     }
   
   openGroupShare(event){
-    console.log(event);
     this.navCtrl.push('ChooseGroupPage', {param1: event});
   }
 

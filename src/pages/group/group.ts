@@ -48,7 +48,7 @@ export class GroupPage{
 
         
 
-        this.uGroup.subscribe(snapshot => { //
+        this.uGroup.subscribe(snapshot => {
             this.userTest.length = 0;
             this.i = 0;
             snapshot.forEach(snap => {
@@ -58,7 +58,7 @@ export class GroupPage{
             this.test();
         });
 
-        this.Group.subscribe(snapshot => { //
+        this.Group.subscribe(snapshot => {
             this.groupTest.length = 0;
             j = 0;
             snapshot.forEach(snap => {
@@ -86,19 +86,13 @@ export class GroupPage{
     }
 
     testattend(ugroup, group){
-        console.log("helo");
-        console.log(this.groupAttend.length);
         for(var x=0;x<this.groupAttend.length;x++){
             if(this.groupAttend[x].userid==this.userid){
                 this.groupmember = this.groupAttend[x];
-                console.log(this.groupmember);
                 break;
             }
-            console.log(this.groupAttend[x].userid);
-            console.log(this.userid);
         }
 
-        console.log("hgg");
         let confirm = this.alertCtrl.create({
         title: 'You have successfully left the group.',
         buttons: [ 'OK' ]
@@ -112,7 +106,6 @@ export class GroupPage{
                 this.count--;
                 this.firebaseService.leaveUserGroup(ugroup);
                 this.firebaseService.removegroupAttend(group, this.groupmember.$key);
-                //this.check();
                 confirm.present();
             }
             },
@@ -166,58 +159,10 @@ export class GroupPage{
         alert.present();
     }
 
-    /*joinGroup(key, gname){
-        this.usergroup={
-            "key": key,
-            "gname": gname,
-            "timejoin": 0-Date.now()
-        }  
-
-        let confirm = this.alertCtrl.create({
-			title: 'Group Joined!',
-			buttons: [ 'OK' ]
-        });
-        let alert = this.alertCtrl.create({
-        title: 'Join Group?',
-        buttons: [  
-            {
-            text: 'YES',
-            handler: () => {
-                this.groupmember={
-                    "name": this.user,
-                    "photo": this.photo,
-                    "userid": this.userid
-                }
-                this.firebaseService.addUserGroup(this.usergroup);  
-                this.firebaseService.groupAttend(key, this.groupmember);
-                this.navCtrl.setRoot('GroupPage');
-                confirm.present();
-            }
-            },
-            {
-            text: 'NO',
-            }
-        ]
-        });
-        alert.present();
-    }*/
-
     leaveGroup(ugroup, group){
         var i;
         this.gmember = this.firebaseService.getgroupAttend(group);
-        /*this.gmember.subscribe(snapshot => {
-            //this.groupAttend.length = 0;
-            var k = 0;
-            snapshot.forEach(snap => {
-                
-            console.log(this.gmember);
-                this.groupAttend[k] = snap;
-                console.log(this.groupAttend[k]);
-                k++;
-            })
-            //this.testattend();
-        });*/
-        this.gmember.subscribe(snapshot => { //
+        this.gmember.subscribe(snapshot => {
             this.groupAttend.length = 0;
             i = 0;
             snapshot.forEach(snap => {
