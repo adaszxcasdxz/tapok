@@ -501,7 +501,7 @@ export class TapokContent {
     this.Message="";
 
     var j;
-    this.eMember = this.firebaseService.getgroupAttend(this.key);
+    this.eMember = this.firebaseService.getAttendees(this.key);
 
     this.eMember.subscribe(snapshot => {
       j = 0;
