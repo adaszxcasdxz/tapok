@@ -511,6 +511,10 @@ export class FireBaseService {
     }
   }
 
+  addArchive(user, event){
+    this.tapok.list('users/'+user+'/history').push(event);
+  }
+
   deleteEvent(event){
     //console.log(event);
     this.tapok.list('events/'+event.$key).remove();

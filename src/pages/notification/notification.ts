@@ -21,6 +21,12 @@ export class NotificationPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,  public firebaseService: FireBaseService, public modalCtrl: ModalController, public viewCtrl: ViewController, public alertCtrl: AlertController) {
     this.Notifs = this.firebaseService.getNotif();
+    this.Notifs.subscribe(snapshot => {
+      if(snapshot.length == 0)
+        this.notifs = false;
+      else
+        this.notifs = true;
+    });
   }
 
   ionViewDidLoad() {

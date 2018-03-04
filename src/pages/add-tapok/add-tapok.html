@@ -70,7 +70,16 @@
                     </button>
                 </ion-item>
             </div>
-            <ion-item>
+            <ion-item class="hide" *ngIf="page=='eongoing'">
+                <div *ngIf="inputLocation == 'false'" class="noVLabel"><b>Venue</b> <ion-icon name="alert"></ion-icon></div>
+                <div *ngIf="inputLocation != 'false'" class="vLabel"><b>Venue</b> <ion-icon name="alert"></ion-icon></div>
+                <input #autocomplete (click)="inputLocationToggle($event, 'true')" placeholder=" " id="autocomplete" class="detail" [(ngModel)]="venue" type="text" />
+                <button (click)="clearVenue()" ion-button outline large item-end clear>
+                    <ion-icon name="close-circle"></ion-icon>
+                </button>
+            </ion-item>
+
+            <ion-item *ngIf="page=='eupcoming'">
                 <div *ngIf="inputLocation == 'false'" class="noVLabel"><b>Venue</b> <ion-icon name="alert"></ion-icon></div>
                 <div *ngIf="inputLocation != 'false'" class="vLabel"><b>Venue</b> <ion-icon name="alert"></ion-icon></div>
                 <input #autocomplete (click)="inputLocationToggle($event, 'true')" placeholder=" " id="autocomplete" class="detail" [(ngModel)]="venue" type="text" />
