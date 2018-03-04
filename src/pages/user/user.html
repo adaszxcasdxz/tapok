@@ -43,9 +43,15 @@
     <ion-item>
       <div class="username"><b>{{ username }}</b></div>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="otherUser==null">
+      <ion-label>Allow other users to see your email: </ion-label><ion-toggle (ionChange)="askEmailPermission()" [(ngModel)]="emailToggle"></ion-toggle>
+    </ion-item>
+    <ion-item *ngIf="pages=='me'&&otherUser==null" >
       <p class="mail"><ion-icon name="mail"></ion-icon> {{ email }}</p>
     </ion-item>
+    <ion-item *ngIf="pages=='me'&&otherUser!=null&&emailToggle==true" >
+        <p class="mail"><ion-icon name="mail"></ion-icon> {{ email }}</p>
+      </ion-item>
     <ion-item>
       <ion-buttons *ngIf="otherUser!=null&&!check">
         <button (click)="follow()" ion-button block outline>
@@ -58,7 +64,7 @@
         </button>
       </ion-buttons>
     </ion-item>
-    <ion-item text-wrap>
+    <ion-item *ngIf="otherUser==null" text-wrap>
       <ion-label>Allow other users to find you: </ion-label><ion-toggle (ionChange)="askPermission()" [(ngModel)]="permission"></ion-toggle>
     </ion-item>
   </div>
