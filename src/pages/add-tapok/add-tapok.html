@@ -34,17 +34,17 @@
                         <ion-icon name="image"></ion-icon> SELECT IMAGE
                     </button> 
                 </ion-item>
-                <ion-item>
+                <ion-item *ngIf="label!='Edit Tapok'">
                     <ion-label stacked><b>Start Date</b> <ion-icon name="alert"></ion-icon></ion-label>
                     <ion-datetime (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="datetime" (ionChange)="changeDate()" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime>
                 </ion-item>
 
-                <ion-item *ngIf="addEndDate == false">
+                <ion-item *ngIf="addEndDate == false&&label!='Edit Tapok'">
                     <div class="noVLabel"><b>End Date</b></div>
                     <button (click)="endDate()" ion-button outline>Add End Date</button> 
                 </ion-item>
 
-                <ion-item *ngIf="addEndDate == true"> 
+                <ion-item *ngIf="addEndDate == true&&label!='Edit Tapok'"> 
                     <ion-label stacked><b>End Date</b></ion-label>
                     <ion-datetime (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="enddatetime" min="{{ datetime }}" displayFormat="MM-DD-YYYY" pickerFormat="MM-DD-YYYY" placeholder="MM-DD-YYYY"></ion-datetime> 
                     <button *ngIf="addEndDate == true" (click)="endDate()" ion-button outline large item-end clear>
@@ -52,17 +52,17 @@
                     </button>
                 </ion-item>
 
-                <ion-item>
+                <ion-item *ngIf="label!='Edit Tapok'">
                     <ion-label stacked><b>Start Time</b> <ion-icon name="alert"></ion-icon></ion-label>
                     <ion-datetime (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="datetime" [(ngModel)]="time" (ionChange)="changeTime()" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
                 </ion-item>
 
-                <ion-item *ngIf="addEndTime == false">
+                <ion-item *ngIf="addEndTime == false&&label!='Edit Tapok'">
                         <div class="noVLabel"><b>End Time</b></div>
                     <button (click)="endTime()" ion-button outline>Add End Time</button>
                 </ion-item>
 
-                <ion-item *ngIf="addEndTime == true">
+                <ion-item *ngIf="addEndTime == true&&label!='Edit Tapok'">
                     <ion-label stacked><b>End Time</b></ion-label>
                     <ion-datetime (ionFocus)="inputLocationToggle($event, 'false')" [(ngModel)]="enddatetime" (ionChange)="changeEndTime()" displayFormat="hh:mm A" pickerFormat="hh:mm A" placeholder="00:00 MM"></ion-datetime>
                     <button *ngIf="addEndTime == true" (click)="endTime()" ion-button outline large item-end clear>
@@ -74,6 +74,9 @@
                 <div *ngIf="inputLocation == 'false'" class="noVLabel"><b>Venue</b> <ion-icon name="alert"></ion-icon></div>
                 <div *ngIf="inputLocation != 'false'" class="vLabel"><b>Venue</b> <ion-icon name="alert"></ion-icon></div>
                 <input #autocomplete (click)="inputLocationToggle($event, 'true')" placeholder=" " id="autocomplete" class="detail" [(ngModel)]="venue" type="text" />
+                <button (click)="clearVenue()" ion-button outline large item-end clear>
+                    <ion-icon name="close-circle"></ion-icon>
+                </button>
             </ion-item>
             <ion-item text-justify>
                 <ion-label stacked><b>Description</b></ion-label>

@@ -65,11 +65,11 @@ export class TapokPage {
     this.User = this.firebaseService.getUsers();
     this.user = firebaseService.getUser();
 
-   /*Observable.interval(5000)
+   Observable.interval(5000)
     .subscribe((val) => { 
       this.inc = 0;
-      this.timeCheck('const');
-    });*/
+      this.timeCheck();
+    });
 
     this.User.map(users => {
       this.userEventKeys = users;
@@ -106,11 +106,10 @@ export class TapokPage {
     this.Tags = this.firebaseService.getTag();
     this.upcomingCount = 1;
     this.ongoingCount = 1;
-    this.timeCheck('load');
+    this.timeCheck();
   }
 
-  timeCheck(type){
-    var Type = type;
+  timeCheck(){
     this.Event.subscribe(snapshots => {
       this.eventTime.length = 0;
       var y = 0, x = 0;
@@ -235,15 +234,6 @@ export class TapokPage {
         y++;
       });
     });    
-
-    if(Type == 'const'){
-      this.upcomingCount = 0;
-      this.ongoingCount = 0;
-    }
-    else{
-      this.upcomingCount = 1;
-      this.ongoingCount = 1;
-    }
   }
 
   test(){ //

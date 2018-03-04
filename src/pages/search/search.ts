@@ -180,7 +180,8 @@ export class SearchPage {
             if(this.ResultPeople[i] != undefined){
               this.ResultPeople[i].subscribe(snapshot2 => {
                 snapshot2.forEach(snap2 => {
-                  this.result[i] = snap2;
+                  if(this.firebaseService.getUser()!=snap2.name)
+                    this.result[i] = snap2;
                 })
               });
             }

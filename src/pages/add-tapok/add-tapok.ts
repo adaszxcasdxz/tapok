@@ -102,12 +102,10 @@ export class AddTapok {
 		this.event = params.get('tapok');
 		this.event_key = params.get('key');
 		this.user = this.firebaseService.getUser();
-		this.age = this.firebaseService.getAge();
-		console.log(this.event_key);	
+		this.age = this.firebaseService.getAge();	
 		this.Tags = this.firebaseService.getTempTag();
 		this.uid=this.firebaseService.getuID();
 		this.photoURL=firebaseService.getPhotoURL();
-	
 
 		if(this.event != undefined)
 			this.editTapokInfo();
@@ -378,6 +376,10 @@ export class AddTapok {
 
 	cancel(){
 		this.viewCtrl.dismiss();
+	}
+
+	clearVenue(){
+		this.venue = '';
 	}
 
 	editTapokInfo(){
