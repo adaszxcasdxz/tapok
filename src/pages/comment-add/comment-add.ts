@@ -49,6 +49,13 @@ export class CommentAddPage {
     this.cKey = navParams.get('tapokCom');
     this.photo= this.firebaseService.getPhotoURL();
     //this.comment = this.firebaseService.getComment(this.groupkey, this.postkey);
+    if(this.cKey != undefined)
+      this.editCommentInfo();
+  }
+
+  editCommentInfo(){
+		this.key = this.cKey.$key;
+		this.comment = this.cKey.comment;
   }
 
   addComment(posts){
