@@ -29,6 +29,7 @@
       <p *ngIf="notif.type == 1">has joined your event <b>{{ notif.event_name }}</b></p>
       <p *ngIf="notif.type == 2">has hosted an event <b>{{ notif.event_name }}</b></p>
       <p *ngIf="notif.type == 3">will start in 1 hour</p>
+      <p *ngIf="notif.type == 8">has deleted event <b>{{ notif.event_name }}</b></p>
     </ion-item>
   </ion-list>
 </ion-content>

@@ -49,6 +49,7 @@ export class TapokContent {
   adminCheck: any = false;
   hostCheck: any = false;
   type: any;
+  Attendee: any[] = [];
 
   constructor(
     public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -60,7 +61,7 @@ export class TapokContent {
     this.user = this.firebaseService.getUser();
     //this.uid = this.firebaseService.getUserID();
     this.key = navParams.get('param1');
-    this.event = this.firebaseService.getSpecificEvent(this.key);
+    this.event = this.firebaseService.getSpecificEvent(this.key); 
     //this.event = params.get('event');
     this.user = this.firebaseService.getUser();
     this.List=this.firebaseService.getChat(this.key, this.content);
@@ -84,13 +85,18 @@ export class TapokContent {
         }
       })
     });
-    
+
     this.event.forEach(events=> {
+      var k = 0;
       this.event = events;
       this.mainAdmin = events.host;
       if(this.user == events.host ){
         this.access = 'ok'; 
         this.hostCheck = true;
+      }
+      for(var attendee in events.attendees){
+        this.Attendee[k] = events.attendees[attendee].name;
+        k++;
       }
     });
 
@@ -192,7 +198,6 @@ export class TapokContent {
       ]
     });
     alert.present();
-    console.log(attendee.$key);
   }
 
   removeAdminMember(attendee){
@@ -313,6 +318,14 @@ export class TapokContent {
   deleteTapok(){
     var i, y;
 
+    var notif = {
+      "name": this.user,
+      "type": 8,
+      "timestamp": 0-Date.now(),
+      "event_name": this.event.name,
+      "event_key": this.event.$key
+    }
+
     let confirm = this.alertCtrl.create({
       title: 'Tapok Deleted',
       buttons: [ 'OK' ]
@@ -328,6 +341,9 @@ export class TapokContent {
               this.firebaseService.deleteKeyword(this.keyword[i]);  
             for(y=0;y<this.tag.length;y++)
               this.firebaseService.deleteTag(this.tag[y]);  
+            for(var k=0;y<this.Attendee.length;k++){
+              this.firebaseService.addNotif(this.Attendee[k].name, notif);
+            }
             this.viewCtrl.dismiss();
           }
         },
