@@ -117,6 +117,12 @@
                             <ion-label>
                                 <h2><strong>{{ sevent.host }}</strong></h2>
                             </ion-label>
+                            <ion-badge *ngIf="sevent.max_members == null" color="tapok" item-end outline>
+                                {{ sevent.tapok }} <ion-icon name="person"></ion-icon>
+                            </ion-badge>
+                            <ion-badge *ngIf="sevent.max_members != null" color="tapok" item-end outline>
+                                {{ sevent.tapok }} of {{ sevent.max_members }} <ion-icon name="person"></ion-icon>
+                            </ion-badge>
                         </ion-item>
                         <ion-row *ngIf="sevent.photo != ''">
                             <div (click)="viewPic(sevent.photo)">
@@ -128,7 +134,7 @@
                         <div>
                             <ion-row>
                                 <ion-col class="title-col" width-50>  
-                                    <div class="title"><b><hr>{{ sevent.name }}<hr></b></div>            
+                                    <div class="title"><b>{{ sevent.name }}</b></div>            
                                 </ion-col> 
                             </ion-row>
                             <ion-row class="details">
@@ -155,11 +161,11 @@
                                         <span class="chip-label">{{ sevent.venue }}</span>
                                     </div>
                                     <br>
-                                    <button ion-button icon-left outline small>
+                                    <!---<div>
                                         <div *ngIf="sevent.tapok > 1">{{ sevent.tapok }} Attendees</div>
                                         <div *ngIf="sevent.tapok == 1">{{ sevent.tapok }} Attendee</div>
                                         <div *ngIf="sevent.tapok == 0">No Attendees</div>
-                                    </button>
+                                    </div>-->
                                 </ion-col> 
                             </ion-row>
                         </div>

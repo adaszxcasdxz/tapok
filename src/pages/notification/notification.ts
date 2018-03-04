@@ -80,6 +80,7 @@ export class NotificationPage {
           handler: () => {					
             this.firebaseService.clearNotifs();
             confirm.present();
+            this.clearBadges();
           }
         },
         {

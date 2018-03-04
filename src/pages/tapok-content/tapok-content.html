@@ -247,7 +247,7 @@
     <ion-list class="content-tab" *ngIf="tab=='attendees'">
         <br><br><br>
         <ion-item-group>
-            <ion-item-divider>Administrators</ion-item-divider>
+            <ion-item-divider class="divide">Administrators</ion-item-divider>
             <ion-item>
                 {{ mainAdmin }}
                 <ion-badge item-end color="primary">
@@ -274,7 +274,7 @@
             </ion-item-sliding>
         </ion-item-group>
         <ion-item-group>
-            <ion-item-divider>Members</ion-item-divider>
+            <ion-item-divider class="divide">Members</ion-item-divider>
             <ion-item-sliding *ngFor="let member of Members | async">
                 <ion-item>
                     {{ member.name }}
