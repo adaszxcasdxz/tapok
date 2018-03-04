@@ -42,8 +42,8 @@ export class GroupPost {
         this.postKey = navParams.get('tapokPost');
         this.groupKey = navParams.get('tapokGroup');
         this.photo = this.firebaseService.getPhotoURL();
-        //if(this.postKey != undefined)
-          //this.editPostInfo();
+        if(this.postKey != undefined)
+          this.editPostInfo();
         console.log(this.posterid);
   }
 
@@ -83,10 +83,10 @@ export class GroupPost {
       this.dismiss();
   }
 
-  /*editPostInfo(){
-		this.key = this.post.$key;
-		this.post = this.post.post;
-	}*/
+  editPostInfo(){
+		this.key = this.postKey.$key;
+		this.post = this.postKey.post;
+	}
 
   dismiss() {
 		this.viewCtrl.dismiss();

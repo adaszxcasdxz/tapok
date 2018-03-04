@@ -122,11 +122,7 @@
     </ion-list>
     <ion-list class="content">
         <ion-item *ngIf="tab=='chat'" no-padding>
-            <div class="message">
-                <!--<button class="button-header" (click)="popoverChat($event)" ion-button icon-only>
-                    <ion-icon name="settings"></ion-icon>
-                </button>-->
-                        
+            <div class="message">                        
                 <ion-list no-lines>
                     <ion-item *ngFor="let List of List | async" text-center>
                         <ion-grid style="margin-top:.3em;" *ngIf="fontSize === 'default'" no-padding>
