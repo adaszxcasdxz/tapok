@@ -79,7 +79,7 @@
                 </button>
             </ion-item>
 
-            <ion-item *ngIf="page=='eupcoming'">
+            <ion-item *ngIf="page!='eongoing'">
                 <div *ngIf="inputLocation == 'false'" class="noVLabel"><b>Venue</b> <ion-icon name="alert"></ion-icon></div>
                 <div *ngIf="inputLocation != 'false'" class="vLabel"><b>Venue</b> <ion-icon name="alert"></ion-icon></div>
                 <input #autocomplete (click)="inputLocationToggle($event, 'true')" placeholder=" " id="autocomplete" class="detail" [(ngModel)]="venue" type="text" />
