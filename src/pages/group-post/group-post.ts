@@ -25,6 +25,8 @@ export class GroupPost {
   groupKey: any;
   photo: any;
   posterid: any;
+  gMember: any;
+  groupmem: any[] = [];
   
   host = '';
   poster = '';
@@ -47,6 +49,7 @@ export class GroupPost {
   }
 
   addPost(post){
+
       this.group={
       "post": this.post,
       "poster": this.user,
@@ -59,6 +62,7 @@ export class GroupPost {
     if(this.label == "Add Post")
 			this.firebaseService.addPost(this.group, this.key);
     //this.firebaseService.addPost(this.group, this.key);
+
     let alert = this.alertCtrl.create({
 			title: 'Post Sent!',
 			buttons: [ 'OK' ]
