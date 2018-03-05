@@ -49,7 +49,7 @@ export class GroupPost {
   }
 
   addPost(post){
-    this.post="";
+    //this.post="";
       this.group={
       "post": this.post,
       "poster": this.user,
